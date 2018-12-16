@@ -13,13 +13,11 @@ public class CameraController : MonoBehaviour
     public float minAltitude = 0.5f;
     public float maxAltitude = 100f;
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 currentPos = transform.position;

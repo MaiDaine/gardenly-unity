@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public WallHandler Ghost;
     private ConstructionState currentState = ConstructionState.Off;
     private const int layerMask = 1 << 9;
+    private List<ISelectable> currentSelection = new List<ISelectable>();
 
     void Start()
     {
@@ -23,8 +24,13 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (currentState == ConstructionState.Off && Input.GetKey("p"))
-            SpawnGhost();
+        if (currentState == ConstructionState.Off)
+        {
+            if (Input.GetKey(KeyCode.P))
+                SpawnGhost();
+            else if (Input.GetMouseButtonDown(0))
+                SelectBuilding();
+        }
 
         if (currentState != ConstructionState.Off)
             UpdateGhost();
@@ -71,5 +77,29 @@ public class PlayerController : MonoBehaviour
     {
         currentState = ConstructionState.Off;
         Ghost.EndPreview();
+    }
+
+    void SelectBuilding()
+    {
+        if (currentSelection.Count > 0 && !Input.GetKey(KeyCode.LeftShift))
+        {
+            foreach (ISelectable elem in currentSelection)
+                elem.DeSelect();
+            currentSelection.Clear();
+        }
+
+        Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        float rayDistance = (viewCamera.transform.position - Vector3.zero).magnitude;
+        if (Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
+        {
+            ISelectable[] selectables = hit.collider.gameObject.GetComponents<ISelectable>();
+            for (int i = 0; i < selectables.Length; i++)
+            {
+                selectables[i].Select();
+                currentSelection.Add(selectables[i]);
+            }
+        }
+
     }
 }

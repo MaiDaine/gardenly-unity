@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent (typeof(MeshRenderer))]
 [RequireComponent (typeof(BoxCollider))]
 [RequireComponent (typeof(Material))]
-public class WallHandler : MonoBehaviour
+public class WallHandler : MonoBehaviour, ISelectable
 {
     public WallTextHandler Text;
     private Vector3 start;
@@ -25,6 +25,7 @@ public class WallHandler : MonoBehaviour
     public void StartPreview(Vector3 position)
     {
         Text = Instantiate(Text, this.transform.position, Quaternion.identity) as WallTextHandler;
+        Text.gameObject.SetActive(true);
         start = position;
     }
 
@@ -32,6 +33,7 @@ public class WallHandler : MonoBehaviour
     public void EndPreview()
     {
         gameObject.layer = 9;
+        Text.gameObject.SetActive(false);
     }
 
     public void Preview(Vector3 position)
@@ -50,4 +52,18 @@ public class WallHandler : MonoBehaviour
             Text.SetText(string.Format("{0:F1}m", lenght));
         }
     }
+
+
+    //ISelectable
+    public void Select()
+    {
+        Text.gameObject.SetActive(true);
+    }
+
+    public void DeSelect()
+    {
+        Text.gameObject.SetActive(false);
+    }
+
+
 }
