@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent (typeof(MeshRenderer))]
 [RequireComponent (typeof(BoxCollider))]
 [RequireComponent (typeof(Material))]
-public class WallHandler : MonoBehaviour, ISelectable
+public class WallHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public WallTextHandler Text;
     private Vector3 start;
@@ -14,6 +14,7 @@ public class WallHandler : MonoBehaviour, ISelectable
 
     void Start()
     {
+        gameObject.layer = 0;
         this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
     }
 
@@ -65,5 +66,17 @@ public class WallHandler : MonoBehaviour, ISelectable
         Text.gameObject.SetActive(false);
     }
 
-
+    //ISnapable
+    public Vector3 FindSnapPoint(Vector3 currentPos, float snapDistance)
+    {
+        if ((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
+        {
+            if ((start - currentPos).magnitude < snapDistance)
+                return start;
+            return currentPos;
+        }
+        if ((end - currentPos).magnitude < snapDistance)
+            return end;
+        return currentPos;
+    }
 }

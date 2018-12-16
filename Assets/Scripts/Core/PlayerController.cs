@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     Camera viewCamera;
     public WallHandler Ghost;
+    public float snapDistance = 25f;
     private ConstructionState currentState = ConstructionState.Off;
     private const int layerMask = 1 << 9;
     private List<ISelectable> currentSelection = new List<ISelectable>();
@@ -48,19 +49,24 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayDistance;
+        Vector3 bestPosition;
 
         if (groundPlane.Raycast(ray, out rayDistance) 
             && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
+            bestPosition = ray.GetPoint(rayDistance);
+            ISnapable snapable = hit.collider.gameObject.GetComponent<ISnapable>();
+            if (snapable != null)
+                bestPosition = snapable.FindSnapPoint(bestPosition, snapDistance);
             if (currentState == ConstructionState.Positioning)
             {
-                Ghost.transform.position = ray.GetPoint(rayDistance);
+                Ghost.transform.position = bestPosition;
                 if (Input.GetMouseButtonDown(0))
-                    StartConstruction(ray.GetPoint(rayDistance));
+                    StartConstruction(bestPosition);
             }
             else
             {
-                Ghost.Preview(ray.GetPoint(rayDistance));
+                Ghost.Preview(bestPosition);
                 if (Input.GetMouseButtonDown(0))
                     EndConstruction();
             }
