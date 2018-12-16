@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     Camera viewCamera;
     public WallHandler Ghost;
     private ConstructionState currentState = ConstructionState.Off;
+    private const int layerMask = 1 << 9;
 
     void Start()
     {
@@ -26,21 +27,7 @@ public class PlayerController : MonoBehaviour
             SpawnGhost();
 
         if (currentState != ConstructionState.Off)
-        {
-            Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-            Plane goundPlane = new Plane(Vector3.up, Vector3.zero);
-            float rayDistance;
-
-            if (goundPlane.Raycast(ray, out rayDistance))
-            {
-                Debug.DrawLine(ray.origin, ray.GetPoint(rayDistance), Color.red);
-
-                if (currentState == ConstructionState.Positioning)
-                    UpdateGhostPosition(ray.GetPoint(rayDistance));
-                if (currentState == ConstructionState.Positioning && Input.GetMouseButtonDown(0))
-                    StartConstruction(ray.GetPoint(rayDistance));
-            }
-        }
+            UpdateGhost();
     }
 
     void SpawnGhost()
@@ -49,13 +36,40 @@ public class PlayerController : MonoBehaviour
         currentState = ConstructionState.Positioning;
     }
 
-    void UpdateGhostPosition(Vector3 point)
+    void UpdateGhost()
     {
-        Ghost.transform.position = point;
+        Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayDistance;
+
+        if (groundPlane.Raycast(ray, out rayDistance) 
+            && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
+        {
+            if (currentState == ConstructionState.Positioning)
+            {
+                Ghost.transform.position = ray.GetPoint(rayDistance);
+                if (Input.GetMouseButtonDown(0))
+                    StartConstruction(ray.GetPoint(rayDistance));
+            }
+            else
+            {
+                Ghost.Preview(ray.GetPoint(rayDistance));
+                if (Input.GetMouseButtonDown(0))
+                    EndConstruction();
+            }
+        }
     }
 
     void StartConstruction(Vector3 point)
     {
+        currentState = ConstructionState.Building;
+        Ghost.StartPreview(point);
+    }
 
+    void EndConstruction()
+    {
+        currentState = ConstructionState.Off;
+        Ghost.EndPreview();
     }
 }

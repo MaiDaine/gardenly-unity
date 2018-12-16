@@ -283,8 +283,8 @@ MonoBehaviour:
   canMoveCameraWithMouse: 0
   moveBorderThickness: 10
   mousePitchDirection: -1
-  minAltitude: 0
-  maxAltitude: 500
+  minAltitude: 0.5
+  maxAltitude: 100
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e691b7ad168fd41acccdc40b67ee08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ghost: {fileID: 5700985614575983424, guid: d9929e72bafaaca489f23eee4c339772, type: 3}
+  Ghost: {fileID: 1445059942037418693, guid: 8afca77b7d717894d9ba00fe7bf66df1, type: 3}
 --- !u!1 &1963243006
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 2124372631}
   - component: {fileID: 2124372630}
   - component: {fileID: 2124372629}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

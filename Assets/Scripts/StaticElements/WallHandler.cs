@@ -8,22 +8,46 @@ using UnityEngine;
 [RequireComponent (typeof(Material))]
 public class WallHandler : MonoBehaviour
 {
-    MeshFilter mesh;
+    public WallTextHandler Text;
+    private Vector3 start;
+    private Vector3 end;
 
     void Start()
     {
-        //tmp test
-        mesh = GetComponent<MeshFilter>();
+        this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void Move(Vector3 position)
+    public void StartPreview(Vector3 position)
     {
-        
+        Text = Instantiate(Text, this.transform.position, Quaternion.identity) as WallTextHandler;
+        start = position;
+    }
+
+
+    public void EndPreview()
+    {
+        gameObject.layer = 9;
+    }
+
+    public void Preview(Vector3 position)
+    {
+        if (start != position && end != position)
+        {
+            end = position;
+            Vector3 tmp = (start + end) / 2f;
+            float lenght = (start - end).magnitude;
+
+            this.transform.position = tmp;
+            this.transform.rotation = (Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0, 90, 0));
+            this.transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
+
+            Text.transform.position = tmp;
+            Text.SetText(string.Format("{0:F1}m", lenght));
+        }
     }
 }
