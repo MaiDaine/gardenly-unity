@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ghost: {fileID: 1445059942037418693, guid: 8afca77b7d717894d9ba00fe7bf66df1, type: 3}
+  snapDistance: 0.25
 --- !u!1 &1963243006
 GameObject:
   m_ObjectHideFlags: 0

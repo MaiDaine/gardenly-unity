@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
     enum ConstructionState { Off, Positioning, Building};
 
     Camera viewCamera;
-    public WallHandler Ghost;
-    public float snapDistance = 25f;
+    public WallHandler GhostRef;
+    public float snapDistance = 0.25f;
+
     private ConstructionState currentState = ConstructionState.Off;
     private const int layerMask = 1 << 9;
+    private WallHandler Ghost;
     private List<ISelectable> currentSelection = new List<ISelectable>();
 
     void Start()
@@ -39,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     void SpawnGhost()
     {
-        Ghost = Instantiate(Ghost, Vector3.zero, Quaternion.identity) as WallHandler;  
+        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity) as WallHandler;  
         currentState = ConstructionState.Positioning;
     }
 

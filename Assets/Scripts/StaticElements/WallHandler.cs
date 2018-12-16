@@ -8,7 +8,8 @@ using UnityEngine;
 [RequireComponent (typeof(Material))]
 public class WallHandler : MonoBehaviour, ISelectable, ISnapable
 {
-    public WallTextHandler Text;
+    public WallTextHandler TextRef;
+    private WallTextHandler Text;
     private Vector3 start;
     private Vector3 end;
 
@@ -25,7 +26,7 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
 
     public void StartPreview(Vector3 position)
     {
-        Text = Instantiate(Text, this.transform.position, Quaternion.identity) as WallTextHandler;
+        Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
         start = position;
     }
@@ -69,13 +70,14 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     //ISnapable
     public Vector3 FindSnapPoint(Vector3 currentPos, float snapDistance)
     {
+        Debug.Log(("" + ((start - currentPos).magnitude).ToString()));
         if ((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
         {
             if ((start - currentPos).magnitude < snapDistance)
                 return start;
             return currentPos;
         }
-        if ((end - currentPos).magnitude < snapDistance)
+        else if ((end - currentPos).magnitude < snapDistance)
             return end;
         return currentPos;
     }
