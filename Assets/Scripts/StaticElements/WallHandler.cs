@@ -12,6 +12,7 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     private WallTextHandler Text = null;
     private Vector3 start;
     private Vector3 end;
+    private List<ISelectable> neighbors = new List<ISelectable>();
 
     void Start()
     {
@@ -62,33 +63,54 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     }
 
 
+    //ISelectable && ISnapable
+    public GameObject GetGameObject() { return (this.gameObject); }
+    
     //ISelectable
     public void Select()
     {
         Text.gameObject.SetActive(true);
     }
 
+    public List<ISelectable> SelectWithNeighbor()
+    {
+        Select();
+        List<ISelectable> tmp = new List<ISelectable>(neighbors);
+        foreach (ISelectable item in tmp)
+            item.Select();
+        return tmp;
+    }
+    
     public void DeSelect()
     {
         Text.gameObject.SetActive(false);
     }
 
-    public GameObject GetGameObject()
+    public void AddNeighbor(ISelectable item)
     {
-        return (this.gameObject);
+        if (!neighbors.Contains(item))
+            neighbors.Add(item);
     }
 
     //ISnapable
-    public Vector3 FindSnapPoint(Vector3 currentPos, float snapDistance)
+    public bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if ((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
+        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude) 
+            && ((start - currentPos).magnitude < snapDistance))
         {
-            if ((start - currentPos).magnitude < snapDistance)
-                return start;
-            return currentPos;
+            currentPos = start;
+            return true;
         }
         else if ((end - currentPos).magnitude < snapDistance)
-            return end;
-        return currentPos;
+        {
+            currentPos = end;
+            return true;
+        }
+        return false;
+    }
+
+    public bool isLinkable()
+    {
+        return true;
     }
 }

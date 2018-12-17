@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface ISnapable
 {
-    Vector3 FindSnapPoint(Vector3 currentPos, float snapDistance);
+    GameObject GetGameObject();
+    bool FindSnapPoint(ref Vector3 currentPos, float snapDistance);
+    bool isLinkable();
 }

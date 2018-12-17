@@ -54,15 +54,18 @@ public class PlayerController : MonoBehaviour
         float rayDistance = (Camera.transform.position - Vector3.zero).magnitude;
         if (Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
-            ISelectable[] selectables = hit.collider.gameObject.GetComponents<ISelectable>();
-            for (int i = 0; i < selectables.Length; i++)
+            ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+            if (selectable != null)
             {
-                selectables[i].Select();
-                currentSelection.Add(selectables[i]);
+                currentSelection.Add(selectable);
+                if (Input.GetKey(KeyCode.LeftControl))
+                    currentSelection.AddRange(selectable.SelectWithNeighbor());
+                else
+                    selectable.Select();
             }
         }
     }
-
+        
     void DestroySelection()
     {
         if (currentSelection != null)
