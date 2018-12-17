@@ -18,6 +18,11 @@ public class WallTextHandler : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        GameObject.Destroy(this.gameObject);
+    }
+
     private void LateUpdate()
     {
         //this.transform.LookAt(-1 * Camera.main.transform.position);

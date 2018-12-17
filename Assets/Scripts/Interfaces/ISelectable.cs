@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ISelectable
 {
+    GameObject GetGameObject();
     void Select();
     void DeSelect();
 }

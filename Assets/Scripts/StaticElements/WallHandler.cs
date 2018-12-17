@@ -9,7 +9,7 @@ using UnityEngine;
 public class WallHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public WallTextHandler TextRef;
-    private WallTextHandler Text;
+    private WallTextHandler Text = null;
     private Vector3 start;
     private Vector3 end;
 
@@ -17,6 +17,12 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     {
         gameObject.layer = 0;
         this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
+    }
+
+    void OnDestroy()
+    {
+        if (Text != null)
+            GameObject.Destroy(Text);
     }
 
     void Update()
@@ -67,10 +73,14 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
         Text.gameObject.SetActive(false);
     }
 
+    public GameObject GetGameObject()
+    {
+        return (this.gameObject);
+    }
+
     //ISnapable
     public Vector3 FindSnapPoint(Vector3 currentPos, float snapDistance)
     {
-        Debug.Log(("" + ((start - currentPos).magnitude).ToString()));
         if ((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
         {
             if ((start - currentPos).magnitude < snapDistance)

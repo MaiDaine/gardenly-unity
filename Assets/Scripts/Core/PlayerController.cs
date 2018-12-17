@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    enum ConstructionState { Off, Positioning, Building};
-
-    Camera viewCamera;
     public WallHandler GhostRef;
     public float snapDistance = 0.25f;
 
-    private ConstructionState currentState = ConstructionState.Off;
+    private Camera Camera;
+    private ConstructionController Construct;
     private const int layerMask = 1 << 9;
-    private WallHandler Ghost;
     private List<ISelectable> currentSelection = new List<ISelectable>();
 
     void Start()
     {
-        viewCamera = Camera.main;
+        Construct = GetComponent<ConstructionController>();
+        Construct.Init(Camera.main, snapDistance);
+        Camera = Camera.main;
     }
 
     void Update()
@@ -27,64 +26,18 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (currentState == ConstructionState.Off)
+        if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
-            if (Input.GetKey(KeyCode.P))
-                SpawnGhost();
+            if (Input.GetKeyDown(KeyCode.P))
+                Construct.SpawnGhost(GhostRef);
             else if (Input.GetMouseButtonDown(0))
                 SelectBuilding();
+            else if (Input.GetKey(KeyCode.Delete))
+                DestroySelection();
         }
 
-        if (currentState != ConstructionState.Off)
-            UpdateGhost();
-    }
-
-    void SpawnGhost()
-    {
-        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity) as WallHandler;  
-        currentState = ConstructionState.Positioning;
-    }
-
-    void UpdateGhost()
-    {
-        Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayDistance;
-        Vector3 bestPosition;
-
-        if (groundPlane.Raycast(ray, out rayDistance) 
-            && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
-        {
-            bestPosition = ray.GetPoint(rayDistance);
-            ISnapable snapable = hit.collider.gameObject.GetComponent<ISnapable>();
-            if (snapable != null)
-                bestPosition = snapable.FindSnapPoint(bestPosition, snapDistance);
-            if (currentState == ConstructionState.Positioning)
-            {
-                Ghost.transform.position = bestPosition;
-                if (Input.GetMouseButtonDown(0))
-                    StartConstruction(bestPosition);
-            }
-            else
-            {
-                Ghost.Preview(bestPosition);
-                if (Input.GetMouseButtonDown(0))
-                    EndConstruction();
-            }
-        }
-    }
-
-    void StartConstruction(Vector3 point)
-    {
-        currentState = ConstructionState.Building;
-        Ghost.StartPreview(point);
-    }
-
-    void EndConstruction()
-    {
-        currentState = ConstructionState.Off;
-        Ghost.EndPreview();
+        if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
+            Construct.UpdateGhost();
     }
 
     void SelectBuilding()
@@ -96,9 +49,9 @@ public class PlayerController : MonoBehaviour
             currentSelection.Clear();
         }
 
-        Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        float rayDistance = (viewCamera.transform.position - Vector3.zero).magnitude;
+        float rayDistance = (Camera.transform.position - Vector3.zero).magnitude;
         if (Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
             ISelectable[] selectables = hit.collider.gameObject.GetComponents<ISelectable>();
@@ -108,6 +61,15 @@ public class PlayerController : MonoBehaviour
                 currentSelection.Add(selectables[i]);
             }
         }
+    }
 
+    void DestroySelection()
+    {
+        if (currentSelection != null)
+        {
+            for (int i = 0; i < currentSelection.Count; i++)
+                GameObject.Destroy(currentSelection[i].GetGameObject());
+            currentSelection.Clear();
+        }
     }
 }
