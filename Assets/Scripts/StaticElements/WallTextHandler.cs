@@ -6,6 +6,8 @@ using UnityEngine;
 public class WallTextHandler : MonoBehaviour
 {
     public float textSize = 0.5f;
+
+
     private TextMesh text;
     
     void Start()
