@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    //TODO Add lock on max Rotation
     public float cameraMoveSpeed = 20f;
     public float cameraRotateSpeed = 100f;
     public float cameraZoomSpeed = 250f;

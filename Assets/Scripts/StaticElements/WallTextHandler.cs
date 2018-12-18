@@ -27,7 +27,6 @@ public class WallTextHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        //this.transform.LookAt(-1 * Camera.main.transform.position);
         this.transform.rotation = Quaternion.LookRotation(this.transform.position - Camera.main.transform.position, Vector3.up);
         text.characterSize = textSize * (transform.position - Camera.main.transform.position).magnitude / 100f;
     }

@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
   - component: {fileID: 534669908}
+  - component: {fileID: 534669909}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -300,7 +301,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GhostRef: {fileID: 1445059942037418693, guid: 8afca77b7d717894d9ba00fe7bf66df1,
     type: 3}
-  Construct: {fileID: 0}
   snapDistance: 0.25
 --- !u!114 &534669908
 MonoBehaviour:
@@ -314,6 +314,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e082c13922854174bbf787b943d3576b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &534669909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610fe8d32ae49a04c8aa4338f113de19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSizeX: 10
+  gridSizeZ: 10
+  largeStep: 1
+  smallStep: 0.2
+  mainColor: {r: 0, g: 1, b: 0, a: 1}
+  subColor: {r: 1, g: 1, b: 1, a: 1}
+  subActiv: 1
+  activ: 0
 --- !u!1 &1963243006
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +419,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963243006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.49, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

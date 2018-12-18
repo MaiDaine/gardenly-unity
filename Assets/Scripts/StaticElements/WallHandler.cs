@@ -26,6 +26,8 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     {
         if (Text != null)
             GameObject.Destroy(Text);
+        foreach (ISelectable elem in neighbors)
+            elem.RemoveFromNeighbor(this);
     }
 
     void Update()
@@ -92,6 +94,11 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     {
         if (!neighbors.Contains(item))
             neighbors.Add(item);
+    }
+
+    public void RemoveFromNeighbor(ISelectable item)
+    {
+        neighbors.Remove(item);
     }
 
     //ISnapable

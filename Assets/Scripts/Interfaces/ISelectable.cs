@@ -9,4 +9,5 @@ public interface ISelectable
     List<ISelectable> SelectWithNeighbor();
     void DeSelect();
     void AddNeighbor(ISelectable item);
+    void RemoveFromNeighbor(ISelectable item);
 }

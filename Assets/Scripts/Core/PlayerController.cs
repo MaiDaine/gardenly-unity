@@ -10,14 +10,16 @@ public class PlayerController : MonoBehaviour
 
     private Camera Camera;
     private ConstructionController Construct;
+    private GridController Grid;
     private const int layerMask = 1 << 9;
     private List<ISelectable> currentSelection = new List<ISelectable>();
 
     void Start()
     {
-        Construct = GetComponent<ConstructionController>();
-        Construct.Init(Camera.main, snapDistance);
         Camera = Camera.main;
+        Grid = GetComponent<GridController>();                
+        Construct = GetComponent<ConstructionController>();
+        Construct.Init(Camera.main, snapDistance, Grid);
     }
 
     void Update()
@@ -29,7 +31,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.O))
+                Grid.activ = !Grid.activ;
+            else if (Input.GetKeyDown(KeyCode.P))
                 Construct.SpawnGhost(GhostRef);
             else if (Input.GetMouseButtonDown(0))
                 SelectBuilding();
