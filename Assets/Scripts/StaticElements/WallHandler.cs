@@ -10,7 +10,6 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public WallTextHandler TextRef;
 
-
     private WallTextHandler Text = null;
     private Vector3 start;
     private Vector3 end;

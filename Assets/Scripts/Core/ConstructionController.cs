@@ -16,7 +16,6 @@ public class ConstructionController : MonoBehaviour
     private ConstructionState currentState = ConstructionState.Off;
     private WallHandler Ghost;
     private Vector3 lastRayCast = new Vector3(0, 0, 0);
-    private bool lClick = false;
 
     void Start()
     {
@@ -25,8 +24,6 @@ public class ConstructionController : MonoBehaviour
 
     void Update()
     {
-        if (currentState != ConstructionState.Off && Input.GetMouseButtonDown(0))
-            lClick = true;
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
@@ -57,7 +54,7 @@ public class ConstructionController : MonoBehaviour
             && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
             bestPosition = ray.GetPoint(rayDistance);
-            if (bestPosition == lastRayCast)
+            if (bestPosition == lastRayCast && !Input.GetMouseButtonDown(0))
                 return;
             lastRayCast = bestPosition;
             Vector3 tmp;
@@ -69,7 +66,7 @@ public class ConstructionController : MonoBehaviour
             if (currentState == ConstructionState.Positioning)
             {
                 Ghost.transform.position = bestPosition;
-                if (lClick)
+                if (Input.GetMouseButtonDown(0))
                 {
                     StartConstruction(bestPosition);
                     if (neighbor != null)
@@ -82,7 +79,7 @@ public class ConstructionController : MonoBehaviour
             else
             {
                 Ghost.Preview(bestPosition);
-                if (lClick)
+                if (Input.GetMouseButtonDown(0))
                 {
                     EndConstruction();
                     if (neighbor != null)
@@ -93,7 +90,6 @@ public class ConstructionController : MonoBehaviour
                 }
             }
         }
-        lClick = false;
     }
 
     void StartConstruction(Vector3 point)

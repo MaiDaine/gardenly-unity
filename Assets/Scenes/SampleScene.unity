@@ -332,7 +332,7 @@ MonoBehaviour:
   smallStep: 0.2
   mainColor: {r: 0, g: 1, b: 0, a: 1}
   subColor: {r: 1, g: 1, b: 1, a: 1}
-  subActiv: 1
+  subActiv: 0
   activ: 0
 --- !u!1 &1963243006
 GameObject:

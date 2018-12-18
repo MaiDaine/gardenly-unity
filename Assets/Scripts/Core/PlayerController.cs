@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     public WallHandler GhostRef;
     public float snapDistance = 0.25f;
 
-
     private Camera Camera;
     private ConstructionController Construct;
     private GridController Grid;
