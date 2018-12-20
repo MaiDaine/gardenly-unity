@@ -21,16 +21,16 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
     }
 
-    public void StartPreview(Vector3 position)
+    public virtual void StartPreview(Vector3 position)
     {
     }
 
-    public void EndPreview()
+    public virtual void EndPreview()
     {
         this.gameObject.layer = 9;
     }
 
-    public void Preview(Vector3 position)
+    public virtual void Preview(Vector3 position)
     {
         this.transform.position = position;
     }
@@ -89,4 +89,4 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
         return true;
     }
-}
+}   

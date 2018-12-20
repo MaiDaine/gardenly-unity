@@ -14,7 +14,8 @@ public class ConstructionController : MonoBehaviour
     private float snapDistance = 0.25f;
 
     private ConstructionState currentState = ConstructionState.Off;
-    private WallHandler Ghost;
+    private GhostHandler Ghost;
+
     private Vector3 lastRayCast = new Vector3(0, 0, 0);
 
     void Start()
@@ -35,9 +36,9 @@ public class ConstructionController : MonoBehaviour
         Grid = grid;
     }
 
-    public void SpawnGhost(WallHandler GhostRef)
+    public void SpawnGhost(GhostHandler GhostRef)
     {
-        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity) as WallHandler;
+        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
         currentState = ConstructionState.Positioning;
         Grid.activ = true;
     }
