@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostHandler : MonoBehaviour, ISelectable, ISnapable
+public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
-    private List<ISelectable> neighbors = new List<ISelectable>();
+    protected List<ISelectable> neighbors = new List<ISelectable>();
 
     void Start()
     {
-        gameObject.layer = 0;
+        this.gameObject.layer = 0;
     }
 
     void OnDestroy()
@@ -27,12 +27,18 @@ public class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public void EndPreview()
     {
-        gameObject.layer = 9;
+        this.gameObject.layer = 9;
     }
 
     public void Preview(Vector3 position)
     {
-        transform.position = position;
+        this.transform.position = position;
+    }
+
+    public void Rotate(float axisInput)
+    {
+        Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
+        this.transform.eulerAngles += rotateValue;
     }
 
 
@@ -40,11 +46,11 @@ public class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public GameObject GetGameObject() { return (this.gameObject); }
 
     //ISelectable
-    public void Select()
+    public virtual void Select()
     {
     }
 
-    public List<ISelectable> SelectWithNeighbor()
+    public virtual List<ISelectable> SelectWithNeighbor()
     {
         Select();
         List<ISelectable> tmp = new List<ISelectable>(neighbors);
@@ -53,7 +59,7 @@ public class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         return tmp;
     }
 
-    public void DeSelect()
+    public virtual void DeSelect()
     {
     }
 
@@ -69,17 +75,17 @@ public class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     }
 
     //ISnapable
-    public bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
+    public virtual bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if ((currentPos - transform.position).magnitude < snapDistance)
+        if ((currentPos - this.transform.position).magnitude < snapDistance)
         {
-            currentPos = transform.position;
+            currentPos = this.transform.position;
             return true;
         }
         return false;
     }
 
-    public bool isLinkable()
+    public virtual bool isLinkable()
     {
         return true;
     }

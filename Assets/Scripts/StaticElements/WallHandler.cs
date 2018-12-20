@@ -6,14 +6,13 @@ using UnityEngine;
 [RequireComponent (typeof(MeshRenderer))]
 [RequireComponent (typeof(BoxCollider))]
 [RequireComponent (typeof(Material))]
-public class WallHandler : MonoBehaviour, ISelectable, ISnapable
+public class WallHandler : GhostHandler
 {
     public WallTextHandler TextRef;
 
     private WallTextHandler Text = null;
     private Vector3 start;
     private Vector3 end;
-    private List<ISelectable> neighbors = new List<ISelectable>();
 
     void Start()
     {
@@ -34,7 +33,7 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
         
     }
 
-    public void StartPreview(Vector3 position)
+    public new void StartPreview(Vector3 position)
     {
         Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
@@ -42,13 +41,13 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
     }
 
 
-    public void EndPreview()
+    public new void EndPreview()
     {
-        gameObject.layer = 9;
+        this.gameObject.layer = 9;
         Text.gameObject.SetActive(false);
     }
 
-    public void Preview(Vector3 position)
+    public new void Preview(Vector3 position)
     {
         if (start != position && end != position)
         {
@@ -65,17 +64,14 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
         }
     }
 
-
-    //ISelectable && ISnapable
-    public GameObject GetGameObject() { return (this.gameObject); }
     
     //ISelectable
-    public void Select()
+    public override void Select()
     {
         Text.gameObject.SetActive(true);
     }
 
-    public List<ISelectable> SelectWithNeighbor()
+    public override List<ISelectable> SelectWithNeighbor()
     {
         Select();
         List<ISelectable> tmp = new List<ISelectable>(neighbors);
@@ -83,25 +79,14 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
             item.Select();
         return tmp;
     }
-    
-    public void DeSelect()
+
+    public override void DeSelect()
     {
         Text.gameObject.SetActive(false);
     }
 
-    public void AddNeighbor(ISelectable item)
-    {
-        if (!neighbors.Contains(item))
-            neighbors.Add(item);
-    }
-
-    public void RemoveFromNeighbor(ISelectable item)
-    {
-        neighbors.Remove(item);
-    }
-
     //ISnapable
-    public bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
+    public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
         if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude) 
             && ((start - currentPos).magnitude < snapDistance))
@@ -115,10 +100,5 @@ public class WallHandler : MonoBehaviour, ISelectable, ISnapable
             return true;
         }
         return false;
-    }
-
-    public bool isLinkable()
-    {
-        return true;
     }
 }
