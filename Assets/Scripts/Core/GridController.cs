@@ -84,19 +84,14 @@ public class GridController : MonoBehaviour
 
     public Vector3 GetNearestPointOnGrid(Vector3 position)
     {
-        position -= transform.position;
-
         int xCount = Mathf.RoundToInt(position.x / largeStep);
-        int yCount = Mathf.RoundToInt(position.y / largeStep);
         int zCount = Mathf.RoundToInt(position.z / largeStep);
 
         Vector3 result = new Vector3(
             (float)xCount * largeStep,
-            (float)yCount * largeStep,
+            0,
             (float)zCount * largeStep);
 
-        result += transform.position;
-        result.y = 0;
         return result;
     }
 }
