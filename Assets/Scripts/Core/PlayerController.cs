@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public WallHandler GhostRef;
     public float snapDistance = 0.25f;
 
     private Camera Camera;
@@ -32,8 +31,6 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.O))
                 Grid.activ = !Grid.activ;
-            else if (Input.GetKeyDown(KeyCode.P))
-                Construct.SpawnGhost(GhostRef);
             else if (Input.GetMouseButtonDown(0))
                 SelectBuilding();
             else if (Input.GetKey(KeyCode.Delete))
