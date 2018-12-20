@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    //TODO Add lock on max Rotation
     public float cameraMoveSpeed = 20f;
     public float cameraRotateSpeed = 100f;
     public float cameraZoomSpeed = 250f;
     public bool canMoveCameraWithMouse = true;
     public float moveBorderThickness = 10f;
-    public float mousePitchDirection = -1f;
+    public float mousePitchDirection = -1f; //Inverse Pitch
     public float minAltitude = 0.5f;
     public float maxAltitude = 100f;
 
@@ -55,7 +54,7 @@ public class CameraController : MonoBehaviour
 
     Vector3 MoveForward(Vector3 currentPos, float axisInput)
     {
-        Vector3 newPos = transform.forward * axisInput * cameraMoveSpeed * Time.deltaTime;
+        Vector3 newPos = (transform.forward + transform.up) * axisInput * cameraMoveSpeed * Time.deltaTime;
         currentPos.x += newPos.x;
         currentPos.z += newPos.z;
         return currentPos;
@@ -86,8 +85,12 @@ public class CameraController : MonoBehaviour
 
     Quaternion RotatePitch(Quaternion currentRotation, float axisInput)
     {
+        Quaternion tmp = currentRotation;
+
         Vector3 rotateValue = new Vector3((axisInput * cameraRotateSpeed * Time.deltaTime), 0, 0);
-        currentRotation.eulerAngles += rotateValue;
+        tmp.eulerAngles += rotateValue;
+        if (tmp.x > -0.7f) //90°
+            return tmp;
         return currentRotation;
     }
 }
