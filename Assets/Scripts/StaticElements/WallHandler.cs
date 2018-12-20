@@ -33,7 +33,7 @@ public class WallHandler : GhostHandler
         
     }
 
-    override public void StartPreview(Vector3 position)
+    public override void StartPreview(Vector3 position)
     {
         Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
@@ -41,13 +41,13 @@ public class WallHandler : GhostHandler
     }
 
 
-    override public void EndPreview()
+    public override void EndPreview()
     {
         this.gameObject.layer = 9;
         Text.gameObject.SetActive(false);
     }
 
-    override public void Preview(Vector3 position)
+    public override void Preview(Vector3 position)
     {
         if (start != position && end != position)
         {

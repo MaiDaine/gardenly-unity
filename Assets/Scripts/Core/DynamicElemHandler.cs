@@ -12,14 +12,13 @@ public class DynamicElemHandler : GhostHandler
     }
 
     //ISELECTABLE
-    public new void Select()
+    public override void Select()
     {
         // OPEN CANVAS WITH INFO + INTERACTION
     }
 
-    public new void DeSelect()
+    public override void DeSelect()
     {
         // CLOSE CANVAS WITH INFO + INTERACTION
     }
-
 }
