@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-        
+
     void DestroySelection()
     {
         if (currentSelection != null)

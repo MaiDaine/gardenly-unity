@@ -6,6 +6,8 @@ public class MenuScript : MonoBehaviour
 {
     public bool state = false;
 
+    private DynamicElemHandler ghost;
+
     // Start is called before the first frame update
     void Start()
     {
