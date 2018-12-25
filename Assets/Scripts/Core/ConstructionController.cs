@@ -38,9 +38,12 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
-        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
-        currentState = ConstructionState.Positioning;
-        Grid.activ = true;
+        if (currentState == ConstructionState.Off)
+        {
+            Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+            currentState = ConstructionState.Positioning;
+            Grid.activ = true;
+        }
     }
 
     public void UpdateGhost()

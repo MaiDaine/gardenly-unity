@@ -26,7 +26,7 @@ public class DynamicElemHandler : GhostHandler
 
     void    SetPosition(Transform obj, float x, float y, float z)
     {
-        Transform child = obj.GetChild(0);
+        Transform child = obj;
         child.position = new Vector3(x, y, z);
     }
 
@@ -43,13 +43,17 @@ public class DynamicElemHandler : GhostHandler
         canvas = previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
 
-        SetPosition(previewUI, transform.position.x, transform.position.y + 20, transform.position.z);
+        SetPosition(previewUI.GetChild(0), transform.position.x, transform.position.y + 20, transform.position.z);
 
         SetSize(previewUI.GetChild(0), 20, 10);
-        SetPosition(previewUI.GetChild(0), transform.position.x + 16, transform.position.y + 23, transform.position.z);
+        SetPosition(previewUI.GetChild(0).GetChild(0), transform.position.x + 16, transform.position.y + 23, transform.position.z);
 
         SetSize(previewUI.GetChild(0).GetChild(0), 1f, 1f);
-        
+
+        SetPosition(previewUI.GetChild(0).GetChild(1), transform.position.x - 7, transform.position.y + 19, transform.position.z);
+
+        SetSize(previewUI.GetChild(0).GetChild(1), 5, 10);
+
     }
 
     //ISELECTABLE
