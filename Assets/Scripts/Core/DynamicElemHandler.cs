@@ -64,4 +64,9 @@ public class DynamicElemHandler : GhostHandler
         else if (!previewUI.gameObject.activeSelf)
             previewUI.gameObject.SetActive(true);
     }
+
+    public void OnGUI()
+    {
+        
+    }
 }
