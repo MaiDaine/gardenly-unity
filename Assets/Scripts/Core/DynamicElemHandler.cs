@@ -54,6 +54,8 @@ public class DynamicElemHandler : GhostHandler
 
         SetSize(previewUI.GetChild(0).GetChild(1), 5, 10);
 
+        menu = previewUI.GetComponent<MenuScript>();
+        menu.SetGhostRef(this);    
     }
 
     //ISELECTABLE

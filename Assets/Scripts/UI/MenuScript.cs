@@ -7,11 +7,13 @@ public class MenuScript : MonoBehaviour
     public bool state = false;
 
     private DynamicElemHandler ghost;
+    private Camera player;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.SetActive(state);
+        player = Camera.main;
     }
 
     // Update is called once per frame
@@ -24,5 +26,26 @@ public class MenuScript : MonoBehaviour
     {
         gameObject.SetActive(!state);
         state = !state;
+    }
+
+    public void SetGhostRef(DynamicElemHandler ghostRef)
+    {
+        ghost = ghostRef;
+    }
+
+    public DynamicElemHandler GetGhost()
+    {
+        return ghost;
+    }
+
+    public void DestroyMenu()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void MoveGhost()
+    {
+        ConstructionController constructionController = player.GetComponent<ConstructionController>();
+        constructionController.SetGhost(ghost);
     }
 }

@@ -46,6 +46,13 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    public void SetGhost(GhostHandler ghost)
+    {
+        Ghost = ghost;
+        currentState = ConstructionState.Positioning;
+        Grid.activ = true;
+    }
+
     public void UpdateGhost()
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);

@@ -13,8 +13,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     void OnDestroy()
     {
-        foreach (ISelectable elem in neighbors)
-            elem.RemoveFromNeighbor(this);
+        for (int cnt = 0; cnt < neighbors.Count; cnt++)
+            neighbors[cnt].RemoveFromNeighbor(this);
     }
 
     void Update()
