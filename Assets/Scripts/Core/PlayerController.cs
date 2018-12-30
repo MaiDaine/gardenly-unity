@@ -5,13 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float snapDistance = 0.25f;
+    public Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
+    public FlowerBedHandler bed;
 
     private Camera Camera;
     private ConstructionController Construct;
     private GridController Grid;
     private const int layerMask = 1 << 9;
     private List<ISelectable> currentSelection = new List<ISelectable>();
-
+    
     void Start()
     {
         Camera = Camera.main;
@@ -20,17 +22,25 @@ public class PlayerController : MonoBehaviour
         Construct.Init(Camera.main, snapDistance, Grid);
     }
 
-    void Update()
-    {
-        
-    }
-
     void LateUpdate()
     {
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
             if (Input.GetKeyDown(KeyCode.O))
                 Grid.activ = !Grid.activ;
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                //WIP, will me merged to construction controller since it need the same raycast
+                Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+                float rayDistance;
+                groundPlane.Raycast(ray, out rayDistance);
+                Vector3 pos = ray.GetPoint(rayDistance);
+                //worst raycast ever, will be replace by the one in CC
+                pos = groundPlane.ClosestPointOnPlane(pos);
+                bed.AddPoint(pos);
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+                bed.Init();
             else if (Input.GetMouseButtonDown(0))
                 SelectBuilding();
             else if (Input.GetKey(KeyCode.Delete))
