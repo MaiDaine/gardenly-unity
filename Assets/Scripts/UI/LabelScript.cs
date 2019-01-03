@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Text text;
+    public Color color;
+    public Color actionColor;
 
     protected Image image;
     protected bool pressed;
@@ -16,7 +18,6 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         image = transform.GetComponent<Image>();
         pressed = false;
     }
-
 
     public void isPressed()
     {
@@ -28,17 +29,16 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
    
     public void ChangeColor()
     {
-        Debug.Log("CHANGE " + image.color + " " + text.color);
         isPressed();
         if (pressed)
         {
-            text.color = Color.red;
-            image.color = Color.red;
+            text.color = actionColor;
+            image.color = actionColor;
         }
         else
         {
-            text.color = Color.white;
-            image.color = Color.white;
+            text.color = color;
+            image.color = color;
         }
     }
 
@@ -46,8 +46,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = Color.red;
-            image.color = Color.red;
+            text.color = actionColor;
+            image.color = actionColor;
         }
     }
 
@@ -55,8 +55,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = Color.white;
-            image.color = Color.white;
+            text.color = color;
+            image.color = color;
         }
     }
 }

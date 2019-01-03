@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class DynamicElemHandler : GhostHandler
 {
-    public  Transform windowPreview;
+    public Transform windowPreview;
+    public bool startRotate = false;
+    public Vector3 currentPosition;
 
     protected Transform previewUI;
     protected MenuScript menu;
@@ -33,28 +35,25 @@ public class DynamicElemHandler : GhostHandler
     void    SpawnWindow()
     {
         Canvas canvas;
+        Vector3 position;
 
-        previewUI = Instantiate(windowPreview, Vector3.zero, Quaternion.identity);
-        previewUI.transform.position = transform.position;
-        previewUI.transform.SetParent(transform, false);
+        position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
 
-        SetSize(previewUI, 20, 10);
+        previewUI = Instantiate(windowPreview, position, Quaternion.identity, transform);
 
         canvas = previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
 
-        SetPosition(previewUI.GetChild(0), transform.position.x, transform.position.y + 20, transform.position.z);
-        SetSize(previewUI.GetChild(0), 20, 10);
-
-        SetPosition(previewUI.GetChild(0).GetChild(0), transform.position.x + 16, transform.position.y + 23, transform.position.z);
-        SetSize(previewUI.GetChild(0).GetChild(0), 1f, 1f);
-
-        SetPosition(previewUI.GetChild(0).GetChild(1), transform.position.x - 7, transform.position.y + 19, transform.position.z);
-        SetSize(previewUI.GetChild(0).GetChild(1), 5, 10);
-
         menu = previewUI.GetComponent<MenuScript>();
-        menu.SetGhostRef(this);    
+        menu.SetGhostRef(this);
     }
+
+    void OnMouseDrag()
+    {
+        if (menu != null && menu.rotateState)
+            menu.RotateGhost();
+    }
+
 
     //ISELECTABLE
     public override void Select()
@@ -63,10 +62,5 @@ public class DynamicElemHandler : GhostHandler
             SpawnWindow();
         else if (!previewUI.gameObject.activeSelf)
             previewUI.gameObject.SetActive(true);
-    }
-
-    public void OnGUI()
-    {
-        
     }
 }

@@ -48,9 +48,12 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
-        Ghost = ghost;
-        currentState = ConstructionState.Positioning;
-        Grid.activ = true;
+        if (currentState == ConstructionState.Off)
+        {
+            Ghost = ghost;
+            currentState = ConstructionState.Positioning;
+            Grid.activ = true;
+        }
     }
 
     public void UpdateGhost()
@@ -101,6 +104,13 @@ public class ConstructionController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool StateIsOff()
+    {
+        if (currentState == ConstructionState.Off)
+            return true;
+        return false;
     }
 
     void StartConstruction(Vector3 point)
