@@ -26,19 +26,15 @@ public class PlayerController : MonoBehaviour
     {
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
+            Vector3 pos;
+            RaycastHit hit;
+            if (Construct.MouseRayCast(out pos, out hit))
+                Debug.DrawLine(Camera.transform.position, pos);
+
             if (Input.GetKeyDown(KeyCode.O))
                 Grid.activ = !Grid.activ;
             if (Input.GetKeyDown(KeyCode.P))
-            {
-                //WIP, will me merged to construction controller since it need the same raycast
-                Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
-                float rayDistance;
-                groundPlane.Raycast(ray, out rayDistance);
-                Vector3 pos = ray.GetPoint(rayDistance);
-                //worst raycast ever, will be replace by the one in CC
-                pos = groundPlane.ClosestPointOnPlane(pos);
-                bed.AddPoint(pos);
-            }
+                bed.AddPoint(new Vector2(pos.x, pos.z));
             if (Input.GetKeyDown(KeyCode.M))
                 bed.Init();
             else if (Input.GetMouseButtonDown(0))

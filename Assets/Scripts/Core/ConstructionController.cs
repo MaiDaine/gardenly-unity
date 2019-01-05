@@ -15,8 +15,8 @@ public class ConstructionController : MonoBehaviour
 
     private ConstructionState currentState = ConstructionState.Off;
     private GhostHandler Ghost;
-
-    private Vector3 lastRayCast = new Vector3(0, 0, 0);
+    private Vector3 lastPos = new Vector3(0, 0, 0);
+    private Vector3 lastCast = new Vector3(0, 0, 0);
 
     void Start()
     {
@@ -42,67 +42,78 @@ public class ConstructionController : MonoBehaviour
         currentState = ConstructionState.Positioning;
         Grid.activ = true;
     }
-
-    public void UpdateGhost()
+    
+    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit)
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
-        RaycastHit hit;
-        Vector3 bestPosition;
-        ISelectable neighbor = null;
 
         if (groundPlane.Raycast(ray, out rayDistance)
-            && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
+           && Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
-            bestPosition = ray.GetPoint(rayDistance);
-            if (bestPosition == lastRayCast && !Input.GetMouseButtonDown(0))
+            pos = ray.GetPoint(rayDistance);
+            lastCast = pos;
+            return true;
+        }
+        pos = lastCast;
+        hit = new RaycastHit();
+        return false;
+    }
+
+    public void UpdateGhost()
+    {
+        Vector3 tmp;
+        RaycastHit hit;
+        ISelectable neighbor = null;
+        ISnapable snapable;
+
+        if (MouseRayCast(out tmp, out hit))
+        {
+            if (tmp == lastPos && !Input.GetMouseButtonDown(0))
                 return;
-            lastRayCast = bestPosition;
-            Vector3 tmp;
-            ISnapable snapable = hit.collider.gameObject.GetComponent<ISnapable>();
-            if ((snapable != null) && (snapable.FindSnapPoint(ref bestPosition, snapDistance)) && (snapable.isLinkable()))
+            lastPos = tmp;
+
+            snapable = hit.collider.gameObject.GetComponent<ISnapable>();
+            if ((snapable != null) && (snapable.FindSnapPoint(ref tmp, snapDistance)) && (snapable.isLinkable()))
                 neighbor = snapable.GetGameObject().GetComponent<ISelectable>();
-            else if (((tmp = Grid.GetNearestPointOnGrid(bestPosition)) - bestPosition).magnitude < snapDistance)
-                bestPosition = tmp;
+            else if (((tmp = Grid.GetNearestPointOnGrid(lastPos)) - lastPos).magnitude < snapDistance)
+                lastPos = tmp;
             if (currentState == ConstructionState.Positioning)
-            {
-                Ghost.transform.position = bestPosition;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    StartConstruction(bestPosition);
-                    if (neighbor != null)
-                    {
-                        Ghost.AddNeighbor(neighbor);
-                        neighbor.AddNeighbor(Ghost);
-                    }
-                }
-            }
+                UpdateGhostPositioning(lastPos, neighbor);
             else
-            {
-                Ghost.Preview(bestPosition);
-                if (Input.GetMouseButtonDown(0))
-                {
-                    EndConstruction();
-                    if (neighbor != null)
-                    {
-                        Ghost.AddNeighbor(neighbor);
-                        neighbor.AddNeighbor(Ghost);
-                    }
-                }
-            }
+                UpdateGhostBuilding(lastPos, neighbor);
         }
     }
 
-    void StartConstruction(Vector3 point)
+    private void UpdateGhostPositioning(Vector3 pos, ISelectable neighbor)
     {
-        currentState = ConstructionState.Building;
-        Ghost.StartPreview(point);
+        Ghost.transform.position = pos;
+        if (Input.GetMouseButtonDown(0))
+        {
+            AddNeighbor(neighbor);
+            currentState = ConstructionState.Building;
+            Ghost.StartPreview(pos);
+        }
     }
 
-    void EndConstruction()
+    private void UpdateGhostBuilding(Vector3 pos, ISelectable neighbor)
     {
-        currentState = ConstructionState.Off;
-        Ghost.EndPreview();
-        Grid.activ = false;
+        Ghost.Preview(pos);
+        if (Input.GetMouseButtonDown(0))
+        {
+            AddNeighbor(neighbor);
+            currentState = ConstructionState.Off;
+            Ghost.EndPreview();
+            Grid.activ = false;
+        }
+    }
+
+    private void AddNeighbor(ISelectable neighbor)
+    {
+        if (neighbor != null)
+        {
+            Ghost.AddNeighbor(neighbor);
+            neighbor.AddNeighbor(Ghost);
+        }
     }
 }

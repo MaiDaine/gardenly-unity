@@ -36,7 +36,7 @@ namespace mattatz.Triangulation2DSystem {
 
 			var vertices = P.Select(p => { 
 				var xy = p.Coordinate;
-				var v = new Vector3(xy.x, 0.1f, xy.y);
+				var v = new Vector3(xy.x, 0.01f, xy.y);
 				return v;
 			}).ToArray();
 

@@ -17,7 +17,7 @@ public class FlowerBedHandler : MonoBehaviour
     {
         vertices2D.Add(point);
     }
-
+    
     public void Init()
     {
         MeshRenderer renderer = gameObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
