@@ -26,7 +26,7 @@ public class DynamicElemHandler : GhostHandler
         rect.sizeDelta = new Vector2(width, height);
     }
 
-    void    SetPosition(Transform obj, float x, float y, float z)
+    void SetPosition(Transform obj, float x, float y, float z)
     {
         Transform child = obj;
         child.position = new Vector3(x, y, z);
@@ -56,7 +56,7 @@ public class DynamicElemHandler : GhostHandler
 
 
     //ISELECTABLE
-    public override void Select()
+    public override void Select(ConstructionController.ConstructionState state)
     {
         if (previewUI == null)
             SpawnWindow();

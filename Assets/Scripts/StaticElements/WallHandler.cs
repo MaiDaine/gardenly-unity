@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,31 +7,39 @@ using UnityEngine;
 [RequireComponent (typeof(MeshRenderer))]
 [RequireComponent (typeof(BoxCollider))]
 [RequireComponent (typeof(Material))]
-public class WallHandler : GhostHandler
+public class WallHandler : GhostHandler, ISerializable
 {
     public WallTextHandler TextRef;
 
+    private SerializableItem serializableItem;
     private WallTextHandler Text = null;
     private Vector3 start;
     private Vector3 end;
+    private bool initFromSerialization = false;
 
     void Start()
     {
-        gameObject.layer = 0;
-        this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
+        if (initFromSerialization)
+        {
+            StartPreview(serializableItem.start);
+            Preview(serializableItem.end);
+            EndPreview();
+        }
+        else
+        {
+            gameObject.layer = 0;
+            this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
+        }
+        SerializationController.instance.AddToList(this);
     }
 
     void OnDestroy()
     {
         if (Text != null)
             GameObject.Destroy(Text);
-        foreach (ISelectable elem in neighbors)
-            elem.RemoveFromNeighbor(this);
-    }
-
-    void Update()
-    {
-        
+        //foreach (ISelectable elem in neighbors)
+            //elem.RemoveFromNeighbor(this);
+        SerializationController.instance.RemoveFromList(this);
     }
 
     public override void StartPreview(Vector3 position)
@@ -38,13 +47,6 @@ public class WallHandler : GhostHandler
         Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
         start = position;
-    }
-
-
-    public override void EndPreview()
-    {
-        this.gameObject.layer = 9;
-        Text.gameObject.SetActive(false);
     }
 
     public override void Preview(Vector3 position)
@@ -64,19 +66,26 @@ public class WallHandler : GhostHandler
         }
     }
 
-    
-    //ISelectable
-    public override void Select()
+    public override void EndPreview()
     {
+        this.gameObject.layer = 10;
+        Text.gameObject.SetActive(false);
+    }
+
+
+    //ISelectable
+    public override void Select(ConstructionController.ConstructionState state)
+    {
+        //TODO edit mode
         Text.gameObject.SetActive(true);
     }
 
     public override List<ISelectable> SelectWithNeighbor()
     {
-        Select();
+        Select(ConstructionController.ConstructionState.Off);
         List<ISelectable> tmp = new List<ISelectable>(neighbors);
         foreach (ISelectable item in tmp)
-            item.Select();
+            item.Select(ConstructionController.ConstructionState.Off);
         return tmp;
     }
 
@@ -84,6 +93,7 @@ public class WallHandler : GhostHandler
     {
         Text.gameObject.SetActive(false);
     }
+
 
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
@@ -101,4 +111,31 @@ public class WallHandler : GhostHandler
         }
         return false;
     }
+
+
+    //Serialization
+    [Serializable]
+    public struct SerializableItem
+    {
+        public Vector3 start;
+        public Vector3 end;
+    }
+
+    public SerializationData Serialize()
+    {
+        serializableItem.start = start;
+        serializableItem.end = end;
+        SerializationData tmp;
+        tmp.type = SerializationController.ItemType.WallHandler;
+        tmp.serializedData = JsonUtility.ToJson(serializableItem);
+        return (tmp);
+    }
+
+    public void DeSerialize(string json)
+    {
+        initFromSerialization = true;
+        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+    }
+
+
 }
