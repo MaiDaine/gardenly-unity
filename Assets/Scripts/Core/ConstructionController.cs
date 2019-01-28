@@ -7,6 +7,7 @@ public class ConstructionController : MonoBehaviour
     public enum ConstructionState { Off, Positioning, Building, Editing };
 
     public WallHandler WallHandlerRef;//need one of each for serialization
+    public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
     public static ConstructionController instance = null;
 
     private Camera Camera;
@@ -167,16 +168,37 @@ public class ConstructionController : MonoBehaviour
     public void SpawnScene(SerializationData[] data)
     {
         WallHandler wallHandler;
+        DefaultStaticElement staticElement;
+        DefaultStaticElement.SerializableItem subType;
+
         for (int i = 0; i < data.Length; i++)
         {
             switch (data[i].type)
             {
-                case SerializationController.ItemType.WallHandler :
+                case SerializationController.ItemType.WallHandler:
                     wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
                     wallHandler.DeSerialize(data[i].serializedData);
                     break;
+
+                case SerializationController.ItemType.DefaultStaticElement:
+                    subType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].serializedData);
+                    switch (subType.subType)
+                    {
+                        case DefaultStaticElement.StaticElementType.Chair:
+                            staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
+                            break;
+                        case DefaultStaticElement.StaticElementType.Table:
+                            staticElement = Instantiate(staticElements[1], Vector3.zero, Quaternion.identity);
+                            break;
+                        default:
+                            //SHOULD NOT HAPPEN
+                            staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
+                            break;
+                       //TODO
+                    }
+                    staticElement.DeSerialize(data[i].serializedData);
+                    break;
                 default:
-                    Debug.Log("Failed");
                     break;
             }
         }
