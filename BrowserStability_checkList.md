@@ -9,12 +9,12 @@
         - [ ] Mes préférences sont présentes
   
 ### II.   Tests d'interface
-        - Mise en forme
-          - [ ] L'interface utilisateur est visible
-          - [ ] La position des menus est correct
-          - [ ] Les icônes et textes des menus sont visibles et bien formatés
-        - Utilisation
-          - [ ] Les boutons peuvent être activés
+        1. Mise en forme
+                - [ ] L'interface utilisateur est visible
+                - [ ] La position des menus est correct
+                - [ ] Les icônes et textes des menus sont visibles et bien formatés
+        1. Utilisation
+                - [ ] Les boutons peuvent être activés
           - [ ] Ils changent de couleur lors du survol de la souris
           - [ ] Ils conservent leur couleur après le click
           - [ ] Leur activation entraîne la bonne fonctionnalité
