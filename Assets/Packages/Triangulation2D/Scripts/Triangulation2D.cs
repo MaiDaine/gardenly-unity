@@ -303,6 +303,8 @@ namespace mattatz.Triangulation2DSystem {
 			}
 
 			var skinny = T.Find (t => !ExternalPSLG(t) && t.Skinny(angle, threshold));
+            if (skinny == null)
+                return;
 			var p = skinny.Circumcenter();
 
 			var segments = S.FindAll(s => s.EncroachedUpon(p));

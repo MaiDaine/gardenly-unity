@@ -25,14 +25,14 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
     }
 
-    public virtual void EndPreview()
-    {
-        this.gameObject.layer = 9;
-    }
-
     public virtual void Preview(Vector3 position)
     {
         this.transform.position = position;
+    }
+
+    public virtual void EndPreview()
+    {
+        this.gameObject.layer = 10;
     }
 
     public void Rotate(float axisInput)
@@ -46,16 +46,16 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public GameObject GetGameObject() { return (this.gameObject); }
 
     //ISelectable
-    public virtual void Select()
+    public virtual void Select(ConstructionController.ConstructionState state)
     {
     }
 
     public virtual List<ISelectable> SelectWithNeighbor()
     {
-        Select();
+        Select(ConstructionController.ConstructionState.Off);
         List<ISelectable> tmp = new List<ISelectable>(neighbors);
         foreach (ISelectable item in tmp)
-            item.Select();
+            item.Select(ConstructionController.ConstructionState.Off);
         return tmp;
     }
 

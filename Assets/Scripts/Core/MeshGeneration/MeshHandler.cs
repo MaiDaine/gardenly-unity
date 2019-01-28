@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class MeshHandler : MonoBehaviour
 
     public Mesh Init(Vector2[] vertices2D, int qualitySettings = 0)
     {
+
         mattatz.Triangulation2DSystem.Polygon2D polygon = mattatz.Triangulation2DSystem.Polygon2D.Contour(vertices2D);
         mattatz.Triangulation2DSystem.Triangulation2D triangulation = new mattatz.Triangulation2DSystem.Triangulation2D(polygon, 22.5f);
         mesh = triangulation.Build();
@@ -15,6 +17,25 @@ public class MeshHandler : MonoBehaviour
         for (int i = 0; i < qualitySettings; i++)
             ApplyQuality();
         GenerateUV();
+
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
+        return mesh;
+    }
+
+    public Mesh AddPoint(Vector3 point, int[] triangles)
+    {
+        Vector3[] tmpV = new Vector3[mesh.vertexCount + 1];
+        Array.Copy(mesh.vertices, tmpV, mesh.vertexCount);
+        tmpV[mesh.vertexCount] = point;
+        int[] tmpT = new int[mesh.triangles.Length + 3];
+        Array.Copy(mesh.triangles, tmpT, mesh.triangles.Length);
+        tmpT[mesh.triangles.Length] = triangles[0];
+        tmpT[mesh.triangles.Length + 1] = triangles[1];
+        tmpT[mesh.triangles.Length + 2] = triangles[2];
+        mesh.vertices = tmpV;
+        mesh.triangles = tmpT;
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
@@ -23,6 +44,8 @@ public class MeshHandler : MonoBehaviour
 
     void GenerateUV()
     {
+        if (mesh.vertices.Length == 0)
+            return;
         Vector2 min = new Vector2(mesh.vertices[0].x, mesh.vertices[0].y);
         Vector2 max = new Vector2(0f, 0f);
         Vector2 dist = new Vector2(0f, 0f);

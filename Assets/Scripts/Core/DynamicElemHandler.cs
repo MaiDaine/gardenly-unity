@@ -12,8 +12,9 @@ public class DynamicElemHandler : GhostHandler
     }
 
     //ISELECTABLE
-    public override void Select()
+    public override void Select(ConstructionController.ConstructionState state)
     {
+        //TODO select mode
         // OPEN CANVAS WITH INFO + INTERACTION
     }
 

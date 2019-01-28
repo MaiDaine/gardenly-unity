@@ -10,6 +10,7 @@ public class GridController : MonoBehaviour
     public float smallStep = 0.2f;
     public Color mainColor = new Color(0f, 1f, 0f, 1f);
     public Color subColor = new Color(1f, 1f, 1f, 1f);
+    public Color lineColor = new Color(1f, 0f, 0f, 1f);
     public bool subActiv = false;
     public bool activ = true;   
 
@@ -93,5 +94,17 @@ public class GridController : MonoBehaviour
             (float)zCount * largeStep);
 
         return result;
+    }
+
+    public void DrawLimited(Vector3 start, Vector3 end)
+    {
+        lineMaterial.SetPass(0);
+        GL.Begin(GL.LINES);
+        GL.Color(lineColor);
+
+        GL.Vertex3(start.x, 0.1f, start.z);
+        GL.Vertex3(end.x, 0.1f, end.z);
+
+        GL.End();
     }
 }
