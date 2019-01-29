@@ -14,8 +14,14 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     void Start()
     {
+        SerializationController.instance.AddToList(this);
         SpawnMesh();
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
+    }
+
+    void OnDestroy()
+    {
+        SerializationController.instance.RemoveFromList(this);
     }
 
     private void LateUpdate()
