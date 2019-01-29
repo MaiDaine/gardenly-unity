@@ -13,10 +13,17 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private SerializableItem serializableItem;
 
-    private void Start()
+    void Start()
     {
         this.transform.eulerAngles += correctedRotation;
+        SerializationController.instance.AddToList(this);
     }
+
+    void OnDestroy()
+    {
+        SerializationController.instance.RemoveFromList(this);
+    }
+
 
     //Serialization
     [Serializable]

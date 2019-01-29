@@ -91,3 +91,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctedRotation: {x: -90, y: 0, z: 0}
+  type: 1
+  subType: 0
