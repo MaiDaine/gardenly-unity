@@ -7,6 +7,7 @@ public class ConstructionController : MonoBehaviour
     public enum ConstructionState { Off, Positioning, Building, Editing };
 
     public WallHandler WallHandlerRef;//need one of each for serialization
+    public FlowerBedHandler FlowerBedHandlerRef;
     public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
     public static ConstructionController instance = null;
 
@@ -168,6 +169,7 @@ public class ConstructionController : MonoBehaviour
     public void SpawnScene(SerializationData[] data)
     {
         WallHandler wallHandler;
+        FlowerBedHandler flowerBedHandler;
         DefaultStaticElement staticElement;
         DefaultStaticElement.SerializableItem subType;
 
@@ -178,6 +180,11 @@ public class ConstructionController : MonoBehaviour
                 case SerializationController.ItemType.WallHandler:
                     wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
                     wallHandler.DeSerialize(data[i].serializedData);
+                    break;
+
+                case SerializationController.ItemType.FlowerBed:
+                    flowerBedHandler = Instantiate(FlowerBedHandlerRef, Vector3.zero, Quaternion.identity);
+                    flowerBedHandler.DeSerialize(data[i].serializedData);
                     break;
 
                 case SerializationController.ItemType.DefaultStaticElement:
@@ -194,7 +201,6 @@ public class ConstructionController : MonoBehaviour
                             //SHOULD NOT HAPPEN
                             staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
                             break;
-                       //TODO
                     }
                     staticElement.DeSerialize(data[i].serializedData);
                     break;

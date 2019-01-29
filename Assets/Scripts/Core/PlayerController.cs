@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     public GhostHandler table; //TODO interface
 
 
-    private string tmp;
+    private string serialization;
+    private int numberItems;
     private Camera Camera;
     private ConstructionController Construct;
     private GridController Grid;
@@ -59,15 +60,12 @@ public class PlayerController : MonoBehaviour
             Construct.SetConstructionState(ConstructionController.ConstructionState.Editing);
 
         if (Input.GetKeyDown(KeyCode.Keypad8))
-            tmp = SerializationController.instance.Serialize();
+            serialization = SerializationController.instance.Serialize(out numberItems);
         if (Input.GetKeyDown(KeyCode.Keypad9))
-            Construct.SpawnScene(SerializationController.instance.DeSerialize(tmp, 3));
+            Construct.SpawnScene(SerializationController.instance.DeSerialize(serialization, numberItems));
 
         if (Input.GetKeyDown(KeyCode.Keypad5) && Construct.GetConstructionState() != ConstructionController.ConstructionState.Editing)
             Construct.SpawnGhost(bed);
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-            Construct.SpawnGhost(table);//TODO INTERFACE + chaise
-
 
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
