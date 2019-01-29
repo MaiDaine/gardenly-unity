@@ -9,7 +9,7 @@ public class WallTextHandler : MonoBehaviour
 
     private TextMesh text;
     
-    void Start()
+    void Awake()
     {
         text = GetComponent<TextMesh>();
     }

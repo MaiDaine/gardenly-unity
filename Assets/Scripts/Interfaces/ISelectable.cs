@@ -5,7 +5,7 @@ using UnityEngine;
 public interface ISelectable
 {
     GameObject GetGameObject();
-    void Select();
+    void Select(ConstructionController.ConstructionState state);
     List<ISelectable> SelectWithNeighbor();
     void DeSelect();
     void AddNeighbor(ISelectable item);
