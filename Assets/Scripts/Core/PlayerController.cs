@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     public GhostHandler table; //TODO interface
 
 
-    private string tmp;
+    private string serialization;
+    private int numberItems;
     private Camera Camera;
     private ConstructionController Construct;
     private GridController Grid;
@@ -59,15 +60,12 @@ public class PlayerController : MonoBehaviour
             Construct.SetConstructionState(ConstructionController.ConstructionState.Editing);
 
         if (Input.GetKeyDown(KeyCode.Keypad8))
-            tmp = SerializationController.instance.Serialize();
+            serialization = SerializationController.instance.Serialize(out numberItems);
         if (Input.GetKeyDown(KeyCode.Keypad9))
-            Construct.SpawnScene(SerializationController.instance.DeSerialize(tmp, 3));
+            Construct.SpawnScene(SerializationController.instance.DeSerialize(serialization, numberItems));
 
         if (Input.GetKeyDown(KeyCode.Keypad5) && Construct.GetConstructionState() != ConstructionController.ConstructionState.Editing)
             Construct.SpawnGhost(bed);
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-            Construct.SpawnGhost(table);//TODO INTERFACE + chaise
-
 
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
         {
@@ -99,6 +97,8 @@ public class PlayerController : MonoBehaviour
                         currentSelection.Clear();
                     }
                 }
+                if (interactible == null)
+                    DeSelect(true);
             }
             else if (Input.GetMouseButton(0) && interactible != null)
                 Construct.UpdateEditing(interactible);
@@ -112,14 +112,19 @@ public class PlayerController : MonoBehaviour
             Construct.UpdateGhost();
     }
 
-    void SelectBuilding()
+    void DeSelect(bool forced = false)
     {
-        if (currentSelection.Count > 0 && !Input.GetKey(KeyCode.LeftShift))
+        if (currentSelection.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
         {
             foreach (ISelectable elem in currentSelection)
                 elem.DeSelect();
             currentSelection.Clear();
         }
+    }
+
+    void SelectBuilding()
+    {
+        DeSelect();
 
         Vector3 pos;
         RaycastHit hit;

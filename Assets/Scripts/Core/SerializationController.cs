@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, WallHandler };
+    public enum ItemType { None, DefaultStaticElement, WallHandler, FlowerBed };
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();
@@ -27,7 +27,7 @@ public class SerializationController : MonoBehaviour
         items.Remove(item);
     }
 
-    public string Serialize()
+    public string Serialize(out int numberElems)
     {
         ISerializable[] a = items.ToArray();
         SerializationData[] elems = new SerializationData[a.Length];
@@ -36,6 +36,7 @@ public class SerializationController : MonoBehaviour
         for (int i = 0; i < a.Length; i++)
             elems[i] = a[i].Serialize();
         serializedData.data = elems;
+        numberElems = a.Length;
         return(JsonUtility.ToJson(serializedData));
     }
 
