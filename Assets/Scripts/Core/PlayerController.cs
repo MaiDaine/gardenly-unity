@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
                         currentSelection.Clear();
                     }
                 }
+                if (interactible == null)
+                    DeSelect(true);
             }
             else if (Input.GetMouseButton(0) && interactible != null)
                 Construct.UpdateEditing(interactible);
@@ -110,14 +112,19 @@ public class PlayerController : MonoBehaviour
             Construct.UpdateGhost();
     }
 
-    void SelectBuilding()
+    void DeSelect(bool forced = false)
     {
-        if (currentSelection.Count > 0 && !Input.GetKey(KeyCode.LeftShift))
+        if (currentSelection.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
         {
             foreach (ISelectable elem in currentSelection)
                 elem.DeSelect();
             currentSelection.Clear();
         }
+    }
+
+    void SelectBuilding()
+    {
+        DeSelect();
 
         Vector3 pos;
         RaycastHit hit;

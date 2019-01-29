@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
 public class FlowerBedHandler : GhostHandler, ISerializable
 {
+    public Material material;
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
     
@@ -26,6 +29,8 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     private void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+            CombineMesh();
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing
             && Input.GetKeyDown(KeyCode.Keypad5))
         {
@@ -36,12 +41,32 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     public void CombineMesh()
     {
-        //TODO;
+        int i = 0;
+        MeshFilter[] meshFilters = new MeshFilter[meshCount];
+        foreach (FlowerBedMesh mesh in meshes)
+        {
+            meshFilters[i] = mesh.GetComponent<MeshFilter>();
+            i++;
+        }
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+        i = 0;
+        while (i < meshFilters.Length)
+        {
+            combine[i].mesh = meshFilters[i].sharedMesh;
+            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+            meshFilters[i].gameObject.SetActive(false);
+            i++;
+        }
+        this.GetComponent<MeshFilter>().mesh = new Mesh();
+        this.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+        this.gameObject.SetActive(true);
+        this.GetComponent<MeshRenderer>().material = material;
+        this.transform.position = new Vector3(0, 0, 0);
     }
 
     public override void StartPreview(Vector3 position)
     {
-        currentMesh.transform.position = position;
     }
 
     public override void Preview(Vector3 position)
