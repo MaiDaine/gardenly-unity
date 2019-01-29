@@ -63,6 +63,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         this.gameObject.SetActive(true);
         this.GetComponent<MeshRenderer>().material = material;
         this.transform.position = new Vector3(0, 0, 0);
+        ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
     }
 
     public override void StartPreview(Vector3 position)
@@ -150,6 +151,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
             meshes.Add(currentMesh);
             meshCount++;
         }
+        CombineMesh();
     }
 
 }
