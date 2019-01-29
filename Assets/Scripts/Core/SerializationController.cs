@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, DefaultStaticElement, WallHandler, FlowerBed };
+    public enum ItemType { None, DefaultStaticElement, WallHandler, FlowerBed, TreeHandler };
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();

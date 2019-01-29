@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3695800142019012036}
   - component: {fileID: 206029582746413244}
   - component: {fileID: 1889026557}
+  - component: {fileID: 3208204501342541398}
+  - component: {fileID: 1868898870250685511}
   m_Layer: 0
   m_Name: FlowerBed
   m_TagString: Untagged
@@ -45,7 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51d1c6751009b34da93f6dbc876934a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
   meshRef: {fileID: 815548044933981863, guid: 5b7699735f17c7241b7ec65c1c1fc355, type: 3}
+  serializableItem:
+    meshPosition: {x: 0, y: 0, z: 0}
+    meshNumber: 0
+    pointsList:
+      positions: []
+      points: []
 --- !u!114 &206029582746413244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +163,48 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!33 &3208204501342541398
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425279538196900678}
+  m_Mesh: {fileID: 0}
+--- !u!23 &1868898870250685511
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425279538196900678}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DynamicElemHandler : GhostHandler
+public class DynamicElemHandler : DefaultStaticElement
 {
     public Transform windowPreview;
     public bool startRotate = false;
@@ -62,5 +62,15 @@ public class DynamicElemHandler : GhostHandler
             SpawnWindow();
         else if (!previewUI.gameObject.activeSelf)
             previewUI.gameObject.SetActive(true);
+    }
+
+    public SerializationData Serialize()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void DeSerialize(string json)
+    {
+        throw new System.NotImplementedException();
     }
 }

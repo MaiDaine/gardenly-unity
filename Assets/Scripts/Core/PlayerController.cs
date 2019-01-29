@@ -46,69 +46,69 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+        /*if (Input.GetKeyDown(KeyCode.Keypad0))
             Grid.activ = !Grid.activ;
 
         //DEBUG ONLY
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-            Construct.SetConstructionState(ConstructionController.ConstructionState.Off);
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-            Construct.SetConstructionState(ConstructionController.ConstructionState.Positioning);
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-            Construct.SetConstructionState(ConstructionController.ConstructionState.Building);
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-            Construct.SetConstructionState(ConstructionController.ConstructionState.Editing);
+         if (Input.GetKeyDown(KeyCode.Keypad1))
+             Construct.SetConstructionState(ConstructionController.ConstructionState.Off);
+         if (Input.GetKeyDown(KeyCode.Keypad2))
+             Construct.SetConstructionState(ConstructionController.ConstructionState.Positioning);
+         if (Input.GetKeyDown(KeyCode.Keypad3))
+             Construct.SetConstructionState(ConstructionController.ConstructionState.Building);
+         if (Input.GetKeyDown(KeyCode.Keypad4))
+             Construct.SetConstructionState(ConstructionController.ConstructionState.Editing);
 
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-            serialization = SerializationController.instance.Serialize(out numberItems);
-        if (Input.GetKeyDown(KeyCode.Keypad9))
-            Construct.SpawnScene(SerializationController.instance.DeSerialize(serialization, numberItems));
+         if (Input.GetKeyDown(KeyCode.Keypad8))
+             serialization = SerializationController.instance.Serialize(out numberItems);
+         if (Input.GetKeyDown(KeyCode.Keypad9))
+             Construct.SpawnScene(SerializationController.instance.DeSerialize(serialization, numberItems));
 
-        if (Input.GetKeyDown(KeyCode.Keypad5) && Construct.GetConstructionState() != ConstructionController.ConstructionState.Editing)
-            Construct.SpawnGhost(bed);
+         if (Input.GetKeyDown(KeyCode.Keypad5) && Construct.GetConstructionState() != ConstructionController.ConstructionState.Editing)
+             Construct.SpawnGhost(bed);*/
 
-        if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
-        {
-            Vector3 pos;
-            RaycastHit hit;
-            if (Construct.MouseRayCast(out pos, out hit))
-                Debug.DrawLine(Camera.transform.position, pos);
-            if (Input.GetMouseButtonDown(0))
-                SelectBuilding();
-            else if (Input.GetKey(KeyCode.Delete))
-                DestroySelection();
-        }
+         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
+         {
+             Vector3 pos;
+             RaycastHit hit;
+             if (Construct.MouseRayCast(out pos, out hit))
+                 Debug.DrawLine(Camera.transform.position, pos);
+             if (Input.GetMouseButtonDown(0))
+                 SelectBuilding();
+             else if (Input.GetKey(KeyCode.Delete))
+                 DestroySelection();
+         }
 
-        if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Editing)
-        {
-            Vector3 pos;
-            RaycastHit hit;
+         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Editing)
+         {
+             Vector3 pos;
+             RaycastHit hit;
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))
-                    interactible = hit.collider.gameObject.GetComponent<IInteractible>();
-                else if (Construct.MouseRayCast(out pos, out hit, layerMaskStatic))
-                {
-                    ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
-                    if (selectable != null)
-                    {
-                        selectable.Select(ConstructionController.ConstructionState.Editing);
-                        currentSelection.Clear();
-                    }
-                }
-                if (interactible == null)
-                    DeSelect(true);
-            }
-            else if (Input.GetMouseButton(0) && interactible != null)
-                Construct.UpdateEditing(interactible);
-            if (interactible != null && Input.GetMouseButtonUp(0))
-            {
-                interactible.EndDrag();
-                interactible = null;
-            }
-        }
-        else if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
+             if (Input.GetMouseButtonDown(0))
+             {
+                 if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))
+                     interactible = hit.collider.gameObject.GetComponent<IInteractible>();
+                 else if (Construct.MouseRayCast(out pos, out hit, layerMaskStatic))
+                 {
+                     ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+                     if (selectable != null)
+                     {
+                         selectable.Select(ConstructionController.ConstructionState.Editing);
+                         currentSelection.Clear();
+                     }
+                 }
+                 if (interactible == null)
+                     DeSelect(true);
+             }
+             else if (Input.GetMouseButton(0) && interactible != null)
+                 Construct.UpdateEditing(interactible);
+             if (interactible != null && Input.GetMouseButtonUp(0))
+             {
+                 interactible.EndDrag();
+                 interactible = null;
+             }
+         }
+       if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
             Construct.UpdateGhost();
     }
 

@@ -8,6 +8,7 @@ public class ConstructionController : MonoBehaviour
 
     public WallHandler WallHandlerRef;//need one of each for serialization
     public FlowerBedHandler FlowerBedHandlerRef;
+    public TreeHandler treeRef;
     public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
     public static ConstructionController instance = null;
 
@@ -77,7 +78,7 @@ public class ConstructionController : MonoBehaviour
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore))
+           && Physics.Raycast(ray, out hit, rayDistance))
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
@@ -92,7 +93,7 @@ public class ConstructionController : MonoBehaviour
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
-
+       
         if (groundPlane.Raycast(ray, out rayDistance)
            && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore))
         {
@@ -113,7 +114,6 @@ public class ConstructionController : MonoBehaviour
         RaycastHit hit;
         ISelectable neighbor = null;
         ISnapable snapable;
-
         if (MouseRayCast(out tmp, out hit))
         {
             if (tmp == lastPos && !Input.GetMouseButtonDown(0))
@@ -150,6 +150,7 @@ public class ConstructionController : MonoBehaviour
     private void UpdateGhostPositioning(Vector3 pos, ISelectable neighbor)
     {
         Ghost.transform.position = pos;
+        Debug.Log(pos);
         if (Input.GetMouseButtonDown(0))
         {
             AddNeighbor(neighbor);
@@ -165,10 +166,6 @@ public class ConstructionController : MonoBehaviour
         return false;
     }
 
-    void StartConstruction(Vector3 point)
-    {
-
-    }
     public void UpdateGhostBuilding(Vector3 pos, ISelectable neighbor)
     {
         Ghost.Preview(pos);

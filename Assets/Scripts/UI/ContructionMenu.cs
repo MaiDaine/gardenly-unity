@@ -16,4 +16,10 @@ public class ContructionMenu : MonoBehaviour
         gameObject.SetActive(!state);
         state = !state;
     }
+
+    public void SetState(bool state)
+    {
+        gameObject.SetActive(state);
+        this.state = state;
+    }
 }
