@@ -32,6 +32,11 @@ public class ConstructionController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    private void Update()
+    {
+        Debug.Log(currentState);
+    }
+
     public ConstructionState GetConstructionState() { return currentState; }
     public void SetConstructionState(ConstructionState state)
     {
@@ -78,7 +83,7 @@ public class ConstructionController : MonoBehaviour
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance))
+           && Physics.Raycast(ray, out hit, rayDistance, layer))
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
@@ -150,7 +155,7 @@ public class ConstructionController : MonoBehaviour
     private void UpdateGhostPositioning(Vector3 pos, ISelectable neighbor)
     {
         Ghost.transform.position = pos;
-        Debug.Log(pos);
+
         if (Input.GetMouseButtonDown(0))
         {
             AddNeighbor(neighbor);

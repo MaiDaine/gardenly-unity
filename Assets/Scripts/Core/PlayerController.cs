@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
          {
              Vector3 pos;
              RaycastHit hit;
-
+            
              if (Input.GetMouseButtonDown(0))
              {
                  if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))
@@ -108,8 +108,8 @@ public class PlayerController : MonoBehaviour
                  interactible = null;
              }
          }
-       if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
-            Construct.UpdateGhost();
+        else if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
+                Construct.UpdateGhost();
     }
 
     void DeSelect(bool forced = false)

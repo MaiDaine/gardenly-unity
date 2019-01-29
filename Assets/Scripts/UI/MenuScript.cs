@@ -6,7 +6,7 @@ public class MenuScript : MonoBehaviour
 {
     public bool rotateState = false;
 
-    private DynamicElemHandler ghost;
+    private GhostHandler ghost;
     private Camera player;
     private ConstructionController constructionController;
 
@@ -23,12 +23,12 @@ public class MenuScript : MonoBehaviour
      
     }
 
-    public void SetGhostRef(DynamicElemHandler ghostRef)
+    public void SetGhostRef(GhostHandler ghostRef)
     {
         ghost = ghostRef;
     }
 
-    public DynamicElemHandler GetGhost()
+    public GhostHandler GetGhost()
     {
         return ghost;
     }
@@ -63,7 +63,9 @@ public class MenuScript : MonoBehaviour
     {
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
-        
-        ghost.transform.Rotate(Vector3.up, -rotx);
+        if (ghost.transform.eulerAngles.x == 0)
+            ghost.transform.Rotate(Vector3.up, -rotx);
+        else
+            ghost.transform.Rotate(Vector3.forward, -rotx);
     }
 }
