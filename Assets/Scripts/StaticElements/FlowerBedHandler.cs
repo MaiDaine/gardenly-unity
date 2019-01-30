@@ -72,14 +72,11 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     public override void Preview(Vector3 position)
     {
-        Debug.Log("prreview");
-
         currentMesh.transform.position = position;
     }
 
     public override void EndPreview()
     {
-        Debug.Log("End prreview");
         currentMesh.gameObject.layer = 10;
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Editing);
         currentMesh.Select(ConstructionController.ConstructionState.Editing);

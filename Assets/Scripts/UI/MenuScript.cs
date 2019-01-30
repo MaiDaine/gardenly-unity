@@ -6,7 +6,7 @@ public class MenuScript : MonoBehaviour
 {
     public bool rotateState = false;
 
-    private GhostHandler ghost;
+    private DefaultStaticElement ghost;
     private Camera player;
     private ConstructionController constructionController;
 
@@ -18,12 +18,13 @@ public class MenuScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-     
+        if (ghost != null && !rotateState)
+            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 6, ghost.transform.position.z);
     }
 
-    public void SetGhostRef(GhostHandler ghostRef)
+    public void SetGhostRef(DefaultStaticElement ghostRef)
     {
         ghost = ghostRef;
     }
@@ -51,7 +52,8 @@ public class MenuScript : MonoBehaviour
 
     public void MoveGhost()
     {
-        constructionController.SetGhost(ghost);
+        if (!rotateState)
+            constructionController.SetGhost(ghost);
     }
 
     public void StartRotate()

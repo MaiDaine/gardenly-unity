@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
-  meshRef: {fileID: 815548044933981863, guid: 5b7699735f17c7241b7ec65c1c1fc355, type: 3}
+  meshRef: {fileID: 815548044933981863, guid: ad897f0ce6ca055488276d4bb7d23d01, type: 3}
   serializableItem:
     meshPosition: {x: 0, y: 0, z: 0}
     meshNumber: 0

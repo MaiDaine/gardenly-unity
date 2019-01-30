@@ -67,7 +67,7 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
-    public void SetGhost(GhostHandler ghost)
+    public void SetGhost(DefaultStaticElement ghost)
     {
         if (currentState == ConstructionState.Off)
         {

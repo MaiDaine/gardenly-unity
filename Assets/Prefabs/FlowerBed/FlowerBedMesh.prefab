@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
-  point: {fileID: 6651099495871532926, guid: 480ea6eb79f95ea49bcc686ed435f695, type: 3}
+  point: {fileID: 6651099495871532926, guid: d1fc0baa0cf84144ab920f2f5900532d, type: 3}
   qualitySettings: 0
   straights:
   - {fileID: 0}
