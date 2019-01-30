@@ -34,7 +34,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         Vector3 position;
 
         position = new Vector3(transform.position.x, transform.position.y + 6, transform.position.z);
-        
+
         previewUI = Instantiate(windowPreview, position, Quaternion.identity);
         canvas = previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
