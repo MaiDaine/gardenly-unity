@@ -5,23 +5,58 @@ using UnityEngine;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
-    public enum StaticElementType { Chair, Table, Tree };
+    public enum StaticElementType { Chair, Table, Tree, Tree2 };
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
+    public Transform windowPreview;
 
     private SerializableItem serializableItem;
+    protected Transform previewUI;
+    protected MenuScript menu;
 
     void Start()
     {
         this.transform.eulerAngles += correctedRotation;
         SerializationController.instance.AddToList(this);
+        previewUI = null;
     }
 
     void OnDestroy()
     {
         SerializationController.instance.RemoveFromList(this);
+    }
+
+    void SpawnWindow()
+    {
+        Canvas canvas;
+        Vector3 position;
+
+        position = new Vector3(transform.position.x, transform.position.y + 6, transform.position.z);
+        
+        previewUI = Instantiate(windowPreview, position, Quaternion.identity);
+        canvas = previewUI.GetComponent<Canvas>();
+        canvas.worldCamera = Camera.main;
+
+        menu = previewUI.GetComponent<MenuScript>();
+        menu.SetGhostRef(this);
+    }
+
+    void OnMouseDrag()
+    {
+        if (menu != null && menu.rotateState)
+            menu.RotateGhost();
+    }
+
+
+    //ISELECTABLE
+    public override void Select(ConstructionController.ConstructionState state)
+    {
+        if (previewUI == null)
+            SpawnWindow();
+        else if (!previewUI.gameObject.activeSelf)
+            previewUI.gameObject.SetActive(true);
     }
 
 
