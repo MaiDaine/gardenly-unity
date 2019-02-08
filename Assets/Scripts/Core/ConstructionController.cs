@@ -34,7 +34,6 @@ public class ConstructionController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
