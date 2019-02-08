@@ -7,10 +7,6 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance = null;
     public float snapDistance = 0.25f;
     public Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
-    public FlowerBedHandler bed; //TODO interface
-    public GhostHandler chair; //TODO interface
-    public GhostHandler table; //TODO interface
-
 
     private string serialization;
     private int numberItems;
@@ -19,8 +15,9 @@ public class PlayerController : MonoBehaviour
     private GridController Grid;
     private const int layerMaskInteractible = (1 << 9);
     private const int layerMaskStatic = (1 << 10);
-    public List<ISelectable> currentSelection = new List<ISelectable>();
     private IInteractible interactible;
+
+    public List<ISelectable> currentSelection = new List<ISelectable>();
 
     void Awake()
     {
@@ -46,33 +43,21 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        /*if (Input.GetKeyDown(KeyCode.Keypad0))
+        /*
+         if (Input.GetKeyDown(KeyCode.Keypad0)) //TODO => Interface : GridButton
             Grid.activ = !Grid.activ;
 
-        //DEBUG ONLY
-         if (Input.GetKeyDown(KeyCode.Keypad1))
-             Construct.SetConstructionState(ConstructionController.ConstructionState.Off);
-         if (Input.GetKeyDown(KeyCode.Keypad2))
-             Construct.SetConstructionState(ConstructionController.ConstructionState.Positioning);
-         if (Input.GetKeyDown(KeyCode.Keypad3))
-             Construct.SetConstructionState(ConstructionController.ConstructionState.Building);
-         if (Input.GetKeyDown(KeyCode.Keypad4))
-             Construct.SetConstructionState(ConstructionController.ConstructionState.Editing);
-
-         if (Input.GetKeyDown(KeyCode.Keypad8))
+         if (Input.GetKeyDown(KeyCode.Keypad8)) //TODO => Interface : SaveButton
              serialization = SerializationController.instance.Serialize(out numberItems);
-         if (Input.GetKeyDown(KeyCode.Keypad9))
-             Construct.SpawnScene(SerializationController.instance.DeSerialize(serialization, numberItems));
+        */
 
-         if (Input.GetKeyDown(KeyCode.Keypad5) && Construct.GetConstructionState() != ConstructionController.ConstructionState.Editing)
-             Construct.SpawnGhost(bed);*/
-
-         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
+        if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
          {
-             Vector3 pos;
-             RaycastHit hit;
-             if (Construct.MouseRayCast(out pos, out hit))
-                 Debug.DrawLine(Camera.transform.position, pos);
+                //DEBUG TOOL
+                //Vector3 pos;
+                //RaycastHit hit;
+                //if (Construct.MouseRayCast(out pos, out hit))
+                //    Debug.DrawLine(Camera.transform.position, pos);
              if (Input.GetMouseButtonDown(0))
                  SelectBuilding();
              else if (Input.GetKey(KeyCode.Delete))

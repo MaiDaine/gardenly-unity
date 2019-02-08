@@ -76,7 +76,7 @@ public class WallHandler : GhostHandler, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        //TODO edit mode
+        //TODO => Interface : edit mode
         Text.gameObject.SetActive(true);
     }
 
