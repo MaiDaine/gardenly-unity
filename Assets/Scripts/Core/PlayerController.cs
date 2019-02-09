@@ -51,13 +51,14 @@ public class PlayerController : MonoBehaviour
              serialization = SerializationController.instance.Serialize(out numberItems);
         */
 
+        //DEBUG TOOL
+        Vector3 pos;
+        RaycastHit hit;
+        if (Construct.MouseRayCast(out pos, out hit))
+            Debug.DrawLine(Camera.transform.position, pos);
+
         if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Off)
          {
-                //DEBUG TOOL
-                //Vector3 pos;
-                //RaycastHit hit;
-                //if (Construct.MouseRayCast(out pos, out hit))
-                //    Debug.DrawLine(Camera.transform.position, pos);
              if (Input.GetMouseButtonDown(0))
                  SelectBuilding();
              else if (Input.GetKey(KeyCode.Delete))
@@ -66,8 +67,8 @@ public class PlayerController : MonoBehaviour
 
          if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Editing)
          {
-             Vector3 pos;
-             RaycastHit hit;
+             //Vector3 pos;
+             //RaycastHit hit;
             
              if (Input.GetMouseButtonDown(0))
              {

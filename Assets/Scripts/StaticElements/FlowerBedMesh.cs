@@ -35,12 +35,7 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
         points[3].SetLimits(points[0], new System.Tuple<bool, bool>(false, true), points[2], new System.Tuple<bool, bool>(true, false));
         for (int i = 0; i < 6; i++)
             straights[i] = gameObject.AddComponent<Straight>();
-        straights[0].UpdateEquation(GetRealPosition(3), GetRealPosition(0));
-        straights[1].UpdateEquation(GetRealPosition(1), GetRealPosition(0));
-        straights[2].UpdateEquation(GetRealPosition(2), GetRealPosition(1));
-        straights[3].UpdateEquation(GetRealPosition(3), GetRealPosition(2));
-        straights[4].UpdateEquation(GetRealPosition(0), GetRealPosition(2));
-        straights[5].UpdateEquation(GetRealPosition(1), GetRealPosition(3));
+        UpdateStraight();
         meshHandler = gameObject.AddComponent<MeshHandler>();
         mRenderer = gameObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
         mFilter = gameObject.AddComponent(typeof(MeshFilter)) as MeshFilter;
@@ -95,9 +90,13 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
     public void Select(ConstructionController.ConstructionState state)
     {
         if (state == ConstructionController.ConstructionState.Editing)
+        {
+            UpdateStraight();
             for (int i = 0; i < 4; i++)
                 points[i].Activate();
-        //TODO else overlay
+        }
+        //else
+        //TODO => Interface : overlay
     }
     public List<ISelectable> SelectWithNeighbor() { return new List<ISelectable>(); }
     public void DeSelect()
