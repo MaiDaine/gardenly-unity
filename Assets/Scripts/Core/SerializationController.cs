@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class SerializationController : MonoBehaviour
@@ -8,6 +10,30 @@ public class SerializationController : MonoBehaviour
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();
+    private int serializationElemNb;
+    private string serializationJSON;
+
+    [DllImport("__Internal")]
+    private static extern void SaveScene(string json, int nbElem);
+
+    public void PreInitScene(int nbElem)
+    {
+        serializationElemNb = nbElem;
+    }
+
+    public void InitScene(string json)
+    {
+        ConstructionController.instance.SpawnScene(DeSerialize(json, serializationElemNb));
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            serializationJSON = Serialize(out serializationElemNb);
+            SaveScene(serializationJSON, serializationElemNb);
+        }
+    }
 
     void Awake()
     {
@@ -29,6 +55,7 @@ public class SerializationController : MonoBehaviour
 
     public string Serialize(out int numberElems)
     {
+        string result;
         ISerializable[] a = items.ToArray();
         SerializationData[] elems = new SerializationData[a.Length];
         SerializedData serializedData;
@@ -37,7 +64,8 @@ public class SerializationController : MonoBehaviour
             elems[i] = a[i].Serialize();
         serializedData.data = elems;
         numberElems = a.Length;
-        return(JsonUtility.ToJson(serializedData));
+        result = JsonUtility.ToJson(serializedData);
+        return (result);
     }
 
     public SerializationData[] DeSerialize(string json, int itemNumber)
