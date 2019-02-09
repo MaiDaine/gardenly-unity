@@ -42,6 +42,13 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    public void ResetColor()
+    {
+        text.color = color;
+        image.color = color;
+        pressed = false;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!pressed)
