@@ -6,7 +6,7 @@ public class MenuScript : MonoBehaviour
 {
     public bool rotateState = false;
 
-    private DefaultStaticElement ghost;
+    private GhostHandler ghost;
     private Camera player;
     private ConstructionController constructionController;
 
@@ -24,7 +24,7 @@ public class MenuScript : MonoBehaviour
             this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 6, ghost.transform.position.z);
     }
 
-    public void SetGhostRef(DefaultStaticElement ghostRef)
+    public void SetGhostRef(GhostHandler ghostRef)
     {
         ghost = ghostRef;
     }
