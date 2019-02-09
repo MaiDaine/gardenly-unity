@@ -8,11 +8,6 @@ public class ConstructionController : MonoBehaviour
 
     public static ConstructionController instance = null;
 
-    //need one of each for serialization
-    public WallHandler WallHandlerRef;
-    public FlowerBedHandler FlowerBedHandlerRef;
-    public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
-
     private Camera Camera;
     private GridController Grid;
     private const int layerMaskInteractible = (1 << 9);
@@ -190,49 +185,6 @@ public class ConstructionController : MonoBehaviour
         {
             Ghost.AddNeighbor(neighbor);
             neighbor.AddNeighbor(Ghost);
-        }
-    }
-
-    public void SpawnScene(SerializationData[] data)
-    {
-        WallHandler wallHandler;
-        FlowerBedHandler flowerBedHandler;
-        DefaultStaticElement staticElement;
-        DefaultStaticElement.SerializableItem subType;
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            switch (data[i].type)
-            {
-                case SerializationController.ItemType.WallHandler:
-                    wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
-                    wallHandler.DeSerialize(data[i].serializedData);
-                    break;
-
-                case SerializationController.ItemType.FlowerBed:
-                    flowerBedHandler = Instantiate(FlowerBedHandlerRef, Vector3.zero, Quaternion.identity);
-                    flowerBedHandler.DeSerialize(data[i].serializedData);
-                    break;
-
-                case SerializationController.ItemType.DefaultStaticElement:
-                    subType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].serializedData);
-                    switch (subType.subType)
-                    {
-                        case DefaultStaticElement.StaticElementType.Chair:
-                            staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
-                            break;
-                        case DefaultStaticElement.StaticElementType.Table:
-                            staticElement = Instantiate(staticElements[1], Vector3.zero, Quaternion.identity);
-                            break;
-                        default:
-                            Debug.Log("Serialization Error");
-                            return;
-                    }
-                    staticElement.DeSerialize(data[i].serializedData);
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

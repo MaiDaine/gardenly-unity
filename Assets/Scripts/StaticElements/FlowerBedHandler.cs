@@ -14,6 +14,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
+    private List<FlowerBedElement> elements;
 
     void Start()
     {
@@ -109,6 +110,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         public Vector3 meshPosition;
         public int meshNumber;
         public SerializableList pointsList;
+        public List<FlowerBedElement> FBElements;
     }
 
     public SerializationData Serialize()
@@ -120,7 +122,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         tmpList.points = new Vector2[meshCount * 4];
         tmpList.positions = new Vector3[meshCount];
         int i = 0;
-        foreach(FlowerBedMesh mesh in meshes)
+        foreach (FlowerBedMesh mesh in meshes)
         {
             tmpList.points[i] = mesh.GetPoint(0);
             tmpList.points[i + 1] = mesh.GetPoint(1);
@@ -132,6 +134,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         serializableItem.meshPosition = this.transform.position;
         serializableItem.meshNumber = meshCount;
         serializableItem.pointsList = tmpList;
+        serializableItem.FBElements = elements;
         tmp.serializedData = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
@@ -151,6 +154,8 @@ public class FlowerBedHandler : GhostHandler, ISerializable
             meshes.Add(currentMesh);
             meshCount++;
         }
+
+        //TODO REINSTANTIATE FBELEMENTS
         CombineMesh();
     }
 
