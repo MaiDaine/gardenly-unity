@@ -10,10 +10,20 @@ public class FlowerBedHandler : GhostHandler, ISerializable
     public Material material;
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
+
+    public static FlowerBedHandler instance = null;
     
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(this.gameObject);
+    }
 
     void Start()
     {

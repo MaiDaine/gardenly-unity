@@ -9,6 +9,7 @@ public class MenuScript : MonoBehaviour
     private GhostHandler ghost;
     private Camera player;
     private ConstructionController constructionController;
+    private FlowerBedHandler flowerBedHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class MenuScript : MonoBehaviour
     void LateUpdate()
     {
         if (ghost != null && !rotateState)
-            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 6, ghost.transform.position.z);
+            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 3, ghost.transform.position.z);
     }
 
     public void SetGhostRef(GhostHandler ghostRef)
@@ -50,6 +51,16 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    public void DestroyFlowerBedHandler()
+    {
+        if (constructionController.StateIsOff())
+        {
+            Destroy(this.flowerBedHandler.gameObject);
+            Destroy(this.flowerBedHandler);
+            Destroy(this.gameObject);
+        }
+    }
+
     public void MoveGhost()
     {
         if (!rotateState)
@@ -69,5 +80,15 @@ public class MenuScript : MonoBehaviour
             ghost.transform.Rotate(Vector3.up, -rotx);
         else
             ghost.transform.Rotate(Vector3.forward, -rotx);
+    }
+
+    public void SetFlowerBedHandler(FlowerBedHandler handler)
+    {
+        flowerBedHandler = handler;
+    }
+
+    public void register()
+    {
+        flowerBedHandler.CombineMesh();
     }
 }

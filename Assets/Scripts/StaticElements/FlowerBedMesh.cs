@@ -94,6 +94,8 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
             UpdateStraight();
             for (int i = 0; i < 4; i++)
                 points[i].Activate();
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.SpawnFlowerBedMenu();
         }
         //else
         //TODO => Interface : overlay

@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 8436751300136772335}
   - component: {fileID: 8436751300136772334}
   - component: {fileID: 8436751300136772328}
-  - component: {fileID: 9022663019363749697}
+  - component: {fileID: 3252909456858999457}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: {x: -10, y: 5}
---- !u!114 &9022663019363749697
+--- !u!114 &3252909456858999457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
