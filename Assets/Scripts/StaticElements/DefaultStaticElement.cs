@@ -12,9 +12,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public StaticElementType subType;
     public Transform windowPreview;
 
-    private SerializableItem serializableItem;
     protected Transform previewUI;
     protected MenuScript menu;
+
+    private SerializableItem serializableItem;
 
     void Start()
     {

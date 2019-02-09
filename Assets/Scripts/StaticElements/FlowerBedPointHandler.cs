@@ -16,7 +16,7 @@ public class FlowerBedPointHandler : MonoBehaviour, IInteractible
         index = idx;
         owner = inOwner;
     }
-    
+
     public void SetLimits(FlowerBedPointHandler first, Tuple<bool, bool> firstRule, FlowerBedPointHandler second, Tuple<bool, bool> secondRule)
     {
         limites[0] = first;
@@ -43,6 +43,7 @@ public class FlowerBedPointHandler : MonoBehaviour, IInteractible
 
     private void CheckStraight(ref Vector3 mousePosition, int[] indexs, int[] checks)
     {
+        return;
         Vector2 updatedPos = new Vector2(0f, 0f);
         for (int i = 0; i < 2; i++)
         {
@@ -123,15 +124,15 @@ public class FlowerBedPointHandler : MonoBehaviour, IInteractible
             case 0:
                 CheckStraight(ref mousePosition, new int[3] { 3, 2, 5 }, new int[3] { 1, -1, 1 });
                 break;
-
+        
             case 1:
                 CheckStraight(ref mousePosition, new int[3] { 0, 3, 4 }, new int[3] { 1, 1, -1 });
                 break;
-
+        
             case 2:
                 CheckStraight(ref mousePosition, new int[3] { 0, 1, 5 }, new int[3] { 1, -1, -1 });
                 break;
-
+        
             case 3:
                 CheckStraight(ref mousePosition, new int[3] { 1, 2, 4 }, new int[3] { -1, -1, 1 });
                 break;

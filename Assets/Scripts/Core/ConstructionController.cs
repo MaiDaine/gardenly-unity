@@ -6,11 +6,12 @@ public class ConstructionController : MonoBehaviour
 {
     public enum ConstructionState { Off, Positioning, Building, Editing };
 
-    public WallHandler WallHandlerRef;//need one of each for serialization
-    public FlowerBedHandler FlowerBedHandlerRef;
-    public TreeHandler treeRef;
-    public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
     public static ConstructionController instance = null;
+
+    //need one of each for serialization
+    public WallHandler WallHandlerRef;
+    public FlowerBedHandler FlowerBedHandlerRef;
+    public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
 
     private Camera Camera;
     private GridController Grid;
@@ -18,7 +19,6 @@ public class ConstructionController : MonoBehaviour
     private const int layerMask = 1 << 10;
     private Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
     private float snapDistance = 0.15f;
-
     private ConstructionState currentState = ConstructionState.Off;
     private GhostHandler Ghost;
     private Vector3 lastPos = new Vector3(0, 0, 0);
@@ -125,7 +125,10 @@ public class ConstructionController : MonoBehaviour
             lastPos = tmp;
             snapable = hit.collider.gameObject.GetComponent<ISnapable>();
             if ((snapable != null) && (snapable.FindSnapPoint(ref tmp, snapDistance)) && (snapable.isLinkable()))
+            {
+                lastPos = tmp;
                 neighbor = snapable.GetGameObject().GetComponent<ISelectable>();
+            }
             else if (((tmp = Grid.GetNearestPointOnGrid(lastPos)) - lastPos).magnitude < snapDistance)
                 lastPos = tmp;
             if (currentState == ConstructionState.Positioning)
@@ -154,7 +157,6 @@ public class ConstructionController : MonoBehaviour
     private void UpdateGhostPositioning(Vector3 pos, ISelectable neighbor)
     {
         Ghost.transform.position = pos;
-
         if (Input.GetMouseButtonDown(0))
         {
             AddNeighbor(neighbor);
@@ -223,9 +225,8 @@ public class ConstructionController : MonoBehaviour
                             staticElement = Instantiate(staticElements[1], Vector3.zero, Quaternion.identity);
                             break;
                         default:
-                            //SHOULD NOT HAPPEN
-                            staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
-                            break;
+                            Debug.Log("Serialization Error");
+                            return;
                     }
                     staticElement.DeSerialize(data[i].serializedData);
                     break;
