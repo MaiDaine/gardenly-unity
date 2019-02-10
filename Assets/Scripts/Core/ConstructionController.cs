@@ -29,6 +29,9 @@ public class ConstructionController : MonoBehaviour
 
     private void Update()
     {
+        //DEBUG ONLY
+        if (Input.GetKey(KeyCode.Keypad5))
+            currentState = ConstructionState.Off;
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
@@ -154,6 +157,24 @@ public class ConstructionController : MonoBehaviour
         Ghost.transform.position = pos;
         if (Input.GetMouseButtonDown(0))
         {
+            if (Ghost.needFlowerBed)
+            {
+                Vector3 currentPos;
+                RaycastHit hit;
+                MouseRayCast(out currentPos, out hit);
+                if (hit.collider.gameObject.tag != "FlowerBed")
+                {
+                    //TODO ERRORMSG
+                }
+                else
+                {
+                    hit.collider.GetComponent<FlowerBedMesh>().GetOwner().AddElement((FlowerBedElement)Ghost);
+                    currentState = ConstructionState.Off;
+                    Grid.activ = false;
+                    Ghost.EndPreview();
+                }
+                return;
+            }
             AddNeighbor(neighbor);
             currentState = ConstructionState.Building;
             Ghost.StartPreview(pos);

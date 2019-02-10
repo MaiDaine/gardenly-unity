@@ -40,6 +40,11 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         }
     }
 
+    public void AddElement(FlowerBedElement element)
+    {
+        element.AddNeighbor(element);
+    }
+
     public void CombineMesh()
     {
         int i = 0;
@@ -92,7 +97,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
             PlayerController.instance.currentSelection.Clear();
         }
         currentMesh = Instantiate<FlowerBedMesh>(meshRef);
-        currentMesh.CustomStart();
+        currentMesh.CustomStart(this);
         meshes.Add(currentMesh);
         meshCount++;
     }

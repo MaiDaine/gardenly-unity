@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowerBedElement : MonoBehaviour, ISerializable
+public class FlowerBedElement : GhostHandler, ISerializable //TODO ADD SELECT
 {
     public enum FlowerBedElementType { Flower01 };
 
