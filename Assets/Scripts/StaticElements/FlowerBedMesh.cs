@@ -89,15 +89,16 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
     public GameObject GetGameObject() { return this.gameObject; }
     public void Select(ConstructionController.ConstructionState state)
     {
+        UIController controller = Camera.main.GetComponent<UIController>();
+        Debug.Log(UIController.menuOpen);
+        if (!UIController.menuOpen)
+            controller.SpawnFlowerBedMenu(this);
         if (state == ConstructionController.ConstructionState.Editing)
         {
             UpdateStraight();
             for (int i = 0; i < 4; i++)
                 points[i].Activate();
-            UIController controller = Camera.main.GetComponent<UIController>();
-            controller.SpawnFlowerBedMenu();
         }
-        //else
         //TODO => Interface : overlay
     }
     public List<ISelectable> SelectWithNeighbor() { return new List<ISelectable>(); }

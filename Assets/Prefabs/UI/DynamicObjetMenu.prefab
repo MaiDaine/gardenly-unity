@@ -326,6 +326,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5028326482482271886}
     m_Modifications:
+    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_Name
+      value: RotateButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971548, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -430,11 +435,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_Name
-      value: RotateButton
       objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971550, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
@@ -592,6 +592,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5028326482482271886}
     m_Modifications:
+    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_Name
+      value: MoveButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971548, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -696,11 +701,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_Name
-      value: MoveButton
       objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971550, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
@@ -858,26 +858,6 @@ PrefabInstance:
       propertyPath: color.b
       value: 0.58431375
       objectReference: {fileID: 0}
-    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.000014782
-      objectReference: {fileID: 0}
-    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 3035762879139269427, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -919,6 +899,26 @@ PrefabInstance:
       propertyPath: m_FontData.m_MaxSize
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000014782
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035762879139269426, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82257365790156142, guid: caec2b8dd3ebca94287661f2ad6d9138, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: caec2b8dd3ebca94287661f2ad6d9138, type: 3}
@@ -935,6 +935,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5028326482482271886}
     m_Modifications:
+    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_Name
+      value: DeleteButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971548, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1040,11 +1045,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3035762879415971523, guid: caec2b8dd3ebca94287661f2ad6d9138,
-        type: 3}
-      propertyPath: m_Name
-      value: DeleteButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971550, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_Sprite
@@ -1124,12 +1124,17 @@ PrefabInstance:
     - target: {fileID: 3035762879415971549, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: DestroyGhost
+      value: DestroyDynObj
       objectReference: {fileID: 0}
     - target: {fileID: 3035762879415971549, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035762879415971549, guid: caec2b8dd3ebca94287661f2ad6d9138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3035762879139269425, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}

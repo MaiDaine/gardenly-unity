@@ -19,10 +19,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(this.gameObject);
+        instance = this;
     }
 
     void Start()
@@ -39,8 +36,6 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-            CombineMesh();
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing
             && Input.GetKeyDown(KeyCode.Keypad5))
         {
@@ -76,6 +71,19 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
     }
 
+    public void SpawnMesh()
+    {
+        if (currentMesh != null)
+        {
+            currentMesh.DeSelect();
+            PlayerController.instance.currentSelection.Clear();
+        }
+        currentMesh = Instantiate<FlowerBedMesh>(meshRef);
+        currentMesh.CustomStart();
+        meshes.Add(currentMesh);
+        meshCount++;
+    }
+
     public override void StartPreview(Vector3 position)
     {
     }
@@ -91,19 +99,6 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Editing);
         currentMesh.Select(ConstructionController.ConstructionState.Editing);
         PlayerController.instance.ForcedSelection(currentMesh.GetComponent<ISelectable>());
-    }
-
-    private void SpawnMesh()
-    {
-        if (currentMesh != null)
-        {
-            currentMesh.DeSelect();
-            PlayerController.instance.currentSelection.Clear();
-        }
-        currentMesh = Instantiate<FlowerBedMesh>(meshRef);
-        currentMesh.CustomStart();
-        meshes.Add(currentMesh);
-        meshCount++;
     }
 
     //Serialization

@@ -14,14 +14,13 @@ public class MenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = Camera.main;
-        constructionController = player.GetComponent<ConstructionController>();
+        constructionController = ConstructionController.instance;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (ghost != null && !rotateState)
+        if (ghost != null && !rotateState && flowerBedHandler == null)
             this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 3, ghost.transform.position.z);
     }
 
@@ -39,26 +38,27 @@ public class MenuScript : MonoBehaviour
     {
         Destroy(this.gameObject);
         this.rotateState = false;
+        UIController.menuOpen = false;
     }
 
-    public void DestroyGhost()
+    public void DestroyGhost(GhostHandler ghost)
     {
         if (constructionController.StateIsOff())
         {
-            Destroy(this.ghost.gameObject);
-            Destroy(this.ghost);
-            Destroy(this.gameObject);
+            Destroy(ghost.gameObject);
+            Destroy(ghost);
+            DestroyMenu();
         }
+    }
+
+    public void DestroyDynObj()
+    {
+        DestroyGhost(this.ghost);
     }
 
     public void DestroyFlowerBedHandler()
     {
-        if (constructionController.StateIsOff())
-        {
-            Destroy(this.flowerBedHandler.gameObject);
-            Destroy(this.flowerBedHandler);
-            Destroy(this.gameObject);
-        }
+        DestroyGhost(this.flowerBedHandler);
     }
 
     public void MoveGhost()
@@ -90,5 +90,11 @@ public class MenuScript : MonoBehaviour
     public void register()
     {
         flowerBedHandler.CombineMesh();
+    }
+
+    public void addFlowerBedMesh()
+    {
+        flowerBedHandler.SpawnMesh();
+        constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
     }
 }
