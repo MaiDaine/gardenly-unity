@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuScript : MonoBehaviour
 {
     public bool rotateState = false;
+    public bool isMoving = false;
 
     private GhostHandler ghost;
     private Camera player;
@@ -38,6 +39,7 @@ public class MenuScript : MonoBehaviour
     {
         Destroy(this.gameObject);
         this.rotateState = false;
+        this.isMoving = false;
         UIController.menuOpen = false;
     }
 
@@ -64,7 +66,10 @@ public class MenuScript : MonoBehaviour
     public void MoveGhost()
     {
         if (!rotateState)
+        {
+            isMoving = true;
             constructionController.SetGhost(ghost);
+        }
     }
 
     public void StartRotate()

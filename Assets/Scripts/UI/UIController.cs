@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     void Start()
     {
         previewUI = null;
+        menu = null;
     }
 
     // Update is called once per frame
@@ -43,6 +44,7 @@ public class UIController : MonoBehaviour
         canvas.worldCamera = Camera.main;
 
         menu = previewUI.GetComponent<MenuScript>();
+        menuOpen = true;
     }
 
     public Transform GetPreviewUI()
@@ -55,11 +57,10 @@ public class UIController : MonoBehaviour
         return menu;
     }
 
-    public void SpawnDynMenu(GhostHandler ghost)
+    public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
-        SpawnMenu(ghost, dynamicObjectMenu);
+        SpawnMenu(ghost, typeMenu);
         menu.SetGhostRef(ghost);
-        menuOpen = true;
     }
 
     public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
@@ -68,6 +69,11 @@ public class UIController : MonoBehaviour
 
         SpawnMenu(handler, flowerBedMenu, mesh);
         menu.SetFlowerBedHandler(handler);
-        menuOpen = true;
+    }
+
+    public void SpawnWallMenu(GhostHandler ghost)
+    {
+        SpawnMenu(ghost, wallMenu);
+        menu.SetGhostRef(ghost);
     }
 }

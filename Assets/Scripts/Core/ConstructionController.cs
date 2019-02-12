@@ -184,6 +184,11 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    public void activateGrid()
+    {
+        Grid.activ = !Grid.activ;
+    }
+
     private void AddNeighbor(ISelectable neighbor)
     {
         if (neighbor != null)

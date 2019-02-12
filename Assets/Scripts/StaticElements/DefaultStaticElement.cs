@@ -45,7 +45,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         Transform previewUI = uIController.GetPreviewUI();
 
         if (previewUI == null)
-            uIController.SpawnDynMenu(this);
+            uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
         else if (!previewUI.gameObject.activeSelf)
             previewUI.gameObject.SetActive(true);
     }
