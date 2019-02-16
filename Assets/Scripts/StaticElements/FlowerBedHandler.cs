@@ -5,7 +5,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-public class FlowerBedHandler : GhostHandler, ISerializable
+[RequireComponent(typeof(MeshCollider))]
+public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 {
     public Material material;
     public FlowerBedMesh meshRef;
@@ -14,7 +15,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
-    private List<FlowerBedElement> elements;
+    private List<FlowerBedElement> elements = new List<FlowerBedElement>();
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     private void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad8))
+            Debug.Log(ConstructionController.instance.GetConstructionState());
         if (Input.GetKeyDown(KeyCode.Keypad6))
             CombineMesh();
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing
@@ -42,7 +45,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     public void AddElement(FlowerBedElement element)
     {
-        element.AddNeighbor(element);
+        elements.Add(element);
     }
 
     public void CombineMesh()
@@ -70,6 +73,8 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         this.GetComponent<MeshRenderer>().material = material;
         this.transform.position = new Vector3(0, 0, 0);
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
+        this.GetComponent<MeshCollider>().sharedMesh = this.GetComponent<MeshFilter>().mesh;
+        this.GetComponent<MeshCollider>().enabled = true;
     }
 
     public override void StartPreview(Vector3 position)
@@ -83,7 +88,7 @@ public class FlowerBedHandler : GhostHandler, ISerializable
 
     public override void EndPreview()
     {
-        currentMesh.gameObject.layer = 10;
+        this.gameObject.layer = 10;
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Editing);
         currentMesh.Select(ConstructionController.ConstructionState.Editing);
         PlayerController.instance.ForcedSelection(currentMesh.GetComponent<ISelectable>());
@@ -100,6 +105,18 @@ public class FlowerBedHandler : GhostHandler, ISerializable
         currentMesh.CustomStart(this);
         meshes.Add(currentMesh);
         meshCount++;
+    }
+
+
+    //ISelectable overload
+    override public void Select(ConstructionController.ConstructionState state)
+    {
+        //TODO : interface
+    }
+
+    override public void DeSelect()
+    {
+        //TODO : interface
     }
 
     //Serialization

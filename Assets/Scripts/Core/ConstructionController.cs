@@ -29,9 +29,6 @@ public class ConstructionController : MonoBehaviour
 
     private void Update()
     {
-        //DEBUG ONLY
-        if (Input.GetKey(KeyCode.Keypad5))
-            currentState = ConstructionState.Off;
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
@@ -168,7 +165,7 @@ public class ConstructionController : MonoBehaviour
                 }
                 else
                 {
-                    hit.collider.GetComponent<FlowerBedMesh>().GetOwner().AddElement((FlowerBedElement)Ghost);
+                    hit.collider.GetComponent<FlowerBedHandler>().AddElement((FlowerBedElement)Ghost);
                     currentState = ConstructionState.Off;
                     Grid.activ = false;
                     Ghost.EndPreview();

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowerBedElement : GhostHandler, ISerializable //TODO ADD SELECT
+public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
     public enum FlowerBedElementType { Flower01 };
 
@@ -16,6 +16,17 @@ public class FlowerBedElement : GhostHandler, ISerializable //TODO ADD SELECT
     void Start()
     {
         this.transform.eulerAngles += correctedRotation;
+    }
+
+    public override void Select(ConstructionController.ConstructionState state)
+    {
+        Debug.Log("I'm Selected1");
+        //TODO : interface
+    }
+
+    public override void DeSelect()
+    {
+        //TODO : interface
     }
 
     //Serialization

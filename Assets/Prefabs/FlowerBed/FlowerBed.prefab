@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 1889026557}
   - component: {fileID: 3208204501342541398}
   - component: {fileID: 1868898870250685511}
+  - component: {fileID: 2241910824259528528}
   m_Layer: 0
   m_Name: FlowerBed
-  m_TagString: Untagged
+  m_TagString: FlowerBed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51d1c6751009b34da93f6dbc876934a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needFlowerBed: 0
   material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
   meshRef: {fileID: 815548044933981863, guid: ad897f0ce6ca055488276d4bb7d23d01, type: 3}
   serializableItem:
@@ -55,6 +57,7 @@ MonoBehaviour:
     pointsList:
       positions: []
       points: []
+    FBElements: []
 --- !u!114 &206029582746413244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,3 +211,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2241910824259528528
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425279538196900678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
