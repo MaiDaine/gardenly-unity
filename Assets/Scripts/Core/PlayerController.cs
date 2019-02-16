@@ -43,15 +43,6 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        /*
-         if (Input.GetKeyDown(KeyCode.Keypad0)) //TODO => Interface : GridButton
-            Grid.activ = !Grid.activ;
-
-         if (Input.GetKeyDown(KeyCode.Keypad8)) //TODO => Interface : SaveButton
-             serialization = SerializationController.instance.Serialize(out numberItems);
-        */
-
-        //DEBUG TOOL
         Vector3 pos;
         RaycastHit hit;
         if (Construct.MouseRayCast(out pos, out hit))
@@ -67,9 +58,6 @@ public class PlayerController : MonoBehaviour
 
          if (Construct.GetConstructionState() == ConstructionController.ConstructionState.Editing)
          {
-             //Vector3 pos;
-             //RaycastHit hit;
-            
              if (Input.GetMouseButtonDown(0))
              {
                  if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))

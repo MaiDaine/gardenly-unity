@@ -18,6 +18,7 @@ public class ConstructionController : MonoBehaviour
     private GhostHandler Ghost;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
+    public int flowerbedCount = 0;
 
     void Awake()
     {
@@ -25,10 +26,6 @@ public class ConstructionController : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(this.gameObject);
-    }
-
-    private void Update()
-    {
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
@@ -44,6 +41,13 @@ public class ConstructionController : MonoBehaviour
         Grid = grid;
     }
 
+    public void Cancel()
+    {
+        Destroy(Ghost.gameObject);
+        currentState = ConstructionState.Off;
+        Grid.activ = false;
+    }
+
     public void EditPositioning(GhostHandler GhostRef)
     {
         Ghost = GhostRef;
@@ -53,12 +57,12 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
-        if (currentState == ConstructionState.Off)
-        {
-            Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
-            currentState = ConstructionState.Positioning;
-            Grid.activ = true;
-        }
+        if (currentState != ConstructionState.Off)
+            Cancel();
+        //TODO TEST;
+        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+        currentState = ConstructionState.Positioning;
+        Grid.activ = true;
     }
 
     public void SetGhost(DefaultStaticElement ghost)
@@ -160,9 +164,7 @@ public class ConstructionController : MonoBehaviour
                 RaycastHit hit;
                 MouseRayCast(out currentPos, out hit);
                 if (hit.collider.gameObject.tag != "FlowerBed")
-                {
-                    //TODO ERRORMSG
-                }
+                    ErrorHandler.instance.ErrorMessage("Must be placed in a Flowerbed");
                 else
                 {
                     hit.collider.GetComponent<FlowerBedHandler>().AddElement((FlowerBedElement)Ghost);

@@ -22,11 +22,13 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         SerializationController.instance.AddToList(this);
         SpawnMesh();
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
+        ConstructionController.instance.flowerbedCount += 1;
     }
 
     void OnDestroy()
     {
         SerializationController.instance.RemoveFromList(this);
+        ConstructionController.instance.flowerbedCount -= 1;
     }
 
     private void LateUpdate()

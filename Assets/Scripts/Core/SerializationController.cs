@@ -28,6 +28,8 @@ public class SerializationController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
+            Debug.Log(items.ToArray().Length);
         if (Input.GetKeyDown(KeyCode.L))
         {
             serializationJSON = Serialize(out serializationElemNb);

@@ -16,11 +16,15 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     void Start()
     {
         this.transform.eulerAngles += correctedRotation;
+        if (ConstructionController.instance.flowerbedCount < 1)
+        {
+            ErrorHandler.instance.ErrorMessage("You must place a flowerbed first");
+            ConstructionController.instance.Cancel();
+        }
     }
 
     public override void Select(ConstructionController.ConstructionState state)
     {
-        Debug.Log("I'm Selected1");
         //TODO : interface
     }
 
