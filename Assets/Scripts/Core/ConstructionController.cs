@@ -87,7 +87,7 @@ public class ConstructionController : MonoBehaviour
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance, layer))
+           && Physics.Raycast(ray, out hit, rayDistance, layer) && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
@@ -104,7 +104,8 @@ public class ConstructionController : MonoBehaviour
         float rayDistance;
        
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore))
+           && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore)
+           && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
