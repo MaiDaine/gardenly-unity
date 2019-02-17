@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ErrorHandler : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class ErrorHandler : MonoBehaviour
 
     public void ErrorMessage(string msg)
     {
-        //TODO : interface
-        Debug.Log(msg);
+        Text errorMsg = this.GetComponent<Text>();
+
+        errorMsg.text = msg;
     }
 }

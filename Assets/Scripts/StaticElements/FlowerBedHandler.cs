@@ -36,7 +36,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     {
         SerializationController.instance.RemoveFromList(this);
         ConstructionController.instance.flowerbedCount -= 1;
-        Debug.Log("COUNT : " + elements.Count);
         for (int i = 0; i < elements.Count; i++)
         {
             if (elements[i] != null)
