@@ -15,12 +15,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private SerializableItem serializableItem;
 
-    void Awake()
-    {
-        uIController = Camera.main.GetComponent<UIController>();
-    }
     void Start()
     {
+        uIController = Camera.main.GetComponent<UIController>();
         this.transform.eulerAngles += correctedRotation;
         SerializationController.instance.AddToList(this);
     }

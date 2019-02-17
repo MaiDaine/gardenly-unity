@@ -19,11 +19,6 @@ public class WallHandler : GhostHandler, ISerializable
     private Vector3 end;
     private bool initFromSerialization = false;
 
-    void Awake()
-    {
-        uIController = Camera.main.GetComponent<UIController>();
-    }
-
     void Start()
     {
         if (initFromSerialization)
@@ -38,6 +33,7 @@ public class WallHandler : GhostHandler, ISerializable
             this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
         }
         SerializationController.instance.AddToList(this);
+        uIController = Camera.main.GetComponent<UIController>();
     }
 
     void OnDestroy()
