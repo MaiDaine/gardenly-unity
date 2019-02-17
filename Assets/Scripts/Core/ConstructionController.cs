@@ -15,7 +15,7 @@ public class ConstructionController : MonoBehaviour
     private Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
     private float snapDistance = 0.15f;
     private ConstructionState currentState = ConstructionState.Off;
-    private GhostHandler Ghost;
+    private GhostHandler Ghost = null;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
     public int flowerbedCount = 0;
@@ -43,9 +43,15 @@ public class ConstructionController : MonoBehaviour
 
     public void Cancel()
     {
-        Destroy(Ghost.gameObject);
-        currentState = ConstructionState.Off;
-        Grid.activ = false;
+        if (Grid.activ || Ghost != null)
+        {
+            Destroy(Ghost.gameObject);
+            Ghost = null;
+            currentState = ConstructionState.Off;
+            Grid.activ = false;
+        }
+        //else
+        //TODO : interface => show user menu(options, sound ...)
     }
 
     public void EditPositioning(GhostHandler GhostRef)

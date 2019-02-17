@@ -113,7 +113,8 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     //ISelectable overload
     override public void Select(ConstructionController.ConstructionState state)
     {
-        //TODO : interface
+        //if (state == ConstructionController.ConstructionState.Off)
+            //TODO : interface
     }
 
     override public void DeSelect()

@@ -41,10 +41,12 @@ public class PlayerController : MonoBehaviour
         currentSelection.Add(elem);
     }
 
-    void LateUpdate()
+    void Update()
     {
         Vector3 pos;
         RaycastHit hit;
+
+        //DEBUG
         if (Construct.MouseRayCast(out pos, out hit))
             Debug.DrawLine(Camera.transform.position, pos);
 
@@ -60,19 +62,19 @@ public class PlayerController : MonoBehaviour
          {
              if (Input.GetMouseButtonDown(0))
              {
-                 if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))
-                     interactible = hit.collider.gameObject.GetComponent<IInteractible>();
-                 else if (Construct.MouseRayCast(out pos, out hit, layerMaskStatic))
-                 {
-                     ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
-                     if (selectable != null)
-                     {
-                         selectable.Select(ConstructionController.ConstructionState.Editing);
-                         currentSelection.Clear();
-                     }
-                 }
-                 if (interactible == null)
-                     DeSelect(true);
+                if (Construct.MouseRayCast(out pos, out hit, layerMaskInteractible))
+                    interactible = hit.collider.gameObject.GetComponent<IInteractible>();
+                else if (Construct.MouseRayCast(out pos, out hit, layerMaskStatic))
+                {
+                    ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+                    if (selectable != null)
+                    {
+                        selectable.Select(ConstructionController.ConstructionState.Editing);
+                        currentSelection.Clear();
+                    }
+                }
+                if (interactible == null)
+                    DeSelect(true);
              }
              else if (Input.GetMouseButton(0) && interactible != null)
                  Construct.UpdateEditing(interactible);
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour
              }
          }
         else if (Construct.GetConstructionState() != ConstructionController.ConstructionState.Off)
-                Construct.UpdateGhost();
+            Construct.UpdateGhost();
     }
 
     void DeSelect(bool forced = false)
@@ -98,10 +100,10 @@ public class PlayerController : MonoBehaviour
 
     void SelectBuilding()
     {
-        DeSelect();
-
         Vector3 pos;
         RaycastHit hit;
+
+        DeSelect();
         if (Construct.MouseRayCast(out pos, out hit, layerMaskStatic))
         {
             ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
