@@ -16,9 +16,13 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
     private MeshCollider mCollider; 
     private Vector2[] vertices2D = new Vector2[4];
     private const float maxDistance = 10f;
+    private FlowerBedHandler owner;
 
-    public void CustomStart()
+    public FlowerBedHandler GetOwner() { return owner; }
+
+    public void CustomStart(FlowerBedHandler fbOwner)
     {
+        owner = fbOwner;
         Init(new Vector2(-1f, 1f), new Vector2(1f, 1f), new Vector2(1f, -1f), new Vector2(-1f, -1f));
     }
 

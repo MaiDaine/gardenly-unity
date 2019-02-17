@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
+    public bool needFlowerBed = false;
     protected List<ISelectable> neighbors = new List<ISelectable>();
 
     void Start()

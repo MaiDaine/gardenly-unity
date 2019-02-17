@@ -5,24 +5,23 @@ using UnityEngine;
 public class ConstructionController : MonoBehaviour
 {
     public enum ConstructionState { Off, Positioning, Building, Editing };
-
     public static ConstructionController instance = null;
-
-    //need one of each for serialization
-    public WallHandler WallHandlerRef;
-    public FlowerBedHandler FlowerBedHandlerRef;
-    public DefaultStaticElement[] staticElements = new DefaultStaticElement[4];
+    public float snapDistance = 0.15f;
 
     private Camera Camera;
     private GridController Grid;
-    private const int layerMaskInteractible = (1 << 9);
-    private const int layerMask = 1 << 10;
     private Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-    private float snapDistance = 0.15f;
     private ConstructionState currentState = ConstructionState.Off;
-    private GhostHandler Ghost;
+    private GhostHandler Ghost = null;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
+    public int flowerbedCount = 0;
+
+    public void Start()
+    {
+        Camera = Camera.main;
+        Grid = GetComponent<GridController>();
+    }
 
     void Awake()
     {
@@ -32,21 +31,23 @@ public class ConstructionController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void Update()
-    {
-    }
-
     public ConstructionState GetConstructionState() { return currentState; }
     public void SetConstructionState(ConstructionState state)
     {
         currentState = state;
     }
 
-    public void Init(Camera main, float inSnapDistance, GridController grid)
+    public void Cancel()
     {
-        Camera = main;
-        snapDistance = inSnapDistance;
-        Grid = grid;
+        if (Grid.activ || Ghost != null)
+        {
+            Destroy(Ghost.gameObject);
+            Ghost = null;
+            currentState = ConstructionState.Off;
+            Grid.activ = false;
+        }
+        //else
+        //TODO : interface => show user menu(options, sound ...)
     }
 
     public void EditPositioning(GhostHandler GhostRef)
@@ -58,12 +59,11 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
-        if (currentState == ConstructionState.Off)
-        {
-            Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
-            currentState = ConstructionState.Positioning;
-            Grid.activ = true;
-        }
+        if (currentState != ConstructionState.Off)
+            Cancel();//TODO TEST;
+        Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+        currentState = ConstructionState.Positioning;
+        Grid.activ = true;
     }
 
     public void SetGhost(DefaultStaticElement ghost)
@@ -76,13 +76,13 @@ public class ConstructionController : MonoBehaviour
         }
     }
     
-    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = layerMask)
+    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = PlayerController.layerMaskStatic)
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance, layer))
+           && Physics.Raycast(ray, out hit, rayDistance, layer) && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
@@ -93,13 +93,14 @@ public class ConstructionController : MonoBehaviour
         return false;
     }
 
-    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, out ISnapable snapable, int layer = layerMask)
+    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, out ISnapable snapable, int layer = PlayerController.layerMaskStatic)
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
        
         if (groundPlane.Raycast(ray, out rayDistance)
-           && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore))
+           && Physics.Raycast(ray, out hit, rayDistance, layer, QueryTriggerInteraction.Ignore)
+           && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
             lastCast = pos;
@@ -159,6 +160,22 @@ public class ConstructionController : MonoBehaviour
         Ghost.transform.position = pos;
         if (Input.GetMouseButtonDown(0))
         {
+            if (Ghost.needFlowerBed)
+            {
+                Vector3 currentPos;
+                RaycastHit hit;
+                MouseRayCast(out currentPos, out hit);
+                if (hit.collider.gameObject.tag != "FlowerBed")
+                    ErrorHandler.instance.ErrorMessage("Must be placed in a Flowerbed");
+                else
+                {
+                    hit.collider.GetComponent<FlowerBedHandler>().AddElement((FlowerBedElement)Ghost);
+                    currentState = ConstructionState.Off;
+                    Grid.activ = false;
+                    Ghost.EndPreview();
+                }
+                return;
+            }
             AddNeighbor(neighbor);
             currentState = ConstructionState.Building;
             Ghost.StartPreview(pos);
@@ -190,49 +207,6 @@ public class ConstructionController : MonoBehaviour
         {
             Ghost.AddNeighbor(neighbor);
             neighbor.AddNeighbor(Ghost);
-        }
-    }
-
-    public void SpawnScene(SerializationData[] data)
-    {
-        WallHandler wallHandler;
-        FlowerBedHandler flowerBedHandler;
-        DefaultStaticElement staticElement;
-        DefaultStaticElement.SerializableItem subType;
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            switch (data[i].type)
-            {
-                case SerializationController.ItemType.WallHandler:
-                    wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
-                    wallHandler.DeSerialize(data[i].serializedData);
-                    break;
-
-                case SerializationController.ItemType.FlowerBed:
-                    flowerBedHandler = Instantiate(FlowerBedHandlerRef, Vector3.zero, Quaternion.identity);
-                    flowerBedHandler.DeSerialize(data[i].serializedData);
-                    break;
-
-                case SerializationController.ItemType.DefaultStaticElement:
-                    subType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].serializedData);
-                    switch (subType.subType)
-                    {
-                        case DefaultStaticElement.StaticElementType.Chair:
-                            staticElement = Instantiate(staticElements[0], Vector3.zero, Quaternion.identity);
-                            break;
-                        case DefaultStaticElement.StaticElementType.Table:
-                            staticElement = Instantiate(staticElements[1], Vector3.zero, Quaternion.identity);
-                            break;
-                        default:
-                            Debug.Log("Serialization Error");
-                            return;
-                    }
-                    staticElement.DeSerialize(data[i].serializedData);
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, DefaultStaticElement, WallHandler, FlowerBed, TreeHandler };
+    public enum ItemType { None, DefaultStaticElement, WallHandler, FlowerBed, FlowerBedElement, TreeHandler };
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();
@@ -23,11 +23,13 @@ public class SerializationController : MonoBehaviour
 
     public void InitScene(string json)
     {
-        ConstructionController.instance.SpawnScene(DeSerialize(json, serializationElemNb));
+        SpawnController.instance.SpawnScene(DeSerialize(json, serializationElemNb));
     }
 
     private void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
+            Debug.Log(items.ToArray().Length);
         if (Input.GetKeyDown(KeyCode.L))
         {
             serializationJSON = Serialize(out serializationElemNb);
