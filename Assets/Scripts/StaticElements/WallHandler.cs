@@ -11,6 +11,8 @@ public class WallHandler : GhostHandler, ISerializable
 {
     public WallTextHandler TextRef;
 
+    protected UIController uIController;
+
     private SerializableItem serializableItem;
     private WallTextHandler Text = null;
     private Vector3 start;
@@ -31,14 +33,15 @@ public class WallHandler : GhostHandler, ISerializable
             this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
         }
         SerializationController.instance.AddToList(this);
+        uIController = Camera.main.GetComponent<UIController>();
     }
 
     void OnDestroy()
     {
         if (Text != null)
             GameObject.Destroy(Text);
-        //foreach (ISelectable elem in neighbors)
-            //elem.RemoveFromNeighbor(this);
+        /*foreach (ISelectable elem in neighbors)
+            elem.RemoveFromNeighbor(this);*/
         SerializationController.instance.RemoveFromList(this);
     }
 
@@ -46,11 +49,20 @@ public class WallHandler : GhostHandler, ISerializable
     {
         Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
-        start = position;
+        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
+            return;
+            start = position;
     }
 
     public override void Preview(Vector3 position)
     {
+        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
+        {
+            this.transform.position = position;
+            Text.transform.position = position;
+            Text.SetText(string.Format("{0:F1}m", (start - end).magnitude));
+            return;
+        }
         if (start != position && end != position)
         {
             end = position;
@@ -72,11 +84,22 @@ public class WallHandler : GhostHandler, ISerializable
         Text.gameObject.SetActive(false);
     }
 
+    void OnMouseDrag()
+    {
+        MenuScript menu = uIController.GetMenuScript();
+
+        if (menu != null && menu.rotateState)
+            menu.RotateGhost();
+    }
+
 
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        //TODO => Interface : edit mode
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        if (state == ConstructionController.ConstructionState.Off)
+            uIController.SpawnDynMenu(this, uIController.wallMenu);
+
         Text.gameObject.SetActive(true);
     }
 
@@ -91,7 +114,8 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-        Text.gameObject.SetActive(false);
+        if (Text.gameObject != null)
+            Text.gameObject.SetActive(false);
     }
 
 

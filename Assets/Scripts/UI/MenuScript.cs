@@ -5,26 +5,27 @@ using UnityEngine;
 public class MenuScript : MonoBehaviour
 {
     public bool rotateState = false;
+    public bool isMoving = false;
 
-    private DefaultStaticElement ghost;
+    private GhostHandler ghost;
     private Camera player;
     private ConstructionController constructionController;
+    private FlowerBedHandler flowerBedHandler;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = Camera.main;
-        constructionController = player.GetComponent<ConstructionController>();
+        constructionController = ConstructionController.instance;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (ghost != null && !rotateState)
-            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 6, ghost.transform.position.z);
+        if (ghost != null && !rotateState && flowerBedHandler == null)
+            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 3, ghost.transform.position.z);
     }
 
-    public void SetGhostRef(DefaultStaticElement ghostRef)
+    public void SetGhostRef(GhostHandler ghostRef)
     {
         ghost = ghostRef;
     }
@@ -38,22 +39,40 @@ public class MenuScript : MonoBehaviour
     {
         Destroy(this.gameObject);
         this.rotateState = false;
+        this.isMoving = false;
+        UIController.menuOpen = false;
+        if (constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
+            && flowerBedHandler != null)
+            this.register();
     }
 
-    public void DestroyGhost()
+    public void DestroyGhost(GhostHandler ghost)
     {
         if (constructionController.StateIsOff())
         {
-            Destroy(this.ghost.gameObject);
-            Destroy(this.ghost);
-            Destroy(this.gameObject);
+            Destroy(ghost.gameObject);
+            Destroy(ghost);
+            DestroyMenu();
         }
+    }
+
+    public void DestroyDynObj()
+    {
+        DestroyGhost(this.ghost);
+    }
+
+    public void DestroyFlowerBedHandler()
+    {
+        DestroyGhost(this.flowerBedHandler);
     }
 
     public void MoveGhost()
     {
         if (!rotateState)
+        {
+            isMoving = true;
             constructionController.SetGhost(ghost);
+        }
     }
 
     public void StartRotate()
@@ -69,5 +88,21 @@ public class MenuScript : MonoBehaviour
             ghost.transform.Rotate(Vector3.up, -rotx);
         else
             ghost.transform.Rotate(Vector3.forward, -rotx);
+    }
+
+    public void SetFlowerBedHandler(FlowerBedHandler handler)
+    {
+        flowerBedHandler = handler;
+    }
+
+    public void register()
+    {
+        flowerBedHandler.CombineMesh();
+    }
+
+    public void addFlowerBedMesh()
+    {
+        flowerBedHandler.SpawnMesh();
+        constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContructionMenu : MonoBehaviour
+public class ConstructionMenu : MonoBehaviour
 { 
     public bool state = false;
 

@@ -10,18 +10,16 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
-    public Transform windowPreview;
-
-    protected Transform previewUI;
-    protected MenuScript menu;
+  
+    protected UIController uIController;
 
     private SerializableItem serializableItem;
 
     void Start()
     {
+        uIController = Camera.main.GetComponent<UIController>();
         this.transform.eulerAngles += correctedRotation;
         SerializationController.instance.AddToList(this);
-        previewUI = null;
     }
 
     void OnDestroy()
@@ -29,23 +27,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         SerializationController.instance.RemoveFromList(this);
     }
 
-    void SpawnWindow()
-    {
-        Canvas canvas;
-        Vector3 position;
-
-        position = new Vector3(transform.position.x, transform.position.y + 6, transform.position.z);
-
-        previewUI = Instantiate(windowPreview, position, Quaternion.identity);
-        canvas = previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
-
-        menu = previewUI.GetComponent<MenuScript>();
-        menu.SetGhostRef(this);
-    }
-
     void OnMouseDrag()
     {
+        MenuScript menu = uIController.GetMenuScript();
+
         if (menu != null && menu.rotateState)
             menu.RotateGhost();
     }
@@ -54,10 +39,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     //ISELECTABLE
     public override void Select(ConstructionController.ConstructionState state)
     {
-        if (previewUI == null)
-            SpawnWindow();
-        else if (!previewUI.gameObject.activeSelf)
-            previewUI.gameObject.SetActive(true);
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        if (state == ConstructionController.ConstructionState.Off)
+                uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
     }
 
 

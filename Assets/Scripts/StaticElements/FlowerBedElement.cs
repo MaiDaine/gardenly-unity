@@ -23,10 +23,19 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         }
     }
 
+    void OnMouseDrag()
+    {
+        MenuScript menu = Camera.main.GetComponent<UIController>().GetMenuScript();
+
+        if (menu != null && menu.rotateState)
+            menu.RotateGhost();
+    }
+
     public override void Select(ConstructionController.ConstructionState state)
     {
-        //if (state == ConstructionController.ConstructionState.Off)
-            //TODO : interface
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        if (state == ConstructionController.ConstructionState.Off)
+                uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
     }
 
     public override void DeSelect()

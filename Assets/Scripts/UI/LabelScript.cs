@@ -17,6 +17,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         image = transform.GetComponent<Image>();
         pressed = false;
+        image.color = color;
     }
 
     public void isPressed()
@@ -40,6 +41,13 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             text.color = color;
             image.color = color;
         }
+    }
+
+    public void ResetColor()
+    {
+        text.color = color;
+        image.color = color;
+        pressed = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

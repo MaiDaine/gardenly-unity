@@ -59,6 +59,8 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
+        if (UIController.menuOpen)
+            Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
         if (currentState != ConstructionState.Off)
             Cancel();//TODO TEST;
         Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
@@ -66,7 +68,7 @@ public class ConstructionController : MonoBehaviour
         Grid.activ = true;
     }
 
-    public void SetGhost(DefaultStaticElement ghost)
+    public void SetGhost(GhostHandler ghost)
     {
         if (currentState == ConstructionState.Off)
         {
@@ -199,6 +201,11 @@ public class ConstructionController : MonoBehaviour
             Ghost.EndPreview();
             Grid.activ = false;
         }
+    }
+
+    public void activateGrid()
+    {
+        Grid.activ = !Grid.activ;
     }
 
     private void AddNeighbor(ISelectable neighbor)

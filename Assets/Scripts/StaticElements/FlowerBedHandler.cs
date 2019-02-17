@@ -11,11 +11,16 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     public Material material;
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
-    
+
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
     private List<FlowerBedElement> elements = new List<FlowerBedElement>();
+
+    void Awake()
+    {
+       
+    }
 
     void Start()
     {
@@ -29,6 +34,12 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     {
         SerializationController.instance.RemoveFromList(this);
         ConstructionController.instance.flowerbedCount -= 1;
+        for (int i = 0; i < elements.Count; i++)
+        {
+            if (elements[i] != null)
+                Destroy(elements[i].gameObject);
+        }
+        elements.Clear();
     }
 
     private void LateUpdate()
@@ -96,7 +107,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         PlayerController.instance.ForcedSelection(currentMesh.GetComponent<ISelectable>());
     }
 
-    private void SpawnMesh()
+    public void SpawnMesh()
     {
         if (currentMesh != null)
         {
@@ -113,8 +124,11 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     //ISelectable overload
     override public void Select(ConstructionController.ConstructionState state)
     {
-        //if (state == ConstructionController.ConstructionState.Off)
-            //TODO : interface
+        if (state == ConstructionController.ConstructionState.Off || state == ConstructionController.ConstructionState.Editing)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.SpawnFlowerBedMenu(this.currentMesh);
+        }
     }
 
     override public void DeSelect()
