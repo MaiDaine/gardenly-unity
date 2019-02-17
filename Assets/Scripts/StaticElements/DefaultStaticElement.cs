@@ -65,7 +65,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
         serializableItem.transform = this.transform;
         serializableItem.subType = subType;
-        tmp.type = SerializationController.ItemType.WallHandler;
+        tmp.type = SerializationController.ItemType.DefaultStaticElement;
         tmp.serializedData = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
