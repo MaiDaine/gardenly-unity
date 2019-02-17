@@ -5,20 +5,23 @@ using UnityEngine;
 public class ConstructionController : MonoBehaviour
 {
     public enum ConstructionState { Off, Positioning, Building, Editing };
-
     public static ConstructionController instance = null;
+    public float snapDistance = 0.15f;
 
     private Camera Camera;
     private GridController Grid;
-    private const int layerMaskInteractible = (1 << 9);
-    private const int layerMask = 1 << 10;
     private Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-    private float snapDistance = 0.15f;
     private ConstructionState currentState = ConstructionState.Off;
     private GhostHandler Ghost = null;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
     public int flowerbedCount = 0;
+
+    public void Start()
+    {
+        Camera = Camera.main;
+        Grid = GetComponent<GridController>();
+    }
 
     void Awake()
     {
@@ -32,13 +35,6 @@ public class ConstructionController : MonoBehaviour
     public void SetConstructionState(ConstructionState state)
     {
         currentState = state;
-    }
-
-    public void Init(Camera main, float inSnapDistance, GridController grid)
-    {
-        Camera = main;
-        snapDistance = inSnapDistance;
-        Grid = grid;
     }
 
     public void Cancel()
@@ -64,8 +60,7 @@ public class ConstructionController : MonoBehaviour
     public void SpawnGhost(GhostHandler GhostRef)
     {
         if (currentState != ConstructionState.Off)
-            Cancel();
-        //TODO TEST;
+            Cancel();//TODO TEST;
         Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
         currentState = ConstructionState.Positioning;
         Grid.activ = true;
@@ -81,7 +76,7 @@ public class ConstructionController : MonoBehaviour
         }
     }
     
-    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = layerMask)
+    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = PlayerController.layerMaskStatic)
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
@@ -98,7 +93,7 @@ public class ConstructionController : MonoBehaviour
         return false;
     }
 
-    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, out ISnapable snapable, int layer = layerMask)
+    public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, out ISnapable snapable, int layer = PlayerController.layerMaskStatic)
     {
         Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
