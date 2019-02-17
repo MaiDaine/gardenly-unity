@@ -34,6 +34,8 @@ public class UIController : MonoBehaviour
         Canvas canvas;
         Vector3 position;
 
+        if (menuOpen)
+            this.menu.DestroyMenu();
         if (mesh == null)
             position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
         else

@@ -95,8 +95,7 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
     {
         UIController controller = Camera.main.GetComponent<UIController>();
 
-        if (!UIController.menuOpen)
-            controller.SpawnFlowerBedMenu(this);
+        controller.SpawnFlowerBedMenu(this);
         if (state == ConstructionController.ConstructionState.Editing)
         {
             UpdateStraight();

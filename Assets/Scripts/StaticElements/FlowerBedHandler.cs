@@ -36,6 +36,13 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     {
         SerializationController.instance.RemoveFromList(this);
         ConstructionController.instance.flowerbedCount -= 1;
+        Debug.Log("COUNT : " + elements.Count);
+        for (int i = 0; i < elements.Count; i++)
+        {
+            if (elements[i] != null)
+                Destroy(elements[i].gameObject);
+        }
+        elements.Clear();
     }
 
     private void LateUpdate()
@@ -120,8 +127,11 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     //ISelectable overload
     override public void Select(ConstructionController.ConstructionState state)
     {
-        //if (state == ConstructionController.ConstructionState.Off)
-            //TODO : interface
+        if (state == ConstructionController.ConstructionState.Off || state == ConstructionController.ConstructionState.Editing)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.SpawnFlowerBedMenu(this.currentMesh);
+        }
     }
 
     override public void DeSelect()

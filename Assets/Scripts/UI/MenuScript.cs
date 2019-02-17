@@ -41,6 +41,9 @@ public class MenuScript : MonoBehaviour
         this.rotateState = false;
         this.isMoving = false;
         UIController.menuOpen = false;
+        if (constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
+            && flowerBedHandler != null)
+            this.register();
     }
 
     public void DestroyGhost(GhostHandler ghost)

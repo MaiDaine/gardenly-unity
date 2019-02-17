@@ -100,12 +100,9 @@ public class WallHandler : GhostHandler, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        Transform previewUI = uIController.GetPreviewUI();
-
-        if (previewUI == null)
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        if (state == ConstructionController.ConstructionState.Off)
             uIController.SpawnDynMenu(this, uIController.wallMenu);
-        else if (!previewUI.gameObject.activeSelf)
-            previewUI.gameObject.SetActive(true);
 
         Text.gameObject.SetActive(true);
     }

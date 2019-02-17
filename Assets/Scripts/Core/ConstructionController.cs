@@ -59,6 +59,8 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
+        if (UIController.menuOpen)
+            Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
         if (currentState != ConstructionState.Off)
             Cancel();//TODO TEST;
         Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);

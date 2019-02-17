@@ -42,12 +42,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     //ISELECTABLE
     public override void Select(ConstructionController.ConstructionState state)
     {
-        Transform previewUI = uIController.GetPreviewUI();
-
-        if (previewUI == null)
-            uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-        else if (!previewUI.gameObject.activeSelf)
-            previewUI.gameObject.SetActive(true);
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        if (state == ConstructionController.ConstructionState.Off)
+                uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
     }
 
 
