@@ -44,8 +44,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-            Debug.Log(ConstructionController.instance.GetConstructionState());
         if (Input.GetKeyDown(KeyCode.Keypad6))
             CombineMesh();
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing

@@ -61,7 +61,7 @@ public class SpawnController : MonoBehaviour
                             staticElement = Instantiate(DSElements[3], Vector3.zero, Quaternion.identity);
                             break;
                         default:
-                            Debug.Log("Serialization Error");
+                            ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
                             return;
                     }
                     staticElement.DeSerialize(data[i].serializedData);
@@ -75,7 +75,7 @@ public class SpawnController : MonoBehaviour
                         case FlowerBedElement.FlowerBedElementType.Flower01:
                             break;
                         default:
-                            Debug.Log("Serialization Error");
+                            ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
                             return;
                     }
                     break;
