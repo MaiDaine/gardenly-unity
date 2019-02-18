@@ -67,22 +67,26 @@ public class SpawnController : MonoBehaviour
                     staticElement.DeSerialize(data[i].serializedData);
                     break;
 
-                case SerializationController.ItemType.FlowerBedElement:
-                    FlowerBedElement.SerializableItem FBEsubType;
-                    FBEsubType = JsonUtility.FromJson<FlowerBedElement.SerializableItem>(data[i].serializedData);
-                    switch (FBEsubType.subType)
-                    {
-                        case FlowerBedElement.FlowerBedElementType.Flower01:
-                            break;
-                        default:
-                            ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
-                            return;
-                    }
-                    break;
-
                 default:
                     break;
             }
         }
+    }
+
+    public FlowerBedElement SpawnFlowerBedElement(SerializationData data)
+    {
+        FlowerBedElement elem = null;
+        FlowerBedElement.SerializableItem tmp = JsonUtility.FromJson<FlowerBedElement.SerializableItem>(data.serializedData);
+        switch (tmp.subType)
+        {
+            case FlowerBedElement.FlowerBedElementType.Flower01:
+                elem = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
+                elem.DeSerialize(data.serializedData);
+                break;
+            //default :
+                //ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
+                //return null;
+        }
+        return elem;
     }
 }
