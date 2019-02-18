@@ -81,7 +81,7 @@ public class MenuScript : MonoBehaviour
     }
 
     public void RotateGhost()
-    {
+    {     
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
         if (ghost.transform.eulerAngles.x == 0)

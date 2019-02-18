@@ -12,6 +12,8 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
 
+    public static FlowerBedHandler instance = null;
+
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
@@ -19,7 +21,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     void Awake()
     {
-       
+        instance = this;
     }
 
     void Start()
@@ -78,6 +80,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
             meshFilters[i].gameObject.SetActive(false);
+            //Destroy(meshFilters[i].gameObject);
             i++;
         }
         this.GetComponent<MeshFilter>().mesh = new Mesh();

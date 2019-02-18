@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ErrorHandler : MonoBehaviour
 {
-    public static ErrorHandler instance;
+    public static ErrorHandler instance = null;
 
     private void Awake()
     {
@@ -17,8 +17,8 @@ public class ErrorHandler : MonoBehaviour
 
     public void ErrorMessage(string msg)
     {
-        Text errorMsg = this.GetComponent<Text>();
+        /*Text errorMsg = this.GetComponent<Text>();
 
-        errorMsg.text = msg;
+        errorMsg.text = msg;*/
     }
 }
