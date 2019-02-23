@@ -72,7 +72,10 @@ public class UIController : MonoBehaviour
         FlowerBedHandler handler = FlowerBedHandler.instance;
 
         if (menu != null && menu.rotateState)
+        {
+            ErrorHandler.instance.ErrorMessage("Rotation still active");
             return;
+        }
         SpawnMenu(handler, flowerBedMenu, mesh);
         menu.SetFlowerBedHandler(handler);
     }

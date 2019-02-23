@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 500313992507823282}
   - component: {fileID: 5848085319270114232}
   - component: {fileID: 5007713659454275582}
+  - component: {fileID: 7597030928426193009}
   m_Layer: 10
   m_Name: F_foliageplant_10_LOD0_01 1
   m_TagString: Untagged
@@ -94,3 +95,17 @@ MonoBehaviour:
   type: 4
   subType: 0
   correctedRotation: {x: 0, y: 0, z: 0}
+--- !u!64 &7597030928426193009
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344667881147691538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 271c8dffd0b3d2a40a6da8c5b06f0394, type: 3}
