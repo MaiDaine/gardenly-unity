@@ -37,9 +37,8 @@ public class SerializationController : MonoBehaviour
         items.Remove(item);
     }
 
-    public string Serialize(out int numberElems)
+    public void Serialize()
     {
-        string result;
         ISerializable[] a = items.ToArray();
         SerializationData[] elems = new SerializationData[a.Length];
         SerializedData serializedData;
@@ -47,9 +46,8 @@ public class SerializationController : MonoBehaviour
         for (int i = 0; i < a.Length; i++)
             elems[i] = a[i].Serialize();
         serializedData.data = elems;
-        numberElems = a.Length;
-        result = JsonUtility.ToJson(serializedData);
-        return (result);
+        serializationElemNb = a.Length;
+        serializationJSON = JsonUtility.ToJson(serializedData);
     }
 
     public SerializationData[] DeSerialize(string json, int itemNumber)

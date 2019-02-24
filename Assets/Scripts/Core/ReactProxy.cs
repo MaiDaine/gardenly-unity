@@ -10,7 +10,9 @@ public class ReactProxy : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void UnsavedDataCheck(bool result);
     [DllImport("__Internal")]
-    private static extern void SaveScene(string json, int nbElem);
+    private static extern void PreSaveScene(int nbElems);
+    [DllImport("__Internal")]
+    private static extern void SaveScene(string json);
 
     private void Awake()
     {
@@ -23,8 +25,9 @@ public class ReactProxy : MonoBehaviour
     //Link To REACT
     public void ExportScene()
     {
-        SerializationController.instance.serializationJSON = SerializationController.instance.Serialize(out SerializationController.instance.serializationElemNb);
-        SaveScene(SerializationController.instance.serializationJSON, SerializationController.instance.serializationElemNb);
+        SerializationController.instance.Serialize();
+        PreSaveScene(SerializationController.instance.serializationElemNb);
+        SaveScene(SerializationController.instance.serializationJSON);
     }
 
     //Called from REACT
