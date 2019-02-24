@@ -13,3 +13,8 @@ mergeInto(LibraryManager.library, {
     ReactUnityWebGL.SaveScene(Pointer_stringify(json), score);
   }
 });
+mergeInto(LibraryManager.library, {
+	UnsavedDataCheck: function(result) {
+		ReactUnityWebGL.UnsavedDataCheck(result);
+	}
+});

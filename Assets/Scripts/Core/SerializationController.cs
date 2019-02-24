@@ -10,32 +10,8 @@ public class SerializationController : MonoBehaviour
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();
-    private int serializationElemNb;
-    private string serializationJSON;
-
-    [DllImport("__Internal")]
-    private static extern void SaveScene(string json, int nbElem);
-
-    public void PreInitScene(int nbElem)
-    {
-        serializationElemNb = nbElem;
-    }
-
-    public void InitScene(string json)
-    {
-        SpawnController.instance.SpawnScene(DeSerialize(json, serializationElemNb));
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
-            Debug.Log(items.ToArray().Length);
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            serializationJSON = Serialize(out serializationElemNb);
-            SaveScene(serializationJSON, serializationElemNb);
-        }
-    }
+    public int serializationElemNb;
+    public string serializationJSON;
 
     void Awake()
     {
@@ -43,6 +19,12 @@ public class SerializationController : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(this.gameObject);
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
+            Debug.Log(items.ToArray().Length);
     }
 
     public void AddToList(ISerializable item)
