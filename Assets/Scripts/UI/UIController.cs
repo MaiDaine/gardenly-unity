@@ -61,20 +61,29 @@ public class UIController : MonoBehaviour
 
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
+        if (menu != null && menu.rotateState)
+            return;
         SpawnMenu(ghost, typeMenu);
         menu.SetGhostRef(ghost);
     }
 
     public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
     {
-        FlowerBedHandler handler = SpawnController.instance.FlowerBedHandlerRef;
+        FlowerBedHandler handler = FlowerBedHandler.instance;
 
+        if (menu != null && menu.rotateState)
+        {
+            ErrorHandler.instance.ErrorMessage("Rotation still active");
+            return;
+        }
         SpawnMenu(handler, flowerBedMenu, mesh);
         menu.SetFlowerBedHandler(handler);
     }
 
     public void SpawnWallMenu(GhostHandler ghost)
     {
+        if (menu != null && menu.rotateState)
+            return;
         SpawnMenu(ghost, wallMenu);
         menu.SetGhostRef(ghost);
     }
