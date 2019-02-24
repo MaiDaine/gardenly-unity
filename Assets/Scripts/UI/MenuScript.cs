@@ -84,7 +84,10 @@ public class MenuScript : MonoBehaviour
     {
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
-        if (ghost.transform.eulerAngles.x == 0)
+        
+        Debug.Log("GLROT " + ghost.gameObject.transform.localEulerAngles);
+        
+        if (ghost.transform.localEulerAngles.x <= 270)
             ghost.transform.Rotate(Vector3.up, -rotx);
         else
             ghost.transform.Rotate(Vector3.forward, -rotx);

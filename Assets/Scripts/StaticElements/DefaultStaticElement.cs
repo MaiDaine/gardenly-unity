@@ -15,9 +15,13 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private SerializableItem serializableItem;
 
-    void Start()
+    void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
+    }
+
+    void Start()
+    {
         this.transform.eulerAngles += correctedRotation;
         SerializationController.instance.AddToList(this);
     }
@@ -29,17 +33,20 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     void OnMouseDrag()
     {
-        MenuScript menu = uIController.GetMenuScript();
+        if (uIController != null)
+        {
+            MenuScript menu = uIController.GetMenuScript();
 
-        if (menu != null && menu.rotateState)
-            menu.RotateGhost();
+            if (menu != null && menu.rotateState)
+                menu.RotateGhost();
+        }
     }
 
 
     //ISELECTABLE
     public override void Select(ConstructionController.ConstructionState state)
     {
-        UIController uIController = Camera.main.GetComponent<UIController>();
+        //UIController uIController = Camera.main.GetComponent<UIController>();
         if (state == ConstructionController.ConstructionState.Off)
                 uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
     }
