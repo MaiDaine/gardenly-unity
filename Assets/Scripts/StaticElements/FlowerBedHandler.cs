@@ -46,8 +46,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-            Debug.Log(ConstructionController.instance.GetConstructionState());
         if (Input.GetKeyDown(KeyCode.Keypad6))
             CombineMesh();
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing
@@ -152,7 +150,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         public Vector3 meshPosition;
         public int meshNumber;
         public SerializableList pointsList;
-        public List<FlowerBedElement> FBElements;
+        public List<SerializationData> FBElements;
     }
 
     public SerializationData Serialize()
@@ -176,7 +174,10 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         serializableItem.meshPosition = this.transform.position;
         serializableItem.meshNumber = meshCount;
         serializableItem.pointsList = tmpList;
-        serializableItem.FBElements = elements;
+
+        serializableItem.FBElements = new List<SerializationData>();
+        foreach (FlowerBedElement elem in elements)
+            serializableItem.FBElements.Add(elem.Serialize());
         tmp.serializedData = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
@@ -196,9 +197,10 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
             meshes.Add(currentMesh);
             meshCount++;
         }
-
-        //TODO REINSTANTIATE FBELEMENTS
         CombineMesh();
+
+        foreach (SerializationData elem in serializableItem.FBElements)
+            elements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
     }
 
 }

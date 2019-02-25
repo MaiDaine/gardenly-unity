@@ -10,32 +10,8 @@ public class SerializationController : MonoBehaviour
 
     public static SerializationController instance = null;
     private List<ISerializable> items = new List<ISerializable>();
-    private int serializationElemNb;
-    private string serializationJSON;
-
-    [DllImport("__Internal")]
-    private static extern void SaveScene(string json, int nbElem);
-
-    public void PreInitScene(int nbElem)
-    {
-        serializationElemNb = nbElem;
-    }
-
-    public void InitScene(string json)
-    {
-        SpawnController.instance.SpawnScene(DeSerialize(json, serializationElemNb));
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
-            Debug.Log(items.ToArray().Length);
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            serializationJSON = Serialize(out serializationElemNb);
-            SaveScene(serializationJSON, serializationElemNb);
-        }
-    }
+    public int serializationElemNb;
+    public string serializationJSON;
 
     void Awake()
     {
@@ -43,6 +19,12 @@ public class SerializationController : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(this.gameObject);
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
+            Debug.Log(items.ToArray().Length);
     }
 
     public void AddToList(ISerializable item)
@@ -55,9 +37,8 @@ public class SerializationController : MonoBehaviour
         items.Remove(item);
     }
 
-    public string Serialize(out int numberElems)
+    public void Serialize()
     {
-        string result;
         ISerializable[] a = items.ToArray();
         SerializationData[] elems = new SerializationData[a.Length];
         SerializedData serializedData;
@@ -65,9 +46,8 @@ public class SerializationController : MonoBehaviour
         for (int i = 0; i < a.Length; i++)
             elems[i] = a[i].Serialize();
         serializedData.data = elems;
-        numberElems = a.Length;
-        result = JsonUtility.ToJson(serializedData);
-        return (result);
+        serializationElemNb = a.Length;
+        serializationJSON = JsonUtility.ToJson(serializedData);
     }
 
     public SerializationData[] DeSerialize(string json, int itemNumber)

@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
         if (ConstructionController.instance.MouseRayCast(out pos, out hit))
             Debug.DrawLine(Camera.main.transform.position, pos);
 
+        if (Input.GetKeyDown(KeyCode.L))
+            ReactProxy.instance.ExportScene();
+
+
         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Off)
          {
              if (Input.GetMouseButtonDown(0))
