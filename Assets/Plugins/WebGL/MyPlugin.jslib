@@ -1,7 +1,7 @@
 mergeInto(LibraryManager.library, {
 
   PreSaveScene: function (nbElems) {
-    ReactUnityWebGL.SaveScene(nbElems);
+    ReactUnityWebGL.PreSaveScene(nbElems);
   },
 
   SaveScene: function(elems) {

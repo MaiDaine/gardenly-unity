@@ -42,7 +42,7 @@ public class ReactProxy : MonoBehaviour
             SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json, SerializationController.instance.serializationElemNb));
     }
 
-    public bool IsUnsavecWorkLeft()
+    public bool IsUnsavedWorkLeft()
     {
         //UnsavedDataCheck(true);//TODO CTRL+Z 
         return false;
