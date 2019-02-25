@@ -50,7 +50,8 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void StartPreview(Vector3 position)
     {
-        Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+      if (Text == null)
+          Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
             return;
@@ -127,7 +128,7 @@ public class WallHandler : GhostHandler, ISerializable
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude) 
+        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
             && ((start - currentPos).magnitude < snapDistance))
         {
             currentPos = start;

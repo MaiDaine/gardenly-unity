@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ConstructionMenu : MonoBehaviour
-{ 
+{
     public bool state = false;
+
+    public static ConstructionMenu instance = null;
+
+    void Awake()
+    {
+      //if (instance == null)
+      instance = this;
+      //else if (instance != this)
+        //Destroy(instance);
+    }
 
     void Start()
     {

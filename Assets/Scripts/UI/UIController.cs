@@ -22,12 +22,12 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void LateUpdate()
     {
-        
+
     }
 
     void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
@@ -98,9 +98,15 @@ public class UIController : MonoBehaviour
     {
         RectTransform rectTransform = gardenMenu.GetComponent<RectTransform>();
         Vector3 tmpPos;
+/*        Component[] constructionMenu = gardenMenu.GetComponentsInChildren<Transform>();
+
+        /*foreach (Component t in  constructionMenu)
+        {
+          Debug.Log(t);
+        }*/
 
         tmpPos = rectTransform.position;
-        if (!subMenuOpen)
+        if (ConstructionMenu.instance.state)
             tmpPos.y -= 90;
         else
             tmpPos.y += 90;

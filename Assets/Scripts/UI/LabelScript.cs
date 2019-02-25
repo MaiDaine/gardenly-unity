@@ -16,7 +16,6 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     void Start()
     {
         image = transform.GetComponent<Image>();
-        Debug.Log(image);
         pressed = false;
         if (image != null)
             image.color = color;
@@ -29,7 +28,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else
             pressed = true;
     }
-   
+
     public void ChangeColor()
     {
         isPressed();

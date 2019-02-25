@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateState: 0
+  isMoving: 0
 --- !u!1 &6826039653415984221
 GameObject:
   m_ObjectHideFlags: 0
