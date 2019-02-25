@@ -16,8 +16,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     void Start()
     {
         image = transform.GetComponent<Image>();
+        Debug.Log(image);
         pressed = false;
-        image.color = color;
+        if (image != null)
+            image.color = color;
     }
 
     public void isPressed()
@@ -34,19 +36,22 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (pressed)
         {
             text.color = actionColor;
-            image.color = actionColor;
+            if (image != null)
+                image.color = actionColor;
         }
         else
         {
             text.color = color;
-            image.color = color;
+            if (image != null)
+                image.color = color;
         }
     }
 
     public void ResetColor()
     {
         text.color = color;
-        image.color = color;
+        if (image != null)
+            image.color = color;
         pressed = false;
     }
 
@@ -55,7 +60,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (!pressed)
         {
             text.color = actionColor;
-            image.color = actionColor;
+            if (image != null)
+                image.color = actionColor;
         }
     }
 
@@ -64,7 +70,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (!pressed)
         {
             text.color = color;
-            image.color = color;
+            if (image != null)
+                image.color = color;
         }
     }
 }

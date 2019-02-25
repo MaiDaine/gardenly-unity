@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
 
     protected Transform previewUI;
     protected MenuScript menu;
+    protected bool subMenuOpen = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -86,5 +87,23 @@ public class UIController : MonoBehaviour
             return;
         SpawnMenu(ghost, wallMenu);
         menu.SetGhostRef(ghost);
+    }
+
+    public void SubMenuOpen()
+    {
+        subMenuOpen = !subMenuOpen;
+    }
+
+    public void MoveSubMenu(Transform gardenMenu)
+    {
+        RectTransform rectTransform = gardenMenu.GetComponent<RectTransform>();
+        Vector3 tmpPos;
+
+        tmpPos = rectTransform.position;
+        if (!subMenuOpen)
+            tmpPos.y -= 90;
+        else
+            tmpPos.y += 90;
+        rectTransform.position = tmpPos;
     }
 }
