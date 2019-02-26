@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         if (ConstructionController.instance.MouseRayCast(out pos, out hit, layerMaskStatic))
         {
             ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+
             if (selectable != null)
             {
                 currentSelection.Add(selectable);

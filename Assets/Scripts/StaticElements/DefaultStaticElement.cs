@@ -10,7 +10,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
-  
+
     protected UIController uIController;
 
     private SerializableItem serializableItem;
@@ -46,9 +46,17 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     //ISELECTABLE
     public override void Select(ConstructionController.ConstructionState state)
     {
-        //UIController uIController = Camera.main.GetComponent<UIController>();
         if (state == ConstructionController.ConstructionState.Off)
                 uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
+    }
+
+    public override void DeSelect()
+    {
+      if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
+      {
+          uIController.GetMenuScript().rotateState = false;
+          uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+      }
     }
 
 
