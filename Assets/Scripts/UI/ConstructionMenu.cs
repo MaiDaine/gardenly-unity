@@ -5,16 +5,7 @@ using UnityEngine;
 public class ConstructionMenu : MonoBehaviour
 {
     public bool state = false;
-
-    public static ConstructionMenu instance = null;
-
-    void Awake()
-    {
-      //if (instance == null)
-      instance = this;
-      //else if (instance != this)
-        //Destroy(instance);
-    }
+    public bool isChild = false;
 
     void Start()
     {
@@ -40,26 +31,22 @@ public class ConstructionMenu : MonoBehaviour
         ConstructionMenu[] tmpMenus = this.GetComponentsInChildren<ConstructionMenu>();
 
         tmpPos = rectTransform.position;
-        Debug.Log("STATE " + state);
         if (tmpMenus != null && tmpMenus.Length > 1)
         {
-          foreach (ConstructionMenu menu in tmpMenus)
-          {
-            if (menu.state)
-              {
-                Debug.Log("MENU " + menu.transform.parent.name + "MSTATE " + menu.state);
-                  menu.state = false;
-                  if (state)
-                    tmpPos.y -= 90;
-                  else
-                    tmpPos.y += 90;
-              }
-          }
+            foreach (ConstructionMenu menu in tmpMenus)
+            {
+                tmpPos.y += 90;
+                if (menu.isChild)
+                    menu.ChangeState();
+            }
         }
-        if (state)
-            tmpPos.y -= 90;
         else
-            tmpPos.y += 90;
+        {
+            if (state)
+                tmpPos.y -= 90;
+            else
+                tmpPos.y += 90;
+        }
         rectTransform.position = tmpPos;
     }
 }
