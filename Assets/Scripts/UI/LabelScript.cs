@@ -34,13 +34,15 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         isPressed();
         if (pressed)
         {
-            text.color = actionColor;
+            if (text != null)
+                text.color = actionColor;
             if (image != null)
                 image.color = actionColor;
         }
         else
         {
-            text.color = color;
+            if (text != null)
+                text.color = color;
             if (image != null)
                 image.color = color;
         }
@@ -48,7 +50,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void ResetColor()
     {
-        text.color = color;
+        if (text != null)
+            text.color = color;
         if (image != null)
             image.color = color;
         pressed = false;
@@ -58,7 +61,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = actionColor;
+            if (text != null)
+                text.color = actionColor;
             if (image != null)
                 image.color = actionColor;
         }
@@ -68,7 +72,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = color;
+            if (text != null)
+                text.color = color;
             if (image != null)
                 image.color = color;
         }

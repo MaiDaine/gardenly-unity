@@ -136,7 +136,8 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     override public void DeSelect()
     {
-        //TODO : interface
+        // TODO si le menu bloque le ray cast appel destroymenu
+        //uIController.GetMenuScript().DestroyMenu();
     }
 
     //Serialization

@@ -57,6 +57,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
           uIController.GetMenuScript().rotateState = false;
           uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
       }
+        // TODO si le menu bloque le ray cast appel destroymenu
+        //uIController.GetMenuScript().DestroyMenu();
     }
 
 
