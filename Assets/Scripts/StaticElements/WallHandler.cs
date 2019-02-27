@@ -50,7 +50,8 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void StartPreview(Vector3 position)
     {
-        Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+      if (Text == null)
+          Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         Text.gameObject.SetActive(true);
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
             return;
@@ -121,13 +122,22 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (Text.gameObject != null)
             Text.gameObject.SetActive(false);
+        // Inutile si le deselect supprime le menu
+            if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
+            {
+                uIController.GetMenuScript().rotateState = false;
+                uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+            }
+        // TODO si le menu bloque le ray cast appel destroymenu
+        //uIController.GetMenuScript().DestroyMenu();
+
     }
 
 
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude) 
+        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
             && ((start - currentPos).magnitude < snapDistance))
         {
             currentPos = start;

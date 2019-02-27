@@ -35,13 +35,15 @@ public class ErrorHandler : MonoBehaviour
             errorMsg.text = "";
             startCount = false;
             timer = 5;
+            this.gameObject.SetActive(false);
         }
     }
 
     public void ErrorMessage(string msg)
     {
+        this.gameObject.SetActive(true);
         errorMsg = this.GetComponent<Text>();
-
+        Debug.Log("ERROR " + this.gameObject.activeSelf);
         if (errorMsg != null)
         {
             errorMsg.text = msg;

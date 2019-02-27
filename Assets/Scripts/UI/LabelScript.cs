@@ -17,7 +17,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         image = transform.GetComponent<Image>();
         pressed = false;
-        image.color = color;
+        if (image != null)
+            image.color = color;
     }
 
     public void isPressed()
@@ -27,26 +28,32 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else
             pressed = true;
     }
-   
+
     public void ChangeColor()
     {
         isPressed();
         if (pressed)
         {
-            text.color = actionColor;
-            image.color = actionColor;
+            if (text != null)
+                text.color = actionColor;
+            if (image != null)
+                image.color = actionColor;
         }
         else
         {
-            text.color = color;
-            image.color = color;
+            if (text != null)
+                text.color = color;
+            if (image != null)
+                image.color = color;
         }
     }
 
     public void ResetColor()
     {
-        text.color = color;
-        image.color = color;
+        if (text != null)
+            text.color = color;
+        if (image != null)
+            image.color = color;
         pressed = false;
     }
 
@@ -54,8 +61,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = actionColor;
-            image.color = actionColor;
+            if (text != null)
+                text.color = actionColor;
+            if (image != null)
+                image.color = actionColor;
         }
     }
 
@@ -63,8 +72,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!pressed)
         {
-            text.color = color;
-            image.color = color;
+            if (text != null)
+                text.color = color;
+            if (image != null)
+                image.color = color;
         }
     }
 }

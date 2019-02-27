@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
@@ -68,11 +69,12 @@ public class MenuScript : MonoBehaviour
 
     public void MoveGhost()
     {
-        if (!rotateState)
-        {
-            isMoving = true;
-            constructionController.SetGhost(ghost);
-        }
+      LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+
+      tmpScript.ResetColor();
+      rotateState = false;
+      isMoving = true;
+      constructionController.SetGhost(ghost);
     }
 
     public void StartRotate()
@@ -84,9 +86,7 @@ public class MenuScript : MonoBehaviour
     {
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
-        
-        Debug.Log("GLROT " + ghost.gameObject.transform.localEulerAngles);
-        
+
         if (ghost.transform.localEulerAngles.x <= 270)
             ghost.transform.Rotate(Vector3.up, -rotx);
         else

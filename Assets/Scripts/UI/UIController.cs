@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
 
     protected Transform previewUI;
     protected MenuScript menu;
+    protected bool subMenuOpen = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +22,12 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void LateUpdate()
     {
-        
+
     }
 
     void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
@@ -62,7 +63,9 @@ public class UIController : MonoBehaviour
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
         if (menu != null && menu.rotateState)
-            return;
+        {
+          return;
+        }
         SpawnMenu(ghost, typeMenu);
         menu.SetGhostRef(ghost);
     }
@@ -73,7 +76,6 @@ public class UIController : MonoBehaviour
 
         if (menu != null && menu.rotateState)
         {
-            ErrorHandler.instance.ErrorMessage("Rotation still active");
             return;
         }
         SpawnMenu(handler, flowerBedMenu, mesh);
@@ -86,5 +88,13 @@ public class UIController : MonoBehaviour
             return;
         SpawnMenu(ghost, wallMenu);
         menu.SetGhostRef(ghost);
+    }
+
+    public void SubMenuOpen(ConstructionMenu instance)
+    {
+      if (instance.state)
+        subMenuOpen = false;
+      else
+        subMenuOpen = true;
     }
 }
