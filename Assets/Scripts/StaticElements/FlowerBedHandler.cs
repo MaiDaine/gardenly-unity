@@ -63,6 +63,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     public void CombineMesh()
     {
+        Debug.Log("Combine");
         int i = 0;
         MeshFilter[] meshFilters = new MeshFilter[meshCount];
         foreach (FlowerBedMesh mesh in meshes)
@@ -83,12 +84,17 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         }
         this.GetComponent<MeshFilter>().mesh = new Mesh();
         this.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+        this.GetComponent<MeshFilter>().mesh.RecalculateBounds();
+        this.GetComponent<MeshFilter>().mesh.RecalculateNormals();
+        this.GetComponent<MeshFilter>().mesh.RecalculateTangents();
         this.gameObject.SetActive(true);
         this.GetComponent<MeshRenderer>().material = material;
         this.transform.position = new Vector3(0, 0, 0);
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
         this.GetComponent<MeshCollider>().sharedMesh = this.GetComponent<MeshFilter>().mesh;
         this.GetComponent<MeshCollider>().enabled = true;
+        UIController controller = Camera.main.GetComponent<UIController>();
+        controller.GetMenuScript().DestroyMenu();
     }
 
     public override void StartPreview(Vector3 position)
@@ -110,6 +116,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     public void SpawnMesh()
     {
+        //Debug.Log("Spawn");
         if (currentMesh != null)
         {
             currentMesh.DeSelect();
