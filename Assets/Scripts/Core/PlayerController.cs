@@ -95,6 +95,8 @@ public class PlayerController : MonoBehaviour
 
     public void ForcedSelection(ISelectable elem)
     {
+        foreach (ISelectable item in currentSelection)
+            item.DeSelect();
         currentSelection.Clear();
         currentSelection.Add(elem);
     }

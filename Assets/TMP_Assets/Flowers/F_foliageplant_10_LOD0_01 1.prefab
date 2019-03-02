@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5848085319270114232}
   - component: {fileID: 5007713659454275582}
   - component: {fileID: 7597030928426193009}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: F_foliageplant_10_LOD0_01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

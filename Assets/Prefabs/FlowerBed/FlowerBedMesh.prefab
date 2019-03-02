@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7824842893579240894}
   - component: {fileID: 815548044933981863}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlowerBedMesh
   m_TagString: FlowerBed
   m_Icon: {fileID: 0}
