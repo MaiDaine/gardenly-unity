@@ -16,9 +16,13 @@ public class MenuFlowerBedScript : MonoBehaviour
     {
         if (constructionController.StateIsOff())
         {
-            Destroy(this.flowerBedHandler.gameObject);
-            Destroy(this.flowerBedHandler);
             DestroyMenu();
+            foreach (FlowerBedMesh mesh in this.flowerBedHandler.GetMeshes())
+            {
+                Destroy(mesh);
+            }
+           Destroy(this.flowerBedHandler.gameObject);
+           Destroy(this.flowerBedHandler);
         }
     }
 

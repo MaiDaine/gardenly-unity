@@ -9,9 +9,7 @@ public class MenuScript : MonoBehaviour
     public bool isMoving = false;
 
     private GhostHandler ghost;
-//    private Camera player;
     private ConstructionController constructionController;
- //   private FlowerBedHandler flowerBedHandler;
 
     void Start()
     {

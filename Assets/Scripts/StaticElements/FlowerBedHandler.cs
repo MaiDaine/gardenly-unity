@@ -12,17 +12,10 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
 
-    public static FlowerBedHandler instance = null;
-
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
     private List<FlowerBedElement> elements = new List<FlowerBedElement>();
-
-    void Awake()
-    {
-        instance = this;
-    }
 
     void Start()
     {
@@ -124,6 +117,16 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         currentMesh.CustomStart(this);
         meshes.Add(currentMesh);
         meshCount++;
+    }
+
+    public FlowerBedMesh GetMesh()
+    {
+        return currentMesh;
+    }
+
+    public List<FlowerBedMesh> GetMeshes()
+    {
+        return meshes;
     }
 
 
