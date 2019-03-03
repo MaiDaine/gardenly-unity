@@ -93,8 +93,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
         this.GetComponent<MeshCollider>().sharedMesh = this.GetComponent<MeshFilter>().mesh;
         this.GetComponent<MeshCollider>().enabled = true;
-        UIController controller = Camera.main.GetComponent<UIController>();
-        controller.GetMenuScript().DestroyMenu();
     }
 
     public override void StartPreview(Vector3 position)

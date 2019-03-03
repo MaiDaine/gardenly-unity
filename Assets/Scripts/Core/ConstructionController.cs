@@ -61,6 +61,8 @@ public class ConstructionController : MonoBehaviour
     {
         if (UIController.menuOpen)
             Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
+        if (UIController.flowerBedMenuOpen)
+            Camera.main.GetComponent<UIController>().GetFlowerBedMenuScript().DestroyMenu();
         if (currentState != ConstructionState.Off)
             Cancel();//TODO TEST;
         Ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);

@@ -21,17 +21,18 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             image.color = color;
     }
 
-    public void isPressed()
+    public void IsPressed()
     {
-        if (pressed)
+        pressed = !pressed;
+        /*if (pressed)
             pressed = false;
         else
-            pressed = true;
+            pressed = true;*/
     }
 
     public void ChangeColor()
     {
-        isPressed();
+        IsPressed();
         if (pressed)
         {
             if (text != null)

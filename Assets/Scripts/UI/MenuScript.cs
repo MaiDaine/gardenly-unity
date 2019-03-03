@@ -9,20 +9,18 @@ public class MenuScript : MonoBehaviour
     public bool isMoving = false;
 
     private GhostHandler ghost;
-    private Camera player;
+//    private Camera player;
     private ConstructionController constructionController;
-    private FlowerBedHandler flowerBedHandler;
+ //   private FlowerBedHandler flowerBedHandler;
 
-    // Start is called before the first frame update
     void Start()
     {
         constructionController = ConstructionController.instance;
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-        if (ghost != null && !rotateState && flowerBedHandler == null)
+        if (ghost != null && !rotateState)
             this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 3, ghost.transform.position.z);
     }
 
@@ -42,9 +40,6 @@ public class MenuScript : MonoBehaviour
         this.rotateState = false;
         this.isMoving = false;
         UIController.menuOpen = false;
-        if (constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
-            && flowerBedHandler != null)
-            this.register();
     }
 
     public void DestroyGhost(GhostHandler ghost)
@@ -60,11 +55,6 @@ public class MenuScript : MonoBehaviour
     public void DestroyDynObj()
     {
         DestroyGhost(this.ghost);
-    }
-
-    public void DestroyFlowerBedHandler()
-    {
-        DestroyGhost(this.flowerBedHandler);
     }
 
     public void MoveGhost()
@@ -91,21 +81,5 @@ public class MenuScript : MonoBehaviour
             ghost.transform.Rotate(Vector3.up, -rotx);
         else
             ghost.transform.Rotate(Vector3.forward, -rotx);
-    }
-
-    public void SetFlowerBedHandler(FlowerBedHandler handler)
-    {
-        flowerBedHandler = handler;
-    }
-
-    public void register()
-    {
-        flowerBedHandler.CombineMesh();
-    }
-
-    public void addFlowerBedMesh()
-    {
-        flowerBedHandler.SpawnMesh();
-        constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
     }
 }
