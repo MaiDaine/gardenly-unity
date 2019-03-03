@@ -14,10 +14,7 @@ public class ErrorHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
+        this.gameObject.SetActive(false);
     }
 
     void Update()
@@ -42,8 +39,7 @@ public class ErrorHandler : MonoBehaviour
     public void ErrorMessage(string msg)
     {
         this.gameObject.SetActive(true);
-        errorMsg = this.GetComponent<Text>();
-        Debug.Log("ERROR " + this.gameObject.activeSelf);
+        errorMsg = this.GetComponentInChildren<Text>();
         if (errorMsg != null)
         {
             errorMsg.text = msg;
