@@ -69,7 +69,7 @@ public class UIController : MonoBehaviour
 
     public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
     {
-        FlowerBedHandler handler = SpawnController.instance.FlowerBedHandlerRef;
+        FlowerBedHandler handler = mesh.GetOwner();
 
         if (flowerBedMenuScript != null)
             return;

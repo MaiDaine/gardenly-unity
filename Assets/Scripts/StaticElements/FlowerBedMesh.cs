@@ -98,6 +98,7 @@ public class FlowerBedMesh : MonoBehaviour, ISelectable
         controller.SpawnFlowerBedMenu(this);
         if (state == ConstructionController.ConstructionState.Editing)
         {
+            owner.MeshSelected();
             UpdateStraight();
             for (int i = 0; i < 4; i++)
                 points[i].Activate();

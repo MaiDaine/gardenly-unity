@@ -129,6 +129,11 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         return meshes;
     }
 
+    public void MeshSelected()
+    {
+        foreach(FlowerBedMesh elem in meshes)
+            elem.DeSelect();
+    }
 
     //ISelectable overload
     override public void Select(ConstructionController.ConstructionState state)
