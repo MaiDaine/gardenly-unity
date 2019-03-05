@@ -8,27 +8,12 @@ public class UIController : MonoBehaviour
     public Transform flowerBedMenu;
     public Transform wallMenu;
     public static bool menuOpen = false;
+    public static bool flowerBedMenuOpen = false;
 
-    protected Transform previewUI;
-    protected MenuScript menu;
+    protected Transform previewUI = null;
+    protected MenuScript menu = null;
+    protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected bool subMenuOpen = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        previewUI = null;
-        menu = null;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void LateUpdate()
-    {
-
-    }
 
     void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
     {
@@ -37,6 +22,8 @@ public class UIController : MonoBehaviour
 
         if (menuOpen)
             this.menu.DestroyMenu();
+        else if (flowerBedMenuOpen)
+            this.flowerBedMenuScript.DestroyMenu();
         if (mesh == null)
             position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
         else
@@ -45,9 +32,16 @@ public class UIController : MonoBehaviour
         previewUI = Instantiate(menuType, position, Quaternion.identity);
         canvas = previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
-
-        menu = previewUI.GetComponent<MenuScript>();
-        menuOpen = true;
+        if (mesh == null)
+        {
+            menu = previewUI.GetComponent<MenuScript>();
+            menuOpen = true;
+        }
+        else
+        {
+            flowerBedMenuScript = previewUI.GetComponent<MenuFlowerBedScript>();
+            flowerBedMenuOpen = true;
+        }
     }
 
     public Transform GetPreviewUI()
@@ -60,26 +54,27 @@ public class UIController : MonoBehaviour
         return menu;
     }
 
+    public MenuFlowerBedScript GetFlowerBedMenuScript()
+    {
+        return flowerBedMenuScript;
+    }
+
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
         if (menu != null && menu.rotateState)
-        {
           return;
-        }
         SpawnMenu(ghost, typeMenu);
         menu.SetGhostRef(ghost);
     }
 
     public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
     {
-        FlowerBedHandler handler = FlowerBedHandler.instance;
+        FlowerBedHandler handler = mesh.GetOwner();
 
-        if (menu != null && menu.rotateState)
-        {
+        if (flowerBedMenuScript != null)
             return;
-        }
         SpawnMenu(handler, flowerBedMenu, mesh);
-        menu.SetFlowerBedHandler(handler);
+        flowerBedMenuScript.SetFlowerBedHandler(handler);
     }
 
     public void SpawnWallMenu(GhostHandler ghost)
@@ -88,13 +83,5 @@ public class UIController : MonoBehaviour
             return;
         SpawnMenu(ghost, wallMenu);
         menu.SetGhostRef(ghost);
-    }
-
-    public void SubMenuOpen(ConstructionMenu instance)
-    {
-      if (instance.state)
-        subMenuOpen = false;
-      else
-        subMenuOpen = true;
     }
 }

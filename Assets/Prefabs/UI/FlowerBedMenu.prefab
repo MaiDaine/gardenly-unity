@@ -115,8 +115,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5884256166495845473}
-        m_MethodName: register
+      - m_Target: {fileID: 8715711793969537720}
+        m_MethodName: CombineMesh
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5884256166495845473}
+      - m_Target: {fileID: 8715711793969537720}
         m_MethodName: DestroyMenu
         m_Mode: 1
         m_Arguments:
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5884256166495845473}
+      - m_Target: {fileID: 8715711793969537720}
         m_MethodName: DestroyFlowerBedHandler
         m_Mode: 1
         m_Arguments:
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 3692115306929964803}
   - component: {fileID: 3692115306929964800}
   - component: {fileID: 3692115306929964801}
-  - component: {fileID: 5884256166495845473}
+  - component: {fileID: 8715711793969537720}
   m_Layer: 5
   m_Name: FlowerBedMenu
   m_TagString: Untagged
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5884256166495845473
+--- !u!114 &8715711793969537720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -495,11 +495,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3692115306929964814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c2a42b505a6fd43903a89d66d61d1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 57a72a8b1ac48d54e888362362524fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateState: 0
-  isMoving: 0
 --- !u!1 &3692115307329336047
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,8 +765,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5884256166495845473}
-        m_MethodName: addFlowerBedMesh
+      - m_Target: {fileID: 8715711793969537720}
+        m_MethodName: AddFlowerBedMesh
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -12,17 +12,10 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     public FlowerBedMesh meshRef;
     public SerializableItem serializableItem;
 
-    public static FlowerBedHandler instance = null;
-
     private List<FlowerBedMesh> meshes = new List<FlowerBedMesh>();
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
     private List<FlowerBedElement> elements = new List<FlowerBedElement>();
-
-    void Awake()
-    {
-        instance = this;
-    }
 
     void Start()
     {
@@ -93,8 +86,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
         this.GetComponent<MeshCollider>().sharedMesh = this.GetComponent<MeshFilter>().mesh;
         this.GetComponent<MeshCollider>().enabled = true;
-        UIController controller = Camera.main.GetComponent<UIController>();
-        controller.GetMenuScript().DestroyMenu();
     }
 
     public override void StartPreview(Vector3 position)
@@ -128,6 +119,21 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         meshCount++;
     }
 
+    public FlowerBedMesh GetMesh()
+    {
+        return currentMesh;
+    }
+
+    public List<FlowerBedMesh> GetMeshes()
+    {
+        return meshes;
+    }
+
+    public void MeshSelected()
+    {
+        foreach(FlowerBedMesh elem in meshes)
+            elem.DeSelect();
+    }
 
     //ISelectable overload
     override public void Select(ConstructionController.ConstructionState state)
