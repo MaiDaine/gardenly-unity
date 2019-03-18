@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectsData
+public class ObjectsData : MonoBehaviour
 {
     public string objectName;
     public string description;
@@ -12,4 +12,5 @@ public class ObjectsData
     public float solidity;
     public int age;
     public Image image;
+    
 }

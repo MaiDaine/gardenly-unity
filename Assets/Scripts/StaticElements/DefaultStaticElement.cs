@@ -17,6 +17,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     void Awake()
     {
+        Debug.Log("AWAKE DEFAULT");
         uIController = Camera.main.GetComponent<UIController>();
     }
 
@@ -46,6 +47,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     //ISELECTABLE
     public override void Select(ConstructionController.ConstructionState state)
     {
+        uIController = Camera.main.GetComponent<UIController>();
         if (state == ConstructionController.ConstructionState.Off)
                 uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
     }

@@ -89,14 +89,20 @@ public class UIController : MonoBehaviour
 
     public void SetDataPanel(GhostHandler handler)
     {
-        ObjectsData data = handler.GetData();
+        ObjectsData tmp = handler.GetData();
         Text[] labels = dataPanel.GetComponentsInChildren<Text>();
         Slider[] sliders = dataPanel.GetComponentsInChildren<Slider>();
-       
-        labels[0].text = data.objectName;
-        labels[1].text = data.description;
-        sliders[0].value = data.water;
-        sliders[1].value = data.sunshine;
-        sliders[2].value = data.solidity;
+        Image[] icons = dataPanel.GetComponentsInChildren<Image>();
+        Button button;
+
+        labels[0].text = tmp.objectName;
+        labels[1].text = tmp.description;
+        sliders[0].value = tmp.water;
+        sliders[1].value = tmp.sunshine;
+        sliders[2].value = tmp.solidity;
+        icons[4].color = Color.green;
+
+        button = dataPanel.GetComponentInChildren<Button>();
+        button.onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });
     }
 }
