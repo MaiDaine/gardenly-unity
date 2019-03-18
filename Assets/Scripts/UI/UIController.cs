@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     public Transform dynamicObjectMenu;
     public Transform flowerBedMenu;
     public Transform wallMenu;
+    public Transform dataPanel;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
 
@@ -83,5 +85,18 @@ public class UIController : MonoBehaviour
             return;
         SpawnMenu(ghost, wallMenu);
         menu.SetGhostRef(ghost);
+    }
+
+    public void SetDataPanel(GhostHandler handler)
+    {
+        ObjectsData data = handler.GetData();
+        Text[] labels = dataPanel.GetComponentsInChildren<Text>();
+        Slider[] sliders = dataPanel.GetComponentsInChildren<Slider>();
+       
+        labels[0].text = data.objectName;
+        labels[1].text = data.description;
+        sliders[0].value = data.water;
+        sliders[1].value = data.sunshine;
+        sliders[2].value = data.solidity;
     }
 }

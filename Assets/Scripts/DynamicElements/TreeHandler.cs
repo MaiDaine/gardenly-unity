@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class TreeHandler : DynamicElemHandler
 {
-
-
-    
-    void Start()
+    void    Awake()
     {
-        
+        Debug.Log("AWAKE");
+        data.objectName = "Tree";
+        data.description = "this is a simple description of this Tree";
+        data.solidity = 0.4f;
+        data.water = 0.7f;
+        data.sunshine = 1f;
+        data.age = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    void    Start()
     {
-        
+        Debug.Log("START");
     }
+
+    public override ObjectsData GetData()
+    {
+        return this.data;
+    }
+
 }

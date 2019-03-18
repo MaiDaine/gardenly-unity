@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public bool needFlowerBed = false;
+    protected ObjectsData data = new ObjectsData();
     protected List<ISelectable> neighbors = new List<ISelectable>();
 
     void Start()
@@ -40,6 +41,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
         Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
         this.transform.eulerAngles += rotateValue;
+    }
+
+    public virtual ObjectsData GetData()
+    {
+        return this.data;
     }
 
 
