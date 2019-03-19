@@ -34,18 +34,18 @@ public class SpawnController : MonoBehaviour
             {
                 case SerializationController.ItemType.WallHandler:
                     wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
-                    wallHandler.DeSerialize(data[i].serializedData);
+                    wallHandler.DeSerialize(data[i].data);
                     break;
 
                 case SerializationController.ItemType.FlowerBed:
                     flowerBedHandler = Instantiate(FlowerBedHandlerRef, Vector3.zero, Quaternion.identity);
-                    flowerBedHandler.DeSerialize(data[i].serializedData);
+                    flowerBedHandler.DeSerialize(data[i].data);
                     break;
 
                 case SerializationController.ItemType.DefaultStaticElement:
                     DefaultStaticElement staticElement;
                     DefaultStaticElement.SerializableItem DSESubType;
-                    DSESubType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].serializedData);
+                    DSESubType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].data);
                     switch (DSESubType.subType)
                     {
                         case DefaultStaticElement.StaticElementType.Chair:
@@ -64,7 +64,7 @@ public class SpawnController : MonoBehaviour
                             ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
                             return;
                     }
-                    staticElement.DeSerialize(data[i].serializedData);
+                    staticElement.DeSerialize(data[i].data);
                     break;
 
                 default:
@@ -73,20 +73,19 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public FlowerBedElement SpawnFlowerBedElement(SerializationData data)
+    public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
     {
-        FlowerBedElement elem = null;
-        FlowerBedElement.SerializableItem tmp = JsonUtility.FromJson<FlowerBedElement.SerializableItem>(data.serializedData);
-        switch (tmp.subType)
+        FlowerBedElement tmp = null;
+        switch (elem.subType)
         {
             case FlowerBedElement.FlowerBedElementType.Flower01:
-                elem = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
-                elem.DeSerialize(data.serializedData);
+                tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
+                tmp.InnerDeSerialize(elem);
                 break;
-            //default :
-                //ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
-                //return null;
+            default :
+                ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
+                return null;
         }
-        return elem;
+        return tmp;
     }
 }

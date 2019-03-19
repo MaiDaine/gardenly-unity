@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(MeshFilter))]
-[RequireComponent (typeof(MeshRenderer))]
-[RequireComponent (typeof(BoxCollider))]
-[RequireComponent (typeof(Material))]
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Material))]
 public class WallHandler : GhostHandler, ISerializable
 {
     public WallTextHandler TextRef;
@@ -43,28 +43,29 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (Text != null)
             GameObject.Destroy(Text);
-        /*foreach (ISelectable elem in neighbors)
-            elem.RemoveFromNeighbor(this);*/
         SerializationController.instance.RemoveFromList(this);
     }
 
     public override void StartPreview(Vector3 position)
     {
-      if (Text == null)
-          Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+        if (Text == null)
+            Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+        else
+            Text.transform.position = position;
         Text.gameObject.SetActive(true);
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
             return;
-            start = position;
+        start = position;
     }
 
     public override void Preview(Vector3 position)
     {
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
         {
+            start += (this.transform.position - position);
+            end += (this.transform.position - position);
             this.transform.position = position;
             Text.transform.position = position;
-            Text.SetText(string.Format("{0:F1}m", (start - end).magnitude));
             return;
         }
         if (start != position && end != position)
@@ -123,14 +124,13 @@ public class WallHandler : GhostHandler, ISerializable
         if (Text.gameObject != null)
             Text.gameObject.SetActive(false);
         // Inutile si le deselect supprime le menu
-            if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-            {
-                uIController.GetMenuScript().rotateState = false;
-                uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-            }
+        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
+        {
+            uIController.GetMenuScript().rotateState = false;
+            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+        }
         // TODO si le menu bloque le ray cast appel destroymenu
         //uIController.GetMenuScript().DestroyMenu();
-
     }
 
 
@@ -166,7 +166,7 @@ public class WallHandler : GhostHandler, ISerializable
         serializableItem.end = end;
         SerializationData tmp;
         tmp.type = SerializationController.ItemType.WallHandler;
-        tmp.serializedData = JsonUtility.ToJson(serializableItem);
+        tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
 
@@ -175,6 +175,4 @@ public class WallHandler : GhostHandler, ISerializable
         initFromSerialization = true;
         serializableItem = JsonUtility.FromJson<SerializableItem>(json);
     }
-
-
 }

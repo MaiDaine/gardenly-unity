@@ -7,7 +7,7 @@ using UnityEngine;
 public struct SerializationData
 {
     public SerializationController.ItemType type;
-    public string serializedData;
+    public string data;
 }
 
 [Serializable]
