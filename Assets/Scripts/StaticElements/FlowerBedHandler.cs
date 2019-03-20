@@ -16,12 +16,14 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     private FlowerBedMesh currentMesh = null;
     private int meshCount = 0;
     private List<FlowerBedElement> elements = new List<FlowerBedElement>();
+    private bool initFromSerialization = false;
 
     void Start()
     {
         SerializationController.instance.AddToList(this);
         SpawnMesh();
-        ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
+        if (!initFromSerialization)
+            ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
         ConstructionController.instance.flowerbedCount += 1;
     }
 
@@ -56,7 +58,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     public void CombineMesh()
     {
-        Debug.Log("Combine");
         int i = 0;
         MeshFilter[] meshFilters = new MeshFilter[meshCount];
         foreach (FlowerBedMesh mesh in meshes)
@@ -107,7 +108,6 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
 
     public void SpawnMesh()
     {
-        //Debug.Log("Spawn");
         if (currentMesh != null)
         {
             currentMesh.DeSelect();
@@ -164,7 +164,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         public Vector3 meshPosition;
         public int meshNumber;
         public SerializableList pointsList;
-        public List<SerializationData> FBElements;
+        public FlowerBedElement.SerializedFBE[] FBEElements;
     }
 
     public SerializationData Serialize()
@@ -189,21 +189,21 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         serializableItem.meshNumber = meshCount;
         serializableItem.pointsList = tmpList;
 
-        serializableItem.FBElements = new List<SerializationData>();
-        foreach (FlowerBedElement elem in elements)
-            serializableItem.FBElements.Add(elem.Serialize());
-        tmp.serializedData = JsonUtility.ToJson(serializableItem);
+        serializableItem.FBEElements = new FlowerBedElement.SerializedFBE[elements.Count];
+        for (int j = 0; j < elements.Count; j++)
+            serializableItem.FBEElements[j] = elements[j].InnerSerialize(); 
+        tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
 
     public void DeSerialize(string json)
     {
         serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-
         this.transform.position = serializableItem.meshPosition;
-        serializableItem.pointsList.points = new Vector2[serializableItem.meshNumber];
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        for (int i = 0; i < serializableItem.meshNumber; i = i + 4)
+        serializableItem.pointsList.points = new Vector2[serializableItem.meshNumber * 4];
+        serializableItem.pointsList.positions = new Vector3[serializableItem.meshNumber];
+        JsonUtility.FromJsonOverwrite(json, serializableItem);
+        for (int i = 0; i < serializableItem.meshNumber * 4; i = i + 4)
         {
             currentMesh = Instantiate<FlowerBedMesh>(meshRef);
             currentMesh.transform.position = serializableItem.pointsList.positions[i / 4];
@@ -212,9 +212,9 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
             meshCount++;
         }
         CombineMesh();
-
-        foreach (SerializationData elem in serializableItem.FBElements)
+        foreach (FlowerBedElement.SerializedFBE elem in serializableItem.FBEElements)
             elements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
+        initFromSerialization = true;
     }
 
 }

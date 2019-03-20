@@ -22,24 +22,24 @@ public class ReactProxy : MonoBehaviour
             Destroy(this);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+            ExportScene();
+    }
+
     //Link To REACT
     public void ExportScene()
     {
         SerializationController.instance.Serialize();
-        PreSaveScene(SerializationController.instance.serializationElemNb);
-        SaveScene(SerializationController.instance.serializationJSON);
+        SaveScene(SerializationController.instance.GetSerializedData());
     }
 
     //Called from REACT
-    public void PreInitScene(int nbElem)
-    {
-        SerializationController.instance.serializationElemNb = nbElem;
-    }
-
     public void InitScene(string json)
     {
-        if (SerializationController.instance.serializationElemNb != 0 && json != "")
-            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json, SerializationController.instance.serializationElemNb));
+       if (json != "")
+           SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
     }
 
     public bool IsUnsavedWorkLeft()

@@ -52,11 +52,11 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-      if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-      {
-          uIController.GetMenuScript().rotateState = false;
-          uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-      }
+        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
+        {
+            uIController.GetMenuScript().rotateState = false;
+            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+        }
         // TODO si le menu bloque le ray cast appel destroymenu
         //uIController.GetMenuScript().DestroyMenu();
     }
@@ -67,25 +67,26 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public struct SerializableItem
     {
         public StaticElementType subType;
-        public Transform transform;
+        public Vector3 position;
+        public Quaternion rotation;
     }
 
     public SerializationData Serialize()
     {
         SerializationData tmp;
 
-        serializableItem.transform = this.transform;
+        serializableItem.position = this.transform.position;
+        serializableItem.rotation = this.transform.rotation;
         serializableItem.subType = subType;
         tmp.type = SerializationController.ItemType.DefaultStaticElement;
-        tmp.serializedData = JsonUtility.ToJson(serializableItem);
+        tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
 
     public void DeSerialize(string json)
     {
         serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        this.transform.position = serializableItem.transform.position;
-        this.transform.rotation = serializableItem.transform.rotation;
-        this.transform.localScale = serializableItem.transform.localScale;
+        this.transform.position = serializableItem.position;
+        this.transform.rotation = serializableItem.rotation;
     }
 }

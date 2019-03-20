@@ -32,10 +32,7 @@ public class ConstructionController : MonoBehaviour
     }
 
     public ConstructionState GetConstructionState() { return currentState; }
-    public void SetConstructionState(ConstructionState state)
-    {
-        currentState = state;
-    }
+    public void SetConstructionState(ConstructionState state) { currentState = state; }
 
     public void Cancel()
     {

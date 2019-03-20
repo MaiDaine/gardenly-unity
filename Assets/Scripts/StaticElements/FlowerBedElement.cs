@@ -11,7 +11,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     public FlowerBedElementType subType;
     public Vector3 correctedRotation;
 
-    private SerializableItem serializableItem;
+    private SerializedFBE serializableItem;
 
     void Start()
     {
@@ -51,29 +51,44 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     }
 
     //Serialization
-    [Serializable]
-    public struct SerializableItem
+    [Serializable] //Create struct to stock in upper class
+    public struct SerializedFBE
     {
         public FlowerBedElementType subType;
-        public Transform transform;
+        public Vector3 position;
+        public Quaternion rotation;
     }
 
     public SerializationData Serialize()
     {
-        SerializationData tmp;
+        SerializationData tmp = new SerializationData();
 
-        serializableItem.transform = this.transform;
-        serializableItem.subType = subType;
         tmp.type = SerializationController.ItemType.FlowerBedElement;
-        tmp.serializedData = JsonUtility.ToJson(serializableItem);
+        tmp.data = JsonUtility.ToJson(InnerSerialize());
+        return tmp;
+    }
+
+    public SerializedFBE InnerSerialize()
+    {
+        SerializedFBE tmp;
+
+        tmp.position = this.transform.position;
+        tmp.rotation = this.transform.rotation;
+        tmp.subType = subType;
         return (tmp);
+    }
+
+    public void InnerDeSerialize(SerializedFBE elem)
+    {
+        this.subType = elem.subType;
+        this.transform.position = elem.position;
+        this.transform.rotation = elem.rotation;
     }
 
     public void DeSerialize(string json)
     {
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        this.transform.position = serializableItem.transform.position;
-        this.transform.rotation = serializableItem.transform.rotation;
-        this.transform.localScale = serializableItem.transform.localScale;
+        serializableItem = JsonUtility.FromJson<SerializedFBE>(json);
+        this.transform.position = serializableItem.position;
+        this.transform.rotation = serializableItem.rotation;
     }
 }
