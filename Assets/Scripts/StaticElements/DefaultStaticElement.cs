@@ -15,14 +15,14 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private SerializableItem serializableItem;
 
-    void Awake()
+    private void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
 
-    void Start()
+    private void Start()
     {
-        this.transform.eulerAngles += correctedRotation;
+        this.transform.eulerAngles += this.correctedRotation;
         SerializationController.instance.AddToList(this);
     }
 
@@ -43,7 +43,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     }
 
 
-    //ISELECTABLE
+    //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (state == ConstructionController.ConstructionState.Off)
@@ -75,9 +75,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     {
         SerializationData tmp;
 
-        serializableItem.position = this.transform.position;
-        serializableItem.rotation = this.transform.rotation;
-        serializableItem.subType = subType;
+        this.serializableItem.position = this.transform.position;
+        this.serializableItem.rotation = this.transform.rotation;
+        this.serializableItem.subType = this.subType;
         tmp.type = SerializationController.ItemType.DefaultStaticElement;
         tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
@@ -85,8 +85,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     public void DeSerialize(string json)
     {
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        this.transform.position = serializableItem.position;
-        this.transform.rotation = serializableItem.rotation;
+        this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        this.transform.position = this.serializableItem.position;
+        this.transform.rotation = this.serializableItem.rotation;
     }
 }

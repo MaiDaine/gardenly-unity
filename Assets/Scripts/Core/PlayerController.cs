@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
     private IInteractible interactible;
+    private ConstructionController constructionController;
 
 
     void Awake()
@@ -21,20 +22,27 @@ public class PlayerController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    private void Start()
+    {
+        constructionController = ConstructionController.instance;
+    }
+
     void Update()
     {
+        //DEBUG
         Vector3 pos;
         RaycastHit hit;
 
-        //DEBUG
-        if (ConstructionController.instance.MouseRayCast(out pos, out hit))
+        if (constructionController.MouseRayCast(out pos, out hit))
             Debug.DrawLine(Camera.main.transform.position, pos);
-
         if (Input.GetKeyDown(KeyCode.L))
             ReactProxy.instance.ExportScene();
+        if (Input.GetKeyDown(KeyCode.P))
+            SpawnController.instance.SpawnFlowerBed();
+        //END DEBUG
 
 
-        if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Off)
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
          {
              if (Input.GetMouseButtonDown(0))
                  SelectBuilding();
@@ -42,13 +50,13 @@ public class PlayerController : MonoBehaviour
                  DestroySelection();
          }
 
-         if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing)
+         if (constructionController.currentState == ConstructionController.ConstructionState.Editing)
          {
              if (Input.GetMouseButtonDown(0))
              {
-                if (ConstructionController.instance.MouseRayCast(out pos, out hit, layerMaskInteractible))
+                if (constructionController.MouseRayCast(out pos, out hit, layerMaskInteractible))
                     interactible = hit.collider.gameObject.GetComponent<IInteractible>();
-                else if (ConstructionController.instance.MouseRayCast(out pos, out hit, layerMaskStatic))
+                else if (constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
                 {
                     ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
                     if (selectable != null)
@@ -61,15 +69,15 @@ public class PlayerController : MonoBehaviour
                     DeSelect(true);
              }
              else if (Input.GetMouseButton(0) && interactible != null)
-                ConstructionController.instance.UpdateEditing(interactible);
+                constructionController.UpdateGhostEditing(interactible);
              if (interactible != null && Input.GetMouseButtonUp(0))
              {
                  interactible.EndDrag();
                  interactible = null;
              }
          }
-        else if (ConstructionController.instance.GetConstructionState() != ConstructionController.ConstructionState.Off)
-            ConstructionController.instance.UpdateGhost();
+        else if (constructionController.currentState != ConstructionController.ConstructionState.Off)
+            constructionController.UpdateGhost();
     }
 
     void SelectBuilding()
@@ -78,7 +86,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
 
         DeSelect();
-        if (ConstructionController.instance.MouseRayCast(out pos, out hit, layerMaskStatic))
+        if (constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
         {
             ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
 
@@ -88,7 +96,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftControl))
                     currentSelection.AddRange(selectable.SelectWithNeighbor());
                 else
-                    selectable.Select(ConstructionController.instance.GetConstructionState());
+                    selectable.Select(constructionController.currentState);
             }
         }
     }

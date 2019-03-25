@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GridController : MonoBehaviour
 {
+    public static GridController instance = null;
+    public UnityEvent eventPostRender = new UnityEvent();
+
     public float gridSizeX = 10f;
     public float gridSizeZ = 10f;
     public float largeStep = 1f;
@@ -12,7 +16,7 @@ public class GridController : MonoBehaviour
     public Color subColor = new Color(1f, 1f, 1f, 1f);
     public Color lineColor = new Color(1f, 0f, 0f, 1f);
     public bool subActiv = false;
-    public bool activ = true;   
+    public bool activ = true;
 
     private Material lineMaterial;
     private float startX;
@@ -20,6 +24,14 @@ public class GridController : MonoBehaviour
     private float startY = 0.05f;
     private float startZ;
     private float sizeZ;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(this.gameObject);
+    }
 
     private void Start()
     {
@@ -37,14 +49,16 @@ public class GridController : MonoBehaviour
 
         sizeX = gridSizeX * 10;
         sizeZ = gridSizeZ * 10;
-        startX = sizeX / -2f;
-        startZ = sizeZ / -2f;
+        startX = sizeX / -2f + 50;
+        startZ = sizeZ / -2f - 50;
     }
 
     private void OnPostRender()
     {
+        eventPostRender.Invoke();
         if (!activ)
             return;
+
         lineMaterial.SetPass(0);
         GL.Begin(GL.LINES);
         GL.Color(mainColor);
@@ -83,6 +97,8 @@ public class GridController : MonoBehaviour
         GL.End();
     }
 
+    public void ToggleGrid() { this.activ = !this.activ; }
+
     public Vector3 GetNearestPointOnGrid(Vector3 position)
     {
         int xCount = Mathf.RoundToInt(position.x / largeStep);
@@ -96,11 +112,11 @@ public class GridController : MonoBehaviour
         return result;
     }
 
-    public void DrawLimited(Vector3 start, Vector3 end)
+    public void DrawLimited(Vector3 start, Vector3 end, Color color)
     {
         lineMaterial.SetPass(0);
         GL.Begin(GL.LINES);
-        GL.Color(lineColor);
+        GL.Color(color);
 
         GL.Vertex3(start.x, 0.1f, start.z);
         GL.Vertex3(end.x, 0.1f, end.z);

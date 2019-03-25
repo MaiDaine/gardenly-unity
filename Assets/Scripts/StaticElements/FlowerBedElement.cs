@@ -15,7 +15,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
     void Start()
     {
-        this.transform.eulerAngles += correctedRotation;
+        this.transform.eulerAngles += this.correctedRotation;
         if (ConstructionController.instance.flowerbedCount < 1)
         {
             ErrorHandler.instance.ErrorMessage("You must place a flowerbed first");
@@ -54,7 +54,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     [Serializable] //Create struct to stock in upper class
     public struct SerializedFBE
     {
-        public FlowerBedElementType subType;
+        public FlowerBedElementType subID;
         public Vector3 position;
         public Quaternion rotation;
     }
@@ -74,13 +74,13 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         tmp.position = this.transform.position;
         tmp.rotation = this.transform.rotation;
-        tmp.subType = subType;
+        tmp.subID = subType;
         return (tmp);
     }
 
     public void InnerDeSerialize(SerializedFBE elem)
     {
-        this.subType = elem.subType;
+        this.subType = elem.subID;
         this.transform.position = elem.position;
         this.transform.rotation = elem.rotation;
     }

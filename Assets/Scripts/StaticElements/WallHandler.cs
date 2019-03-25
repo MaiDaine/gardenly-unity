@@ -14,59 +14,63 @@ public class WallHandler : GhostHandler, ISerializable
     protected UIController uIController;
 
     private SerializableItem serializableItem;
-    private WallTextHandler Text = null;
+    private WallTextHandler text = null;
     private Vector3 start;
     private Vector3 end;
     private bool initFromSerialization = false;
 
-    void Awake()
+    private void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
-    void Start()
+    
+    private void Start()
     {
         if (initFromSerialization)
         {
-            StartPreview(serializableItem.start);
-            Preview(serializableItem.end);
-            EndPreview();
+            Positioning(this.serializableItem.start);
+            FromPositioningToBuilding(this.serializableItem.start);
+            Building(this.serializableItem.end);
+            EndConstruction(this.serializableItem.end);
         }
         else
         {
-            gameObject.layer = 0;
+            this.gameObject.layer = 0;
             this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
         }
         SerializationController.instance.AddToList(this);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        if (Text != null)
-            GameObject.Destroy(Text);
+        if (text != null)
+            GameObject.Destroy(text);
         SerializationController.instance.RemoveFromList(this);
     }
 
-    public override void StartPreview(Vector3 position)
+    //public override void Positioning(Vector3 position) { base.Positioning(position); }
+
+    public override bool FromPositioningToBuilding(Vector3 position)
     {
-        if (Text == null)
-            Text = Instantiate(TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+        if (this.text == null)
+            this.text = Instantiate(this.TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
         else
-            Text.transform.position = position;
-        Text.gameObject.SetActive(true);
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
-            return;
-        start = position;
+            this.text.transform.position = position;
+        this.text.gameObject.SetActive(true);
+        if (!(this.uIController.GetMenuScript() != null && this.uIController.GetMenuScript().isMoving))
+            this.start = position;
+        return true;
     }
 
-    public override void Preview(Vector3 position)
+    public override bool Building(Vector3 position)
     {
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
         {
             start += (this.transform.position - position);
             end += (this.transform.position - position);
             this.transform.position = position;
-            Text.transform.position = position;
-            return;
+            text.transform.position = position;
+            return false;
         }
         if (start != position && end != position)
         {
@@ -78,22 +82,23 @@ public class WallHandler : GhostHandler, ISerializable
             this.transform.rotation = (Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0, 90, 0));
             this.transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
 
-            Text.transform.position = tmp;
-            Text.SetText(string.Format("{0:F1}m", lenght));
+            text.transform.position = tmp;
+            text.SetText(string.Format("{0:F1}m", lenght));
         }
+        return false;
     }
 
-    public override void EndPreview()
+    public override void EndConstruction(Vector3 position)
     {
-        this.gameObject.layer = 10;
-        Text.gameObject.SetActive(false);
+        base.EndConstruction(position);
+        text.gameObject.SetActive(false);
     }
 
     void OnMouseDrag()
     {
-        if (uIController != null)
+        if (this.uIController != null)
         {
-            MenuScript menu = uIController.GetMenuScript();
+            MenuScript menu = this.uIController.GetMenuScript();
 
             if (menu != null && menu.rotateState)
                 menu.RotateGhost();
@@ -105,15 +110,15 @@ public class WallHandler : GhostHandler, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (state == ConstructionController.ConstructionState.Off)
-            uIController.SpawnDynMenu(this, uIController.wallMenu);
+            this.uIController.SpawnDynMenu(this, this.uIController.wallMenu);
 
-        Text.gameObject.SetActive(true);
+        this.text.gameObject.SetActive(true);
     }
 
     public override List<ISelectable> SelectWithNeighbor()
     {
         Select(ConstructionController.ConstructionState.Off);
-        List<ISelectable> tmp = new List<ISelectable>(neighbors);
+        List<ISelectable> tmp = new List<ISelectable>(this.neighbors);
         foreach (ISelectable item in tmp)
             item.Select(ConstructionController.ConstructionState.Off);
         return tmp;
@@ -121,13 +126,13 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-        if (Text.gameObject != null)
-            Text.gameObject.SetActive(false);
+        if (this.text.gameObject != null)
+            this.text.gameObject.SetActive(false);
         // Inutile si le deselect supprime le menu
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
+        if (this.uIController.GetMenuScript() != null && this.uIController.GetMenuScript().rotateState)
         {
-            uIController.GetMenuScript().rotateState = false;
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+            this.uIController.GetMenuScript().rotateState = false;
+            this.uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
         }
         // TODO si le menu bloque le ray cast appel destroymenu
         //uIController.GetMenuScript().DestroyMenu();
@@ -137,13 +142,13 @@ public class WallHandler : GhostHandler, ISerializable
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
-            && ((start - currentPos).magnitude < snapDistance))
+        if (((this.start - currentPos).sqrMagnitude < (this.end - currentPos).sqrMagnitude)
+            && ((this.start - currentPos).magnitude < snapDistance))
         {
             currentPos = start;
             return true;
         }
-        else if ((end - currentPos).magnitude < snapDistance)
+        else if ((this.end - currentPos).magnitude < snapDistance)
         {
             currentPos = end;
             return true;
@@ -162,9 +167,10 @@ public class WallHandler : GhostHandler, ISerializable
 
     public SerializationData Serialize()
     {
-        serializableItem.start = start;
-        serializableItem.end = end;
         SerializationData tmp;
+
+        this.serializableItem.start = this.start;
+        this.serializableItem.end = this.end;
         tmp.type = SerializationController.ItemType.WallHandler;
         tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
@@ -172,7 +178,7 @@ public class WallHandler : GhostHandler, ISerializable
 
     public void DeSerialize(string json)
     {
-        initFromSerialization = true;
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        this.initFromSerialization = true;
+        this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
     }
 }

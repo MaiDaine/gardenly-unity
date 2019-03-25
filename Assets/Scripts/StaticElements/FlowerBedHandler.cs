@@ -23,7 +23,7 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         SerializationController.instance.AddToList(this);
         SpawnMesh();
         if (!initFromSerialization)
-            ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
+            ConstructionController.instance.currentState = ConstructionController.ConstructionState.Building;
         ConstructionController.instance.flowerbedCount += 1;
     }
 
@@ -43,11 +43,11 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
     {
         if (Input.GetKeyDown(KeyCode.Keypad6))
             CombineMesh();
-        if (ConstructionController.instance.GetConstructionState() == ConstructionController.ConstructionState.Editing
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Editing
             && Input.GetKeyDown(KeyCode.Keypad5))
         {
             SpawnMesh();
-            ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Building);
+            ConstructionController.instance.currentState = ConstructionController.ConstructionState.Building;
         }
     }
 
@@ -84,27 +84,18 @@ public class FlowerBedHandler : GhostHandler, ISelectable, ISerializable
         this.gameObject.SetActive(true);
         this.GetComponent<MeshRenderer>().material = material;
         this.transform.position = new Vector3(0, 0, 0);
-        ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Off);
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;
         this.GetComponent<MeshCollider>().sharedMesh = this.GetComponent<MeshFilter>().mesh;
         this.GetComponent<MeshCollider>().enabled = true;
     }
 
-    public override void StartPreview(Vector3 position)
-    {
-    }
-
-    public override void Preview(Vector3 position)
-    {
-        currentMesh.transform.position = position;
-    }
-
-    public override void EndPreview()
-    {
-        this.gameObject.layer = 10;
-        ConstructionController.instance.SetConstructionState(ConstructionController.ConstructionState.Editing);
-        currentMesh.Select(ConstructionController.ConstructionState.Editing);
-        PlayerController.instance.ForcedSelection(currentMesh.GetComponent<ISelectable>());
-    }
+    //public override void EndPreview()
+    //{
+    //    this.gameObject.layer = 10;
+    //    ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
+    //    currentMesh.Select(ConstructionController.ConstructionState.Editing);
+    //    PlayerController.instance.ForcedSelection(currentMesh.GetComponent<ISelectable>());
+    //}
 
     public void SpawnMesh()
     {

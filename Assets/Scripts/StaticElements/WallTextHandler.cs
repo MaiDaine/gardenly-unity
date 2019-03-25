@@ -11,12 +11,7 @@ public class WallTextHandler : MonoBehaviour
     
     void Awake()
     {
-        text = GetComponent<TextMesh>();
-    }
-
-    void Update()
-    {
-        
+        this.text = GetComponent<TextMesh>();
     }
 
     private void OnDestroy()
@@ -27,11 +22,11 @@ public class WallTextHandler : MonoBehaviour
     private void LateUpdate()
     {
         this.transform.rotation = Quaternion.LookRotation(this.transform.position - Camera.main.transform.position, Vector3.up);
-        text.characterSize = textSize * (transform.position - Camera.main.transform.position).magnitude / 100f;
+        this.text.characterSize = this.textSize * (transform.position - Camera.main.transform.position).magnitude / 100f;
     }
 
     public void SetText(string inText)
     {
-        text.text = inText;
+        this.text.text = inText;
     }
 }

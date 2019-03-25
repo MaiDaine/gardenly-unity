@@ -11,27 +11,27 @@ public class ErrorHandler : MonoBehaviour
     private Text errorMsg;
     private bool startCount = false;
 
-    void Awake()
+    private void Awake()
     {
         instance = this;
         this.gameObject.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        if (startCount)
+        if (this.startCount)
             UpdateTime();
     }
 
-    void UpdateTime()
+    private void UpdateTime()
     {
-        timer -= Time.deltaTime;
+        this.timer -= Time.deltaTime;
 
-        if (timer <= 0)
+        if (this.timer <= 0)
         {
-            errorMsg.text = "";
-            startCount = false;
-            timer = 5;
+            this.errorMsg.text = "";
+            this.startCount = false;
+            this.timer = 5;
             this.gameObject.SetActive(false);
         }
     }
@@ -39,11 +39,11 @@ public class ErrorHandler : MonoBehaviour
     public void ErrorMessage(string msg)
     {
         this.gameObject.SetActive(true);
-        errorMsg = this.GetComponentInChildren<Text>();
-        if (errorMsg != null)
+        this.errorMsg = this.GetComponentInChildren<Text>();
+        if (this.errorMsg != null)
         {
-            errorMsg.text = msg;
-            startCount = true;
+            this.errorMsg.text = msg;
+            this.startCount = true;
         }
     }
 }

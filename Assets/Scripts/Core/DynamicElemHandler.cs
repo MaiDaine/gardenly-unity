@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//TODO CLEAN
 public class DynamicElemHandler : DefaultStaticElement
 {
     public Vector3 currentPosition;
 
-   
-    // Start is called before the first frame update
     void Start()
     {
-        gameObject.layer = 1;
-        
+        this.gameObject.layer = 1;
     }
 }
