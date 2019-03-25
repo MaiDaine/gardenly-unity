@@ -5,16 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance = null;
-    public List<ISelectable> currentSelection = new List<ISelectable>();
     public const int layerMaskInteractible = (1 << 9);
     public const int layerMaskStatic = (1 << 10);
+
+    public List<ISelectable> currentSelection = new List<ISelectable>();
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
     private IInteractible interactible;
     private ConstructionController constructionController;
 
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
         Vector3 pos;
         RaycastHit hit;
 
-        if (constructionController.MouseRayCast(out pos, out hit))
+        if (this.constructionController.MouseRayCast(out pos, out hit))
             Debug.DrawLine(Camera.main.transform.position, pos);
         if (Input.GetKeyDown(KeyCode.L))
             ReactProxy.instance.ExportScene();
@@ -41,8 +42,8 @@ public class PlayerController : MonoBehaviour
             SpawnController.instance.SpawnFlowerBed();
         //END DEBUG
 
-
-        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
+        //Selection
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Off)
          {
              if (Input.GetMouseButtonDown(0))
                  SelectBuilding();
@@ -50,13 +51,14 @@ public class PlayerController : MonoBehaviour
                  DestroySelection();
          }
 
-         if (constructionController.currentState == ConstructionController.ConstructionState.Editing)
+        //Ghost Handle
+         if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
          {
              if (Input.GetMouseButtonDown(0))
              {
-                if (constructionController.MouseRayCast(out pos, out hit, layerMaskInteractible))
-                    interactible = hit.collider.gameObject.GetComponent<IInteractible>();
-                else if (constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
+                if (this.constructionController.MouseRayCast(out pos, out hit, layerMaskInteractible))
+                    this.interactible = hit.collider.gameObject.GetComponent<IInteractible>();
+                else if (this.constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
                 {
                     ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
                     if (selectable != null)
@@ -69,18 +71,20 @@ public class PlayerController : MonoBehaviour
                     DeSelect(true);
              }
              else if (Input.GetMouseButton(0) && interactible != null)
-                constructionController.UpdateGhostEditing(interactible);
+                this.constructionController.UpdateGhostEditing(interactible);
              if (interactible != null && Input.GetMouseButtonUp(0))
              {
                  interactible.EndDrag();
                  interactible = null;
              }
          }
-        else if (constructionController.currentState != ConstructionController.ConstructionState.Off)
-            constructionController.UpdateGhost();
+        else if (this.constructionController.currentState != ConstructionController.ConstructionState.Off)
+            this.constructionController.UpdateGhost();
     }
 
-    void SelectBuilding()
+
+    //Selection Handle
+    private void SelectBuilding()
     {
         Vector3 pos;
         RaycastHit hit;
@@ -92,9 +96,9 @@ public class PlayerController : MonoBehaviour
 
             if (selectable != null)
             {
-                currentSelection.Add(selectable);
+                this.currentSelection.Add(selectable);
                 if (Input.GetKey(KeyCode.LeftControl))
-                    currentSelection.AddRange(selectable.SelectWithNeighbor());
+                    this.currentSelection.AddRange(selectable.SelectWithNeighbor());
                 else
                     selectable.Select(constructionController.currentState);
             }
@@ -103,29 +107,29 @@ public class PlayerController : MonoBehaviour
 
     public void ForcedSelection(ISelectable elem)
     {
-        foreach (ISelectable item in currentSelection)
+        foreach (ISelectable item in this.currentSelection)
             item.DeSelect();
-        currentSelection.Clear();
-        currentSelection.Add(elem);
+        this.currentSelection.Clear();
+        this.currentSelection.Add(elem);
     }
 
-    void DeSelect(bool forced = false)
+    private void DeSelect(bool forced = false)
     {
-        if (currentSelection.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
+        if (this.currentSelection.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
         {
-            foreach (ISelectable elem in currentSelection)
+            foreach (ISelectable elem in this.currentSelection)
                 elem.DeSelect();
-            currentSelection.Clear();
+            this.currentSelection.Clear();
         }
     }
 
-    void DestroySelection()
+    private void DestroySelection()
     {
-        if (currentSelection != null)
+        if (this.currentSelection != null)
         {
-            for (int i = 0; i < currentSelection.Count; i++)
-                GameObject.Destroy(currentSelection[i].GetGameObject());
-            currentSelection.Clear();
+            for (int i = 0; i < this.currentSelection.Count; i++)
+                GameObject.Destroy(this.currentSelection[i].GetGameObject());
+            this.currentSelection.Clear();
         }
     }
 }

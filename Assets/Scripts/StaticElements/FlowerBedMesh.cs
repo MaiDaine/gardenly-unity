@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//TODO REMOVE AFTER LINK NEW FLOWER BED
 public class FlowerBedMesh : MonoBehaviour, ISelectable
 {
     public Material material;

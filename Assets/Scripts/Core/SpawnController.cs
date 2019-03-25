@@ -29,8 +29,8 @@ public class SpawnController : MonoBehaviour
 
     private void Start()
     {
-        shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
-        shapeCreator.gameObject.SetActive(false);
+        this.shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
+        this.shapeCreator.gameObject.SetActive(false);
     }
 
     public void SpawnScene(SerializationData[] data)
@@ -87,11 +87,11 @@ public class SpawnController : MonoBehaviour
     {
         FlowerBed tmp;
 
-        shapeCreator.gameObject.SetActive(true);
-        shapeCreator.Init();
-        tmp = Instantiate(flowerBedRef);
-        tmp.Init(shapeCreator);
-        ConstructionController.instance.SetGhost(shapeCreator);
+        this.shapeCreator.gameObject.SetActive(true);
+        this.shapeCreator.Init();
+        tmp = Instantiate(this.flowerBedRef);
+        tmp.Init(this.shapeCreator);
+        ConstructionController.instance.SetGhost(this.shapeCreator);
         return tmp;
     }
 
