@@ -93,7 +93,7 @@ public class UIController : MonoBehaviour
         Text[] labels = dataPanel.GetComponentsInChildren<Text>();
         Slider[] sliders = dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = dataPanel.GetComponentsInChildren<Image>();
-        Button button;
+        Button[] button;
 
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
@@ -102,7 +102,8 @@ public class UIController : MonoBehaviour
         sliders[2].value = tmp.solidity;
         icons[4].color = Color.green;
 
-        button = dataPanel.GetComponentInChildren<Button>();
-        button.onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });
+        button = dataPanel.GetComponentsInChildren<Button>();
+        button[1].onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });
+        dataPanel.gameObject.SetActive(true);
     }
 }
