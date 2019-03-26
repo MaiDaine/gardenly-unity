@@ -5,62 +5,63 @@ using UnityEngine.UI;
 
 public class SettingsController : MonoBehaviour
 {
-    private GameSettings gameSettings;
     public Dropdown resolutionDropDown;
     public Dropdown qualityDropDown;
-    public Dropdown antialiasingDropDown;
-    private Resolution[] resolutions;
+    public Dropdown antialiasingDropDown;   
     public Toggle fullScreen;
     public Slider volume;
     public AudioSource audioSource;
 
-    void OnEnable()
+    private Resolution[] resolutions;
+    private GameSettings gameSettings;
+
+    private void OnEnable()
     {
-        gameSettings = new GameSettings();
-        resolutions = Screen.resolutions;
-        fullScreen.onValueChanged.AddListener(delegate { OnFullScreenToggle(); });
-        volume.onValueChanged.AddListener(delegate { OnVolumeChange(); });
-        resolutionDropDown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
-        qualityDropDown.onValueChanged.AddListener(delegate { OnQualityChange(); });
-        antialiasingDropDown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
-        audioSource.volume = 0;
+        this.gameSettings = new GameSettings();
+        this.resolutions = Screen.resolutions;
+        this.fullScreen.onValueChanged.AddListener(delegate { OnFullScreenToggle(); });
+        this.volume.onValueChanged.AddListener(delegate { OnVolumeChange(); });
+        this.resolutionDropDown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
+        this.qualityDropDown.onValueChanged.AddListener(delegate { OnQualityChange(); });
+        this.antialiasingDropDown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
+        this.audioSource.volume = 0;
         Screen.fullScreen = false;
 
         foreach (Resolution resolution in resolutions)
         {
-            resolutionDropDown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+            this.resolutionDropDown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
     }
 
     public void OnFullScreenToggle()
     {
-        gameSettings.fullscreen = Screen.fullScreen = fullScreen.isOn;
+        this.gameSettings.fullscreen = Screen.fullScreen = this.fullScreen.isOn;
     }
 
     public void OnAntialiasingChange()
     {
-        QualitySettings.antiAliasing = gameSettings.antialiasing = (int)Mathf.Pow(2f, antialiasingDropDown.value);
+        QualitySettings.antiAliasing = this.gameSettings.antialiasing = (int)Mathf.Pow(2f, this.antialiasingDropDown.value);
     }
 
     public void OnVolumeChange()
     {
-        if (volume.value > 0 && !audioSource.isPlaying)
-            audioSource.Play();
-        audioSource.volume = gameSettings.volume = volume.value;
+        if (this.volume.value > 0 && !this.audioSource.isPlaying)
+            this.audioSource.Play();
+        this.audioSource.volume = this.gameSettings.volume = this.volume.value;
     }
 
     public void OnResolutionChange()
     {
-        Screen.SetResolution(resolutions[resolutionDropDown.value].width, resolutions[resolutionDropDown.value].height, Screen.fullScreen);
+        Screen.SetResolution(this.resolutions[this.resolutionDropDown.value].width, this.resolutions[this.resolutionDropDown.value].height, Screen.fullScreen);
     }
 
     public void OnQualityChange()
     {
-        QualitySettings.masterTextureLimit = gameSettings.quality = qualityDropDown.value;
+        QualitySettings.masterTextureLimit = this.gameSettings.quality = this.qualityDropDown.value;
     }
 
     public void ApplySettings()
     {
-
+        // TODO write pref
     }
 }

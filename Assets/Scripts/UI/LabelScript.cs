@@ -12,71 +12,68 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     protected Image image;
     protected bool pressed;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        image = transform.GetComponent<Image>();
-        pressed = false;
-        if (image != null)
-            image.color = color;
+        this.image = transform.GetComponent<Image>();
+        this.pressed = false;
+        if (this.image != null)
+            this.image.color = this.color;
     }
+
 
     public void IsPressed()
     {
-        pressed = !pressed;
-        /*if (pressed)
-            pressed = false;
-        else
-            pressed = true;*/
+        this.pressed = !this.pressed;
     }
 
     public void ChangeColor()
     {
         IsPressed();
-        if (pressed)
+        if (this.pressed)
         {
-            if (text != null)
-                text.color = actionColor;
-            if (image != null)
-                image.color = actionColor;
+            if (this.text != null)
+                this.text.color = this.actionColor;
+            if (this.image != null)
+                this.image.color = this.actionColor;
         }
         else
         {
-            if (text != null)
-                text.color = color;
-            if (image != null)
-                image.color = color;
+            if (this.text != null)
+                this.text.color = this.color;
+            if (this.image != null)
+                this.image.color = this.color;
         }
     }
 
     public void ResetColor()
     {
-        if (text != null)
-            text.color = color;
-        if (image != null)
-            image.color = color;
-        pressed = false;
+        if (this.text != null)
+            this.text.color = this.color;
+        if (this.image != null)
+            this.image.color = this.color;
+        this.pressed = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!pressed)
+        if (!this.pressed)
         {
-            if (text != null)
-                text.color = actionColor;
-            if (image != null)
-                image.color = actionColor;
+            if (this.text != null)
+                this.text.color = this.actionColor;
+            if (this.image != null)
+                this.image.color = this.actionColor;
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!pressed)
+        if (!this.pressed)
         {
-            if (text != null)
-                text.color = color;
-            if (image != null)
-                image.color = color;
+            if (this.text != null)
+                this.text.color = this.color;
+            if (this.image != null)
+                this.image.color = this.color;
         }
     }
 }

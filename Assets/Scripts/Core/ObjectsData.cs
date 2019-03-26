@@ -12,5 +12,4 @@ public class ObjectsData : MonoBehaviour
     public float solidity;
     public int age;
     public Image image;
-    
 }
