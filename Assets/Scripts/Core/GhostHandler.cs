@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public bool needFlowerBed = false;
+    protected ObjectsData data;
     protected List<ISelectable> neighbors = new List<ISelectable>();
     //TODO UI : add UI controller here 
 
@@ -41,6 +42,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
         Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
         this.transform.eulerAngles += rotateValue;
+    }
+
+    public ObjectsData GetData()
+    {
+        data = this.GetComponent<ObjectsData>();
+        return this.data;
     }
 
 

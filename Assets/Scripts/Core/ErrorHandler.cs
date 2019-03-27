@@ -36,6 +36,7 @@ public class ErrorHandler : MonoBehaviour
         }
     }
 
+
     public void ErrorMessage(string msg)
     {
         this.gameObject.SetActive(true);

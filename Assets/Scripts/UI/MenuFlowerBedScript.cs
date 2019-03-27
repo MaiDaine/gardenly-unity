@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MenuFlowerBedScript : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class MenuFlowerBedScript : MonoBehaviour
     
     void Start()
     {
-        constructionController = ConstructionController.instance;
+        this.constructionController = ConstructionController.instance;
     }
 
     public void DestroyFlowerBedHandler()
@@ -31,24 +29,24 @@ public class MenuFlowerBedScript : MonoBehaviour
         if (this.gameObject)
             Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
-        if (constructionController.currentState == ConstructionController.ConstructionState.Editing
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing
             && flowerBedHandler != null)
             this.CombineMesh();
     }
 
     public void SetFlowerBedHandler(FlowerBedHandler handler)
     {
-        flowerBedHandler = handler;
+        this.flowerBedHandler = handler;
     }
 
     public void CombineMesh()
     {
-        flowerBedHandler.CombineMesh();
+        this.flowerBedHandler.CombineMesh();
     }
 
     public void AddFlowerBedMesh()
     {
-        flowerBedHandler.SpawnMesh();
-        constructionController.currentState = ConstructionController.ConstructionState.Building;
+        this.flowerBedHandler.SpawnMesh();
+        this.constructionController.currentState = ConstructionController.ConstructionState.Building;
     }
 }
