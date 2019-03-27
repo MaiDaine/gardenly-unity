@@ -4739,7 +4739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03da565f58684f48846049f83d7d67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gardenName: 
+  gardenName: PlaceHolder
 --- !u!1 &784379902
 GameObject:
   m_ObjectHideFlags: 0
