@@ -4681,6 +4681,7 @@ GameObject:
   - component: {fileID: 783192051}
   - component: {fileID: 783192050}
   - component: {fileID: 783192052}
+  - component: {fileID: 783192053}
   m_Layer: 0
   m_Name: ReactProxy
   m_TagString: Untagged
@@ -4700,8 +4701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e9a055d871e224da8615d4e2ecba6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationElemNb: 0
-  serializationJSON: 
 --- !u!4 &783192051
 Transform:
   m_ObjectHideFlags: 0
@@ -4728,6 +4727,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd409662e41115408c366fde8a7df8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &783192053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783192049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03da565f58684f48846049f83d7d67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gardenName: 
 --- !u!1 &784379902
 GameObject:
   m_ObjectHideFlags: 0
