@@ -105,6 +105,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SpawnFlowerBedMesh()
+    {
+        SpawnController.instance.SpawnFlowerBed();
+    }
+
     public void ForcedSelection(ISelectable elem)
     {
         foreach (ISelectable item in this.currentSelection)
