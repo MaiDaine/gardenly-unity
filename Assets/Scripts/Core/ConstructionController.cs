@@ -77,7 +77,7 @@ public class ConstructionController : MonoBehaviour
         if (ghost != null)
         {
             Destroy(ghost.gameObject);
-            //TODO GhostHandler.OnCancel();
+            ghost.OnCancel();
             ghost = null;
             currentState = ConstructionState.Off;
         }
