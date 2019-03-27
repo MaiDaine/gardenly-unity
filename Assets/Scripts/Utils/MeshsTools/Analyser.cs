@@ -8,16 +8,21 @@ public class Analyser : MonoBehaviour
 
     void Start()
     {
+        GridController.instance.eventPostRender.AddListener(DrawLines);
+        MeshFilter meshFilter = gameObject.GetComponent(typeof(MeshFilter)) as MeshFilter;
+        if (meshFilter != null)
+            mesh = meshFilter.mesh;
+        else
+            Destroy(this);
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        if (mesh == null)
-        {
-            MeshFilter meshFilter = gameObject.GetComponent(typeof(MeshFilter)) as MeshFilter;
-            if (meshFilter != null)
-                mesh = meshFilter.mesh;
-        }
+        GridController.instance.eventPostRender.RemoveListener(DrawLines);
+    }
+
+    void DrawLines()
+    {
         if (mesh != null)
             for (int i = 0; i < mesh.triangles.Length; i = i + 3)
             {

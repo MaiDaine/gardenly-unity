@@ -12,7 +12,7 @@ public class MenuFlowerBedScript : MonoBehaviour
 
     public void DestroyFlowerBedHandler()
     {
-        if (this.constructionController.StateIsOff())
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             DestroyMenu();
             foreach (FlowerBedMesh mesh in this.flowerBedHandler.GetMeshes())
@@ -29,8 +29,8 @@ public class MenuFlowerBedScript : MonoBehaviour
         if (this.gameObject)
             Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
-        if (this.constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
-            && this.flowerBedHandler != null)
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing
+            && flowerBedHandler != null)
             this.CombineMesh();
     }
 
@@ -47,6 +47,6 @@ public class MenuFlowerBedScript : MonoBehaviour
     public void AddFlowerBedMesh()
     {
         this.flowerBedHandler.SpawnMesh();
-        this.constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
+        this.constructionController.currentState = ConstructionController.ConstructionState.Building;
     }
 }

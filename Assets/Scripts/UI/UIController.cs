@@ -17,6 +17,17 @@ public class UIController : MonoBehaviour
     protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected bool subMenuOpen = true;
 
+    public void Cancel()
+    {
+        //TODO CLEAN
+        if (menuOpen)
+            this.menu.DestroyMenu();
+        //Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
+        if (flowerBedMenuOpen)
+            this.flowerBedMenuScript.DestroyMenu();
+        //Camera.main.GetComponent<UIController>().GetFlowerBedMenuScript().DestroyMenu();
+    }
+
     private void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
     {
         Canvas canvas;

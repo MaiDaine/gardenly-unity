@@ -44,7 +44,7 @@ public class MenuScript : MonoBehaviour
 
     public void DestroyGhost(GhostHandler ghost)
     {
-        if (constructionController.StateIsOff())
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             Destroy(ghost.gameObject);
             Destroy(ghost);

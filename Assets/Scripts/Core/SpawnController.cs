@@ -11,9 +11,13 @@ public class SpawnController : MonoBehaviour
 
     //need one of each for serialization
     public WallHandler WallHandlerRef;
+    public FlowerBed flowerBedRef;
     public FlowerBedHandler FlowerBedHandlerRef;
+    public ShapeCreator ShapeCreator;
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
     public FlowerBedElement[] FBElements = new FlowerBedElement[1];
+
+    private ShapeCreator shapeCreator;
 
     void Awake()
     {
@@ -23,10 +27,16 @@ public class SpawnController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    private void Start()
+    {
+        this.shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
+        this.shapeCreator.gameObject.SetActive(false);
+    }
+
     public void SpawnScene(SerializationData[] data)
     {
         WallHandler wallHandler;
-        FlowerBedHandler flowerBedHandler;
+        FlowerBed flowerBed;
 
         for (int i = 0; i < data.Length; i++)
         {
@@ -38,8 +48,8 @@ public class SpawnController : MonoBehaviour
                     break;
 
                 case SerializationController.ItemType.FlowerBed:
-                    flowerBedHandler = Instantiate(FlowerBedHandlerRef, Vector3.zero, Quaternion.identity);
-                    flowerBedHandler.DeSerialize(data[i].data);
+                    flowerBed = Instantiate(flowerBedRef, Vector3.zero, Quaternion.identity);
+                    flowerBed.DeSerialize(data[i].data);
                     break;
 
                 case SerializationController.ItemType.DefaultStaticElement:
@@ -73,10 +83,22 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    public FlowerBed SpawnFlowerBed()
+    {
+        FlowerBed tmp;
+
+        this.shapeCreator.gameObject.SetActive(true);
+        this.shapeCreator.Init();
+        tmp = Instantiate(this.flowerBedRef);
+        tmp.Init(this.shapeCreator);
+        ConstructionController.instance.SetGhost(this.shapeCreator);
+        return tmp;
+    }
+
     public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
     {
         FlowerBedElement tmp = null;
-        switch (elem.subType)
+        switch (elem.subID)
         {
             case FlowerBedElement.FlowerBedElementType.Flower01:
                 tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);

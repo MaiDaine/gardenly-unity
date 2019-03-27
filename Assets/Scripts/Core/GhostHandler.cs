@@ -7,6 +7,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public bool needFlowerBed = false;
     protected ObjectsData data;
     protected List<ISelectable> neighbors = new List<ISelectable>();
+    //TODO UI : add UI controller here 
 
     void Start()
     {
@@ -15,27 +16,27 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     void OnDestroy()
     {
-        for (int cnt = 0; cnt < neighbors.Count; cnt++)
-            neighbors[cnt].RemoveFromNeighbor(this);
+        for (int i = 0; i < this.neighbors.Count; i++)
+            this.neighbors[i].RemoveFromNeighbor(this);
+        //TODO UI: Delete menu
     }
 
-    void Update()
+    public virtual void OnCancel()
     {
+        //TODO UI: Delete menu
     }
 
-    public virtual void StartPreview(Vector3 position)
+    public virtual void Positioning(Vector3 position) { this.transform.position = position; }
+
+    public virtual bool FromPositioningToBuilding(Vector3 position)
     {
+        Positioning(position);
+        return true;
     }
 
-    public virtual void Preview(Vector3 position)
-    {
-        this.transform.position = position;
-    }
+    public virtual bool Building(Vector3 position) { return true; }
 
-    public virtual void EndPreview()
-    {
-        this.gameObject.layer = 10;
-    }
+    public virtual void EndConstruction(Vector3 position) { this.gameObject.layer = 10; }
 
     public void Rotate(float axisInput)
     {
@@ -54,32 +55,28 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public GameObject GetGameObject() { return (this.gameObject); }
 
     //ISelectable
-    public virtual void Select(ConstructionController.ConstructionState state)
-    {
-    }
+    public virtual void Select(ConstructionController.ConstructionState state) { }
 
     public virtual List<ISelectable> SelectWithNeighbor()
     {
         Select(ConstructionController.ConstructionState.Off);
-        List<ISelectable> tmp = new List<ISelectable>(neighbors);
+        List<ISelectable> tmp = new List<ISelectable>(this.neighbors);
         foreach (ISelectable item in tmp)
             item.Select(ConstructionController.ConstructionState.Off);
         return tmp;
     }
 
-    public virtual void DeSelect()
-    {
-    }
+    public virtual void DeSelect() { }
 
     public void AddNeighbor(ISelectable item)
     {
-        if (!neighbors.Contains(item))
-            neighbors.Add(item);
+        if (!this.neighbors.Contains(item))
+            this.neighbors.Add(item);
     }
 
     public void RemoveFromNeighbor(ISelectable item)
     {
-        neighbors.Remove(item);
+        this.neighbors.Remove(item);
     }
 
     //ISnapable
@@ -93,8 +90,5 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         return false;
     }
 
-    public virtual bool isLinkable()
-    {
-        return true;
-    }
+    public virtual bool isLinkable() { return true; }
 }   
