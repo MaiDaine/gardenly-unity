@@ -11,25 +11,27 @@ public class MenuScript : MonoBehaviour
     private GhostHandler ghost;
     private ConstructionController constructionController;
 
-    void Start()
+    private void Start()
     {
-        constructionController = ConstructionController.instance;
+        this.constructionController = ConstructionController.instance;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if (ghost != null && !rotateState)
-            this.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y + 3, ghost.transform.position.z);
+        if (this.ghost != null && !this.rotateState)
+            this.transform.position = new Vector3(this.ghost.transform.position.x, 
+                this.ghost.transform.position.y + 3, this.ghost.transform.position.z);
     }
+
 
     public void SetGhostRef(GhostHandler ghostRef)
     {
-        ghost = ghostRef;
+        this.ghost = ghostRef;
     }
 
     public GhostHandler GetGhost()
     {
-        return ghost;
+        return this.ghost;
     }
 
     public void DestroyMenu()
@@ -57,17 +59,17 @@ public class MenuScript : MonoBehaviour
 
     public void MoveGhost()
     {
-      LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
 
-      tmpScript.ResetColor();
-      rotateState = false;
-      isMoving = true;
-      constructionController.SetGhost(ghost);
+        tmpScript.ResetColor();
+        this.rotateState = false;
+        this.isMoving = true;
+        this.constructionController.SetGhost(ghost);
     }
 
     public void StartRotate()
     {
-        rotateState = !rotateState;
+        this.rotateState = !this.rotateState;
     }
 
     public void RotateGhost()
@@ -75,9 +77,9 @@ public class MenuScript : MonoBehaviour
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
 
-        if (ghost.transform.localEulerAngles.x <= 270)
-            ghost.transform.Rotate(Vector3.up, -rotx);
+        if (this.ghost.transform.localEulerAngles.x <= 270)
+            this.ghost.transform.Rotate(Vector3.up, -rotx);
         else
-            ghost.transform.Rotate(Vector3.forward, -rotx);
+            this.ghost.transform.Rotate(Vector3.forward, -rotx);
     }
 }

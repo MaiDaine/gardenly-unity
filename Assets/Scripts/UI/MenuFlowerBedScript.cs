@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MenuFlowerBedScript : MonoBehaviour
 {
@@ -9,12 +7,12 @@ public class MenuFlowerBedScript : MonoBehaviour
     
     void Start()
     {
-        constructionController = ConstructionController.instance;
+        this.constructionController = ConstructionController.instance;
     }
 
     public void DestroyFlowerBedHandler()
     {
-        if (constructionController.StateIsOff())
+        if (this.constructionController.StateIsOff())
         {
             DestroyMenu();
             foreach (FlowerBedMesh mesh in this.flowerBedHandler.GetMeshes())
@@ -31,24 +29,24 @@ public class MenuFlowerBedScript : MonoBehaviour
         if (this.gameObject)
             Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
-        if (constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
-            && flowerBedHandler != null)
+        if (this.constructionController.GetConstructionState() == ConstructionController.ConstructionState.Editing
+            && this.flowerBedHandler != null)
             this.CombineMesh();
     }
 
     public void SetFlowerBedHandler(FlowerBedHandler handler)
     {
-        flowerBedHandler = handler;
+        this.flowerBedHandler = handler;
     }
 
     public void CombineMesh()
     {
-        flowerBedHandler.CombineMesh();
+        this.flowerBedHandler.CombineMesh();
     }
 
     public void AddFlowerBedMesh()
     {
-        flowerBedHandler.SpawnMesh();
-        constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
+        this.flowerBedHandler.SpawnMesh();
+        this.constructionController.SetConstructionState(ConstructionController.ConstructionState.Building);
     }
 }
