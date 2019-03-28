@@ -12,7 +12,7 @@ public class SpawnController : MonoBehaviour
     //need one of each for serialization
     public WallHandler WallHandlerRef;
     public FlowerBed flowerBedRef;
-    public FlowerBedHandler FlowerBedHandlerRef;
+    //public FlowerBedHandler FlowerBedHandlerRef;
     public ShapeCreator ShapeCreator;
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
     public FlowerBedElement[] FBElements = new FlowerBedElement[1];

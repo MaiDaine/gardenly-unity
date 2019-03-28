@@ -3,7 +3,7 @@
 public class MenuFlowerBedScript : MonoBehaviour
 {
     private ConstructionController constructionController;
-    private FlowerBedHandler flowerBedHandler;
+    private FlowerBed flowerBed;
     
     void Start()
     {
@@ -15,12 +15,12 @@ public class MenuFlowerBedScript : MonoBehaviour
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             DestroyMenu();
-            foreach (FlowerBedMesh mesh in this.flowerBedHandler.GetMeshes())
+            /*foreach (FlowerBedMesh mesh in this.flowerBed.GetMeshes())
             {
                 Destroy(mesh);
-            }
-           Destroy(this.flowerBedHandler.gameObject);
-           Destroy(this.flowerBedHandler);
+            }*/
+           Destroy(this.flowerBed.gameObject);
+           Destroy(this.flowerBed);
         }
     }
 
@@ -29,24 +29,24 @@ public class MenuFlowerBedScript : MonoBehaviour
         if (this.gameObject)
             Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
-        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing
-            && flowerBedHandler != null)
-            this.CombineMesh();
+        /*if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing
+            && flowerBed != null)
+            this.CombineMesh();*/
     }
 
-    public void SetFlowerBedHandler(FlowerBedHandler handler)
+    public void SetFlowerBedHandler(FlowerBed handler)
     {
-        this.flowerBedHandler = handler;
+        this.flowerBed = handler;
     }
 
-    public void CombineMesh()
+    /*public void CombineMesh()
     {
-        this.flowerBedHandler.CombineMesh();
+        this.flowerBed.CombineMesh();
     }
 
     public void AddFlowerBedMesh()
     {
-        this.flowerBedHandler.SpawnMesh();
+        this.flowerBed.SpawnMesh();
         this.constructionController.currentState = ConstructionController.ConstructionState.Building;
-    }
+    }*/
 }

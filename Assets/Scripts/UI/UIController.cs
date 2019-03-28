@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour
         //Camera.main.GetComponent<UIController>().GetFlowerBedMenuScript().DestroyMenu();
     }
 
-    private void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
+    private void SpawnMenu(GhostHandler selectable, Transform menuType, bool isFlowerBed = false)
     {
         Canvas canvas;
         Vector3 position;
@@ -37,16 +37,21 @@ public class UIController : MonoBehaviour
             this.menu.DestroyMenu();
         else if (flowerBedMenuOpen)
             this.flowerBedMenuScript.DestroyMenu();
-        if (mesh == null)
+
+        if (!isFlowerBed)
             position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
         else
-            position = new Vector3(mesh.transform.position.x, mesh.transform.position.y + 3, mesh.transform.position.z);
+        {
+            FlowerBed tmp = (FlowerBed)selectable;
+            
+            position = new Vector3(tmp.GetVertices()[0].x, selectable.transform.position.y + 3, selectable.transform.position.z + 3);
+        }
 
         this.previewUI = Instantiate(menuType, position, Quaternion.identity);
         canvas = this.previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
 
-        if (mesh == null)
+        if (!isFlowerBed)
         {
             this.menu = this.previewUI.GetComponent<MenuScript>();
             menuOpen = true;
@@ -83,15 +88,15 @@ public class UIController : MonoBehaviour
         this.menu.SetGhostRef(ghost);
     }
 
-    public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
+    public void SpawnFlowerBedMenu(FlowerBed flowerBed)
     {
-        FlowerBedHandler handler = mesh.GetOwner();
+        //FlowerBedHandler handler = mesh.GetOwner();
 
         if (this.flowerBedMenuScript != null)
             return;
 
-        SpawnMenu(handler, this.flowerBedMenu, mesh);
-        this.flowerBedMenuScript.SetFlowerBedHandler(handler);
+        SpawnMenu(flowerBed, this.flowerBedMenu, true);
+        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
     public void SpawnWallMenu(GhostHandler ghost)
@@ -114,10 +119,28 @@ public class UIController : MonoBehaviour
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
 
-        sliders[0].value = tmp.water;
-        sliders[1].value = tmp.sunshine;
-        sliders[2].value = tmp.solidity;
-
+        // close your eyes
+        if (sliders[0].value == -1)
+            sliders[0].gameObject.SetActive(false);
+        else
+        {
+            sliders[0].gameObject.SetActive(true);
+            sliders[0].value = tmp.water;
+        }
+        if (sliders[1].value == -1)
+            sliders[1].gameObject.SetActive(false);
+        else
+        {
+            sliders[1].gameObject.SetActive(true);
+            sliders[1].value = tmp.sunshine;
+        }
+        if (sliders[2].value == -1)
+            sliders[2].gameObject.SetActive(false);
+        else
+        {
+            sliders[2].value = tmp.solidity;
+            sliders[2].gameObject.SetActive(true);
+        }
         icons[4].color = Color.green;
 
         button[1].onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });

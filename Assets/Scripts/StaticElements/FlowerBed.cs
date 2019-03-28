@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
-public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
+public class FlowerBed : GhostHandler ,ISelectable, ISerializable
 {
     public Material material;
 
@@ -69,7 +69,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (state == ConstructionController.ConstructionState.Off || state == ConstructionController.ConstructionState.Editing)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
-            //controller.SpawnFlowerBedMenu(this); //TODO UI
+            controller.SpawnFlowerBedMenu(this); //TODO UI
         }
     }
     public List<ISelectable> SelectWithNeighbor()
@@ -79,6 +79,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         tmp.Add(this);
         return tmp;
     }
+
+    public Vector2[] GetVertices() { return this.vertices; }
+
     public void DeSelect() { }
     public void AddNeighbor(ISelectable item) { }
     public void RemoveFromNeighbor(ISelectable item) { }

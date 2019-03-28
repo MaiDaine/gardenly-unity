@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowerBedPointHandler : MonoBehaviour, IInteractible
+/*public class FlowerBedPointHandler : MonoBehaviour, IInteractible
 {
     private int index;
     private FlowerBedMesh owner;
@@ -141,3 +141,4 @@ public class FlowerBedPointHandler : MonoBehaviour, IInteractible
         this.GetComponentInParent<FlowerBedMesh>().UpdatePointPosition(this.transform.position, index);
     }
 }
+*/
