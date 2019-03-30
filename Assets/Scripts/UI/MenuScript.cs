@@ -24,15 +24,9 @@ public class MenuScript : MonoBehaviour
     }
 
 
-    public void SetGhostRef(GhostHandler ghostRef)
-    {
-        this.ghost = ghostRef;
-    }
+    public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
 
-    public GhostHandler GetGhost()
-    {
-        return this.ghost;
-    }
+    public GhostHandler GetGhost() { return this.ghost; }
 
     public void DestroyMenu()
     {
@@ -47,7 +41,6 @@ public class MenuScript : MonoBehaviour
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             Destroy(ghost.gameObject);
-            Destroy(ghost);
             DestroyMenu();
         }
     }
@@ -67,10 +60,7 @@ public class MenuScript : MonoBehaviour
         this.constructionController.SetGhost(ghost);
     }
 
-    public void StartRotate()
-    {
-        this.rotateState = !this.rotateState;
-    }
+    public void StartRotate() { this.rotateState = !this.rotateState; }
 
     public void RotateGhost()
     {

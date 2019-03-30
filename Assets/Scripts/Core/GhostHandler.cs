@@ -7,6 +7,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public bool needFlowerBed = false;
     protected ObjectsData data;
     protected List<ISelectable> neighbors = new List<ISelectable>();
+    protected UIController uIController;
     //TODO UI : add UI controller here 
 
     void Start()
@@ -18,12 +19,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
         for (int i = 0; i < this.neighbors.Count; i++)
             this.neighbors[i].RemoveFromNeighbor(this);
-        //TODO UI: Delete menu
     }
 
     public virtual void OnCancel()
     {
-        //TODO UI: Delete menu
+        uIController = Camera.main.GetComponent<UIController>();
+        uIController.Cancel();
     }
 
     public virtual void Positioning(Vector3 position) { this.transform.position = position; }
