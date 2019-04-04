@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected bool subMenuOpen = true;
+    protected GhostHandler ghost = null;
 
     private void SpawnMenu(GhostHandler selectable, Transform menuType)
     {
@@ -68,6 +69,8 @@ public class UIController : MonoBehaviour
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
 
+    public void SetGhost(GhostHandler ghost) { this.ghost = ghost; }
+
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
         if (this.menu != null && this.menu.rotateState)
@@ -100,6 +103,8 @@ public class UIController : MonoBehaviour
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
 
+        this.ghost = Instantiate(handler, Vector3.zero, Quaternion.identity);
+
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
 
@@ -126,7 +131,7 @@ public class UIController : MonoBehaviour
             sliders[2].gameObject.SetActive(true);
         }
         icons[4].color = Color.green;
-        button[1].onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });
+        button[1].onClick.AddListener(delegate { ConstructionController.instance.SetGhost(this.ghost); });
 
         this.dataPanel.gameObject.SetActive(true);
     }
