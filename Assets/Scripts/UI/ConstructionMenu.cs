@@ -11,7 +11,7 @@ public class ConstructionMenu : MonoBehaviour
         this.gameObject.SetActive(this.state);
     }
 
-    private void ChangeState()
+    public void ChangeState()
     {
         this.gameObject.SetActive(!this.state);
         this.state = !this.state;

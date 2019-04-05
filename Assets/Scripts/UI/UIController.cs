@@ -118,12 +118,13 @@ public class UIController : MonoBehaviour
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
-
-        this.ghost = Instantiate(handler, Vector3.zero, Quaternion.identity);
-
-        button[1].onClick.AddListener(delegate { ConstructionController.instance.SetGhost(this.ghost); });
+        ButtonScript script = button[1].GetComponent<ButtonScript>();
 
         this.dataPanel.gameObject.SetActive(true);
+
+        //this.ghost = Instantiate(handler, Vector3.zero, Quaternion.identity);
+
+        script.SetGhost(handler);
 
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
