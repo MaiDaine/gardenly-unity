@@ -244,7 +244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8715711793969537720}
-        m_MethodName: DestroyFlowerBedHandler
+        m_MethodName: DestroyObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -370,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a72a8b1ac48d54e888362362524fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHidden: 0
 --- !u!1 &3692115307329336047
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,24 @@ public class UIController : MonoBehaviour
     protected bool subMenuOpen = true;
     protected GhostHandler ghost = null;
 
+    private void LateUpdate()
+    {
+        if (menu != null && !menu.rotateState && !menu.isMoving)
+            DisplayMenu(menu);
+        if (flowerBedMenuScript != null)
+            DisplayMenu(flowerBedMenuScript);
+    }
+
+    private void DisplayMenu(IMenu menu)
+    {
+        if (Mathf.Abs(menu.GetGameObject().transform.position.x - Camera.main.transform.position.x) > 40
+           || Mathf.Abs(menu.GetGameObject().transform.position.y - Camera.main.transform.position.y) > 20
+           || Mathf.Abs(menu.GetGameObject().transform.position.z - Camera.main.transform.position.z) > 40)
+            menu.GetGameObject().SetActive(false);
+        else
+            menu.GetGameObject().SetActive(true);
+    }
+
     private void SpawnMenu(GhostHandler selectable, Transform menuType)
     {
         Canvas canvas;
@@ -69,8 +87,6 @@ public class UIController : MonoBehaviour
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
 
-    public void SetGhost(GhostHandler ghost) { this.ghost = ghost; }
-
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
         if (this.menu != null && this.menu.rotateState)
@@ -105,6 +121,10 @@ public class UIController : MonoBehaviour
 
         this.ghost = Instantiate(handler, Vector3.zero, Quaternion.identity);
 
+        button[1].onClick.AddListener(delegate { ConstructionController.instance.SetGhost(this.ghost); });
+
+        this.dataPanel.gameObject.SetActive(true);
+
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
 
@@ -131,8 +151,6 @@ public class UIController : MonoBehaviour
             sliders[2].gameObject.SetActive(true);
         }
         icons[4].color = Color.green;
-        button[1].onClick.AddListener(delegate { ConstructionController.instance.SetGhost(this.ghost); });
-
-        this.dataPanel.gameObject.SetActive(true);
+        
     }
 }

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class MenuFlowerBedScript : MonoBehaviour
+public class MenuFlowerBedScript : MonoBehaviour, IMenu
 {
+    public bool isHidden = false;
+
     private ConstructionController constructionController;
     private FlowerBed flowerBed;
     
@@ -10,15 +12,14 @@ public class MenuFlowerBedScript : MonoBehaviour
         this.constructionController = ConstructionController.instance;
     }
 
-
-    public void DestroyFlowerBedHandler()
+    private void LateUpdate()
     {
-        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
-        {
-           DestroyMenu();
-           Destroy(this.flowerBed.gameObject);
-           //Destroy(this.flowerBed);
-        }
+        Quaternion rotation;
+        Vector3 relativePos;
+
+        relativePos = this.transform.position - Camera.main.transform.position;
+        rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        this.transform.rotation = rotation;
     }
 
     public void DestroyMenu()
@@ -28,4 +29,19 @@ public class MenuFlowerBedScript : MonoBehaviour
     }
 
     public void SetFlowerBedHandler(FlowerBed handler) { this.flowerBed = handler; }
+
+    public GameObject GetGameObject() { return this.gameObject; }
+
+    public void SetHidden(bool state) { this.isHidden = state; }
+
+    public bool IsHidden() { return this.isHidden; }
+
+    public void DestroyObject()
+    {
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
+        {
+            DestroyMenu();
+            Destroy(this.flowerBed.gameObject);
+        }
+    }
 }
