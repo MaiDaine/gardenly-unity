@@ -37,16 +37,21 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         CreateMesh();
     }
 
-    private void CreateMesh()
+    private void CreateMesh(bool isFixed = false)
     {
-        MeshHandler meshHandler = new MeshHandler();
+        MeshHandler meshHandler = this.gameObject.AddComponent<MeshHandler>();
         this.GetComponent<MeshFilter>().mesh = meshHandler.Init(this.vertices);
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
-        mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
-        mesh.RecalculateTangents();
         this.GetComponent<MeshRenderer>().material = this.material;
         this.GetComponent<MeshCollider>().sharedMesh = mesh;
+        if (!isFixed && mesh.triangles.Length + 1 < 3 * (vertices.Length - 2))
+        {
+            System.Array.Reverse(vertices);
+            Destroy(meshHandler);
+            Destroy(mesh);
+            CreateMesh(true);
+            return;
+        }
         Destroy(meshHandler);
         this.gameObject.layer = 10;
         SerializationController.instance.AddToList(this);
@@ -101,8 +106,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         data.name = "FlowerBed";//TODO UI
         data.points = vertices;
         data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
-        foreach(FlowerBedElement elem in flowerBedElements)
+
+        foreach (FlowerBedElement elem in flowerBedElements)
         {
+            if (elem == null)
+                Debug.Log(i);
             data.elements[i] = elem.InnerSerialize();
             i++;
         }

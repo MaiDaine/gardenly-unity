@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
-    public enum FlowerBedElementType { Flower01 };
+    public enum FlowerBedElementType { Flower01, Flower02, Flower03 };
 
     public SerializationController.ItemType type;
     public FlowerBedElementType subType;
@@ -74,7 +74,9 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         tmp.position = this.transform.position;
         tmp.rotation = this.transform.rotation;
-        tmp.subID = subType;
+        //TMPFRONT
+        tmp.subID = (FlowerBedElementType)UnityEngine.Random.Range(0, 3);
+        //tmp.subID = subType;
         return (tmp);
     }
 

@@ -105,7 +105,11 @@ public class SpawnController : MonoBehaviour
                 tmp.InnerDeSerialize(elem);
                 break;
             default :
-                ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
+                //TMP FOR FRONT CANVAS
+                tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
+                tmp.InnerDeSerialize(elem);
+                return tmp;
+                //ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
                 return null;
         }
         return tmp;
