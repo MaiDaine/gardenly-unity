@@ -20,10 +20,10 @@ public class UIController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (menu != null && !menu.rotateState && !menu.isMoving)
-            DisplayMenu(menu);
+        if (this.menu != null && !this.menu.rotateState && !this.menu.isMoving)
+            DisplayMenu(this.menu);
         if (flowerBedMenuScript != null)
-            DisplayMenu(flowerBedMenuScript);
+            DisplayMenu(this.flowerBedMenuScript);
     }
 
     private void DisplayMenu(IMenu menu)
@@ -62,6 +62,7 @@ public class UIController : MonoBehaviour
 
         // TODO Vector3.x = middle of flowerbed
         position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
+
         this.previewUI = Instantiate(menuType, position, Quaternion.identity);
         canvas = this.previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
@@ -72,13 +73,10 @@ public class UIController : MonoBehaviour
 
     public void Cancel()
     {
-        //TODO CLEAN
         if (menuOpen)
             this.menu.DestroyMenu();
-        //Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
         if (flowerBedMenuOpen)
             this.flowerBedMenuScript.DestroyMenu();
-        //Camera.main.GetComponent<UIController>().GetFlowerBedMenuScript().DestroyMenu();
     }
 
     public Transform GetPreviewUI() { return this.previewUI; }
@@ -122,14 +120,13 @@ public class UIController : MonoBehaviour
 
         this.dataPanel.gameObject.SetActive(true);
 
-        //this.ghost = Instantiate(handler, Vector3.zero, Quaternion.identity);
-
         script.SetGhost(handler);
 
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
 
-        // close your eyes
+        // TMP
+
         if (sliders[0].value == -1)
             sliders[0].gameObject.SetActive(false);
         else
