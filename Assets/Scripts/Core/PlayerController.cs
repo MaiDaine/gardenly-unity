@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnFlowerBedMesh()
     {
+        Camera.main.GetComponent<UIController>().Cancel();
         SpawnController.instance.SpawnFlowerBed();
     }
 

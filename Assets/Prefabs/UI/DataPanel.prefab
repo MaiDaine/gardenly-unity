@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1758357690334449070}
   - component: {fileID: 9098084177134945541}
   - component: {fileID: 4054935819372729770}
+  - component: {fileID: 4617284090578697686}
   - component: {fileID: 5239204053430411704}
   m_Layer: 5
   m_Name: BuildButton
@@ -112,6 +113,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &4617284090578697686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074588179963666357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf37566d074774e45ad16d4901eb18e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 0}
 --- !u!114 &5239204053430411704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,7 +1840,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  isChild: 0
 --- !u!1 &6367627378926770347
 GameObject:
   m_ObjectHideFlags: 0

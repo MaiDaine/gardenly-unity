@@ -171,6 +171,9 @@ public class ConstructionController : MonoBehaviour
             this.currentState = ConstructionState.Off;
             this.ghost.EndConstruction(pos);
             this.Grid.activ = false;//TODO USERPREF
+            UIController uIController = Camera.main.GetComponent<UIController>();
+            if (uIController.GetMenuScript() != null)
+                uIController.GetMenuScript().isMoving = false;
         }
     }
 

@@ -18,12 +18,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     {
         for (int i = 0; i < this.neighbors.Count; i++)
             this.neighbors[i].RemoveFromNeighbor(this);
-        //TODO UI: Delete menu
     }
 
     public virtual void OnCancel()
     {
-        //TODO UI: Delete menu
+        Camera.main.GetComponent<UIController>().Cancel();
     }
 
     public virtual void Positioning(Vector3 position) { this.transform.position = position; }

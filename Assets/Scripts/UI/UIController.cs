@@ -16,63 +16,74 @@ public class UIController : MonoBehaviour
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected bool subMenuOpen = true;
+    protected GhostHandler ghost = null;
 
-    public void Cancel()
+    private void LateUpdate()
     {
-        //TODO CLEAN
-        if (menuOpen)
-            this.menu.DestroyMenu();
-        //Camera.main.GetComponent<UIController>().GetMenuScript().DestroyMenu();
-        if (flowerBedMenuOpen)
-            this.flowerBedMenuScript.DestroyMenu();
-        //Camera.main.GetComponent<UIController>().GetFlowerBedMenuScript().DestroyMenu();
+        if (this.menu != null && !this.menu.rotateState && !this.menu.isMoving)
+            DisplayMenu(this.menu);
+        if (flowerBedMenuScript != null)
+            DisplayMenu(this.flowerBedMenuScript);
     }
 
-    private void SpawnMenu(GhostHandler selectable, Transform menuType, FlowerBedMesh mesh = null)
+    private void DisplayMenu(IMenu menu)
+    {
+        if (Mathf.Abs(menu.GetGameObject().transform.position.x - Camera.main.transform.position.x) > 40
+           || Mathf.Abs(menu.GetGameObject().transform.position.y - Camera.main.transform.position.y) > 20
+           || Mathf.Abs(menu.GetGameObject().transform.position.z - Camera.main.transform.position.z) > 40)
+            menu.GetGameObject().SetActive(false);
+        else
+            menu.GetGameObject().SetActive(true);
+    }
+
+    private void SpawnMenu(GhostHandler selectable, Transform menuType)
     {
         Canvas canvas;
         Vector3 position;
 
         if (menuOpen)
             this.menu.DestroyMenu();
-        else if (flowerBedMenuOpen)
+
+        position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
+        this.previewUI = Instantiate(menuType, position, Quaternion.identity);
+        canvas = this.previewUI.GetComponent<Canvas>();
+        canvas.worldCamera = Camera.main;       
+        this.menu = this.previewUI.GetComponent<MenuScript>();
+        menuOpen = true;
+    }
+
+    private void SpawnFlowerBedMenu(FlowerBed flowerBed, Transform menuType)
+    {
+        Canvas canvas;
+        Vector3 position;
+
+        if (flowerBedMenuOpen)
             this.flowerBedMenuScript.DestroyMenu();
-        if (mesh == null)
-            position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
-        else
-            position = new Vector3(mesh.transform.position.x, mesh.transform.position.y + 3, mesh.transform.position.z);
+
+        // TODO Vector3.x = middle of flowerbed
+        position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
 
         this.previewUI = Instantiate(menuType, position, Quaternion.identity);
         canvas = this.previewUI.GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
-
-        if (mesh == null)
-        {
-            this.menu = this.previewUI.GetComponent<MenuScript>();
-            menuOpen = true;
-        }
-        else
-        {
-            this.flowerBedMenuScript = this.previewUI.GetComponent<MenuFlowerBedScript>();
-            flowerBedMenuOpen = true;
-        }
+        this.flowerBedMenuScript = this.previewUI.GetComponent<MenuFlowerBedScript>();
+        flowerBedMenuOpen = true;
     }
 
 
-    public Transform GetPreviewUI()
+    public void Cancel()
     {
-        return this.previewUI;
+        if (menuOpen)
+            this.menu.DestroyMenu();
+        if (flowerBedMenuOpen)
+            this.flowerBedMenuScript.DestroyMenu();
     }
 
-    public MenuScript GetMenuScript()
-    {
-        return this.menu;
-    }
+    public Transform GetPreviewUI() { return this.previewUI; }
 
-    public MenuFlowerBedScript GetFlowerBedMenuScript()
-    {
-        return this.flowerBedMenuScript;
-    }
+    public MenuScript GetMenuScript() { return this.menu; }
+
+    public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
 
     public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
     {
@@ -83,15 +94,10 @@ public class UIController : MonoBehaviour
         this.menu.SetGhostRef(ghost);
     }
 
-    public void SpawnFlowerBedMenu(FlowerBedMesh mesh)
+    public void SpawnFlowerBedMenu(FlowerBed flowerBed)
     {
-        FlowerBedHandler handler = mesh.GetOwner();
-
-        if (this.flowerBedMenuScript != null)
-            return;
-
-        SpawnMenu(handler, this.flowerBedMenu, mesh);
-        this.flowerBedMenuScript.SetFlowerBedHandler(handler);
+        SpawnFlowerBedMenu(flowerBed, this.flowerBedMenu);
+        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
     public void SpawnWallMenu(GhostHandler ghost)
@@ -110,18 +116,39 @@ public class UIController : MonoBehaviour
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
+        ButtonScript script = button[1].GetComponent<ButtonScript>();
+
+        this.dataPanel.gameObject.SetActive(true);
+
+        script.SetGhost(handler);
 
         labels[0].text = tmp.objectName;
         labels[1].text = tmp.description;
 
-        sliders[0].value = tmp.water;
-        sliders[1].value = tmp.sunshine;
-        sliders[2].value = tmp.solidity;
+        // TMP
 
+        if (sliders[0].value == -1)
+            sliders[0].gameObject.SetActive(false);
+        else
+        {
+            sliders[0].gameObject.SetActive(true);
+            sliders[0].value = tmp.water;
+        }
+        if (sliders[1].value == -1)
+            sliders[1].gameObject.SetActive(false);
+        else
+        {
+            sliders[1].gameObject.SetActive(true);
+            sliders[1].value = tmp.sunshine;
+        }
+        if (sliders[2].value == -1)
+            sliders[2].gameObject.SetActive(false);
+        else
+        {
+            sliders[2].value = tmp.solidity;
+            sliders[2].gameObject.SetActive(true);
+        }
         icons[4].color = Color.green;
-
-        button[1].onClick.AddListener(delegate { ConstructionController.instance.SpawnGhost(handler); });
-
-        this.dataPanel.gameObject.SetActive(true);
+        
     }
 }

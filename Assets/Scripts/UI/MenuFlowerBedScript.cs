@@ -1,52 +1,47 @@
 ﻿using UnityEngine;
 
-public class MenuFlowerBedScript : MonoBehaviour
+public class MenuFlowerBedScript : MonoBehaviour, IMenu
 {
+    public bool isHidden = false;
+
     private ConstructionController constructionController;
-    private FlowerBedHandler flowerBedHandler;
+    private FlowerBed flowerBed;
     
-    void Start()
+    private void Start()
     {
         this.constructionController = ConstructionController.instance;
     }
 
-    public void DestroyFlowerBedHandler()
+    private void LateUpdate()
     {
-        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
-        {
-            DestroyMenu();
-            foreach (FlowerBedMesh mesh in this.flowerBedHandler.GetMeshes())
-            {
-                Destroy(mesh);
-            }
-           Destroy(this.flowerBedHandler.gameObject);
-           Destroy(this.flowerBedHandler);
-        }
+        Quaternion rotation;
+        Vector3 relativePos;
+
+        relativePos = this.transform.position - Camera.main.transform.position;
+        rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        this.transform.rotation = rotation;
     }
 
     public void DestroyMenu()
     {
-        if (this.gameObject)
-            Destroy(this.gameObject);
+        Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
-        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing
-            && flowerBedHandler != null)
-            this.CombineMesh();
     }
 
-    public void SetFlowerBedHandler(FlowerBedHandler handler)
-    {
-        this.flowerBedHandler = handler;
-    }
+    public void SetFlowerBedHandler(FlowerBed handler) { this.flowerBed = handler; }
 
-    public void CombineMesh()
-    {
-        this.flowerBedHandler.CombineMesh();
-    }
+    public GameObject GetGameObject() { return this.gameObject; }
 
-    public void AddFlowerBedMesh()
+    public void SetHidden(bool state) { this.isHidden = state; }
+
+    public bool IsHidden() { return this.isHidden; }
+
+    public void DestroyObject()
     {
-        this.flowerBedHandler.SpawnMesh();
-        this.constructionController.currentState = ConstructionController.ConstructionState.Building;
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
+        {
+            DestroyMenu();
+            Destroy(this.flowerBed.gameObject);
+        }
     }
 }
