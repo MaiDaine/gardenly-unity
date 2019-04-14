@@ -2095,6 +2095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e691b7ad168fd41acccdc40b67ee08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 605725057468560086}
 --- !u!114 &534669908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7564,7 +7565,7 @@ GameObject:
   - component: {fileID: 605725057468560084}
   - component: {fileID: 605725057468560087}
   - component: {fileID: 4309665363973447628}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

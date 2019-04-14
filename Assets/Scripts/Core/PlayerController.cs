@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public const int layerMaskInteractible = (1 << 9);
     public const int layerMaskStatic = (1 << 10);
 
+    public GameObject canvas;
     public List<ISelectable> currentSelection = new List<ISelectable>();
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
@@ -89,6 +92,9 @@ public class PlayerController : MonoBehaviour
         Vector3 pos;
         RaycastHit hit;
 
+        if (GraphicRaycast())
+            return;
+
         DeSelect();
         if (constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
         {
@@ -136,5 +142,18 @@ public class PlayerController : MonoBehaviour
                 GameObject.Destroy(this.currentSelection[i].GetGameObject());
             this.currentSelection.Clear();
         }
+    }
+
+    private bool GraphicRaycast()
+    {
+        GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+        PointerEventData pointerEventData;
+        EventSystem eventSystem = canvas.GetComponent<EventSystem>();
+
+        pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerEventData, results);
+        return results.Count != 0;
     }
 }
