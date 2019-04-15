@@ -41,13 +41,15 @@ public class ShapeCreator : GhostHandler
     public override bool FromPositioningToBuilding(Vector3 position)
     {
         if (this.currentPoint != this.firstPoint
-          && Vector2.Distance(new Vector2(this.firstPoint.transform.position.x, this.firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 1.5f)
+          && Vector2.Distance(new Vector2(this.firstPoint.transform.position.x, this.firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 0.5f)
         {
             if (this.points.Count < 4)
             {
                 ErrorHandler.instance.ErrorMessage("Place at least 3 points");
                 return false;
             }
+            this.currentPoint.transform.position = this.firstPoint.transform.position;
+            this.points.Remove(currentPoint);
             return true;
         }
         if (this.points.Count > 3 && CheckIntersection(new Vector2(position.x, position.z)))
@@ -65,6 +67,7 @@ public class ShapeCreator : GhostHandler
 
     public override void EndConstruction(Vector3 position)
     {
+        Destroy(currentPoint);
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
         this.eventShapeConstructionFinished.Invoke();
     }

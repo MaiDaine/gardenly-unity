@@ -6,7 +6,7 @@ using UnityEngine;
 public class GardenData : MonoBehaviour, ISerializable
 {
     public string gardenName = "PlaceHolder";
-    private Vector2[] bounds = new Vector2[2] { new Vector2(0, 0), new Vector2(100, 100) };
+    private Vector2[] boundaries = new Vector2[2] { new Vector2(0, 0), new Vector2(100, 100) };
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class GardenData : MonoBehaviour, ISerializable
     public struct SerializedGardenData
     {
         public string name;
-        public Vector2[] bounds;
+        public Vector2[] boundaries;
     }
 
     private SerializedGardenData StoreData()
@@ -26,7 +26,7 @@ public class GardenData : MonoBehaviour, ISerializable
         SerializedGardenData gardenData;
 
         gardenData.name = gardenName;
-        gardenData.bounds = bounds;
+        gardenData.boundaries = boundaries;
         return gardenData;
     }
 
