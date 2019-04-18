@@ -13,24 +13,24 @@ public class Move : Action
 
     public override void Complete()
     {
-        newPosition = gameObject.transform.position;
+        this.newPosition = this.gameObject.transform.position;
     }
 
     public override void Revert()
     {
         GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
-            ghost.Move(oldPosition);
+            ghost.Move(this.oldPosition);
         else
-            this.gameObject.transform.position = oldPosition;
+            this.gameObject.transform.position = this.oldPosition;
     }
 
     public override void ReDo()
     {
         GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
-            ghost.Move(newPosition);
+            ghost.Move(this.newPosition);
         else
-            this.gameObject.transform.position = newPosition;
+            this.gameObject.transform.position = this.newPosition;
     }
 }

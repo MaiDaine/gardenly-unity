@@ -97,9 +97,9 @@ public class WallHandler : GhostHandler, ISerializable
     public override void Move(Vector3 position)
     {
         base.Move(position);
-        start += (this.transform.position - position);
-        end += (this.transform.position - position);
-        text.transform.position = position;
+        this.start += (this.transform.position - position);
+        this.end += (this.transform.position - position);
+        this.text.transform.position = position;
     }
 
     void OnMouseDrag()

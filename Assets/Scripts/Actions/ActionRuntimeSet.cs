@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 [CreateAssetMenu(menuName = "RuntimeSet/Actions")]
 public class ActionRuntimeSet : RuntimeSet<Action>
 {
@@ -8,35 +7,35 @@ public class ActionRuntimeSet : RuntimeSet<Action>
 
     public override void Add(Action elem)
     {
-        if (!items.Contains(elem))
+        if (!this.items.Contains(elem))
         {
-            items.Add(elem);
+            this.items.Add(elem);
             onActionSetUpdated.Raise();
         }
     }
 
     public override void Remove(Action elem)
     {
-        if (items.Contains(elem))
+        if (this.items.Contains(elem))
         {
-            items.Remove(elem);
+            this.items.Remove(elem);
             onActionSetUpdated.Raise();
         }
     }
 
     public override void ClearSet()
     {
-        if (items.Count != 0)
+        if (this.items.Count != 0)
         {
-            items.Clear();
+            this.items.Clear();
             onActionSetUpdated.Raise();
         }
     }
 
     public Action GetLastAction()
     {
-        if (items.Count == 0)
+        if (this.items.Count == 0)
             return null;
-        return (items[items.Count - 1]);
+        return (this.items[this.items.Count - 1]);
     }
 }

@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
         //Undo - Redo
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-            RedoAction();//TODO
+            RedoAction();
         else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
             RevertAction();
 

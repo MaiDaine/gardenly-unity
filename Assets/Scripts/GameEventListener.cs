@@ -8,16 +8,16 @@ public class GameEventListener : MonoBehaviour
 
     private void OnEnable()
     {
-        gameEvent.RegisterListener(this);
+        this.gameEvent.RegisterListener(this);
     }
 
     private void OnDisable()
     {
-        gameEvent.UnregisterListener(this);
+        this.gameEvent.UnregisterListener(this);
     }
 
     public void OnEventRaised()
     {
-        response.Invoke();
+        this.response.Invoke();
     }
 }

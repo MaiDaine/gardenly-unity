@@ -6,7 +6,6 @@ public class ConstructionController : MonoBehaviour
 {
     public enum ConstructionState { Off, Positioning, Building, Editing };
     public enum EditionType { Off, Position, Rotation };
-
     public static ConstructionController instance = null;
 
     public ConstructionState currentState = ConstructionState.Off;
@@ -45,10 +44,10 @@ public class ConstructionController : MonoBehaviour
            && Physics.Raycast(ray, out hit, rayDistance, layer) && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
-            lastCast = pos;
+            this.lastCast = pos;
             return true;
         }
-        pos = lastCast;
+        pos = this.lastCast;
         hit = new RaycastHit();
         return false;
     }
@@ -199,7 +198,7 @@ public class ConstructionController : MonoBehaviour
 
     public void EditPosition(Vector3 position)//TODO TMP
     {
-        ghost.Move(position);
+        this.ghost.Move(position);
     }
 
     //ISelectable Helper

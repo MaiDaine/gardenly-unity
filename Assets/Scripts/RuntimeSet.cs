@@ -7,18 +7,18 @@ public abstract class RuntimeSet<T> : ScriptableObject
 
     public virtual void Add(T elem)
     {
-        if (!items.Contains(elem))
-            items.Add(elem);
+        if (!this.items.Contains(elem))
+            this.items.Add(elem);
     }
 
     public virtual void Remove(T elem)
     {
-        if (items.Contains(elem))
-            items.Remove(elem);
+        if (this.items.Contains(elem))
+            this.items.Remove(elem);
     }
 
     public virtual void ClearSet()
     {
-        items.Clear();
+        this.items.Clear();
     }
 }
