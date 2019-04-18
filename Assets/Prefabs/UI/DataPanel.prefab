@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf37566d074774e45ad16d4901eb18e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  ghosts: []
+  idxGhost: 0
 --- !u!114 &5239204053430411704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +321,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILD
+  m_Text: ADD
 --- !u!1 &2142230584560023621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,6 +1840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
 --- !u!1 &6367627378926770347
 GameObject:
