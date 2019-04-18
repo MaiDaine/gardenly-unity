@@ -5,9 +5,12 @@ using UnityEngine;
 public class ConstructionController : MonoBehaviour
 {
     public enum ConstructionState { Off, Positioning, Building, Editing };
+    public enum EditionType { Off, Position, Rotation };
+
     public static ConstructionController instance = null;
 
     public ConstructionState currentState = ConstructionState.Off;
+    public EditionType editionState = EditionType.Off;
     public float snapDistance = 0.15f;
     public int flowerbedCount = 0;
 
@@ -96,7 +99,7 @@ public class ConstructionController : MonoBehaviour
     public void SetGhost(GhostHandler ghost)
     {
         this.ghost = ghost;
-        this.currentState = ConstructionState.Positioning;
+        //this.currentState = ConstructionState.Positioning;
         this.Grid.activ = true;//TODO USERPREF GRID
     }
 
@@ -194,6 +197,10 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    public void EditPosition(Vector3 position)//TODO TMP
+    {
+        ghost.Move(position);
+    }
 
     //ISelectable Helper
     private void AddNeighbor(ISelectable neighbor)

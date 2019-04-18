@@ -49,7 +49,8 @@ public class MenuScript : MonoBehaviour, IMenu
         tmpScript.ResetColor();
         this.rotateState = false;
         this.isMoving = true;
-        this.constructionController.SetGhost(ghost);
+        PlayerController.instance.CreateAction(ConstructionController.EditionType.Position);
+        //this.constructionController.SetGhost(ghost);
     }
 
     public void StartRotate() { this.rotateState = !this.rotateState; }

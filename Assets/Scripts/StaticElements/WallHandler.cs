@@ -94,6 +94,14 @@ public class WallHandler : GhostHandler, ISerializable
         text.gameObject.SetActive(false);
     }
 
+    public override void Move(Vector3 position)
+    {
+        base.Move(position);
+        start += (this.transform.position - position);
+        end += (this.transform.position - position);
+        text.transform.position = position;
+    }
+
     void OnMouseDrag()
     {
         if (this.uIController != null)

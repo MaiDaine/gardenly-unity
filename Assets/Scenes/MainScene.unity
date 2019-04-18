@@ -2096,6 +2096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 605725057468560086}
+  revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
+  redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
+  actionHandler: {fileID: 0}
 --- !u!114 &534669908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2109,6 +2112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  editionState: 0
   snapDistance: 0.15
   flowerbedCount: 0
 --- !u!114 &534669909
@@ -7631,6 +7635,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GardenMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1713314677744250606, guid: 450ba587a1f403c4c9840026f1c10c8a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 893914708009741651, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7759,7 +7768,7 @@ PrefabInstance:
     - target: {fileID: 893914706994809629, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000091552734
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 7017791801254194296, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
@@ -8527,11 +8536,6 @@ PrefabInstance:
     - target: {fileID: 3920215020075525218, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1713314677744250606, guid: 450ba587a1f403c4c9840026f1c10c8a,
-        type: 3}
-      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1932985642593595829, guid: 450ba587a1f403c4c9840026f1c10c8a,
