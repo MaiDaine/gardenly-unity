@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
     {
         Camera.main.GetComponent<UIController>().Cancel();
         SpawnController.instance.SpawnFlowerBed();
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
     }
 
     public void ForcedSelection(ISelectable elem)
