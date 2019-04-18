@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 078d79622b803624e9a94ed3446c5cf2, type: 3}
-  m_Name: RedoActionRuntimeSet
+  m_Script: {fileID: 11500000, guid: 90e1e5fc4670ece4a8068d79775f8000, type: 3}
+  m_Name: ActionSetUpdated
   m_EditorClassIdentifier: 
-  items: []
-  onActionSetUpdated: {fileID: 11400000, guid: d728070386a660243a365d64ec687e09, type: 2}

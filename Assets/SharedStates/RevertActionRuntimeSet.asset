@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 0}
+  onActionSetUpdated: {fileID: 11400000, guid: d728070386a660243a365d64ec687e09, type: 2}
