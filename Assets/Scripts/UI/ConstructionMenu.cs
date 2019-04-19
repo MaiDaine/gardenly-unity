@@ -39,6 +39,8 @@ public class ConstructionMenu : MonoBehaviour
             this.open = true;
             this.gameObject.SetActive(!this.state);
         }
+        if (!sleepMode)
+            this.gameObject.SetActive(!this.state);
         this.state = !this.state;
     }
 

@@ -156,6 +156,10 @@ MonoBehaviour:
   text: {fileID: 373956926766390912}
   color: {r: 1, g: 1, b: 1, a: 1}
   actionColor: {r: 0.16078432, g: 0.5568628, b: 0.8313726, a: 1}
+  defaultPicture: {fileID: 0}
+  newPicture: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
 --- !u!1 &3423831088999751451
 GameObject:
   m_ObjectHideFlags: 0

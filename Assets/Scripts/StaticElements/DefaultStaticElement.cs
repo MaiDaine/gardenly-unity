@@ -50,18 +50,15 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this);
+            if (this.data != null)
+                uIController.SetDataPanel(this);
         }
     }
 
     public override void DeSelect()
     {
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-        {
-            uIController.GetMenuScript().rotateState = false;
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+        if (uIController.GetMenuScript() != null)
             uIController.GetMenuScript().DestroyMenu();
-        }
     }
 
 

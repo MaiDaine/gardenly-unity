@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8974919763504556810}
   - component: {fileID: 6934096047445395356}
   - component: {fileID: 2064298405484624061}
-  - component: {fileID: 1814917124994063858}
   m_Layer: 0
   m_Name: chair
   m_TagString: Untagged
@@ -110,22 +109,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300006, guid: a864d850437155144a0af71fc3d9e83f, type: 3}
---- !u!114 &1814917124994063858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8974919763506558408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d846d9ea609a5e4e9020c0000d08455, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectName: Chair
-  description: this is a chair
-  sunshine: -1
-  water: -1
-  solidity: -1
-  age: 0
-  image: {fileID: 0}
