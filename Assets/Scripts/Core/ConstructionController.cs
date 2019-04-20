@@ -201,6 +201,11 @@ public class ConstructionController : MonoBehaviour
         this.ghost.Move(position);
     }
 
+    public void EditRotation(float input)
+    {
+        this.ghost.Rotate(input);
+    }
+
     //ISelectable Helper
     private void AddNeighbor(ISelectable neighbor)
     {

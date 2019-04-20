@@ -19,6 +19,7 @@ public class ActionHandler : ScriptableObject
         revertActionSet.Add(currentAction);
         this.currentAction = null;
         this.constructionController.editionState = ConstructionController.EditionType.Off;
+        this.constructionController.currentState = ConstructionController.ConstructionState.Off;
     }
 
     public void EditPositioning(ISelectable selection)
@@ -26,6 +27,16 @@ public class ActionHandler : ScriptableObject
         this.currentAction = ScriptableObject.CreateInstance("Move") as Action;
         this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
         this.constructionController.editionState = ConstructionController.EditionType.Position;
+
+        this.currentAction.Initialize(selection.GetGameObject());
+        this.constructionController.SetGhost(selection.GetGameObject().GetComponent<GhostHandler>());
+    }
+
+    public void EditRotation(ISelectable selection)
+    {
+        this.currentAction = ScriptableObject.CreateInstance("Rotate") as Action;
+        this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
+        this.constructionController.editionState = ConstructionController.EditionType.Rotation;
 
         this.currentAction.Initialize(selection.GetGameObject());
         this.constructionController.SetGhost(selection.GetGameObject().GetComponent<GhostHandler>());

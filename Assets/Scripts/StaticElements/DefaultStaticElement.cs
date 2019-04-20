@@ -31,18 +31,6 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         SerializationController.instance.RemoveFromList(this);
     }
 
-    void OnMouseDrag()
-    {
-        if (uIController != null)
-        {
-            MenuScript menu = uIController.GetMenuScript();
-
-            if (menu != null && menu.rotateState)
-                menu.RotateGhost();
-        }
-    }
-
-
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {

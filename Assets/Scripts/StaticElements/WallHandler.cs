@@ -102,18 +102,6 @@ public class WallHandler : GhostHandler, ISerializable
         this.text.transform.position = position;
     }
 
-    void OnMouseDrag()
-    {
-        if (this.uIController != null)
-        {
-            MenuScript menu = this.uIController.GetMenuScript();
-
-            if (menu != null && menu.rotateState)
-                menu.RotateGhost();
-        }
-    }
-
-
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {

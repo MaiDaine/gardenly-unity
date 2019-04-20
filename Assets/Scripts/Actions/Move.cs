@@ -13,6 +13,7 @@ public class Move : Action
 
     public override void Complete()
     {
+        base.Complete();
         this.newPosition = this.gameObject.transform.position;
     }
 

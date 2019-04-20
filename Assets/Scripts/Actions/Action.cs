@@ -9,7 +9,13 @@ public abstract class Action : ScriptableObject
         this.gameObject = gameObject;
     }
 
-    public abstract void Complete();
+    public virtual void Complete()
+    {
+        UIController uIController = Camera.main.GetComponent<UIController>();
+
+        if (uIController != null)
+            uIController.GetMenuScript().EditionEnd();
+    }
 
     public abstract void Revert();
 

@@ -40,9 +40,7 @@ public class PlayerController : MonoBehaviour
         this.actionHandler.Initialize();
     }
 
-
-
-    void Update()
+    private void Update()
     {
         //DEBUG
 
@@ -74,22 +72,32 @@ public class PlayerController : MonoBehaviour
         //Ghost Handle
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
         {
-            if (constructionController.editionState == ConstructionController.EditionType.Off)
+            switch (constructionController.editionState)
             {
-                if (Input.GetMouseButtonDown(0))
-                    SelectBuilding();
-                else if (Input.GetMouseButton(0) && interactible != null)
-                    this.constructionController.UpdateGhostEditing(interactible);
-                if (interactible != null && Input.GetMouseButtonUp(0))
+                case ConstructionController.EditionType.Off:
                 {
-                    interactible.EndDrag();
-                    interactible = null;
+                    if (Input.GetMouseButtonDown(0))
+                        SelectBuilding();
+                    else if (Input.GetMouseButton(0) && interactible != null)
+                        this.constructionController.UpdateGhostEditing(interactible);
+                    if (interactible != null && Input.GetMouseButtonUp(0))
+                    {
+                        interactible.EndDrag();
+                        interactible = null;
+                    }
+                    break;
                 }
-            }
-            else if (constructionController.editionState == ConstructionController.EditionType.Position)
-            {
-                if (constructionController.MouseRayCast(out pos, out hit))
-                    constructionController.EditPosition(pos);
+                case ConstructionController.EditionType.Position:
+                 {
+                     if (constructionController.MouseRayCast(out pos, out hit))
+                         constructionController.EditPosition(pos);
+                     break;
+                 }
+                case ConstructionController.EditionType.Rotation:
+                 {
+                     constructionController.EditRotation(Input.GetAxis("Mouse X"));
+                     break;
+                 }
             }
             if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
                 actionHandler.ActionComplete(revertActionSet);
@@ -113,7 +121,11 @@ public class PlayerController : MonoBehaviour
                 actionHandler.EditPositioning(currentSelection);
                 break;
             }
-            
+            case ConstructionController.EditionType.Rotation:
+            {
+                actionHandler.EditRotation(currentSelection);
+                break;
+            }
             default:
                 break;
         }

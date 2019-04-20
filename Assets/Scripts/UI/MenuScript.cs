@@ -53,17 +53,19 @@ public class MenuScript : MonoBehaviour, IMenu
         //this.constructionController.SetGhost(ghost);
     }
 
-    public void StartRotate() { this.rotateState = !this.rotateState; }
-
-    public void RotateGhost()
+    public void StartRotate()
     {
-        float rotSpeed = 100f;
-        float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
+        PlayerController.instance.CreateAction(ConstructionController.EditionType.Rotation);
+        this.rotateState = !this.rotateState;//TODO CHECK
+    }
 
-        if (this.ghost.transform.localEulerAngles.x <= 270)
-            this.ghost.transform.Rotate(Vector3.up, -rotx);
-        else
-            this.ghost.transform.Rotate(Vector3.forward, -rotx);
+    public void EditionEnd()
+    {
+        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+
+        tmpScript.ResetColor();
+        this.rotateState = false;
+        this.isMoving = false;
     }
 
     public GameObject GetGameObject() { return this.gameObject; }
