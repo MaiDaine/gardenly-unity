@@ -11,6 +11,8 @@ public class UIController : MonoBehaviour
     public Transform dataPanel;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
+    public ActionRuntimeSet revertActionSet;
+    public ActionRuntimeSet redoActionSet;
 
     protected Transform previewUI = null;
     protected MenuScript menu = null;
@@ -70,6 +72,13 @@ public class UIController : MonoBehaviour
         flowerBedMenuOpen = true;
     }
 
+    //TODO UI
+    public void OnActionSetUpdate()
+    {
+        //update visual
+        //revertActionSet.items
+        //redoActionSet.items
+    }
 
     public void Cancel()
     {

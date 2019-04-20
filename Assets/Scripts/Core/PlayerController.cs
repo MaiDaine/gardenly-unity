@@ -11,17 +11,25 @@ public class PlayerController : MonoBehaviour
     public const int layerMaskStatic = (1 << 10);
 
     public GameObject canvas;
-    public List<ISelectable> currentSelection = new List<ISelectable>();
+    public List<ISelectable> selectionList = new List<ISelectable>();
+    public ISelectable currentSelection = null;
+    public ActionRuntimeSet revertActionSet;
+    public ActionRuntimeSet redoActionSet;
+    public ActionHandler actionHandler;
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
     private IInteractible interactible;
     private ConstructionController constructionController;
 
-
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            this.revertActionSet.items.Clear();
+            this.redoActionSet.items.Clear();
+            this.actionHandler = ScriptableObject.CreateInstance("ActionHandler") as ActionHandler;
+        }
         else if (instance != this)
             Destroy(this.gameObject);
     }
@@ -29,11 +37,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         constructionController = ConstructionController.instance;
+        this.actionHandler.Initialize();
     }
+
+
 
     void Update()
     {
         //DEBUG
+
         Vector3 pos;
         RaycastHit hit;
 
@@ -41,50 +53,109 @@ public class PlayerController : MonoBehaviour
             Debug.DrawLine(Camera.main.transform.position, pos);
         if (Input.GetKeyDown(KeyCode.L))
             ReactProxy.instance.ExportScene();
-        if (Input.GetKeyDown(KeyCode.P))
-            SpawnController.instance.SpawnFlowerBed();
         //END DEBUG
+
+        //Undo - Redo
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+            RedoAction();
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+            RevertAction();
 
         //Selection
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Off)
-         {
-             if (Input.GetMouseButtonDown(0))
-                 SelectBuilding();
-             else if (Input.GetKey(KeyCode.Delete))
-                 DestroySelection();
-         }
+        {
+            if (Input.GetMouseButtonDown(0))
+                SelectBuilding();
+            else if (Input.GetKey(KeyCode.Delete))
+                DestroySelection();
+            return;
+        }
 
         //Ghost Handle
-         if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
-         {
-             if (Input.GetMouseButtonDown(0))
-             {
-                if (this.constructionController.MouseRayCast(out pos, out hit, layerMaskInteractible))
-                    this.interactible = hit.collider.gameObject.GetComponent<IInteractible>();
-                else if (this.constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
+        {
+            if (constructionController.editionState == ConstructionController.EditionType.Off)
+            {
+                if (Input.GetMouseButtonDown(0))
+                    SelectBuilding();
+                else if (Input.GetMouseButton(0) && interactible != null)
+                    this.constructionController.UpdateGhostEditing(interactible);
+                if (interactible != null && Input.GetMouseButtonUp(0))
                 {
-                    ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
-                    if (selectable != null)
-                    {
-                        selectable.Select(ConstructionController.ConstructionState.Editing);
-                        currentSelection.Clear();
-                    }
+                    interactible.EndDrag();
+                    interactible = null;
                 }
-                if (interactible == null)
-                    DeSelect(true);
-             }
-             else if (Input.GetMouseButton(0) && interactible != null)
-                this.constructionController.UpdateGhostEditing(interactible);
-             if (interactible != null && Input.GetMouseButtonUp(0))
-             {
-                 interactible.EndDrag();
-                 interactible = null;
-             }
-         }
-        else if (this.constructionController.currentState != ConstructionController.ConstructionState.Off)
+            }
+            else if (constructionController.editionState == ConstructionController.EditionType.Position)
+            {
+                if (constructionController.MouseRayCast(out pos, out hit))
+                    constructionController.EditPosition(pos);
+            }
+            if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
+                actionHandler.ActionComplete(revertActionSet);
+        }
+        else
             this.constructionController.UpdateGhost();
     }
 
+
+    //Actions
+    public void CreateAction(ConstructionController.EditionType type)
+    {
+        constructionController.currentState = ConstructionController.ConstructionState.Editing;
+        constructionController.editionState = ConstructionController.EditionType.Position;
+        redoActionSet.items.Clear();
+
+        switch (type)
+        {
+            case ConstructionController.EditionType.Position:
+            {
+                actionHandler.EditPositioning(currentSelection);
+                break;
+            }
+            
+            default:
+                break;
+        }
+        constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());//TODO might change
+    }
+
+    //Actions
+    private void RedoAction()
+    {
+        Action action = redoActionSet.GetLastAction();
+        if (action != null)
+        {
+            action.ReDo();
+            revertActionSet.Add(action);
+            redoActionSet.Remove(action);
+            if (currentSelection != null)
+                currentSelection.DeSelect();
+            currentSelection = action.GetGameObject().GetComponent<ISelectable>();
+            if (currentSelection != null)
+                currentSelection.Select(ConstructionController.ConstructionState.Off);
+        }
+        else
+            ErrorHandler.instance.ErrorMessage("No action to cancel");
+    }
+
+    private void RevertAction()
+    {
+        Action action = revertActionSet.GetLastAction();
+        if (action != null)
+        {
+            action.Revert();
+            redoActionSet.Add(action);
+            revertActionSet.Remove(action);
+            if (currentSelection != null)
+                currentSelection.DeSelect();
+            currentSelection = action.GetGameObject().GetComponent<ISelectable>();
+            if (currentSelection != null)
+                currentSelection.Select(ConstructionController.ConstructionState.Off);
+        }
+        else
+            ErrorHandler.instance.ErrorMessage("No action to revert");
+    }
 
     //Selection Handle
     private void SelectBuilding()
@@ -92,7 +163,7 @@ public class PlayerController : MonoBehaviour
         Vector3 pos;
         RaycastHit hit;
 
-        if (GraphicRaycast())
+        if (IsPointerOnUi())
             return;
 
         DeSelect();
@@ -102,11 +173,16 @@ public class PlayerController : MonoBehaviour
 
             if (selectable != null)
             {
-                this.currentSelection.Add(selectable);
+                if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
+                    this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+                this.selectionList.Add(selectable);
                 if (Input.GetKey(KeyCode.LeftControl))
-                    this.currentSelection.AddRange(selectable.SelectWithNeighbor());
+                    this.selectionList.AddRange(selectable.SelectWithNeighbor());
                 else
+                {
+                    this.currentSelection = selectable;
                     selectable.Select(constructionController.currentState);
+                }
             }
         }
     }
@@ -115,46 +191,44 @@ public class PlayerController : MonoBehaviour
     {
         Camera.main.GetComponent<UIController>().Cancel();
         SpawnController.instance.SpawnFlowerBed();
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
     }
 
     public void ForcedSelection(ISelectable elem)
     {
-        foreach (ISelectable item in this.currentSelection)
+        foreach (ISelectable item in this.selectionList)
             item.DeSelect();
-        this.currentSelection.Clear();
-        this.currentSelection.Add(elem);
+        this.selectionList.Clear();
+        this.selectionList.Add(elem);
     }
 
     private void DeSelect(bool forced = false)
     {
-        if (this.currentSelection.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
+        if (this.selectionList.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
         {
-            foreach (ISelectable elem in this.currentSelection)
+            foreach (ISelectable elem in this.selectionList)
                 elem.DeSelect();
-            this.currentSelection.Clear();
+            this.selectionList.Clear();
+        }
+        if (currentSelection != null)
+        {
+            this.currentSelection.DeSelect();
+            this.currentSelection = null;
         }
     }
 
     private void DestroySelection()
     {
-        if (this.currentSelection != null)
+        if (this.selectionList != null)
         {
-            for (int i = 0; i < this.currentSelection.Count; i++)
-                GameObject.Destroy(this.currentSelection[i].GetGameObject());
-            this.currentSelection.Clear();
+            for (int i = 0; i < this.selectionList.Count; i++)
+                GameObject.Destroy(this.selectionList[i].GetGameObject());
+            this.selectionList.Clear();
         }
     }
 
-    private bool GraphicRaycast()
+    private bool IsPointerOnUi()
     {
-        GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
-        PointerEventData pointerEventData;
-        EventSystem eventSystem = canvas.GetComponent<EventSystem>();
-
-        pointerEventData = new PointerEventData(eventSystem);
-        pointerEventData.position = Input.mousePosition;
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerEventData, results);
-        return results.Count != 0;
+        return (EventSystem.current.IsPointerOverGameObject());
     }
 }

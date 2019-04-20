@@ -13,17 +13,12 @@ public class CameraController : MonoBehaviour
     public float minAltitude = 0.5f;
     public float maxAltitude = 100f;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         Vector3 currentPos = transform.position;
         Quaternion currentRot = transform.rotation;
 
-        if (Input.GetKey("z") || (canMoveCameraWithMouse && Input.mousePosition.y >= Screen.height - moveBorderThickness))
+        if ((!Input.GetKey(KeyCode.LeftControl) && Input.GetKey("z")) || (canMoveCameraWithMouse && Input.mousePosition.y >= Screen.height - moveBorderThickness))
             currentPos = MoveForward(currentPos, 1f);
         if (Input.GetKey("s") || (canMoveCameraWithMouse && Input.mousePosition.y <= moveBorderThickness))
             currentPos = MoveForward(currentPos, -1f);

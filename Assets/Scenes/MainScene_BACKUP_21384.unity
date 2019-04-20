@@ -7744,6 +7744,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1001704303921946793, guid: 450ba587a1f403c4c9840026f1c10c8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 893914708009741651, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7849,6 +7854,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1713314677744250606, guid: 450ba587a1f403c4c9840026f1c10c8a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 893914707082734988, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -7868,11 +7878,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 893914706994809629, guid: 450ba587a1f403c4c9840026f1c10c8a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 893914706994809629, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
@@ -8455,7 +8460,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 7017791802186628963, guid: 450ba587a1f403c4c9840026f1c10c8a,
+=======
+    - target: {fileID: 1713314677744250606, guid: 450ba587a1f403c4c9840026f1c10c8a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 893914708009741651, guid: 450ba587a1f403c4c9840026f1c10c8a,
+>>>>>>> 5d7d0522984623ed1d7c7a551567450c0a7874f9
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -8547,11 +8561,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1001704303921946793, guid: 450ba587a1f403c4c9840026f1c10c8a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7207961959924987407, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -8639,8 +8648,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1330214499373313499, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
+<<<<<<< HEAD
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
+=======
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000061035156
+>>>>>>> 5d7d0522984623ed1d7c7a551567450c0a7874f9
       objectReference: {fileID: 0}
     - target: {fileID: 4682590428803355945, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
@@ -8660,11 +8674,6 @@ PrefabInstance:
     - target: {fileID: 3920215020075525218, guid: 450ba587a1f403c4c9840026f1c10c8a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1713314677744250606, guid: 450ba587a1f403c4c9840026f1c10c8a,
-        type: 3}
-      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1932985642593595829, guid: 450ba587a1f403c4c9840026f1c10c8a,
@@ -9663,12 +9672,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 2792766036144347858, guid: caec2b8dd3ebca94287661f2ad6d9138,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 27.510002
       objectReference: {fileID: 0}
     - target: {fileID: 2792766036144347858, guid: caec2b8dd3ebca94287661f2ad6d9138,
+=======
+    - target: {fileID: 1932985642593595829, guid: 450ba587a1f403c4c9840026f1c10c8a,
+>>>>>>> 5d7d0522984623ed1d7c7a551567450c0a7874f9
         type: 3}
       propertyPath: m_Pivot.x
       value: 0

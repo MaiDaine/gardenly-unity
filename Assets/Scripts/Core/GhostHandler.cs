@@ -37,6 +37,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual void EndConstruction(Vector3 position) { this.gameObject.layer = 10; }
 
+    public virtual void Move(Vector3 position) { this.transform.position = position; }
+
     public void Rotate(float axisInput)
     {
         Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
