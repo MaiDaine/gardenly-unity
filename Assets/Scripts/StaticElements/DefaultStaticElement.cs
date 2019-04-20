@@ -33,10 +33,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     void OnMouseDrag()
     {
+        uIController = Camera.main.GetComponent<UIController>();
         if (uIController != null)
         {
             MenuScript menu = uIController.GetMenuScript();
-
             if (menu != null && menu.rotateState)
                 menu.RotateGhost();
         }
@@ -57,7 +57,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-        if (uIController.GetMenuScript() != null)
+        if (uIController.GetMenuScript() != null && !uIController.GetMenuScript().rotateState)
             uIController.GetMenuScript().DestroyMenu();
     }
 

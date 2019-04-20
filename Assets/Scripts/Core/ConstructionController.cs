@@ -19,6 +19,7 @@ public class ConstructionController : MonoBehaviour
     private GhostHandler ghost = null;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
+    private bool gridtate = true;
 
     private void Awake()
     {
@@ -33,6 +34,9 @@ public class ConstructionController : MonoBehaviour
         this.Camera = Camera.main;
         this.Grid = GetComponent<GridController>();
     }
+
+
+    public void ChangeGridState() { this.gridtate = !this.gridtate; }
 
     //MouseRayCast
     public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = PlayerController.layerMaskStatic)
@@ -92,21 +96,24 @@ public class ConstructionController : MonoBehaviour
             Cancel();
         this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
         this.currentState = ConstructionState.Positioning;
-        this.Grid.activ = true;//TODO USERPREF GRID
+        if (this.gridtate)
+            this.Grid.activ = true;
     }
 
     public void SetGhost(GhostHandler ghost)
     {
         this.ghost = ghost;
         //this.currentState = ConstructionState.Positioning;
-        this.Grid.activ = true;//TODO USERPREF GRID
+        if (this.gridtate)
+            this.Grid.activ = true;
     }
 
     public void EditPositioning(GhostHandler GhostRef)
     {
         this.ghost = GhostRef;
         this.currentState = ConstructionState.Positioning;
-        this.Grid.activ = true;//TODO USERPREF GRID 
+        if (this.gridtate)
+            this.Grid.activ = true;
     }
 
     public void UpdateGhost()
@@ -154,7 +161,8 @@ public class ConstructionController : MonoBehaviour
                 {
                     hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
                     this.currentState = ConstructionState.Off;
-                    this.Grid.activ = false;//TODO USERPREF
+                    if (this.gridtate)
+                        this.Grid.activ = false;
                     this.ghost.EndConstruction(pos);
                 }
                 return;
@@ -172,7 +180,7 @@ public class ConstructionController : MonoBehaviour
             AddNeighbor(neighbor);
             this.currentState = ConstructionState.Off;
             this.ghost.EndConstruction(pos);
-            this.Grid.activ = false;//TODO USERPREF
+            this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
                 uIController.GetMenuScript().isMoving = false;

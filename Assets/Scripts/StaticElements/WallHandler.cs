@@ -136,7 +136,7 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (this.text.gameObject != null)
             this.text.gameObject.SetActive(false);
-        if (uIController.GetMenuScript() != null)
+        if (uIController.GetMenuScript() != null && !uIController.GetMenuScript().rotateState)
             uIController.GetMenuScript().DestroyMenu();
     }
 
