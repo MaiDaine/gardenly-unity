@@ -19,7 +19,7 @@ public class ConstructionController : MonoBehaviour
     private GhostHandler ghost = null;
     private Vector3 lastPos = new Vector3(0, 0, 0);
     private Vector3 lastCast = new Vector3(0, 0, 0);
-    private bool gridtate = true;
+    private bool gridState = true;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class ConstructionController : MonoBehaviour
     }
 
 
-    public void ChangeGridState() { this.gridtate = !this.gridtate; }
+    public void ChangeGridState() { this.gridState = !this.gridState; }
 
     //MouseRayCast
     public bool MouseRayCast(out Vector3 pos, out RaycastHit hit, int layer = PlayerController.layerMaskStatic)
@@ -96,7 +96,7 @@ public class ConstructionController : MonoBehaviour
             Cancel();
         this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
         this.currentState = ConstructionState.Positioning;
-        if (this.gridtate)
+        if (this.gridState)
             this.Grid.activ = true;
     }
 
@@ -104,7 +104,7 @@ public class ConstructionController : MonoBehaviour
     {
         this.ghost = ghost;
         //this.currentState = ConstructionState.Positioning;
-        if (this.gridtate)
+        if (this.gridState)
             this.Grid.activ = true;
     }
 
@@ -112,7 +112,7 @@ public class ConstructionController : MonoBehaviour
     {
         this.ghost = GhostRef;
         this.currentState = ConstructionState.Positioning;
-        if (this.gridtate)
+        if (this.gridState)
             this.Grid.activ = true;
     }
 
@@ -161,7 +161,7 @@ public class ConstructionController : MonoBehaviour
                 {
                     hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
                     this.currentState = ConstructionState.Off;
-                    if (this.gridtate)
+                    if (this.gridState)
                         this.Grid.activ = false;
                     this.ghost.EndConstruction(pos);
                 }
