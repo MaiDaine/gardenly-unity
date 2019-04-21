@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class ActionHandler : ScriptableObject
 {
     public Action currentAction = null;
@@ -10,10 +11,10 @@ public class ActionHandler : ScriptableObject
 
     private ConstructionController constructionController;
 
-    public void Initialize(ActionRuntimeSet revertActionSet, ActionRuntimeSet redoActionSet)
+    public void Initialize()
     {
-        this.revertActionSet = revertActionSet;
-        this.redoActionSet = redoActionSet;
+        this.revertActionSet.items.Clear();
+        this.redoActionSet.items.Clear();
         this.constructionController = ConstructionController.instance;
     }
 
@@ -21,7 +22,7 @@ public class ActionHandler : ScriptableObject
     {
         redoActionSet.ClearSet();
         CreateAction(action, gameObject);
-        ActionComplete(revertActionSet);
+        ActionComplete();
     }
 
     public void NewEditonAction(ConstructionController.EditionType type, ISelectable currentSelection)
@@ -53,7 +54,7 @@ public class ActionHandler : ScriptableObject
         constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());//TODO might change
     }
 
-    public void ActionComplete(ActionRuntimeSet revertActionSet)
+    public void ActionComplete()
     {
         this.currentAction.Complete();
         revertActionSet.Add(currentAction);
@@ -65,13 +66,13 @@ public class ActionHandler : ScriptableObject
     public Action RedoAction()
     {
         bool shouldSelect;
-        Action action = redoActionSet.GetLastAction();
+        Action action = this.redoActionSet.GetLastAction();
 
         if (action != null)
         {
             shouldSelect = action.ReDo();
-            revertActionSet.Add(action);
-            redoActionSet.Remove(action);
+            this.revertActionSet.Add(action);
+            this.redoActionSet.Remove(action);
             if (shouldSelect)
                 return action;
         }
@@ -83,13 +84,13 @@ public class ActionHandler : ScriptableObject
     public Action RevertAction()
     {
         bool shouldSelect;
-        Action action = revertActionSet.GetLastAction();
+        Action action = this.revertActionSet.GetLastAction();
 
         if (action != null)
         {
             shouldSelect = action.Revert();
-            redoActionSet.Add(action);
-            revertActionSet.Remove(action);
+            this.redoActionSet.Add(action);
+            this.revertActionSet.Remove(action);
             if (shouldSelect)
                 return action;
         }

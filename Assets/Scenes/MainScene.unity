@@ -2097,9 +2097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 605725057468560086}
-  revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
-  redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
-  actionHandler: {fileID: 0}
+  actionHandler: {fileID: 11400000, guid: badece0373c5d5246b76dd9a8c0b8189, type: 2}
 --- !u!114 &534669908
 MonoBehaviour:
   m_ObjectHideFlags: 0

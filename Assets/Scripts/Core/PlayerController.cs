@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour
     public GameObject canvas;
     public List<ISelectable> selectionList = new List<ISelectable>();
     public ISelectable currentSelection = null;
-    public ActionRuntimeSet revertActionSet;
-    public ActionRuntimeSet redoActionSet;
     public ActionHandler actionHandler;
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
@@ -24,12 +22,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-            this.revertActionSet.items.Clear();
-            this.redoActionSet.items.Clear();
-            this.actionHandler = ScriptableObject.CreateInstance("ActionHandler") as ActionHandler;
-        }
         else if (instance != this)
             Destroy(this.gameObject);
     }
@@ -37,23 +30,12 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         constructionController = ConstructionController.instance;
-        this.actionHandler.Initialize(revertActionSet, redoActionSet);
+        this.actionHandler.Initialize();
     }
 
     private void Update()
     {
-        //DEBUG
-
-        Vector3 pos;
-        RaycastHit hit;
-
-        if (this.constructionController.MouseRayCast(out pos, out hit))
-            Debug.DrawLine(Camera.main.transform.position, pos);
-        if (Input.GetKeyDown(KeyCode.L))
-            ReactProxy.instance.ExportScene();
-        //END DEBUG
-
-        //Undo - Redo
+        //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
             Action currentAction = actionHandler.RedoAction();
@@ -97,6 +79,8 @@ public class PlayerController : MonoBehaviour
                 }
                 case ConstructionController.EditionType.Position:
                  {
+                     Vector3 pos;
+                     RaycastHit hit;
                      if (constructionController.MouseRayCast(out pos, out hit))
                          constructionController.EditPosition(pos);
                      break;
@@ -108,32 +92,13 @@ public class PlayerController : MonoBehaviour
                  }
             }
             if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
-                actionHandler.ActionComplete(revertActionSet);
+                actionHandler.ActionComplete();
         }
         else
             this.constructionController.UpdateGhost();
     }
 
     //Selection Handle
-    public void SelectFromAction(ISelectable selectable)
-    {
-        DeSelect();
-        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
-            this.constructionController.currentState = ConstructionController.ConstructionState.Off;
-        this.selectionList.Add(selectable);
-        this.currentSelection = selectable;
-        selectable.Select(constructionController.currentState);
-    }
-
-    public void UpdateSelectionAfterAction(Action action)
-    {
-        if (currentSelection != null)
-            currentSelection.DeSelect();
-        currentSelection = action.GetGameObject().GetComponent<ISelectable>();
-        if (currentSelection != null)
-            currentSelection.Select(ConstructionController.ConstructionState.Off);
-    }
-
     private void SelectBuilding()
     {
         Vector3 pos;
@@ -163,19 +128,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SpawnFlowerBedMesh()
+    public void SelectFromAction(ISelectable selectable)
     {
-        Camera.main.GetComponent<UIController>().Cancel();
-        SpawnController.instance.SpawnFlowerBed();
-        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        DeSelect();
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
+            this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+        this.selectionList.Add(selectable);
+        this.currentSelection = selectable;
+        selectable.Select(constructionController.currentState);
     }
 
-    public void ForcedSelection(ISelectable elem)
+    public void UpdateSelectionAfterAction(Action action)
     {
-        foreach (ISelectable item in this.selectionList)
-            item.DeSelect();
-        this.selectionList.Clear();
-        this.selectionList.Add(elem);
+        if (currentSelection != null)
+            currentSelection.DeSelect();
+        currentSelection = action.GetGameObject().GetComponent<ISelectable>();
+        if (currentSelection != null)
+            currentSelection.Select(ConstructionController.ConstructionState.Off);
+    }
+
+    public void DestroySelection()
+    {
+        if (this.selectionList != null)
+        {
+            for (int i = 0; i < this.selectionList.Count; i++)
+                this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
+            this.selectionList.Clear();
+        }
     }
 
     private void DeSelect(bool forced = false)
@@ -193,18 +172,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void DestroySelection()
+    //Tools
+    public void SpawnFlowerBedMesh()
     {
-        if (this.selectionList != null)
-        {
-            for (int i = 0; i < this.selectionList.Count; i++)
-                this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
-            this.selectionList.Clear();
-        }
+        Camera.main.GetComponent<UIController>().Cancel();
+        SpawnController.instance.SpawnFlowerBed();
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
     }
 
-    private bool IsPointerOnUi()
-    {
-        return (EventSystem.current.IsPointerOverGameObject());
-    }
+    private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }
 }
