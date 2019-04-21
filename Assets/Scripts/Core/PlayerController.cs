@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         constructionController = ConstructionController.instance;
-        this.actionHandler.Initialize();
+        this.actionHandler.Initialize(revertActionSet, redoActionSet);
     }
 
     private void Update()
@@ -55,9 +55,17 @@ public class PlayerController : MonoBehaviour
 
         //Undo - Redo
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-            RedoAction();
+        {
+            Action currentAction = actionHandler.RedoAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
         else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-            RevertAction();
+        {
+            Action currentAction = actionHandler.RevertAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
 
         //Selection
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Off)
@@ -106,88 +114,6 @@ public class PlayerController : MonoBehaviour
             this.constructionController.UpdateGhost();
     }
 
-
-    //Actions
-    
-    public void NewStateAction(string action, GameObject gameObject)
-    {
-        redoActionSet.ClearSet();
-        this.actionHandler.CreateAction(action, gameObject);
-        this.actionHandler.ActionComplete(revertActionSet);
-    }   
-
-    public void NewEditonAction(ConstructionController.EditionType type)
-    {
-        constructionController.currentState = ConstructionController.ConstructionState.Editing;
-        redoActionSet.ClearSet();
-
-        switch (type)
-        {
-            case ConstructionController.EditionType.Position:
-            {
-                this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-                this.constructionController.editionState = ConstructionController.EditionType.Position;
-                this.actionHandler.CreateAction("Move", currentSelection);
-                this.constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
-                break;
-            }
-            case ConstructionController.EditionType.Rotation:
-            {
-                this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-                this.constructionController.editionState = ConstructionController.EditionType.Rotation;
-                this.actionHandler.CreateAction("Rotate", currentSelection);
-                this.constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
-                break;
-            }
-            default:
-                break;
-        }
-        constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());//TODO might change
-    }
-
-    private void RedoAction()
-    {
-        bool shouldSelect;
-        Action action = redoActionSet.GetLastAction();
-
-        if (action != null)
-        {
-            shouldSelect =  action.ReDo();
-            revertActionSet.Add(action);
-            redoActionSet.Remove(action);
-            if (shouldSelect)
-                UpdateSelectionAfterAction(action);
-        }
-        else
-            ErrorHandler.instance.ErrorMessage("No action to cancel");
-    }
-
-    private void RevertAction()
-    {
-        bool shouldSelect;
-        Action action = revertActionSet.GetLastAction();
-
-        if (action != null)
-        {
-            shouldSelect = action.Revert();
-            redoActionSet.Add(action);
-            revertActionSet.Remove(action);
-            if (shouldSelect)
-                UpdateSelectionAfterAction(action);
-        }
-        else
-            ErrorHandler.instance.ErrorMessage("No action to revert");
-    }
-
-    private void UpdateSelectionAfterAction(Action action)
-    {
-        if (currentSelection != null)
-            currentSelection.DeSelect();
-        currentSelection = action.GetGameObject().GetComponent<ISelectable>();
-        if (currentSelection != null)
-            currentSelection.Select(ConstructionController.ConstructionState.Off);
-    }
-
     //Selection Handle
     public void SelectFromAction(ISelectable selectable)
     {
@@ -197,6 +123,15 @@ public class PlayerController : MonoBehaviour
         this.selectionList.Add(selectable);
         this.currentSelection = selectable;
         selectable.Select(constructionController.currentState);
+    }
+
+    public void UpdateSelectionAfterAction(Action action)
+    {
+        if (currentSelection != null)
+            currentSelection.DeSelect();
+        currentSelection = action.GetGameObject().GetComponent<ISelectable>();
+        if (currentSelection != null)
+            currentSelection.Select(ConstructionController.ConstructionState.Off);
     }
 
     private void SelectBuilding()
@@ -263,7 +198,7 @@ public class PlayerController : MonoBehaviour
         if (this.selectionList != null)
         {
             for (int i = 0; i < this.selectionList.Count; i++)
-                NewStateAction("Destroy", this.selectionList[i].GetGameObject());
+                this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
             this.selectionList.Clear();
         }
     }
