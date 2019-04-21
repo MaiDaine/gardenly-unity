@@ -17,13 +17,15 @@ public class Rotate : Action
         this.newRotation = this.gameObject.transform.rotation;
     }
 
-    public override void Revert()
+    public override bool Revert()
     {
         this.gameObject.transform.rotation = this.oldRotation;
+        return true;
     }
 
-    public override void ReDo()
+    public override bool ReDo()
     {
         this.gameObject.transform.rotation = this.newRotation;
+        return true;
     }
 }

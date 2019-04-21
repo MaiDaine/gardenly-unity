@@ -17,21 +17,23 @@ public class Move : Action
         this.newPosition = this.gameObject.transform.position;
     }
 
-    public override void Revert()
+    public override bool Revert()
     {
         GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
             ghost.Move(this.oldPosition);
         else
             this.gameObject.transform.position = this.oldPosition;
+        return true;
     }
 
-    public override void ReDo()
+    public override bool ReDo()
     {
         GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
             ghost.Move(this.newPosition);
         else
             this.gameObject.transform.position = this.newPosition;
+        return true;
     }
 }

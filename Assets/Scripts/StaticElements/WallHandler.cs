@@ -122,18 +122,20 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
+        MenuScript menuScript = this.uIController.GetMenuScript();
+
         if (this.text.gameObject != null)
             this.text.gameObject.SetActive(false);
-        // Inutile si le deselect supprime le menu
-        if (this.uIController.GetMenuScript() != null && this.uIController.GetMenuScript().rotateState)
-        {
-            this.uIController.GetMenuScript().rotateState = false;
-            this.uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-        }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+
+        if (menuScript != null)
+            menuScript.DestroyMenu();
     }
 
+    protected override void OnEnable()
+    {
+        if (text != null)
+            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+    }
 
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)

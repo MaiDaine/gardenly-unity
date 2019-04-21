@@ -44,13 +44,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-        {
-            uIController.GetMenuScript().rotateState = false;
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-        }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+        MenuScript menuScript = uIController.GetMenuScript();
+        if (menuScript != null)
+            menuScript.DestroyMenu();
     }
 
 

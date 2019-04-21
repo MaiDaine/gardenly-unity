@@ -5,7 +5,6 @@ using UnityEngine;
 public class ActionHandler : ScriptableObject
 {
     public Action currentAction = null;
-
     private ConstructionController constructionController;
 
     public void Initialize()
@@ -18,27 +17,19 @@ public class ActionHandler : ScriptableObject
         this.currentAction.Complete();
         revertActionSet.Add(currentAction);
         this.currentAction = null;
-        this.constructionController.editionState = ConstructionController.EditionType.Off;
+        this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
         this.constructionController.currentState = ConstructionController.ConstructionState.Off;
     }
 
-    public void EditPositioning(ISelectable selection)
+    public void CreateAction(string action, ISelectable selection)
     {
-        this.currentAction = ScriptableObject.CreateInstance("Move") as Action;
-        this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-        this.constructionController.editionState = ConstructionController.EditionType.Position;
-
+        this.currentAction = ScriptableObject.CreateInstance(action) as Action;
         this.currentAction.Initialize(selection.GetGameObject());
-        this.constructionController.SetGhost(selection.GetGameObject().GetComponent<GhostHandler>());
     }
 
-    public void EditRotation(ISelectable selection)
+    public void CreateAction(string action, GameObject gameObject)
     {
-        this.currentAction = ScriptableObject.CreateInstance("Rotate") as Action;
-        this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-        this.constructionController.editionState = ConstructionController.EditionType.Rotation;
-
-        this.currentAction.Initialize(selection.GetGameObject());
-        this.constructionController.SetGhost(selection.GetGameObject().GetComponent<GhostHandler>());
+        this.currentAction = ScriptableObject.CreateInstance(action) as Action;
+        this.currentAction.Initialize(gameObject);
     }
 }

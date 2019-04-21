@@ -102,4 +102,14 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     }
 
     public virtual bool isLinkable() { return true; }
-}   
+
+    protected virtual void OnEnable()
+    {
+        PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+    }
+
+    protected virtual void OnDisable()
+    {
+        DeSelect();
+    }
+}

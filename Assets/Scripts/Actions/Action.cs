@@ -3,7 +3,7 @@
 public abstract class Action : ScriptableObject
 {
     protected GameObject gameObject;
-
+    
     public virtual void Initialize(GameObject gameObject)
     {
         this.gameObject = gameObject;
@@ -17,9 +17,9 @@ public abstract class Action : ScriptableObject
             uIController.GetMenuScript().EditionEnd();
     }
 
-    public abstract void Revert();
+    public abstract bool Revert();//Return true if object needs to be selected
 
-    public abstract void ReDo();
+    public abstract bool ReDo();//Return true if object needs to be selected
 
     public virtual GameObject GetGameObject() { return this.gameObject; } 
 }

@@ -49,13 +49,13 @@ public class MenuScript : MonoBehaviour, IMenu
         tmpScript.ResetColor();
         this.rotateState = false;
         this.isMoving = true;
-        PlayerController.instance.CreateAction(ConstructionController.EditionType.Position);
+        PlayerController.instance.NewEditonAction(ConstructionController.EditionType.Position);
         //this.constructionController.SetGhost(ghost);
     }
 
     public void StartRotate()
     {
-        PlayerController.instance.CreateAction(ConstructionController.EditionType.Rotation);
+        PlayerController.instance.NewEditonAction(ConstructionController.EditionType.Rotation);
         this.rotateState = !this.rotateState;//TODO CHECK
     }
 
@@ -77,9 +77,6 @@ public class MenuScript : MonoBehaviour, IMenu
     public void DestroyObject()
     {
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
-        {
-            Destroy(this.ghost.gameObject);
-            DestroyMenu();
-        }
+            PlayerController.instance.DestroySelection();
     }
 }
