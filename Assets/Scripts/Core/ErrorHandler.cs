@@ -47,4 +47,16 @@ public class ErrorHandler : MonoBehaviour
             this.startCount = true;
         }
     }
+
+    public void SuccesMessage(string msg)
+    {
+        this.gameObject.SetActive(true);
+        this.errorMsg = this.GetComponentInChildren<Text>();
+        if (this.errorMsg != null)
+        {
+            this.errorMsg.text = msg;
+            this.errorMsg.color = Color.green;
+            this.startCount = true;
+        }
+    }
 }

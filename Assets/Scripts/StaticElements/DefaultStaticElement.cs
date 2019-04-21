@@ -38,7 +38,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this);
+            if (this.data != null)
+                uIController.SetDataPanel(this);
         }
     }
 

@@ -126,7 +126,7 @@ public class UIController : MonoBehaviour
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
         ButtonScript script = button[1].GetComponent<ButtonScript>();
-
+        
         this.dataPanel.gameObject.SetActive(true);
 
         script.SetGhost(handler);
@@ -136,27 +136,13 @@ public class UIController : MonoBehaviour
 
         // TMP
 
-        if (sliders[0].value == -1)
-            sliders[0].gameObject.SetActive(false);
-        else
-        {
-            sliders[0].gameObject.SetActive(true);
-            sliders[0].value = tmp.water;
-        }
-        if (sliders[1].value == -1)
-            sliders[1].gameObject.SetActive(false);
-        else
-        {
-            sliders[1].gameObject.SetActive(true);
-            sliders[1].value = tmp.sunshine;
-        }
-        if (sliders[2].value == -1)
-            sliders[2].gameObject.SetActive(false);
-        else
-        {
-            sliders[2].value = tmp.solidity;
-            sliders[2].gameObject.SetActive(true);
-        }
+        sliders[0].gameObject.SetActive(true);
+        sliders[0].value = tmp.water;
+        sliders[1].gameObject.SetActive(true);
+        sliders[1].value = tmp.sunshine;
+        sliders[2].value = tmp.solidity;
+        sliders[2].gameObject.SetActive(true);
+      
         icons[4].color = Color.green;
         
     }

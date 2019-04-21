@@ -9,6 +9,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Text text;
     public Color color;
     public Color actionColor;
+    public Sprite defaultPicture;
+    public Sprite newPicture;
+    public string defaultAnimation;
+    public string updateAnimation;
 
     protected Image image;
     protected bool pressed;
@@ -53,6 +57,22 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (this.image != null)
             this.image.color = this.color;
         this.pressed = false;
+    }
+
+    public void UpdateImage(Image image)
+    {
+        if (image.sprite == this.defaultPicture)
+            image.sprite = this.newPicture;
+        else
+            image.sprite = this.defaultPicture;
+    }
+
+    public void UpdateAnimator(Animator animator)
+    {
+        if (this.pressed)
+            animator.Play(defaultAnimation);
+        else
+            animator.Play(updateAnimation);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
