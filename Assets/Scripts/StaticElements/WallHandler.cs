@@ -136,14 +136,8 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (this.text.gameObject != null)
             this.text.gameObject.SetActive(false);
-        // Inutile si le deselect supprime le menu
-        if (this.uIController.GetMenuScript() != null && this.uIController.GetMenuScript().rotateState)
-        {
-            this.uIController.GetMenuScript().rotateState = false;
-            this.uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-        }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+        if (uIController.GetMenuScript() != null && !uIController.GetMenuScript().rotateState)
+            uIController.GetMenuScript().DestroyMenu();
     }
 
 

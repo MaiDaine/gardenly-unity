@@ -57,6 +57,7 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void RotateGhost()
     {
+        Debug.Log("ROTATE");
         float rotSpeed = 100f;
         float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
 

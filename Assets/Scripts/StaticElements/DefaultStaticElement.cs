@@ -33,10 +33,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     void OnMouseDrag()
     {
+        uIController = Camera.main.GetComponent<UIController>();
         if (uIController != null)
         {
             MenuScript menu = uIController.GetMenuScript();
-
             if (menu != null && menu.rotateState)
                 menu.RotateGhost();
         }
@@ -50,19 +50,15 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this);
+            if (this.data != null)
+                uIController.SetDataPanel(this);
         }
     }
 
     public override void DeSelect()
     {
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-        {
-            uIController.GetMenuScript().rotateState = false;
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-        }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+        if (uIController.GetMenuScript() != null && !uIController.GetMenuScript().rotateState)
+            uIController.GetMenuScript().DestroyMenu();
     }
 
 

@@ -87,7 +87,13 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 
     public Vector2[] GetVertices() { return this.vertices; }
 
-    public void DeSelect() { }
+    public void DeSelect()
+    {
+      /*  UIController uIController = Camera.main.GetComponent<UIController>();
+        if (uIController.GetFlowerBedMenuScript() != null)
+            uIController.GetFlowerBedMenuScript().DestroyMenu();*/
+    }
+
     public void AddNeighbor(ISelectable item) { }
     public void RemoveFromNeighbor(ISelectable item) { }
 
