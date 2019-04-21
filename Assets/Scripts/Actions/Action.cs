@@ -3,17 +3,23 @@
 public abstract class Action : ScriptableObject
 {
     protected GameObject gameObject;
-
+    
     public virtual void Initialize(GameObject gameObject)
     {
         this.gameObject = gameObject;
     }
 
-    public abstract void Complete();
+    public virtual void Complete()
+    {
+        UIController uIController = Camera.main.GetComponent<UIController>();
 
-    public abstract void Revert();
+        if (uIController != null)
+            uIController.GetMenuScript().EditionEnd();
+    }
 
-    public abstract void ReDo();
+    public abstract bool Revert();//Return true if object needs to be selected
+
+    public abstract bool ReDo();//Return true if object needs to be selected
 
     public virtual GameObject GetGameObject() { return this.gameObject; } 
 }

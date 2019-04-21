@@ -8,10 +8,12 @@ public class MenuScript : MonoBehaviour, IMenu
 
     private GhostHandler ghost;
     private ConstructionController constructionController;
+    private PlayerController playerController;
 
     private void Start()
     {
         this.constructionController = ConstructionController.instance;
+        this.playerController = PlayerController.instance;
     }
 
     private void LateUpdate()
@@ -49,22 +51,23 @@ public class MenuScript : MonoBehaviour, IMenu
         tmpScript.ResetColor();
         this.rotateState = false;
         this.isMoving = true;
-        PlayerController.instance.CreateAction(ConstructionController.EditionType.Position);
+        this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Position, this.playerController.currentSelection);
         //this.constructionController.SetGhost(ghost);
     }
 
-    public void StartRotate() { this.rotateState = !this.rotateState; }
-
-    public void RotateGhost()
+    public void StartRotate()
     {
-        Debug.Log("ROTATE");
-        float rotSpeed = 100f;
-        float rotx = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
+        this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Rotation, this.playerController.currentSelection);
+        this.rotateState = !this.rotateState;//TODO CHECK
+    }
 
-        if (this.ghost.transform.localEulerAngles.x <= 270)
-            this.ghost.transform.Rotate(Vector3.up, -rotx);
-        else
-            this.ghost.transform.Rotate(Vector3.forward, -rotx);
+    public void EditionEnd()
+    {
+        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+
+        tmpScript.ResetColor();
+        this.rotateState = false;
+        this.isMoving = false;
     }
 
     public GameObject GetGameObject() { return this.gameObject; }
@@ -76,9 +79,6 @@ public class MenuScript : MonoBehaviour, IMenu
     public void DestroyObject()
     {
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
-        {
-            Destroy(this.ghost.gameObject);
-            DestroyMenu();
-        }
+            PlayerController.instance.DestroySelection();
     }
 }

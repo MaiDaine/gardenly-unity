@@ -102,18 +102,6 @@ public class WallHandler : GhostHandler, ISerializable
         this.text.transform.position = position;
     }
 
-    void OnMouseDrag()
-    {
-        if (this.uIController != null)
-        {
-            MenuScript menu = this.uIController.GetMenuScript();
-
-            if (menu != null && menu.rotateState)
-                menu.RotateGhost();
-        }
-    }
-
-
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
@@ -134,12 +122,20 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
+        MenuScript menuScript = this.uIController.GetMenuScript();
+
         if (this.text.gameObject != null)
             this.text.gameObject.SetActive(false);
-        if (uIController.GetMenuScript() != null && !uIController.GetMenuScript().rotateState)
-            uIController.GetMenuScript().DestroyMenu();
+
+        if (menuScript != null)
+            menuScript.DestroyMenu();
     }
 
+    protected override void OnEnable()
+    {
+        if (text != null)
+            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+    }
 
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)

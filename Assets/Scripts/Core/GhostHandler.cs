@@ -39,7 +39,17 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual void Move(Vector3 position) { this.transform.position = position; }
 
-    public void Rotate(float axisInput)
+    public virtual void Rotate(float input)
+    {
+        float rotx = input * 100f * Mathf.Deg2Rad;
+
+        if (this.transform.localEulerAngles.x <= 270)
+            this.transform.Rotate(Vector3.up, -rotx);
+        else
+            this.transform.Rotate(Vector3.forward, -rotx);
+    }
+
+    public void FixRotate(float axisInput)
     {
         Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
         this.transform.eulerAngles += rotateValue;
@@ -92,4 +102,14 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     }
 
     public virtual bool isLinkable() { return true; }
-}   
+
+    protected virtual void OnEnable()
+    {
+        PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+    }
+
+    protected virtual void OnDisable()
+    {
+        DeSelect();
+    }
+}

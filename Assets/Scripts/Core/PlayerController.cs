@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour
     public GameObject canvas;
     public List<ISelectable> selectionList = new List<ISelectable>();
     public ISelectable currentSelection = null;
-    public ActionRuntimeSet revertActionSet;
-    public ActionRuntimeSet redoActionSet;
     public ActionHandler actionHandler;
 
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
@@ -24,12 +22,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-            this.revertActionSet.items.Clear();
-            this.redoActionSet.items.Clear();
-            this.actionHandler = ScriptableObject.CreateInstance("ActionHandler") as ActionHandler;
-        }
         else if (instance != this)
             Destroy(this.gameObject);
     }
@@ -40,26 +33,21 @@ public class PlayerController : MonoBehaviour
         this.actionHandler.Initialize();
     }
 
-
-
-    void Update()
+    private void Update()
     {
-        //DEBUG
-
-        Vector3 pos;
-        RaycastHit hit;
-
-        if (this.constructionController.MouseRayCast(out pos, out hit))
-            Debug.DrawLine(Camera.main.transform.position, pos);
-        if (Input.GetKeyDown(KeyCode.L))
-            ReactProxy.instance.ExportScene();
-        //END DEBUG
-
-        //Undo - Redo
+        //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-            RedoAction();
+        {
+            Action currentAction = actionHandler.RedoAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
         else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-            RevertAction();
+        {
+            Action currentAction = actionHandler.RevertAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
 
         //Selection
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Off)
@@ -74,87 +62,40 @@ public class PlayerController : MonoBehaviour
         //Ghost Handle
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
         {
-            if (constructionController.editionState == ConstructionController.EditionType.Off)
+            switch (constructionController.editionState)
             {
-                if (Input.GetMouseButtonDown(0))
-                    SelectBuilding();
-                else if (Input.GetMouseButton(0) && interactible != null)
-                    this.constructionController.UpdateGhostEditing(interactible);
-                if (interactible != null && Input.GetMouseButtonUp(0))
+                case ConstructionController.EditionType.Off:
                 {
-                    interactible.EndDrag();
-                    interactible = null;
+                    if (Input.GetMouseButtonDown(0))
+                        SelectBuilding();
+                    else if (Input.GetMouseButton(0) && interactible != null)
+                        this.constructionController.UpdateGhostEditing(interactible);
+                    if (interactible != null && Input.GetMouseButtonUp(0))
+                    {
+                        interactible.EndDrag();
+                        interactible = null;
+                    }
+                    break;
                 }
-            }
-            else if (constructionController.editionState == ConstructionController.EditionType.Position)
-            {
-                if (constructionController.MouseRayCast(out pos, out hit))
-                    constructionController.EditPosition(pos);
+                case ConstructionController.EditionType.Position:
+                 {
+                     Vector3 pos;
+                     RaycastHit hit;
+                     if (constructionController.MouseRayCast(out pos, out hit))
+                         constructionController.EditPosition(pos);
+                     break;
+                 }
+                case ConstructionController.EditionType.Rotation:
+                 {
+                     constructionController.EditRotation(Input.GetAxis("Mouse X"));
+                     break;
+                 }
             }
             if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
-                actionHandler.ActionComplete(revertActionSet);
+                actionHandler.ActionComplete();
         }
         else
             this.constructionController.UpdateGhost();
-    }
-
-
-    //Actions
-    public void CreateAction(ConstructionController.EditionType type)
-    {
-        constructionController.currentState = ConstructionController.ConstructionState.Editing;
-        constructionController.editionState = ConstructionController.EditionType.Position;
-        redoActionSet.items.Clear();
-
-        switch (type)
-        {
-            case ConstructionController.EditionType.Position:
-            {
-                actionHandler.EditPositioning(currentSelection);
-                break;
-            }
-            
-            default:
-                break;
-        }
-        constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());//TODO might change
-    }
-
-    //Actions
-    private void RedoAction()
-    {
-        Action action = redoActionSet.GetLastAction();
-        if (action != null)
-        {
-            action.ReDo();
-            revertActionSet.Add(action);
-            redoActionSet.Remove(action);
-            if (currentSelection != null)
-                currentSelection.DeSelect();
-            currentSelection = action.GetGameObject().GetComponent<ISelectable>();
-            if (currentSelection != null)
-                currentSelection.Select(ConstructionController.ConstructionState.Off);
-        }
-        else
-            ErrorHandler.instance.ErrorMessage("No action to cancel");
-    }
-
-    private void RevertAction()
-    {
-        Action action = revertActionSet.GetLastAction();
-        if (action != null)
-        {
-            action.Revert();
-            redoActionSet.Add(action);
-            revertActionSet.Remove(action);
-            if (currentSelection != null)
-                currentSelection.DeSelect();
-            currentSelection = action.GetGameObject().GetComponent<ISelectable>();
-            if (currentSelection != null)
-                currentSelection.Select(ConstructionController.ConstructionState.Off);
-        }
-        else
-            ErrorHandler.instance.ErrorMessage("No action to revert");
     }
 
     //Selection Handle
@@ -187,19 +128,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SpawnFlowerBedMesh()
+    public void SelectFromAction(ISelectable selectable)
     {
-        Camera.main.GetComponent<UIController>().Cancel();
-        SpawnController.instance.SpawnFlowerBed();
-        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        DeSelect();
+        if (this.constructionController.currentState == ConstructionController.ConstructionState.Editing)
+            this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+        this.selectionList.Add(selectable);
+        this.currentSelection = selectable;
+        selectable.Select(constructionController.currentState);
     }
 
-    public void ForcedSelection(ISelectable elem)
+    public void UpdateSelectionAfterAction(Action action)
     {
-        foreach (ISelectable item in this.selectionList)
-            item.DeSelect();
-        this.selectionList.Clear();
-        this.selectionList.Add(elem);
+        if (currentSelection != null)
+            currentSelection.DeSelect();
+        currentSelection = action.GetGameObject().GetComponent<ISelectable>();
+        if (currentSelection != null)
+            currentSelection.Select(ConstructionController.ConstructionState.Off);
+    }
+
+    public void DestroySelection()
+    {
+        if (this.selectionList != null)
+        {
+            for (int i = 0; i < this.selectionList.Count; i++)
+                this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
+            this.selectionList.Clear();
+        }
     }
 
     private void DeSelect(bool forced = false)
@@ -217,18 +172,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void DestroySelection()
+    //Tools
+    public void SpawnFlowerBedMesh()
     {
-        if (this.selectionList != null)
-        {
-            for (int i = 0; i < this.selectionList.Count; i++)
-                GameObject.Destroy(this.selectionList[i].GetGameObject());
-            this.selectionList.Clear();
-        }
+        Camera.main.GetComponent<UIController>().Cancel();
+        SpawnController.instance.SpawnFlowerBed();
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
     }
 
-    private bool IsPointerOnUi()
-    {
-        return (EventSystem.current.IsPointerOverGameObject());
-    }
+    private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }
 }

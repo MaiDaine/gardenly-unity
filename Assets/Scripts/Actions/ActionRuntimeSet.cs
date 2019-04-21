@@ -27,7 +27,9 @@ public class ActionRuntimeSet : RuntimeSet<Action>
     {
         if (this.items.Count != 0)
         {
-            this.items.Clear();
+            foreach(Action action in items)
+                Destroy(action);
+            items.Clear();
             onActionSetUpdated.Raise();
         }
     }

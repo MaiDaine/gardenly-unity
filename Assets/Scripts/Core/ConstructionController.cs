@@ -80,7 +80,7 @@ public class ConstructionController : MonoBehaviour
     //Ghost Handling functions
     public void Cancel()
     {
-        if (ghost != null)
+        if (ghost != null && currentState != ConstructionState.Editing)
         {
             Destroy(ghost.gameObject);
             ghost.OnCancel();
@@ -164,6 +164,7 @@ public class ConstructionController : MonoBehaviour
                     if (this.gridState)
                         this.Grid.activ = false;
                     this.ghost.EndConstruction(pos);
+                    PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
                 }
                 return;
             }
@@ -180,6 +181,7 @@ public class ConstructionController : MonoBehaviour
             AddNeighbor(neighbor);
             this.currentState = ConstructionState.Off;
             this.ghost.EndConstruction(pos);
+            PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
             this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
@@ -207,6 +209,11 @@ public class ConstructionController : MonoBehaviour
     public void EditPosition(Vector3 position)//TODO TMP
     {
         this.ghost.Move(position);
+    }
+
+    public void EditRotation(float input)
+    {
+        this.ghost.Rotate(input);
     }
 
     //ISelectable Helper
