@@ -9,6 +9,8 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 {
     public Material material;
+    public string name = "PLACEHOLDER";
+    public string soilType = "PLACEHOLDER";
 
     private ShapeCreator shapeCreator;
     private Vector2[] vertices;
@@ -54,18 +56,23 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         }
         Destroy(meshHandler);
         this.gameObject.layer = 10;
-        SerializationController.instance.AddToList(this);
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
         ConstructionController.instance.flowerbedCount++;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
     }
-    private void OnDestroy()
+
+    public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
+
+    private void OnEnable()
+    {
+        SerializationController.instance.AddToList(this);
+    }
+
+    private void OnDisable()
     {
         ConstructionController.instance.flowerbedCount--;
         SerializationController.instance.RemoveFromList(this);
     }
-
-    public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
 
     //ISelectable
     public GameObject GetGameObject() { return this.gameObject; }
@@ -102,6 +109,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
     public struct SerializedFlowerBed
     {
         public string name;
+        public string soilType;
         public Vector2[] points;
         public FlowerBedElement.SerializedFBE[] elements;
     }
@@ -112,7 +120,8 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         SerializedFlowerBed data;
         int i = 0;
 
-        data.name = "FlowerBed";//TODO UI
+        data.name = this.name;
+        data.soilType = this.soilType;
         data.points = vertices;
         data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
 
@@ -132,7 +141,8 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
     public void DeSerialize(string json)
     {
         SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
-        // = tmp.name TODO UI
+        this.name = tmp.name;
+        this.soilType = tmp.soilType;
         this.vertices = tmp.points;
         foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
             this.flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));

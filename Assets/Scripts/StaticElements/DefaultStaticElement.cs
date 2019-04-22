@@ -23,11 +23,21 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     private void Start()
     {
         this.transform.eulerAngles += this.correctedRotation;
-        SerializationController.instance.AddToList(this);
     }
 
     void OnDestroy()
     {
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SerializationController.instance.AddToList(this);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
         SerializationController.instance.RemoveFromList(this);
     }
 
