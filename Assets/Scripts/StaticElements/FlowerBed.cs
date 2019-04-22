@@ -109,6 +109,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
     public struct SerializedFlowerBed
     {
         public string name;
+        public string soilType;
         public Vector2[] points;
         public FlowerBedElement.SerializedFBE[] elements;
     }
@@ -119,7 +120,8 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         SerializedFlowerBed data;
         int i = 0;
 
-        data.name = "FlowerBed";//TODO UI
+        data.name = this.name;
+        data.soilType = this.soilType;
         data.points = vertices;
         data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
 
