@@ -141,7 +141,8 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
     public void DeSerialize(string json)
     {
         SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
-        // = tmp.name TODO UI
+        this.name = tmp.name;
+        this.soilType = tmp.soilType;
         this.vertices = tmp.points;
         foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
             this.flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
