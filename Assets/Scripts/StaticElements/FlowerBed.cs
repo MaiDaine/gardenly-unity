@@ -9,6 +9,8 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 {
     public Material material;
+    public string name = "PLACEHOLDER";
+    public string soilType = "PLACEHOLDER";
 
     private ShapeCreator shapeCreator;
     private Vector2[] vertices;
@@ -54,18 +56,23 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         }
         Destroy(meshHandler);
         this.gameObject.layer = 10;
-        SerializationController.instance.AddToList(this);
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
         ConstructionController.instance.flowerbedCount++;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
     }
-    private void OnDestroy()
+
+    public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
+
+    private void OnEnable()
+    {
+        SerializationController.instance.AddToList(this);
+    }
+
+    private void OnDisable()
     {
         ConstructionController.instance.flowerbedCount--;
         SerializationController.instance.RemoveFromList(this);
     }
-
-    public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
 
     //ISelectable
     public GameObject GetGameObject() { return this.gameObject; }
