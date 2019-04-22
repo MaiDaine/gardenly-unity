@@ -75,6 +75,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         {
             UIController controller = Camera.main.GetComponent<UIController>();
             controller.SpawnFlowerBedMenu(this);
+            controller.SetFlowerBedDataPAnel();
         }
     }
     public List<ISelectable> SelectWithNeighbor()
@@ -89,9 +90,9 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 
     public void DeSelect()
     {
-      /*  UIController uIController = Camera.main.GetComponent<UIController>();
+        UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
-            uIController.GetFlowerBedMenuScript().DestroyMenu();*/
+            uIController.GetFlowerBedMenuScript().DestroyMenu();
     }
 
     public void AddNeighbor(ISelectable item) { }
