@@ -38,14 +38,12 @@ public class WallHandler : GhostHandler, ISerializable
             this.gameObject.layer = 0;
             this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
         }
-        SerializationController.instance.AddToList(this);
     }
 
     private void OnDestroy()
     {
         if (text != null)
             GameObject.Destroy(text);
-        SerializationController.instance.RemoveFromList(this);
     }
 
     //public override void Positioning(Vector3 position) { base.Positioning(position); }
@@ -135,6 +133,12 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (text != null)
             PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+        SerializationController.instance.AddToList(this);
+    }
+
+    protected override void OnDisable()
+    {
+        SerializationController.instance.RemoveFromList(this);
     }
 
     //ISnapable
