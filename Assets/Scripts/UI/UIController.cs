@@ -9,16 +9,19 @@ public class UIController : MonoBehaviour
     public Transform flowerBedMenu;
     public Transform wallMenu;
     public Transform dataPanel;
+    public Transform flowerBedDataPanel;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
+    public FlowerBedPanelScript flowerBedPanelScript;
 
     protected Transform previewUI = null;
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected bool subMenuOpen = true;
     protected GhostHandler ghost = null;
+    protected FlowerBed flowerBed = null;
 
     private void LateUpdate()
     {
@@ -126,7 +129,10 @@ public class UIController : MonoBehaviour
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
         ButtonScript script = button[1].GetComponent<ButtonScript>();
-        
+
+        if (handler.GetData() == null)
+            return ;
+
         this.dataPanel.gameObject.SetActive(true);
 
         script.SetGhost(handler);
@@ -145,5 +151,23 @@ public class UIController : MonoBehaviour
       
         icons[4].color = Color.green;
         
+    }
+
+    public void SetFlowerBedDataPanel(FlowerBed flowerBed)
+    {
+        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
+
+        this.flowerBedDataPanel.gameObject.SetActive(true);
+        texts[1].text = flowerBed.soilType;
+        texts[2].text = flowerBed.name;
+        this.flowerBed = flowerBed;
+    }
+
+    public void UpdateFlowerBedDataPanel(string updateName)
+    {
+        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
+
+        texts[2].text = updateName;
+        this.flowerBed.name = updateName;
     }
 }
