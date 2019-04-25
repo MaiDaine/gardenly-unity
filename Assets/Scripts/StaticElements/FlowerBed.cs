@@ -83,6 +83,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
             UIController controller = Camera.main.GetComponent<UIController>();
             controller.SpawnFlowerBedMenu(this);
             controller.SetFlowerBedDataPanel(this);
+            controller.gardenMenu.gameObject.SetActive(true);
         }
     }
     public List<ISelectable> SelectWithNeighbor()
@@ -99,7 +100,10 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
     {
         UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
+        {
             uIController.GetFlowerBedMenuScript().DestroyMenu();
+            uIController.flowerBedDataPanel.gameObject.SetActive(false);
+        }
     }
 
     public void AddNeighbor(ISelectable item) { }

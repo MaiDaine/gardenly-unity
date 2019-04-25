@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public Transform gardenMenu;
     public Transform dynamicObjectMenu;
     public Transform flowerBedMenu;
     public Transform wallMenu;
@@ -132,7 +133,7 @@ public class UIController : MonoBehaviour
 
         if (handler.GetData() == null)
             return ;
-
+        this.gardenMenu.gameObject.SetActive(true);
         this.dataPanel.gameObject.SetActive(true);
 
         script.SetGhost(handler);
@@ -157,17 +158,23 @@ public class UIController : MonoBehaviour
     {
         Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
 
+        this.gardenMenu.gameObject.SetActive(true);
         this.flowerBedDataPanel.gameObject.SetActive(true);
         texts[1].text = flowerBed.soilType;
-        texts[2].text = flowerBed.name;
+        texts[0].text = flowerBed.name;
         this.flowerBed = flowerBed;
+    }
+
+    public void ResetFlowerBedDataPanel()
+    {
+        this.flowerBed.name = "PLACEHOLDER";
     }
 
     public void UpdateFlowerBedDataPanel(string updateName)
     {
         Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
 
-        texts[2].text = updateName;
+        texts[0].text = updateName;
         this.flowerBed.name = updateName;
     }
 }

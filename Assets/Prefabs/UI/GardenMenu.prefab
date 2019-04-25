@@ -148,8 +148,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7017791801254194296}
   - {fileID: 7017791801393725375}
+  - {fileID: 7017791801254194296}
   - {fileID: 7017791801315169146}
   - {fileID: 7017791802852446492}
   m_Father: {fileID: 893914707082734988}
@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0.000030517578, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &893914706994809634
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 893914708521885317}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1277,7 +1277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!1 &893914708061666555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1360,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1713314677744250606}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangeState
         m_Mode: 1
         m_Arguments:
@@ -2774,6 +2778,10 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.13725491, g: 0.15294118, b: 0.16078432, a: 1}
   actionColor: {r: 0.16078432, g: 0.5568628, b: 0.8313726, a: 1}
+  defaultPicture: {fileID: 0}
+  newPicture: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
 --- !u!1 &4880170871571590985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3368,10 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.13725491, g: 0.15294118, b: 0.16078432, a: 1}
   actionColor: {r: 0.16078432, g: 0.5568628, b: 0.8313726, a: 1}
+  defaultPicture: {fileID: 0}
+  newPicture: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
 --- !u!1 &6893500275573496961
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,7 +3569,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &7921586979351900697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3824,7 +3840,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &7921586979409731292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4628,7 +4648,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1713314677744250606}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangeState
         m_Mode: 1
         m_Arguments:
@@ -4715,7 +4735,7 @@ RectTransform:
   - {fileID: 893914708638057742}
   - {fileID: 7017791801769477096}
   m_Father: {fileID: 893914706994809629}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5144,7 +5164,7 @@ RectTransform:
   - {fileID: 4007273700266702051}
   - {fileID: 7017791800840638511}
   m_Father: {fileID: 893914706994809629}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5596,7 +5616,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1713314677744250606}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangeState
         m_Mode: 1
         m_Arguments:
@@ -6142,7 +6162,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &893914707612239744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7040,7 +7064,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &7921586980599640191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8813,7 +8841,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &8448629637986739518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9734,7 +9766,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &6870530713049064806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10016,7 +10052,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &6870530713104533923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11300,7 +11340,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  defaultAnimation: 
+  updateAnimation: 
   state: 0
+  open: 0
 --- !u!114 &6870530714239028165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11869,15 +11913,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 425a04a94e73f91469f41eac1c88e8ee, type: 3}
---- !u!224 &4170678090733447941 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3857028588248783982, guid: 425a04a94e73f91469f41eac1c88e8ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 893914707058210667}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4170678090707489171 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3857028588208154360, guid: 425a04a94e73f91469f41eac1c88e8ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 893914707058210667}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4170678090733447941 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3857028588248783982, guid: 425a04a94e73f91469f41eac1c88e8ee,
     type: 3}
   m_PrefabInstance: {fileID: 893914707058210667}
   m_PrefabAsset: {fileID: 0}
@@ -12257,18 +12301,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6539432653772934243}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1713314677744250606 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5550213505314022029, guid: 3f322f266974ee64d886fc917c049c9d,
-    type: 3}
-  m_PrefabInstance: {fileID: 6539432653772934243}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8086395996814823908
 PrefabInstance:
   m_ObjectHideFlags: 0
