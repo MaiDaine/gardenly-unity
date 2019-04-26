@@ -12,15 +12,18 @@ public class ConstructionMenu : MonoBehaviour
 
     private bool startCount = false;
     private float timer = 1;
+    private UIController uIController = null;
 
     private void Start()
     {
         this.gameObject.SetActive(this.state);
+        this.uIController = Camera.main.GetComponentInChildren<UIController>();
     }
 
     private void Update()
     {
-        if (this.startCount)
+        if (this.startCount
+            && !this.uIController.dataPanel.gameObject.activeSelf && !this.uIController.flowerBedDataPanel.gameObject.activeSelf)
         {
             this.timer -= Time.deltaTime;
 
@@ -28,6 +31,7 @@ public class ConstructionMenu : MonoBehaviour
             {
                 this.gameObject.SetActive(this.state);
                 this.timer = 1;
+                this.startCount = false;
             }
         }
     }

@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     public float cameraRotateSpeed = 100f;
     public float cameraZoomSpeed = 250f;
     public bool canMoveCameraWithMouse = true;
+    public bool inputEnabled = true;
     public float moveBorderThickness = 10f;
     public float mousePitchDirection = -1f; //Inverse Pitch
     public float minAltitude = 0.5f;
@@ -17,6 +18,9 @@ public class CameraController : MonoBehaviour
     {
         Vector3 currentPos = transform.position;
         Quaternion currentRot = transform.rotation;
+
+        if (!inputEnabled)
+            return;
 
         if ((!Input.GetKey(KeyCode.LeftControl) && Input.GetKey("z")) || (canMoveCameraWithMouse && Input.mousePosition.y >= Screen.height - moveBorderThickness))
             currentPos = MoveForward(currentPos, 1f);

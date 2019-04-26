@@ -9,7 +9,7 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 {
     public Material material;
-    public string name = "PLACEHOLDER";
+    public new string name = "PLACEHOLDER";
     public string soilType = "PLACEHOLDER";
 
     private ShapeCreator shapeCreator;
@@ -82,6 +82,8 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         {
             UIController controller = Camera.main.GetComponent<UIController>();
             controller.SpawnFlowerBedMenu(this);
+            controller.SetFlowerBedDataPanel(this);
+            controller.gardenMenu.gameObject.SetActive(true);
         }
     }
     public List<ISelectable> SelectWithNeighbor()
@@ -96,9 +98,12 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
 
     public void DeSelect()
     {
-      /*  UIController uIController = Camera.main.GetComponent<UIController>();
+        UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
-            uIController.GetFlowerBedMenuScript().DestroyMenu();*/
+        {
+            uIController.GetFlowerBedMenuScript().DestroyMenu();
+            uIController.flowerBedDataPanel.gameObject.SetActive(false);
+        }
     }
 
     public void AddNeighbor(ISelectable item) { }
@@ -119,7 +124,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         SerializationData tmp;
         SerializedFlowerBed data;
         int i = 0;
-
+        
         data.name = this.name;
         data.soilType = this.soilType;
         data.points = vertices;

@@ -48,8 +48,11 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            if (this.data != null)
+            if (this.GetData() != null)
+            {
                 uIController.SetDataPanel(this);
+                uIController.gardenMenu.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -57,7 +60,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     {
         MenuScript menuScript = uIController.GetMenuScript();
         if (menuScript != null)
+        {
             menuScript.DestroyMenu();
+            uIController.dataPanel.gameObject.SetActive(false);
+        }
     }
 
 
