@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
-public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
+public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public new string name = "PLACEHOLDER";
@@ -59,6 +59,7 @@ public class FlowerBed : MonoBehaviour ,ISelectable, ISerializable
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
         ConstructionController.instance.flowerbedCount++;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
+        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
     }
 
     public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }

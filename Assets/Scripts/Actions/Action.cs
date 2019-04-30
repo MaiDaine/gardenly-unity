@@ -2,6 +2,7 @@
 
 public abstract class Action : ScriptableObject
 {
+    public bool tmpAction = false;
     protected GameObject gameObject;
     
     public virtual void Initialize(GameObject gameObject)

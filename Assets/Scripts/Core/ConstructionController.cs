@@ -181,7 +181,10 @@ public class ConstructionController : MonoBehaviour
             AddNeighbor(neighbor);
             this.currentState = ConstructionState.Off;
             this.ghost.EndConstruction(pos);
-            PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
+            if (ghost.GetComponent<ShapeCreator>() != null)
+                PlayerController.instance.OnFlowerBedSpawn();
+            else
+                PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
             this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
