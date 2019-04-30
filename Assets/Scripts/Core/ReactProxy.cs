@@ -6,6 +6,7 @@ using UnityEngine;
 public class ReactProxy : MonoBehaviour
 {
     public static ReactProxy instance = null;
+    public bool unsavedWork = true;
 
     [DllImport("__Internal")]
     private static extern void UnsavedDataCheck(bool result);
@@ -44,9 +45,6 @@ public class ReactProxy : MonoBehaviour
 
     public bool IsUnsavedWorkLeft()
     {
-        //UnsavedDataCheck(true);//TODO CTRL+Z 
-        return false;
+        return this.unsavedWork;
     }
-
-
 }
