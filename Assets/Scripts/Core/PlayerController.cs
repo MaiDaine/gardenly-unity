@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Redo - Revert
+        if (Input.GetKey(KeyCode.Escape))
+            this.constructionController.Cancel();
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
             Action currentAction = actionHandler.RedoAction();
