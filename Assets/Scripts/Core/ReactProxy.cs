@@ -24,7 +24,7 @@ public class ReactProxy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.Keypad0))
             ExportScene();
     }
 
