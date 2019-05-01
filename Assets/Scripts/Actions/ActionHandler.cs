@@ -63,6 +63,7 @@ public class ActionHandler : ScriptableObject
             this.constructionController.currentState = ConstructionController.ConstructionState.Off;
         }
     }
+        //if ((tmp.eulerAngles.x > 80f && pouet > 90f) || (tmp.eulerAngles.x < 10f && pouet < 0f))
 
     public Action RedoAction()
     {
