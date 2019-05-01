@@ -80,12 +80,14 @@ public class ConstructionController : MonoBehaviour
     //Ghost Handling functions
     public void Cancel()
     {
-        if (ghost != null && currentState != ConstructionState.Editing)
+        if (this.ghost != null && this.currentState != ConstructionState.Editing)
         {
+            this.ghost.OnCancel();
             Destroy(ghost.gameObject);
-            ghost.OnCancel();
-            ghost = null;
-            currentState = ConstructionState.Off;
+            this.ghost = null;
+            this.gridState = false;
+            this.Grid.activ = false;
+            this.currentState = ConstructionState.Off;
         }
     }
 
@@ -181,7 +183,10 @@ public class ConstructionController : MonoBehaviour
             AddNeighbor(neighbor);
             this.currentState = ConstructionState.Off;
             this.ghost.EndConstruction(pos);
-            PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
+            if (ghost.GetComponent<ShapeCreator>() != null)
+                PlayerController.instance.OnFlowerBedSpawn();
+            else
+                PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
             this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)

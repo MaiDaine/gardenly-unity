@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Redo - Revert
+        if (Input.GetKey(KeyCode.Escape))
+            this.constructionController.Cancel();
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
             Action currentAction = actionHandler.RedoAction();
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
                  }
             }
             if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
-                actionHandler.ActionComplete();
+                actionHandler.ActionComplete(true);
         }
         else
             this.constructionController.UpdateGhost();
@@ -173,6 +175,12 @@ public class PlayerController : MonoBehaviour
     }
 
     //Tools
+    public void OnFlowerBedSpawn()//TODO Special FB_Create to revert in edition mode
+    {
+        this.actionHandler.NewStateAction("Create", currentSelection.GetGameObject());
+        this.actionHandler.revertActionSet.ClearTmpAction();
+    }
+
     public void SpawnFlowerBedMesh()
     {
         Camera.main.GetComponent<UIController>().Cancel();
