@@ -49,6 +49,11 @@ public class CameraController : MonoBehaviour
 
         transform.position = currentPos;
         transform.rotation = currentRot;
+        //float tmp = transform.localEulerAngles.x;
+        //if (tmp < 0)
+        //    tmp = 360 - (-tmp % 360);
+        //Debug.Log(tmp);
+        //
     }
 
     Vector3 MoveForward(Vector3 currentPos, float axisInput)
@@ -58,7 +63,7 @@ public class CameraController : MonoBehaviour
         currentPos.z += newPos.z;
         return currentPos;
     }
-    
+
     Vector3 MoveRight(Vector3 currentPos, float axisInput)
     {
         Vector3 newPos = transform.right * axisInput * cameraMoveSpeed * Time.deltaTime;
@@ -77,9 +82,11 @@ public class CameraController : MonoBehaviour
 
     Quaternion RotateYaw(Quaternion currentRotation, float axisInput)
     {
+        Quaternion tmp = currentRotation;
+
         Vector3 rotateValue = new Vector3(0, (axisInput * cameraRotateSpeed * Time.deltaTime), 0);
-        currentRotation.eulerAngles += rotateValue;
-        return currentRotation;
+        tmp.eulerAngles += rotateValue;
+        return tmp;
     }
 
     Quaternion RotatePitch(Quaternion currentRotation, float axisInput)
@@ -88,8 +95,8 @@ public class CameraController : MonoBehaviour
 
         Vector3 rotateValue = new Vector3((axisInput * cameraRotateSpeed * Time.deltaTime), 0, 0);
         tmp.eulerAngles += rotateValue;
-        if (tmp.x > -0.7f) //90°
-            return tmp;
-        return currentRotation;
+        if ((rotateValue.x + tmp.eulerAngles.x) > 90f || (rotateValue.x + tmp.eulerAngles.x) < 0f)
+            return currentRotation;
+        return tmp;
     }
 }

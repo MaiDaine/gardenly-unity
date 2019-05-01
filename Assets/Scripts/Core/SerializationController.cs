@@ -25,22 +25,6 @@ public class SerializationController : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))//TODO DEBUG ONLY
-        {
-            Serialize();
-            Debug.Log(GetSerializedData());
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-            SpawnController.instance.SpawnScene(DeSerialize("{\"name\":\"PlaceHolder\",\"boundaries\":[{\"x\":0,\"y\":0},{\"x\":100,\"y\":100}],\"garden\":[{\"type\":\"FlowerBed\",\"data\":{\"name\":\"FlowerBed\",\"points\":[{\"x\":46.46209716796875,\"y\":-66.8306655883789},{\"x\":51.839595794677734,\"y\":-59.973602294921875},{\"x\":59.73530578613281,\"y\":-67.19570922851562},{\"x\":56.854225158691406,\"y\":-69.28050231933594},{\"x\":46.46209716796875,\"y\":-66.8306655883789}],\"elements\":[{\"subID\":2,\"position\":{\"x\":50.28996658325195,\"y\":-9.5367431640625e-7,\"z\":-65.2952651977539},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":1,\"position\":{\"x\":51,\"y\":0,\"z\":-64},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":0,\"position\":{\"x\":52.146240234375,\"y\":0,\"z\":-65.69538879394531},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":0,\"position\":{\"x\":53.64667510986328,\"y\":0,\"z\":-64.77925872802734},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":1,\"position\":{\"x\":54.98756790161133,\"y\":0,\"z\":-65.5239486694336},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":0,\"position\":{\"x\":53.67853927612305,\"y\":0,\"z\":-66.25352478027344},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}}]}},{\"type\":\"DefaultStaticElement\",\"data\":{\"subType\":0,\"position\":{\"x\":43.46509552001953,\"y\":0,\"z\":-62.66104507446289},\"rotation\":{\"x\":1,\"y\":0,\"z\":0,\"w\":-4.371138828673793e-8}}},{\"type\":\"WallHandler\",\"data\":{\"start\":{\"x\":43.43412780761719,\"y\":0,\"z\":-59.35613250732422},\"end\":{\"x\":47.7480354309082,\"y\":9.5367431640625e-7,\"z\":-57.53746032714844}}},{\"type\":\"WallHandler\",\"data\":{\"start\":{\"x\":43.254878997802734,\"y\":-9.5367431640625e-7,\"z\":-65.11761474609375},\"end\":{\"x\":44.40459442138672,\"y\":-9.5367431640625e-7,\"z\":-69.12673950195312}}}]}"));
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            Vector2 tmp = new Vector2(1, 1);
-            Debug.Log(JsonUtility.ToJson(tmp));
-        }
-    }
-
     public void SetGardenData(GardenData.SerializedGardenData gardenData) { this.gardenData = gardenData; }
 
     public void AddToList(ISerializable item) { this.items.Add(item); }

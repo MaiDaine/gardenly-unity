@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu]
 public class ActionHandler : ScriptableObject
@@ -18,11 +16,11 @@ public class ActionHandler : ScriptableObject
         this.constructionController = ConstructionController.instance;
     }
 
-    public void NewStateAction(string action, GameObject gameObject)
+    public void NewStateAction(string action, GameObject gameObject, bool updateState = true)
     {
         redoActionSet.ClearSet();
         CreateAction(action, gameObject);
-        ActionComplete();
+        ActionComplete(updateState);
     }
 
     public void NewEditonAction(ConstructionController.EditionType type, ISelectable currentSelection)
@@ -54,13 +52,17 @@ public class ActionHandler : ScriptableObject
         constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());//TODO might change
     }
 
-    public void ActionComplete()
+    public void ActionComplete(bool updateState)
     {
         this.currentAction.Complete();
         revertActionSet.Add(currentAction);
         this.currentAction = null;
-        this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
-        this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+
+        if (updateState)
+        {
+            this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
+            this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+        }
         ReactProxy.instance.unsavedWork = true;
     }
 

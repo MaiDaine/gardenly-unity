@@ -27,11 +27,21 @@ public class ActionRuntimeSet : RuntimeSet<Action>
     {
         if (this.items.Count != 0)
         {
-            foreach(Action action in items)
+            foreach (Action action in items)
                 Destroy(action);
             items.Clear();
             onActionSetUpdated.Raise();
         }
+    }
+
+    public void ClearTmpAction()
+    {
+        for (int i = items.Count - 1; i > -1; i--)
+            if (items[i].tmpAction)
+            {
+                Destroy(items[i]);
+                items.RemoveAt(i);
+            }
     }
 
     public Action GetLastAction()

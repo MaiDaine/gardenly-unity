@@ -9,9 +9,9 @@ public class ShapeCreator : GhostHandler
     public UnityEvent eventShapeConstructionFinished = new UnityEvent();
     public ShapePoint pointPrefab;
     public List<ShapePoint> points { get; } = new List<ShapePoint>();
+    public ShapePoint currentPoint = null;
 
     private ShapePoint firstPoint = null;
-    private ShapePoint currentPoint = null;
     private Color color = new Color(1f, 0f, 0f, 1f);
 
     public void Init()
@@ -72,6 +72,40 @@ public class ShapeCreator : GhostHandler
         this.eventShapeConstructionFinished.Invoke();
     }
 
+    public bool RemovePoint(ShapePoint point)
+    {
+        this.points.Remove(point);
+        if (this.points.Count == 1)
+        {
+            this.currentPoint.DeActivate();
+            this.gameObject.SetActive(false);
+            GridController.instance.eventPostRender.RemoveListener(DrawLines);
+            return false;
+        }
+        return true;
+    }
+
+    public bool AddPoint(ShapePoint point)
+    {
+        this.points.Remove(currentPoint);
+        this.points.Add(point);
+        this.points.Add(currentPoint);
+
+        if (this.points.Count == 2)
+        {
+            this.currentPoint.Activate();
+            this.gameObject.SetActive(true);
+            GridController.instance.eventPostRender.AddListener(DrawLines);
+        }
+        return true;
+    }
+
+    public override void OnCancel()
+    {
+        GridController.instance.eventPostRender.RemoveListener(DrawLines);
+        foreach (ShapePoint point in points)
+            Destroy(point.gameObject);
+    }
 
     private void DrawLines()
     {
@@ -94,6 +128,7 @@ public class ShapeCreator : GhostHandler
         if (ConstructionController.instance.MouseRayCast(out position, out hit))
         {
             this.currentPoint.EndConstruction();
+            PlayerController.instance.actionHandler.NewStateAction("AddLineShape", this.gameObject, false);
             tmp = Instantiate(pointPrefab, this.transform);
             tmp.transform.position = new Vector3(position.x, 0.2f, position.z);
             this.points.Add(tmp);
