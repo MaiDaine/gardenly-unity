@@ -45,8 +45,8 @@ public class SerializationController : MonoBehaviour
         this.closed = false;
         foreach (ISerializable item in items)
             AddItem(CreateItem(item.Serialize()));
-
-        // CALL FOR SUCCESS MSG ErrorHandler.instance.SuccesMessage("The scene has been saved");
+        ErrorHandler.instance.SuccesMessage("Save sucessfull");
+        ReactProxy.instance.unsavedWork = false;
     }
 
     public string GetSerializedData()

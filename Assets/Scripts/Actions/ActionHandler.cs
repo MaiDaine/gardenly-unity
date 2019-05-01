@@ -57,13 +57,14 @@ public class ActionHandler : ScriptableObject
         this.currentAction.Complete();
         revertActionSet.Add(currentAction);
         this.currentAction = null;
+
         if (updateState)
         {
             this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
             this.constructionController.currentState = ConstructionController.ConstructionState.Off;
         }
+        ReactProxy.instance.unsavedWork = true;
     }
-        //if ((tmp.eulerAngles.x > 80f && pouet > 90f) || (tmp.eulerAngles.x < 10f && pouet < 0f))
 
     public Action RedoAction()
     {
