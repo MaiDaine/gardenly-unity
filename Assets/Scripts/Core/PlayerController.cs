@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Plane groundPlane = new Plane(Vector3.forward, Vector3.up);
     private IInteractible interactible;
     private ConstructionController constructionController;
+    private CameraController cameraController;
 
     private void Awake()
     {
@@ -29,12 +30,15 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        constructionController = ConstructionController.instance;
+        this.constructionController = ConstructionController.instance;
         this.actionHandler.Initialize();
+        this.cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     private void Update()
     {
+        if (!cameraController.inputEnabled)
+            return;
         //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
