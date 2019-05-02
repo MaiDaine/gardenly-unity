@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Rotate : Action
+public class Rotate : GhostAction
 {
     private Quaternion oldRotation;
     private Quaternion newRotation;

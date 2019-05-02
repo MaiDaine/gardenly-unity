@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Destroy : Action
+public class Destroy : GhostAction
 {
     public override void Complete()
     {

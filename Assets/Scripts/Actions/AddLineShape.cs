@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddLineShape : Action
+public class AddLineShape : GhostAction
 {
     private ShapePoint point;
 
