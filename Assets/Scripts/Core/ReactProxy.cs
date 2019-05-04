@@ -35,6 +35,8 @@ public class ReactProxy : MonoBehaviour
 
     public void UpdateSaveState(bool state)
     {
+        if (Application.isEditor)
+            return;
         SetUnsavedWorkState(state);
     }
 
