@@ -51,7 +51,7 @@ public class SerializationController : MonoBehaviour
 
     public string GetSerializedData()
     {
-        if (!this.closed)
+        if (!this.closed && json != "")
         {
             this.json += "]}";
             this.closed = true;
