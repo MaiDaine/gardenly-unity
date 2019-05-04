@@ -46,7 +46,7 @@ public class SerializationController : MonoBehaviour
         foreach (ISerializable item in items)
             AddItem(CreateItem(item.Serialize()));
         ErrorHandler.instance.SuccesMessage("Save sucessfull");
-        ReactProxy.instance.unsavedWork = false;
+        ReactProxy.instance.UpdateSaveState(false);
     }
 
     public string GetSerializedData()

@@ -63,7 +63,7 @@ public class ActionHandler : ScriptableObject
             this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
             this.constructionController.currentState = ConstructionController.ConstructionState.Off;
         }
-        ReactProxy.instance.unsavedWork = true;
+        ReactProxy.instance.UpdateSaveState(true);
     }
 
     public Action RedoAction()

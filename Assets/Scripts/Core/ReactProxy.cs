@@ -6,14 +6,11 @@ using UnityEngine;
 public class ReactProxy : MonoBehaviour
 {
     public static ReactProxy instance = null;
-    public bool unsavedWork = true;
 
     [DllImport("__Internal")]
-    private static extern void UnsavedDataCheck(bool result);
-    [DllImport("__Internal")]
-    private static extern void PreSaveScene(int nbElems);
-    [DllImport("__Internal")]
     private static extern void SaveScene(string json);
+    [DllImport("__Internal")]
+    private static extern void SetUnsavedWorkState(bool status);
 
     private void Awake()
     {
@@ -36,15 +33,15 @@ public class ReactProxy : MonoBehaviour
         SaveScene(SerializationController.instance.GetSerializedData());
     }
 
+    public void UpdateSaveState(bool state)
+    {
+        SetUnsavedWorkState(state);
+    }
+
     //Called from REACT
     public void InitScene(string json)
     {
        if (json != "")
            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
-    }
-
-    public bool IsUnsavedWorkLeft()
-    {
-        return this.unsavedWork;
     }
 }
