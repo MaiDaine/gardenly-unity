@@ -67,12 +67,22 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     private void OnEnable()
     {
         SerializationController.instance.AddToList(this);
+        foreach (FlowerBedElement elem in flowerBedElements)
+            elem.gameObject.SetActive(true);
     }
 
     private void OnDisable()
     {
         ConstructionController.instance.flowerbedCount--;
         SerializationController.instance.RemoveFromList(this);
+        foreach (FlowerBedElement elem in flowerBedElements)
+            elem.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = flowerBedElements.Count - 1; i > 0; i--)
+            Destroy(flowerBedElements[i]);
     }
 
     //ISelectable
