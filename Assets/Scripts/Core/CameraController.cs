@@ -13,6 +13,22 @@ public class CameraController : MonoBehaviour
     public float mousePitchDirection = -1f; //Inverse Pitch
     public float minAltitude = 0.5f;
     public float maxAltitude = 100f;
+    public GameObject plane;
+
+    private Vector2 lowerPlaneBound;
+    private Vector2 upperPlaneBound;
+
+    private void Start()
+    {
+        lowerPlaneBound = new Vector2(
+            plane.transform.position.x - (5f * plane.transform.localScale.x), 
+            plane.transform.position.z - (5f * plane.transform.localScale.z)
+            );
+        upperPlaneBound = new Vector2(
+            plane.transform.position.x + (5f * plane.transform.localScale.x),
+            plane.transform.position.z + (5f * plane.transform.localScale.z)
+            );
+    }
 
     void Update()
     {
@@ -49,27 +65,36 @@ public class CameraController : MonoBehaviour
 
         transform.position = currentPos;
         transform.rotation = currentRot;
-        //float tmp = transform.localEulerAngles.x;
-        //if (tmp < 0)
-        //    tmp = 360 - (-tmp % 360);
-        //Debug.Log(tmp);
-        //
     }
 
     Vector3 MoveForward(Vector3 currentPos, float axisInput)
     {
-        Vector3 newPos = (transform.forward + transform.up) * axisInput * cameraMoveSpeed * Time.deltaTime;
-        currentPos.x += newPos.x;
-        currentPos.z += newPos.z;
-        return currentPos;
+        Vector3 newPos = currentPos;
+        Vector3 step = (transform.forward + transform.up) * axisInput * cameraMoveSpeed * Time.deltaTime;
+
+        newPos.x += step.x;
+        if (newPos.x < lowerPlaneBound.x || newPos.x > upperPlaneBound.x)
+            return currentPos;
+
+        newPos.z += step.z;
+        if (newPos.z < lowerPlaneBound.y || newPos.z > upperPlaneBound.y)
+            return currentPos; 
+        return newPos;
     }
 
     Vector3 MoveRight(Vector3 currentPos, float axisInput)
     {
-        Vector3 newPos = transform.right * axisInput * cameraMoveSpeed * Time.deltaTime;
-        currentPos.x += newPos.x;
-        currentPos.z += newPos.z;
-        return currentPos;
+        Vector3 newPos = currentPos;
+        Vector3 step = transform.right * axisInput * cameraMoveSpeed * Time.deltaTime;
+
+        newPos.x += step.x;
+        if (newPos.x < lowerPlaneBound.x || newPos.x > upperPlaneBound.x)
+            return currentPos;
+
+        newPos.z += step.z;
+        if (newPos.z < lowerPlaneBound.y || newPos.z > upperPlaneBound.y)
+            return currentPos;
+        return newPos;
     }
 
     Vector3 Zoom(Vector3 currentPos, float axisInput)
