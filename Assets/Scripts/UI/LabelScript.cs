@@ -13,9 +13,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Sprite newPicture;
     public string defaultAnimation;
     public string updateAnimation;
+    public bool pressed;
 
     protected Image image;
-    protected bool pressed;
+    
 
     private void Start()
     {

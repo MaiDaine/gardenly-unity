@@ -18,3 +18,5 @@ MonoBehaviour:
   - OpenMenu
   - OpenSettings
   - SaveGarden
+  - MainButton
+  - SubButton
