@@ -16,3 +16,5 @@ MonoBehaviour:
   DatabaseType: 0
   Names:
   - OpenMenu
+  - OpenSettings
+  - SaveGarden
