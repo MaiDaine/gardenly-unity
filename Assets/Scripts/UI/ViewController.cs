@@ -12,7 +12,7 @@ public class ViewController : MonoBehaviour
         foreach(UIButton button in buttons)
         {
             if (button.GetComponent<LabelScript>().pressed
-                && !button.IsSelected)
+                && !button.IsSelected && button.IsActive())
                 button.ExecuteClick();
         }
     }
