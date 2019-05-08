@@ -7,6 +7,8 @@ public class ReactProxy : MonoBehaviour
 {
     public static ReactProxy instance = null;
 
+    public GraphQL graphiQL;
+
     [DllImport("__Internal")]
     private static extern void SaveScene(string json);
     [DllImport("__Internal")]
@@ -15,7 +17,10 @@ public class ReactProxy : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            graphiQL = new GraphQL();
+        }
         else
             Destroy(this);
     }
@@ -40,10 +45,20 @@ public class ReactProxy : MonoBehaviour
         SetUnsavedWorkState(state);
     }
 
+    public void SendQuery(string request)
+    {
+        //CALL front with request
+    }
+
     //Called from REACT
     public void InitScene(string json)
     {
        if (json != "")
            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
+    }
+
+    public void QueryResult(string json)
+    {
+        //Check for errors
     }
 }
