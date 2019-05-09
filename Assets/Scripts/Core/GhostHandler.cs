@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public bool needFlowerBed = false;
-    protected ObjectsData data;
+    protected PlantData data = null;
     protected List<ISelectable> neighbors = new List<ISelectable>();
     //TODO UI : add UI controller here 
 
@@ -55,9 +55,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         this.transform.eulerAngles += rotateValue;
     }
 
-    public ObjectsData GetData()
+    public PlantData GetData()
     {
-        data = this.GetComponent<ObjectsData>();
         return this.data;
     }
 

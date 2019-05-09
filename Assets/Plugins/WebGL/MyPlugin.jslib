@@ -1,8 +1,11 @@
 mergeInto(LibraryManager.library, {
-  SaveScene: function(elems) {
-    ReactUnityWebGL.SaveScene(Pointer_stringify(elems));
+  save: function(elems) {
+    ReactUnityWebGL.save(Pointer_stringify(elems));
   },
-  SetUnsavedWorkState: function(state) {
-		ReactUnityWebGL.SetUnsavedWorkState(state);
-	}
+  unsavedWork: function(state) {
+	ReactUnityWebGL.unsavedWork(state);
+  },
+  query: function(payload) {
+	ReactUnityWebGL.query(Pointer_stringify(payload));
+  }
 });

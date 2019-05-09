@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Move : Action
+public class Move : GhostAction
 {
     private Vector3 oldPosition;
     private Vector3 newPosition;

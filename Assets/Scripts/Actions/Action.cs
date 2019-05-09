@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Action : ScriptableObject
+public abstract class GhostAction : ScriptableObject
 {
     public bool tmpAction = false;
     protected GameObject gameObject;

@@ -3,7 +3,7 @@
 [CreateAssetMenu]
 public class ActionHandler : ScriptableObject
 {
-    public Action currentAction = null;
+    public GhostAction currentAction = null;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
 
@@ -66,10 +66,10 @@ public class ActionHandler : ScriptableObject
         ReactProxy.instance.UpdateSaveState(true);
     }
 
-    public Action RedoAction()
+    public GhostAction RedoAction()
     {
         bool shouldSelect;
-        Action action = this.redoActionSet.GetLastAction();
+        GhostAction action = this.redoActionSet.GetLastAction();
 
         if (action != null)
         {
@@ -84,10 +84,10 @@ public class ActionHandler : ScriptableObject
         return null;
     }
 
-    public Action RevertAction()
+    public GhostAction RevertAction()
     {
         bool shouldSelect;
-        Action action = this.revertActionSet.GetLastAction();
+        GhostAction action = this.revertActionSet.GetLastAction();
 
         if (action != null)
         {
@@ -104,13 +104,13 @@ public class ActionHandler : ScriptableObject
 
     private void CreateAction(string action, ISelectable selection)
     {
-        this.currentAction = ScriptableObject.CreateInstance(action) as Action;
+        this.currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
         this.currentAction.Initialize(selection.GetGameObject());
     }
 
     private void CreateAction(string action, GameObject gameObject)
     {
-        this.currentAction = ScriptableObject.CreateInstance(action) as Action;
+        this.currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
         this.currentAction.Initialize(gameObject);
     }
 }

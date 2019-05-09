@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5848085319270114232}
   - component: {fileID: 5007713659454275582}
   - component: {fileID: 7597030928426193009}
-  - component: {fileID: 4248679179333205109}
   m_Layer: 0
   m_Name: F_foliageplant_10_LOD0_01 1
   m_TagString: Untagged
@@ -110,22 +109,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 271c8dffd0b3d2a40a6da8c5b06f0394, type: 3}
---- !u!114 &4248679179333205109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3344667881147691538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d846d9ea609a5e4e9020c0000d08455, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectName: Flower
-  description: These are flowers
-  sunshine: 0.5
-  water: 0.5
-  solidity: 0.1
-  age: 0
-  image: {fileID: 0}
