@@ -19,6 +19,7 @@ public class ShapeCreator : GhostHandler
         GridController.instance.eventPostRender.AddListener(DrawLines);
         this.transform.position = new Vector3(0, 0, 0);
         this.firstPoint = Instantiate(pointPrefab);
+        firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
         this.points.Add(firstPoint);
         this.currentPoint = firstPoint;
     }

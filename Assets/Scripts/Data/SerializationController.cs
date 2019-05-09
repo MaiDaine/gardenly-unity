@@ -35,23 +35,26 @@ public class SerializationController : MonoBehaviour
     {
         if (this.items.Count == 0)
         {
-            ErrorHandler.instance.ErrorMessage("Nothing to save");
-            return;
+            this.json = "{}";
+            this.closed = true;
         }
-        this.json = "{\"name\":\"" + gardenData.name + "\",";
-        this.json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
-        this.json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "],";
-        this.serializationElemNb = 0;
-        this.closed = false;
-        foreach (ISerializable item in items)
-            AddItem(CreateItem(item.Serialize()));
+        else
+        {
+            this.json = "{\"name\":\"" + gardenData.name + "\",";
+            this.json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
+            this.json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "],";
+            this.serializationElemNb = 0;
+            this.closed = false;
+            foreach (ISerializable item in items)
+                AddItem(CreateItem(item.Serialize()));
+        }
         ErrorHandler.instance.SuccesMessage("Save sucessfull");
-        ReactProxy.instance.unsavedWork = false;
+        ReactProxy.instance.UpdateSaveState(false);
     }
 
     public string GetSerializedData()
     {
-        if (!this.closed)
+        if (!this.closed && json != "")
         {
             this.json += "]}";
             this.closed = true;

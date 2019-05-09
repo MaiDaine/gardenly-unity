@@ -124,30 +124,30 @@ public class UIController : MonoBehaviour
 
     public void SetDataPanel(GhostHandler handler)
     {
-        ObjectsData tmp = handler.GetData();
+        PlantData tmp = handler.GetData();
         Text[] labels = this.dataPanel.GetComponentsInChildren<Text>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
         ButtonScript script = button[1].GetComponent<ButtonScript>();
 
-        if (handler.GetData() == null)
+        if (tmp != null)
             return ;
         this.gardenMenu.gameObject.SetActive(true);
         this.dataPanel.gameObject.SetActive(true);
 
         script.SetGhost(handler);
 
-        labels[0].text = tmp.objectName;
+        labels[0].text = tmp.name;
         labels[1].text = tmp.description;
 
         // TMP
 
         sliders[0].gameObject.SetActive(true);
-        sliders[0].value = tmp.water;
+        sliders[0].value = tmp.waterNeed;
         sliders[1].gameObject.SetActive(true);
-        sliders[1].value = tmp.sunshine;
-        sliders[2].value = tmp.solidity;
+        sliders[1].value = tmp.sunNeed;
+        sliders[2].value = tmp.rusticity;
         sliders[2].gameObject.SetActive(true);
       
         icons[4].color = Color.green;

@@ -5,6 +5,12 @@ using UnityEngine;
 public class ShapePoint : MonoBehaviour, IInteractible, ISnapable
 {
     public float overrideSnapDistance = 0.5f;
+
+    public void ChangeColor(Color color)
+    {
+        this.GetComponent<MeshRenderer>().material.color = color;
+    }
+
     private void Awake() { gameObject.layer = 0; }
     
     public void EndConstruction() { gameObject.layer = 10; }
