@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "RuntimeSet/Actions")]
-public class ActionRuntimeSet : RuntimeSet<Action>
+public class ActionRuntimeSet : RuntimeSet<GhostAction>
 {
     public GameEvent onActionSetUpdated;
 
-    public override void Add(Action elem)
+    public override void Add(GhostAction elem)
     {
         if (!this.items.Contains(elem))
         {
@@ -14,7 +14,7 @@ public class ActionRuntimeSet : RuntimeSet<Action>
         }
     }
 
-    public override void Remove(Action elem)
+    public override void Remove(GhostAction elem)
     {
         if (this.items.Contains(elem))
         {
@@ -27,7 +27,7 @@ public class ActionRuntimeSet : RuntimeSet<Action>
     {
         if (this.items.Count != 0)
         {
-            foreach (Action action in items)
+            foreach (GhostAction action in items)
                 Destroy(action);
             items.Clear();
             onActionSetUpdated.Raise();
@@ -44,7 +44,7 @@ public class ActionRuntimeSet : RuntimeSet<Action>
             }
     }
 
-    public Action GetLastAction()
+    public GhostAction GetLastAction()
     {
         if (this.items.Count == 0)
             return null;

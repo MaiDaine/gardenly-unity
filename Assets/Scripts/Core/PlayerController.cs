@@ -44,13 +44,13 @@ public class PlayerController : MonoBehaviour
             this.constructionController.Cancel();
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
-            Action currentAction = actionHandler.RedoAction();
+            GhostAction currentAction = actionHandler.RedoAction();
             if (currentAction != null)
                 UpdateSelectionAfterAction(currentAction);
         }
         else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
-            Action currentAction = actionHandler.RevertAction();
+            GhostAction currentAction = actionHandler.RevertAction();
             if (currentAction != null)
                 UpdateSelectionAfterAction(currentAction);
         }
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         selectable.Select(constructionController.currentState);
     }
 
-    public void UpdateSelectionAfterAction(Action action)
+    public void UpdateSelectionAfterAction(GhostAction action)
     {
         if (currentSelection != null)
             currentSelection.DeSelect();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Create : Action
+public class Create : GhostAction
 {
     public override void Complete() {}
 
