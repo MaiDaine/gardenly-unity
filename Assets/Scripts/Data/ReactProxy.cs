@@ -96,4 +96,21 @@ public class ReactProxy : MonoBehaviour
         if (tmp != null)
             tmp.Invoke(json);
     }
+
+    //Link to UI
+    public void GetPlantsType()
+    {
+        if (Application.isEditor)
+            DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Abricotier\"}},{\"node\":{\"name\":\"Campanule\"}},{\"node\":{\"name\":\"Capucine\"}},{\"node\":{\"name\":\"Coquelicot\"}},{\"node\":{\"name\":\"Crocus\"}},{\"node\":{\"name\":\"Edelweiss\"}},{\"node\":{\"name\":\"Gardénia\"}},{\"node\":{\"name\":\"Jacinthe\"}},{\"node\":{\"name\":\"Lys\"}},{\"node\":{\"name\":\"Narcisse\"}},{\"node\":{\"name\":\"Œillet\"}},{\"node\":{\"name\":\"Oeillet d'Inde\"}},{\"node\":{\"name\":\"Orchidées\"}},{\"node\":{\"name\":\"Pensée\"}},{\"node\":{\"name\":\"Pétunia\"}},{\"node\":{\"name\":\"Phalaenopsis\"}},{\"node\":{\"name\":\"Pivoine\"}}]}}}");
+        else
+            query(graphQL.GetPlantsOfType("Fleur", externalData.plantsTypes["Fleur"]));
+    }
+
+    public void GetPlantsData()
+    {
+        if (Application.isEditor)
+            DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"blossomingEnd\":[4],\"blossomingStart\":[2],\"color\":[\"Vert\",\"Rose\"],\"createdAt\":\"Sat, 04 May 2019 23:45:58 +0000\",\"groundTypes\":[{\"id\":\"e060619a-7977-4280-ba21-f5673ebb6817\"},{\"id\":\"e09f04bf-57a0-45cc-8e89-00f3657bd287\"},{\"id\":\"f6ddd7f8-329e-4809-a869-40281392823b\"}],\"heightLow\":10000,\"heightHigh\":null,\"id\":\"6bcc1cc7-32dd-4e38-b516-7b70d341707f\",\"periodicities\":[{\"name\":\"Vivace\"}],\"phRangeLow\":7,\"phRangeHigh\":7,\"photo\":\"https://s3.greefine.ovh/dev/8cd324ca744800af98885ec7378bf5ad390fe3ea/e57ce8f2-a9b8-4de8-94a7-d7efea5ccffd.jpg\",\"rusticity\":5,\"shapes\":[{\"name\":\"Arrondi\"}],\"sunNeed\":8,\"thumbnail\":\"https://s3.greefine.ovh/dev/8cd324ca744800af98885ec7378bf5ad390fe3ea/thumbnail_e57ce8f2-a9b8-4de8-94a7-d7efea5ccffd.jpg\",\"type\":{\"name\":\"Fleur\"},\"updatedAt\":\"Sat, 04 May 2019 23:45:59 +0000\"}}}");
+        else
+            query(graphQL.GetPlantData(externalData.plants["Fleur"]["Pétunia"].plantID));
+    }
 }

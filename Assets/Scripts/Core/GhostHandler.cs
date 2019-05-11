@@ -60,6 +60,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         return this.data;
     }
 
+    public void SetData(PlantData data)
+    {
+        this.data = data;
+    }
+
 
     //ISelectable && ISnapable
     public GameObject GetGameObject() { return (this.gameObject); }

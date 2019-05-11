@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Doozy.Engine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class UIController : MonoBehaviour
     public Transform dynamicObjectMenu;
     public Transform flowerBedMenu;
     public Transform wallMenu;
-    public Transform dataPanel;
+    public UIView dataPanel;
     public Transform flowerBedDataPanel;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
@@ -125,32 +127,36 @@ public class UIController : MonoBehaviour
     public void SetDataPanel(GhostHandler handler)
     {
         PlantData tmp = handler.GetData();
-        Text[] labels = this.dataPanel.GetComponentsInChildren<Text>();
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
         Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
-        ButtonScript script = button[1].GetComponent<ButtonScript>();
+        ButtonScript script = button[0].GetComponent<ButtonScript>();
 
-        if (tmp != null)
-            return ;
-        this.gardenMenu.gameObject.SetActive(true);
-        this.dataPanel.gameObject.SetActive(true);
-
+        if (tmp == null)
+            return;
+        
+        if (!this.dataPanel.IsVisible)
+            this.dataPanel.Toggle();
         script.SetGhost(handler);
-
-        labels[0].text = tmp.name;
-        labels[1].text = tmp.description;
-
+        Debug.Log(tmp);
+        if (labels != null && labels.Length > 0)
+        {
+            Debug.Log("Labels " + sliders.Length);
+            labels[0].text = tmp.name;
+            labels[1].text = tmp.description;
+            labels[11].text = tmp.phRangeLow + ", " + tmp.phRangeHigh;
+        }
         // TMP
-
-        sliders[0].gameObject.SetActive(true);
-        sliders[0].value = tmp.waterNeed;
-        sliders[1].gameObject.SetActive(true);
-        sliders[1].value = tmp.sunNeed;
-        sliders[2].value = tmp.rusticity;
-        sliders[2].gameObject.SetActive(true);
+        if (sliders != null && sliders.Length > 0)
+        {
+            Debug.Log("Sliders " + sliders.Length);
+            sliders[0].value = tmp.waterNeed;
+            sliders[1].value = tmp.sunNeed;
+            sliders[2].value = tmp.rusticity;
+        }
       
-        icons[4].color = Color.green;
+       // icons[4].color = Color.green;
         
     }
 
