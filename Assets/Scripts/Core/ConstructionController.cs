@@ -12,13 +12,15 @@ public class ConstructionController : MonoBehaviour
     public EditionType editionState = EditionType.Off;
     public float snapDistance = 0.15f;
     public int flowerbedCount = 0;
+    public RaycastHit lastCastHit;
+    public List<FlowerBed> flowerBeds = new List<FlowerBed>();
 
     private Camera Camera;
     private GridController Grid;
     private Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
     private GhostHandler ghost = null;
-    private Vector3 lastPos = new Vector3(0, 0, 0);
-    private Vector3 lastCast = new Vector3(0, 0, 0);
+    private Vector3 lastValidPos = new Vector3(0, 0, 0);
+    private Vector3 lastCastPos = new Vector3(0, 0, 0);
     private bool gridState = true;
 
     private void Awake()
@@ -48,10 +50,10 @@ public class ConstructionController : MonoBehaviour
            && Physics.Raycast(ray, out hit, rayDistance, layer) && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
-            this.lastCast = pos;
+            this.lastCastPos = pos;
             return true;
         }
-        pos = this.lastCast;
+        pos = this.lastCastPos;
         hit = new RaycastHit();
         return false;
     }
@@ -66,11 +68,11 @@ public class ConstructionController : MonoBehaviour
            && hit.collider.tag != "Invalid")
         {
             pos = ray.GetPoint(rayDistance);
-            this.lastCast = pos;
+            this.lastCastPos = pos;
             snapable = hit.collider.gameObject.GetComponent<ISnapable>();
             return true;
         }
-        pos = this.lastCast;
+        pos = this.lastCastPos;
         hit = new RaycastHit();
         snapable = null;
         return false;
@@ -127,22 +129,23 @@ public class ConstructionController : MonoBehaviour
         
         if (MouseRayCast(out tmp, out hit))
         {
-            if (tmp == this.lastPos && !Input.GetMouseButtonDown(0))
+            lastCastHit = hit;
+            if (tmp == this.lastValidPos && !Input.GetMouseButtonDown(0))
                 return;
-            this.lastPos = tmp;
+            this.lastValidPos = tmp;
             snapable = hit.collider.gameObject.GetComponent<ISnapable>();
             if ((snapable != null) && (snapable.FindSnapPoint(ref tmp, this.snapDistance)))
             {
-                this.lastPos = tmp;
+                this.lastValidPos = tmp;
                 if (snapable.isLinkable())
                     neighbor = snapable.GetGameObject().GetComponent<ISelectable>();
             }
-            else if (((tmp = Grid.GetNearestPointOnGrid(lastPos)) - this.lastPos).magnitude < this.snapDistance)
-                this.lastPos = tmp;
+            else if (((tmp = Grid.GetNearestPointOnGrid(lastValidPos)) - this.lastValidPos).magnitude < this.snapDistance)
+                this.lastValidPos = tmp;
             if (this.currentState == ConstructionState.Positioning)
-                UpdateGhostPositioning(this.lastPos, neighbor);
+                UpdateGhostPositioning(this.lastValidPos, neighbor);
             else
-                UpdateGhostBuilding(this.lastPos, neighbor);
+                UpdateGhostBuilding(this.lastValidPos, neighbor);
         }
     }
 

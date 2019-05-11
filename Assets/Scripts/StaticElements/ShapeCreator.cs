@@ -10,6 +10,8 @@ public class ShapeCreator : GhostHandler
     public ShapePoint pointPrefab;
     public List<ShapePoint> points { get; } = new List<ShapePoint>();
     public ShapePoint currentPoint = null;
+    public float minStep = 25;
+    public FlowerBed flowerBed;
 
     private ShapePoint firstPoint = null;
     private Color color = new Color(1f, 0f, 0f, 1f);
@@ -19,7 +21,7 @@ public class ShapeCreator : GhostHandler
         GridController.instance.eventPostRender.AddListener(DrawLines);
         this.transform.position = new Vector3(0, 0, 0);
         this.firstPoint = Instantiate(pointPrefab);
-        firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
+        this.firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
         this.points.Add(firstPoint);
         this.currentPoint = firstPoint;
     }
@@ -41,25 +43,41 @@ public class ShapeCreator : GhostHandler
 
     public override bool FromPositioningToBuilding(Vector3 position)
     {
+        if (points.Count == 1)
+        {
+            if (ConstructionController.instance.lastCastHit.collider.gameObject.tag == "FlowerBed")
+                return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+            CreatePoint();
+            return false;
+        }
+
+        if (CheckIntersectWithOtherObjects(points[points.Count - 2].transform.position, position))
+            return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+
         if (this.currentPoint != this.firstPoint
           && Vector2.Distance(new Vector2(this.firstPoint.transform.position.x, this.firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 0.5f)
         {
             if (this.points.Count < 4)
-            {
-                ErrorHandler.instance.ErrorMessage("Place at least 3 points");
-                return false;
-            }
+                return ErrorHandler.instance.ErrorMessage("Place at least 3 points");
+
+            Vector3 tmp = this.currentPoint.transform.position;
             this.currentPoint.transform.position = this.firstPoint.transform.position;
             this.points.Remove(currentPoint);
+            if (!CheckContainOtherObjects())
+            {
+                currentPoint.transform.position = tmp;
+                this.points.Add(currentPoint); 
+                return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+            }
             return true;
         }
+
         if (this.points.Count > 3 && CheckIntersection(new Vector2(position.x, position.z)))
-        {
-            ErrorHandler.instance.ErrorMessage("You can't cross the lines");
-            return false;
-        }
+            return ErrorHandler.instance.ErrorMessage("You can't cross the lines");
+
         if (this.points.Count > 1 && Vector3.Distance(position, this.points[this.points.Count - 1].transform.position) < 0.1f)
             return false;
+
         CreatePoint();
         return false;
     }
@@ -68,8 +86,8 @@ public class ShapeCreator : GhostHandler
 
     public override void EndConstruction(Vector3 position)
     {
-        Destroy(currentPoint);
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
+        Destroy(currentPoint);
         this.eventShapeConstructionFinished.Invoke();
     }
 
@@ -135,6 +153,39 @@ public class ShapeCreator : GhostHandler
             this.points.Add(tmp);
             this.currentPoint = tmp;
         }
+    }
+
+    private bool CheckContainOtherObjects()
+    {
+        flowerBed.OnShapeFinished();
+        MeshCollider collider = flowerBed.GetComponent<MeshCollider>();
+        foreach (FlowerBed fb in ConstructionController.instance.flowerBeds)
+            if (fb.GetComponent<MeshCollider>().bounds.Intersects(collider.bounds))
+            {
+                flowerBed.ActivationCancel();
+                return false;
+            }
+        return true;
+    }
+
+    private bool CheckIntersectWithOtherObjects(Vector3 start, Vector3 end)
+    {
+        Vector3 s = new Vector3(start.x, 0.2f, start.z);
+        Vector3 e = new Vector3(end.x, 0.2f, end.z);
+        Vector3 center = (s + e) / 2f;
+        RaycastHit[] hit;
+
+        hit = Physics.BoxCastAll(
+            center,
+            new Vector3(Vector3.Distance(s, e) / 2f, 0.3f, 0.01f),
+            new Vector3(0f, -1f, 0f),
+            Quaternion.LookRotation(e - s, Vector3.up) * Quaternion.Euler(0, 90, 0));
+
+        foreach (RaycastHit elem in hit)
+            if (elem.collider.tag == "FlowerBed" || elem.collider.tag == "Invalid")
+                return true;
+
+        return false;
     }
 
     private bool CheckIntersection(Vector2 p4)
