@@ -20,3 +20,8 @@ MonoBehaviour:
   - SaveGarden
   - MainButton
   - SubButton
+  - TreesButton
+  - ShrubsButton
+  - FlowersButton
+  - VegetableButton
+  - AquaticButton
