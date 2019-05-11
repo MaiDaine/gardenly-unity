@@ -19,13 +19,39 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void Init(ShapeCreator shapeCreator)
     {
         this.shapeCreator = shapeCreator;
-        shapeCreator.eventShapeConstructionFinished.AddListener(OnShapeFinished);
+        this.shapeCreator.flowerBed = this;
+        this.GetComponent<MeshRenderer>().enabled = false;
+        shapeCreator.eventShapeConstructionFinished.AddListener(FinalActivation);
     }
 
-    private void OnShapeFinished()
+    public void ActivationCancel()
     {
-        this.shapeCreator.eventShapeConstructionFinished.RemoveListener(OnShapeFinished);
+        this.GetComponent<MeshCollider>().sharedMesh = null;
+        this.GetComponent<MeshCollider>().enabled = false;
+        Destroy(this.GetComponent<MeshFilter>().mesh);
+        this.GetComponent<MeshFilter>().mesh = null;
+        Destroy(this.GetComponent<MeshHandler>());
+    }
 
+    public void FinalActivation()
+    {
+        this.shapeCreator.SelfClear();
+        this.shapeCreator.gameObject.SetActive(false);
+        this.GetComponent<MeshCollider>().enabled = true;
+        this.GetComponent<MeshRenderer>().material = this.material;
+        this.GetComponent<MeshRenderer>().enabled = true;
+        this.shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
+        Destroy(this.GetComponent<MeshHandler>());
+        this.gameObject.layer = 10;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
+        ConstructionController.instance.flowerbedCount++;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
+        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
+        ConstructionController.instance.flowerBeds.Add(this);
+    }
+
+    public void OnShapeFinished()
+    {
         this.vertices = new Vector2[this.shapeCreator.points.Count];
         int i = 0;
 
@@ -34,8 +60,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             this.vertices[i] = new Vector2(point.transform.position.x, point.transform.position.z);
             i++;
         }
-        this.shapeCreator.SelfClear();
-        this.shapeCreator.gameObject.SetActive(false);
         CreateMesh();
     }
 
@@ -44,7 +68,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         MeshHandler meshHandler = this.gameObject.AddComponent<MeshHandler>();
         this.GetComponent<MeshFilter>().mesh = meshHandler.Init(this.vertices);
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
-        this.GetComponent<MeshRenderer>().material = this.material;
         this.GetComponent<MeshCollider>().sharedMesh = mesh;
         if (!isFixed && mesh.triangles.Length + 1 < 3 * (vertices.Length - 2))
         {
@@ -52,14 +75,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(meshHandler);
             Destroy(mesh);
             CreateMesh(true);
-            return;
         }
-        Destroy(meshHandler);
-        this.gameObject.layer = 10;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
-        ConstructionController.instance.flowerbedCount++;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
-        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
     }
 
     public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }

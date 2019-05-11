@@ -37,7 +37,7 @@ public class ErrorHandler : MonoBehaviour
     }
 
 
-    public void ErrorMessage(string msg)
+    public bool ErrorMessage(string msg)
     {
         this.gameObject.SetActive(true);
         this.errorMsg = this.GetComponentInChildren<Text>();
@@ -46,9 +46,10 @@ public class ErrorHandler : MonoBehaviour
             this.errorMsg.text = msg;
             this.startCount = true;
         }
+        return false;
     }
 
-    public void SuccesMessage(string msg)
+    public bool SuccesMessage(string msg)
     {
         this.gameObject.SetActive(true);
         this.errorMsg = this.GetComponentInChildren<Text>();
@@ -58,5 +59,6 @@ public class ErrorHandler : MonoBehaviour
             this.errorMsg.color = Color.green;
             this.startCount = true;
         }
+        return true;
     }
 }
