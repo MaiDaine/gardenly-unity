@@ -20,7 +20,6 @@ public class ExternalData : MonoBehaviour
 
     public void SetPlantsTypes(string json)
     {
-        Debug.Log("PLANT TYPE");
         var jsonObject = JSONObject.Parse(json);
 
         int count = jsonObject["data"]["getTypes"].Count;
@@ -34,7 +33,6 @@ public class ExternalData : MonoBehaviour
 
     public void SetPlantOfType(string json)
     {
-        Debug.Log("PLANT OF TYPE");
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getAllPlants"].Keys;
         tmp.MoveNext();
@@ -51,7 +49,6 @@ public class ExternalData : MonoBehaviour
 
     public void SetPlantData(string json)
     {
-        Debug.Log("PLANT DATA");
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
@@ -73,6 +70,6 @@ public class ExternalData : MonoBehaviour
             Debug.Log(www.error);
         else
             plantData.image = ((DownloadHandlerTexture)www.downloadHandler).texture;
-        callbackFinishDownloadImage.Invoke(plantData.name);
+        //callbackFinishDownloadImage.Invoke(plantData.name);
     }
 }

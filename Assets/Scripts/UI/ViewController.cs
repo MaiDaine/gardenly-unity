@@ -112,12 +112,10 @@ public class ViewController : MonoBehaviour
             GameObject obj = Instantiate(this.plantButton, view.transform);
             ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
             UIButton btn = obj.GetComponent<UIButton>();
-            Debug.Log("LENGTH " + this.buttons.Length);
+            
             dynamicButtonListener.GetComponent<ViewController>().dynButtons.Add(btn);
             btn.TextMeshProLabel.text = plant.name;
             buttonScript.SetGhost(this.plantType);
-          
-            // this.plantButton.GetComponentInChildren<Image>() = plant.imageUrl
         }
     }
 }

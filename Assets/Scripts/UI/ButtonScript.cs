@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Doozy.Engine.UI;
 
 public class ButtonScript : MonoBehaviour
@@ -10,13 +11,25 @@ public class ButtonScript : MonoBehaviour
 
     protected string ghostType;
 
+    private void Update()
+    {
+        if (ghostType != null)
+        {
+            RawImage img = this.GetComponentInChildren<RawImage>();
+            if (img != null && img.texture == null)
+            {
+                img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
+            }
+        }
+    }
+
     public void SetGhost(string ghostType)
     {
         if (ghostType == "Arbre")
             idxObject = 1;
         else
             idxObject = 0;
-        this.ghostType = ghostType;
+        this.ghostType = ghostType; 
     }
 
     public void BuildFunction()

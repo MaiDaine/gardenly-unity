@@ -129,15 +129,13 @@ public class UIController : MonoBehaviour
         PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
-        Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
+        RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         UIButton[] button = this.dataPanel.GetComponentsInChildren<UIButton>();
         ButtonScript script = button[0].GetComponent<ButtonScript>();
 
         if (tmp == null)
             return;
 
-        
-        Debug.Log(tmp.name);
         if (labels != null && labels.Length > 0)
         {
             labels[0].text = tmp.name;
@@ -151,8 +149,8 @@ public class UIController : MonoBehaviour
             sliders[1].value = tmp.sunNeed;
             sliders[2].value = tmp.rusticity;
         }
-
-        // icons[4].color = Color.green;
+        if (icon != null)
+            icon.texture = tmp.image;
         if (!this.dataPanel.IsVisible)
         {
             this.dataPanel.Toggle();
