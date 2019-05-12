@@ -18,7 +18,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         this.transform.eulerAngles += this.correctedRotation;
         if (ConstructionController.instance.flowerbedCount < 1)
         {
-            ErrorHandler.instance.ErrorMessage("You must place a flowerbed first");
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
             ConstructionController.instance.Cancel();
         }
     }

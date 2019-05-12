@@ -1,0 +1,22 @@
+{
+  "succes": {
+    "save_sucessfull": "Save sucessfull"
+  },
+
+  "errors": {
+    "action": {
+      "no_cancel": "No action to cancel",
+      "no_revert": "No action to revert"
+    },
+    "flower_bed": {
+      "invalid_pos": "Must be placed in a flower bed",
+      "no_flowerbed": "You must place a flowerbed first"
+    },
+    "shape_creator": {
+      "elements_overlap": "Those elements can't overlap",
+      "lessthan_3points": "Place at least 3 points",
+      "line_cross": "You can't cross the lines"
+    },
+    "loading_error": "Error while loading, please reload the page"
+  }
+}
