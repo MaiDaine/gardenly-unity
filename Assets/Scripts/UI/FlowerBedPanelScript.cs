@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FlowerBedPanelScript : MonoBehaviour
 {
-    public InputField inputField;
+    public TMP_InputField nameInputField;
+    public TMP_InputField typeInputField;
 
     private void OnDisable()
     {
@@ -15,12 +17,16 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     public void EnableCameraMovement(bool state)
     {
-        Debug.Log("Enable");
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = state;
     }
 
-    public void ValidateChange()
+    public void ValidateNameChange()
     {
-        Camera.main.GetComponentInChildren<UIController>().UpdateFlowerBedDataPanel(inputField.text);
+        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(nameInputField.text);
+    }
+
+    public void ValidateTypeChange()
+    {
+        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeInputField.text);
     }
 }

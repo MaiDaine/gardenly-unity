@@ -7,12 +7,12 @@ using Doozy.Engine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Transform gardenMenu;
-    public Transform dynamicObjectMenu;
-    public Transform flowerBedMenu;
-    public Transform wallMenu;
+    //public Transform gardenMenu;
+    public UIView dynamicObjectMenu;
+    //public UIView flowerBedMenu;
+    public UIView wallMenu;
     public UIView dataPanel;
-    public Transform flowerBedDataPanel;
+    public UIView flowerBedDataPanel;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
     protected GhostHandler ghost = null;
     protected FlowerBed flowerBed = null;
 
-    private void LateUpdate()
+   /* private void LateUpdate()
     {
         if (this.menu != null && !this.menu.rotateState && !this.menu.isMoving)
             DisplayMenu(this.menu);
@@ -42,39 +42,33 @@ public class UIController : MonoBehaviour
             menu.GetGameObject().SetActive(false);
         else
             menu.GetGameObject().SetActive(true);
-    }
+    }*/
 
-    private void SpawnMenu(GhostHandler selectable, Transform menuType)
+    private void SpawnMenu(GhostHandler selectable, UIView menuType)
     {
-        Canvas canvas;
-        Vector3 position;
-
         if (menuOpen)
             this.menu.DestroyMenu();
 
-        position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
-        this.previewUI = Instantiate(menuType, position, Quaternion.identity);
-        canvas = this.previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;       
-        this.menu = this.previewUI.GetComponent<MenuScript>();
+        //position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
+        //this.previewUI = Instantiate(menuType, position, Quaternion.identity);
+        //canvas = this.previewUI.GetComponent<Canvas>();
+        //canvas.worldCamera = Camera.main;       
+        this.menu = menuType.GetComponent<MenuScript>();
         menuOpen = true;
     }
 
-    private void SpawnFlowerBedMenu(FlowerBed flowerBed, Transform menuType)
+    private void SpawnFlowerBedMenu(FlowerBed flowerBed, UIView menuType)
     {
-        Canvas canvas;
-        Vector3 position;
-
         if (flowerBedMenuOpen)
             this.flowerBedMenuScript.DestroyMenu();
 
         // TODO Vector3.x = middle of flowerbed
-        position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
+        /*position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
 
         this.previewUI = Instantiate(menuType, position, Quaternion.identity);
         canvas = this.previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
-        this.flowerBedMenuScript = this.previewUI.GetComponent<MenuFlowerBedScript>();
+        canvas.worldCamera = Camera.main;*/
+        this.flowerBedMenuScript = menuType.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
     }
 
@@ -100,7 +94,7 @@ public class UIController : MonoBehaviour
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
 
-    public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
+    public void SpawnDynMenu(GhostHandler ghost, UIView typeMenu)
     {
         if (this.menu != null && this.menu.rotateState)
           return;
@@ -111,7 +105,7 @@ public class UIController : MonoBehaviour
 
     public void SpawnFlowerBedMenu(FlowerBed flowerBed)
     {
-        SpawnFlowerBedMenu(flowerBed, this.flowerBedMenu);
+        SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
@@ -160,25 +154,43 @@ public class UIController : MonoBehaviour
 
     public void SetFlowerBedDataPanel(FlowerBed flowerBed)
     {
-        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
+        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
-        this.gardenMenu.gameObject.SetActive(true);
-        this.flowerBedDataPanel.gameObject.SetActive(true);
-        texts[1].text = flowerBed.soilType;
-        texts[0].text = flowerBed.name;
+        Debug.Log(texts.Length);
+        foreach (TextMeshProUGUI t in texts)
+        {
+            Debug.Log(t.name);
+        }
+        SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
+        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
+        if (!this.flowerBedDataPanel.IsVisible)
+             this.flowerBedDataPanel.Toggle();
+        texts[6].text = flowerBed.soilType;
+        texts[3].text = flowerBed.name;
+        texts[6].gameObject.SetActive(false);
+        texts[3].gameObject.SetActive(false);
         this.flowerBed = flowerBed;
     }
 
     public void ResetFlowerBedDataPanel()
     {
-        this.flowerBed.name = "PLACEHOLDER";
+        this.flowerBed.name = "";
+        this.flowerBed.soilType = "";
     }
 
-    public void UpdateFlowerBedDataPanel(string updateName)
+    public void UpdateNameFlowerBed(string updateName)
     {
         Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
 
-        texts[0].text = updateName;
+        texts[4].text = updateName;
         this.flowerBed.name = updateName;
+    }
+
+    public void UpdateTypeFlowerBed(string updateType)
+    {
+        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
+
+        texts[7].text = updateType;
+        this.flowerBed.soilType = updateType;
     }
 }

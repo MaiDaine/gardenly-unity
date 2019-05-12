@@ -108,9 +108,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (state == ConstructionController.ConstructionState.Off || state == ConstructionController.ConstructionState.Editing)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
-            controller.SpawnFlowerBedMenu(this);
             controller.SetFlowerBedDataPanel(this);
-            controller.gardenMenu.gameObject.SetActive(true);
         }
     }
     public List<ISelectable> SelectWithNeighbor()
