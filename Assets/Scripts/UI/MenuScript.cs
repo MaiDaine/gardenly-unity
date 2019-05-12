@@ -67,9 +67,13 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void EditionEnd()
     {
-        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+        Debug.Log("EDITION END");
+        LabelScript[] tmpScripts = this.GetComponentsInChildren<LabelScript>();
 
-        tmpScript.ResetColor();
+        foreach (LabelScript labelScript in tmpScripts)
+        {
+            labelScript.ResetColor();
+        }
         this.rotateState = false;
         this.isMoving = false;
     }

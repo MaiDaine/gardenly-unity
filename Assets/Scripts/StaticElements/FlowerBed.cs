@@ -101,6 +101,16 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(flowerBedElements[i]);
     }
 
+
+    public void SetTutorial()
+    {
+        UIController controller = Camera.main.GetComponent<UIController>();
+        controller.SetFlowerBedDataPanel(this);
+        controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("TTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEE" +
+            "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" +
+            "\n\n\n" + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIIIIIII"
+            + "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" + "\n\n\n" + "ok last one");
+    }
     //ISelectable
     public GameObject GetGameObject() { return this.gameObject; }
     public void Select(ConstructionController.ConstructionState state)
@@ -129,6 +139,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             // uIController.GetFlowerBedMenuScript().DestroyMenu();
             //uIController.SetFlowerBedDataPanel(this);
             uIController.flowerBedDataPanel.Hide();
+            uIController.tutoView.Hide();
             //uIController.flowerBedDataPanel.gameObject.SetActive(false);
         }
     }
