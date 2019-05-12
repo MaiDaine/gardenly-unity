@@ -20739,6 +20739,7 @@ GameObject:
   - component: {fileID: 534669909}
   - component: {fileID: 534669912}
   - component: {fileID: 534669911}
+  - component: {fileID: 534669913}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -20966,6 +20967,18 @@ MonoBehaviour:
   revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
   redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
   flowerBedPanelScript: {fileID: 0}
+--- !u!114 &534669913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73891656deaf2746ac4ad94c1ec36b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &537686114
 GameObject:
   m_ObjectHideFlags: 0

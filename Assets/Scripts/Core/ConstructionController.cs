@@ -161,7 +161,7 @@ public class ConstructionController : MonoBehaviour
 
                 MouseRayCast(out currentPos, out hit);
                 if (hit.collider.gameObject.tag != "FlowerBed")
-                    ErrorHandler.instance.ErrorMessage("Must be placed in a Flowerbed");
+                    MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
                 else
                 {
                     hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);

@@ -90,6 +90,8 @@ public class ReactProxy : MonoBehaviour
     {
         if (json != "")
             SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
+        if (!Application.isEditor)
+            LocalisationController.instance.Init("FR");//TODO USERPREF
     }
 
     public void DispatchQueryResult(string json)
@@ -97,7 +99,8 @@ public class ReactProxy : MonoBehaviour
         var jsonObject = JSONObject.Parse(json);
         if (jsonObject["errors"] != null)
         {
-            ErrorHandler.instance.ErrorMessage(jsonObject["errors"].Value);
+            Debug.Log(jsonObject["errors"].Value);//FIXME
+            MessageHandler.instance.ErrorMessage("loading_error");
             return;
         }
         var keys = jsonObject["data"].Keys;
