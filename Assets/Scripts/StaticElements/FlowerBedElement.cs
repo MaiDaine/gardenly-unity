@@ -29,7 +29,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this);
+            //uIController.SetDataPanel(this);
         }
     }
 

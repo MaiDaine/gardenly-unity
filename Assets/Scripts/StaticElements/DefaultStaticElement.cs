@@ -50,7 +50,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
             if (this.GetData() != null)
             {
-                uIController.SetDataPanel(this);
+                //uIController.SetDataPanel(this);
                 uIController.gardenMenu.gameObject.SetActive(true);
             }
         }

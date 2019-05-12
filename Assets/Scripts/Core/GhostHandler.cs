@@ -62,7 +62,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public void SetData(PlantData data)
     {
-        this.data = data;
+        if (data != null)
+            this.data = data;
     }
 
 

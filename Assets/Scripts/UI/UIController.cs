@@ -124,25 +124,22 @@ public class UIController : MonoBehaviour
         this.menu.SetGhostRef(ghost);
     }
 
-    public void SetDataPanel(GhostHandler handler)
+    public void SetDataPanel(string plantName, string plantType)
     {
-        PlantData tmp = handler.GetData();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
-        Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
+        UIButton[] button = this.dataPanel.GetComponentsInChildren<UIButton>();
         ButtonScript script = button[0].GetComponent<ButtonScript>();
 
         if (tmp == null)
             return;
+
         
-        if (!this.dataPanel.IsVisible)
-            this.dataPanel.Toggle();
-        script.SetGhost(handler);
-        Debug.Log(tmp);
+        Debug.Log(tmp.name);
         if (labels != null && labels.Length > 0)
         {
-            Debug.Log("Labels " + sliders.Length);
             labels[0].text = tmp.name;
             labels[1].text = tmp.description;
             labels[11].text = tmp.phRangeLow + ", " + tmp.phRangeHigh;
@@ -150,14 +147,17 @@ public class UIController : MonoBehaviour
         // TMP
         if (sliders != null && sliders.Length > 0)
         {
-            Debug.Log("Sliders " + sliders.Length);
             sliders[0].value = tmp.waterNeed;
             sliders[1].value = tmp.sunNeed;
             sliders[2].value = tmp.rusticity;
         }
-      
-       // icons[4].color = Color.green;
-        
+
+        // icons[4].color = Color.green;
+        if (!this.dataPanel.IsVisible)
+        {
+            this.dataPanel.Toggle();
+       
+        }
     }
 
     public void SetFlowerBedDataPanel(FlowerBed flowerBed)

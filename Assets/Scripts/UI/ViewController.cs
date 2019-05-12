@@ -7,9 +7,12 @@ using TMPro;
 
 public class ViewController : MonoBehaviour
 {
+    // FlowerBed after click define soil type + tutorial world space object
     public UIButton[] buttons;
+    public List<UIButton> dynButtons;
     public Transform view;
     public GameObject plantButton;
+    public UIButtonListener dynamicButtonListener;
     public string plantType;
 
     protected bool isToogle = false;
@@ -36,13 +39,15 @@ public class ViewController : MonoBehaviour
 
     public void ToogleButtons()
     {
-        foreach (UIButton button in buttons)
+        Debug.Log(this.buttons[0].name);
+        Debug.Log(this.buttons[1].name);
+        Debug.Log(this.buttons[2].name);
+        foreach (UIButton button in this.buttons)
         {
-            if (button != null
-                && button.isActiveAndEnabled 
+            if (button.isActiveAndEnabled 
                 && !button.IsSelected
-                && button.GetComponent<LabelScript>() != null
-                && button.GetComponent<LabelScript>().view.IsVisible)
+                && button.GetComponentInChildren<ConstructionMenu>() != null
+                && button.GetComponentInChildren<ConstructionMenu>().state)
                 button.ExecuteClick();
         }
     }
@@ -50,6 +55,24 @@ public class ViewController : MonoBehaviour
     public void ResetButtons()
     {
         foreach(UIButton button in this.buttons)
+        {
+            if (!button.IsSelected && button.IsActive())
+            {
+                LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
+                ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();
+                if (constructionMenu != null)
+                    constructionMenu.ChangeState();
+                foreach (LabelScript labelScript in tmp)
+                {
+                    labelScript.ResetColor();
+                }
+            }
+        }
+    }
+
+    public void ResetDynButtons()
+    {
+        foreach (UIButton button in this.dynButtons)
         {
             if (!button.IsSelected && button.IsActive())
             {
@@ -89,17 +112,12 @@ public class ViewController : MonoBehaviour
             GameObject obj = Instantiate(this.plantButton, view.transform);
             ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
             UIButton btn = obj.GetComponent<UIButton>();
+            Debug.Log("LENGTH " + this.buttons.Length);
+            dynamicButtonListener.GetComponent<ViewController>().dynButtons.Add(btn);
             btn.TextMeshProLabel.text = plant.name;
-            buttonScript.SetGhost(null, plant.name);
-            buttonScript.ghosts[buttonScript.idxObject].SetData(plant);
-            Debug.Log("NAME " + plant.name);
-            Debug.Log("NAME " + plant.phRangeHigh);
-            Debug.Log("NAME " + plant.phRangeLow);
-            Debug.Log("NAME " + plant.sunNeed);
-            Debug.Log("NAME " + plant.waterNeed);
-            Debug.Log("NAME " + plant.rusticity);
+            buttonScript.SetGhost(this.plantType);
+          
             // this.plantButton.GetComponentInChildren<Image>() = plant.imageUrl
-
         }
     }
 }

@@ -1,30 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
     public GhostHandler[] ghosts;
     public int idxObject;
 
-    public void SetGhost(GhostHandler ghost, string ghostName = null)
+    protected string ghostType;
+
+    public void SetGhost(string ghostType)
     {
-        if (ghostName == null)
-        {
-            for (int i = 0; i < ghosts.Length; i++)
-            {
-                if (this.ghosts[i].name == ghost.name || ghost.name == this.ghosts[i].name + "(Clone)")
-                    this.idxObject = i;
-            }
-        }
+        if (ghostType == "Arbre")
+            idxObject = 1;
         else
-        {
-            for (int i = 0; i < ghosts.Length; i++)
-            {
-                if (this.ghosts[i].name == ghostName || ghostName == this.ghosts[i].name + "(Clone)")
-                    this.idxObject = i;
-            }
-        }
+            idxObject = 0;
+        this.ghostType = ghostType;
     }
 
     public void BuildFunction()
@@ -34,6 +26,6 @@ public class ButtonScript : MonoBehaviour
 
     public void SetPanelFunction()
     {
-        Camera.main.GetComponent<UIController>().SetDataPanel(this.ghosts[this.idxObject]);
+        Camera.main.GetComponent<UIController>().SetDataPanel(this.GetComponent<UIButton>().TextMeshProLabel.text, ghostType);
     }
 }
