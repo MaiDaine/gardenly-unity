@@ -7,12 +7,11 @@ using Doozy.Engine.UI;
 
 public class UIController : MonoBehaviour
 {
-    //public Transform gardenMenu;
     public UIView dynamicObjectMenu;
-    //public UIView flowerBedMenu;
     public UIView wallMenu;
     public UIView dataPanel;
     public UIView flowerBedDataPanel;
+    public UIView tutoView;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
@@ -48,11 +47,7 @@ public class UIController : MonoBehaviour
     {
         if (menuOpen)
             this.menu.DestroyMenu();
-
-        //position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
-        //this.previewUI = Instantiate(menuType, position, Quaternion.identity);
-        //canvas = this.previewUI.GetComponent<Canvas>();
-        //canvas.worldCamera = Camera.main;       
+        menuType.Show();
         this.menu = menuType.GetComponent<MenuScript>();
         menuOpen = true;
     }
@@ -61,13 +56,6 @@ public class UIController : MonoBehaviour
     {
         if (flowerBedMenuOpen)
             this.flowerBedMenuScript.DestroyMenu();
-
-        // TODO Vector3.x = middle of flowerbed
-        /*position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
-
-        this.previewUI = Instantiate(menuType, position, Quaternion.identity);
-        canvas = this.previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;*/
         this.flowerBedMenuScript = menuType.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
     }
@@ -82,10 +70,10 @@ public class UIController : MonoBehaviour
 
     public void Cancel()
     {
-        if (menuOpen)
+       /* if (menuOpen)
             this.menu.DestroyMenu();
         if (flowerBedMenuOpen)
-            this.flowerBedMenuScript.DestroyMenu();
+            this.flowerBedMenuScript.DestroyMenu();*/
     }
 
     public Transform GetPreviewUI() { return this.previewUI; }
@@ -147,7 +135,7 @@ public class UIController : MonoBehaviour
             icon.texture = tmp.image;
         if (!this.dataPanel.IsVisible)
         {
-            this.dataPanel.Toggle();
+            this.dataPanel.Show();
         }
     }
 

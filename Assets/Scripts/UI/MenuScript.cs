@@ -38,7 +38,11 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void DestroyMenu()
     {
-        Destroy(this.gameObject);
+        UIController controller = Camera.main.GetComponent<UIController>();
+        if (controller.dynamicObjectMenu.IsVisible)
+            controller.dynamicObjectMenu.Hide();
+        if (controller.wallMenu.IsVisible)
+            controller.wallMenu.Hide();
         this.rotateState = false;
         this.isMoving = false;
         UIController.menuOpen = false;

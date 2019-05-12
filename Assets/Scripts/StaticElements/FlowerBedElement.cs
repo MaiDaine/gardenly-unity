@@ -29,7 +29,8 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         if (state == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this.data.name, "Fleur");
+            if (uIController.dataPanel.IsHidden)
+                uIController.SetDataPanel(this.data.name, "Fleur");
         }
     }
 
@@ -40,6 +41,8 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
       {
           uIController.GetMenuScript().rotateState = false;
           uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+          if (uIController.dataPanel.IsVisible)
+            uIController.dataPanel.Hide();
       }
         // TODO si le menu bloque le ray cast appel destroymenu
         //uIController.GetMenuScript().DestroyMenu();

@@ -61,7 +61,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (menuScript != null)
         {
             menuScript.DestroyMenu();
-            uIController.dataPanel.gameObject.SetActive(false);
+            if (uIController.dataPanel.IsVisible)
+                uIController.dataPanel.Hide();
         }
     }
 
