@@ -16,7 +16,7 @@ public class MenuScript : MonoBehaviour, IMenu
         this.playerController = PlayerController.instance;
     }
 
-    private void LateUpdate()
+   /* private void LateUpdate()
     {
         Quaternion rotation;
         Vector3 relativePos;
@@ -29,7 +29,7 @@ public class MenuScript : MonoBehaviour, IMenu
         rotation = Quaternion.LookRotation(relativePos,Vector3.up);
         this.transform.rotation = rotation;
         
-    }
+    }*/
 
 
     public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
