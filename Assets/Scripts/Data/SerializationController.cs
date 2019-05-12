@@ -48,7 +48,7 @@ public class SerializationController : MonoBehaviour
             foreach (ISerializable item in items)
                 AddItem(CreateItem(item.Serialize()));
         }
-        ErrorHandler.instance.SuccesMessage("Save sucessfull");
+        MessageHandler.instance.SuccesMessage("save_sucessfull");
         ReactProxy.instance.UpdateSaveState(false);
     }
 

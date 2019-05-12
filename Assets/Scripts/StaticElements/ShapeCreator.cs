@@ -46,19 +46,19 @@ public class ShapeCreator : GhostHandler
         if (points.Count == 1)
         {
             if (ConstructionController.instance.lastCastHit.collider.gameObject.tag == "FlowerBed")
-                return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+                return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             CreatePoint();
             return false;
         }
 
         if (CheckIntersectWithOtherObjects(points[points.Count - 2].transform.position, position))
-            return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+            return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
 
         if (this.currentPoint != this.firstPoint
           && Vector2.Distance(new Vector2(this.firstPoint.transform.position.x, this.firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 0.5f)
         {
             if (this.points.Count < 4)
-                return ErrorHandler.instance.ErrorMessage("Place at least 3 points");
+                return MessageHandler.instance.ErrorMessage("shape_creator", "lessthan_3points");
 
             Vector3 tmp = this.currentPoint.transform.position;
             this.currentPoint.transform.position = this.firstPoint.transform.position;
@@ -66,14 +66,14 @@ public class ShapeCreator : GhostHandler
             if (!CheckContainOtherObjects())
             {
                 currentPoint.transform.position = tmp;
-                this.points.Add(currentPoint); 
-                return ErrorHandler.instance.ErrorMessage("Those elements can't overlap");
+                this.points.Add(currentPoint);
+                return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             }
             return true;
         }
 
         if (this.points.Count > 3 && CheckIntersection(new Vector2(position.x, position.z)))
-            return ErrorHandler.instance.ErrorMessage("You can't cross the lines");
+            return MessageHandler.instance.ErrorMessage("shape_creator", "line_cross");
 
         if (this.points.Count > 1 && Vector3.Distance(position, this.points[this.points.Count - 1].transform.position) < 0.1f)
             return false;

@@ -80,7 +80,7 @@ public class ActionHandler : ScriptableObject
                 return action;
         }
         else
-            ErrorHandler.instance.ErrorMessage("No action to cancel");
+            MessageHandler.instance.ErrorMessage("action", "no_cancel");
         return null;
     }
 
@@ -98,7 +98,7 @@ public class ActionHandler : ScriptableObject
                 return action;
         }
         else
-            ErrorHandler.instance.ErrorMessage("No action to revert");
+            MessageHandler.instance.ErrorMessage("action", "no_revert");
         return null;
     }
 

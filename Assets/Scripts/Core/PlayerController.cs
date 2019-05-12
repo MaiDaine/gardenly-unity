@@ -33,15 +33,19 @@ public class PlayerController : MonoBehaviour
         this.constructionController = ConstructionController.instance;
         this.actionHandler.Initialize();
         this.cameraController = Camera.main.GetComponent<CameraController>();
+        if (Application.isEditor)
+            LocalisationController.instance.Init("FR");
     }
 
     private void Update()
     {
         if (!cameraController.inputEnabled)
             return;
-        //Redo - Revert
+
         if (Input.GetKey(KeyCode.Escape))
             this.constructionController.Cancel();
+        
+        //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
         {
             GhostAction currentAction = actionHandler.RedoAction();

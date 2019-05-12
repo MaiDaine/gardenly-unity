@@ -71,7 +71,7 @@ public class SpawnController : MonoBehaviour
                             staticElement = Instantiate(DSElements[3], Vector3.zero, Quaternion.identity);
                             break;
                         default:
-                            ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
+                            MessageHandler.instance.ErrorMessage("loading_error");
                             return;
                     }
                     staticElement.DeSerialize(data[i].data);
@@ -109,7 +109,7 @@ public class SpawnController : MonoBehaviour
                 tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
                 tmp.InnerDeSerialize(elem);
                 return tmp;
-                //ErrorHandler.instance.ErrorMessage("Error while loading, please reload the page");
+                //ErrorHandler.instance.ErrorMessage("loading_error");
                 return null;
         }
         return tmp;
