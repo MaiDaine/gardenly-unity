@@ -148,7 +148,6 @@ public class UIController : MonoBehaviour
         if (!this.dataPanel.IsVisible)
         {
             this.dataPanel.Toggle();
-       
         }
     }
 
@@ -156,19 +155,17 @@ public class UIController : MonoBehaviour
     {
         TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
-        Debug.Log(texts.Length);
-        foreach (TextMeshProUGUI t in texts)
-        {
-            Debug.Log(t.name);
-        }
         SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
         if (!this.flowerBedDataPanel.IsVisible)
              this.flowerBedDataPanel.Toggle();
-        texts[6].text = flowerBed.soilType;
-        texts[3].text = flowerBed.name;
-        texts[6].gameObject.SetActive(false);
-        texts[3].gameObject.SetActive(false);
+        foreach (TextMeshProUGUI txt in texts)
+        {
+            if (txt.name == "Type")
+                txt.text = flowerBed.soilType;
+            if (txt.name == "Name")
+                txt.text = flowerBed.name;
+        }        
         this.flowerBed = flowerBed;
     }
 
@@ -180,17 +177,24 @@ public class UIController : MonoBehaviour
 
     public void UpdateNameFlowerBed(string updateName)
     {
-        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
-
-        texts[4].text = updateName;
+        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI txt in texts)
+        {
+            if (txt.name == "Name")
+                txt.text = updateName;
+        }
+        
         this.flowerBed.name = updateName;
     }
 
     public void UpdateTypeFlowerBed(string updateType)
     {
-        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
-
-        texts[7].text = updateType;
+        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI txt in texts)
+        {
+            if (txt.name == "Type")
+                txt.text = updateType;
+        }
         this.flowerBed.soilType = updateType;
     }
 }

@@ -12,7 +12,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         this.constructionController = ConstructionController.instance;
     }
 
-    private void LateUpdate()
+   /* private void LateUpdate()
     {
         Quaternion rotation;
         Vector3 relativePos;
@@ -20,11 +20,11 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         relativePos = this.transform.position - Camera.main.transform.position;
         rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         this.transform.rotation = rotation;
-    }
+    }*/
 
     public void DestroyMenu()
     {
-        Destroy(this.gameObject);
+      //  Destroy(this.gameObject);
         UIController.flowerBedMenuOpen = false;
     }
 
@@ -41,7 +41,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             DestroyMenu();
-            Destroy(this.flowerBed.gameObject);
+           // Destroy(this.flowerBed.gameObject);
         }
     }
 }

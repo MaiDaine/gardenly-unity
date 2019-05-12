@@ -9,8 +9,8 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
-    public new string name = "PLACEHOLDER";
-    public string soilType = "PLACEHOLDER";
+    public new string name = "Entrer un nom";
+    public string soilType = "Entrer un type de sol";
 
     private ShapeCreator shapeCreator;
     private Vector2[] vertices;
@@ -126,8 +126,10 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
         {
-            uIController.GetFlowerBedMenuScript().DestroyMenu();
-            uIController.flowerBedDataPanel.gameObject.SetActive(false);
+            // uIController.GetFlowerBedMenuScript().DestroyMenu();
+            //uIController.SetFlowerBedDataPanel(this);
+            uIController.flowerBedDataPanel.Hide();
+            //uIController.flowerBedDataPanel.gameObject.SetActive(false);
         }
     }
 

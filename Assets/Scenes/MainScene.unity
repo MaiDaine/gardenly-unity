@@ -15621,12 +15621,12 @@ GameObject:
   - component: {fileID: 704381822}
   - component: {fileID: 704381821}
   m_Layer: 0
-  m_Name: ValidateButton
+  m_Name: ValidateButtonType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &704381820
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16551,7 +16551,7 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 2070130447}
+          - m_Target: {fileID: 773189800}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -16584,7 +16584,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 1348351556}
+          - m_Target: {fileID: 822797165}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -16595,7 +16595,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1180948855}
+          - m_Target: {fileID: 2139155798}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -18748,12 +18748,12 @@ GameObject:
   - component: {fileID: 773189802}
   - component: {fileID: 773189806}
   m_Layer: 0
-  m_Name: DeleteButton
+  m_Name: DeleteButtonType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &773189801
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19661,7 +19661,7 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
+          - m_Target: {fileID: 704381819}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -19694,7 +19694,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 1348351556}
+          - m_Target: {fileID: 822797165}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -19705,7 +19705,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1180948855}
+          - m_Target: {fileID: 2139155798}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -22099,7 +22099,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &822797166
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27896,12 +27896,12 @@ GameObject:
   - component: {fileID: 996473621}
   - component: {fileID: 996473620}
   m_Layer: 0
-  m_Name: ValidateButton
+  m_Name: ValidateButtonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &996473619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40065,7 +40065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1348351557
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41140,12 +41140,12 @@ GameObject:
   - component: {fileID: 1489178808}
   - component: {fileID: 1489178813}
   m_Layer: 0
-  m_Name: EditButton
+  m_Name: EditButtonType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1489178808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42045,7 +42045,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1180948855}
+          - m_Target: {fileID: 2139155798}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -42056,7 +42056,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1348351556}
+          - m_Target: {fileID: 822797165}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -42067,7 +42067,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 0}
+          - m_Target: {fileID: 704381819}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -44424,12 +44424,12 @@ GameObject:
   - component: {fileID: 1511191258}
   - component: {fileID: 1511191262}
   m_Layer: 0
-  m_Name: EditButton
+  m_Name: EditButtonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1511191257
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44446,7 +44446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1.6200027, y: 0}
+  m_AnchoredPosition: {x: 2, y: 0}
   m_SizeDelta: {x: 15.09, y: 12.86}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1511191258
@@ -45370,7 +45370,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 0}
+          - m_Target: {fileID: 996473618}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -61695,12 +61695,12 @@ GameObject:
   - component: {fileID: 2070130449}
   - component: {fileID: 2070130453}
   m_Layer: 0
-  m_Name: DeleteButton
+  m_Name: DeleteButtonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2070130448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -62608,7 +62608,7 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
+          - m_Target: {fileID: 1511191256}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -62617,7 +62617,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 2070130447}
             m_MethodName: SetActive
@@ -62630,7 +62630,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1511191256}
+          - m_Target: {fileID: 996473618}
             m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
@@ -62639,7 +62639,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
-              m_BoolArgument: 1
+              m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1348351556}
             m_MethodName: SetActive
