@@ -15,9 +15,8 @@ MonoBehaviour:
   CategoryName: Gardenly
   DatabaseType: 2
   Names:
-  - BuildMenu
   - ToolBar
-  - ExtendMenu
+  - ToolBar
   - BackGround
   - ToolBarSubMenu
   - SettingsMenu
