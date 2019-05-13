@@ -37,17 +37,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         this.shapeCreator.SelfClear();
         this.shapeCreator.gameObject.SetActive(false);
-        this.GetComponent<MeshCollider>().enabled = true;
-        this.GetComponent<MeshRenderer>().material = this.material;
-        this.GetComponent<MeshRenderer>().enabled = true;
         this.shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
-        Destroy(this.GetComponent<MeshHandler>());
-        this.gameObject.layer = 10;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
-        ConstructionController.instance.flowerbedCount++;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
-        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
-        ConstructionController.instance.flowerBeds.Add(this);
+        Setup();
     }
 
     public void OnShapeFinished()
@@ -76,6 +67,20 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(mesh);
             CreateMesh(true);
         }
+    }
+
+    private void Setup()
+    {
+        this.GetComponent<MeshCollider>().enabled = true;
+        this.GetComponent<MeshRenderer>().material = this.material;
+        this.GetComponent<MeshRenderer>().enabled = true;
+        Destroy(this.GetComponent<MeshHandler>());
+        this.gameObject.layer = 10;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
+        ConstructionController.instance.flowerbedCount++;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
+        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
+        ConstructionController.instance.flowerBeds.Add(this);
     }
 
     public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
@@ -179,5 +184,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
             this.flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
         CreateMesh();
+        Setup();
     }
 }
