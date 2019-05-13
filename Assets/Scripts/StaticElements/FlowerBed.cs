@@ -5,15 +5,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(MeshCollider))]
 public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public new string name = "PLACEHOLDER";
     public string soilType = "PLACEHOLDER";
+    public Vector2[] vertices;
 
     private ShapeCreator shapeCreator;
-    private Vector2[] vertices;
     private List<FlowerBedElement> flowerBedElements = new List<FlowerBedElement>();
 
     public void Init(ShapeCreator shapeCreator)
@@ -28,8 +27,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         this.GetComponent<MeshCollider>().sharedMesh = null;
         this.GetComponent<MeshCollider>().enabled = false;
-        Destroy(this.GetComponent<MeshFilter>().mesh);
+        Destroy(this.GetComponent<MeshCollider>());
         this.GetComponent<MeshFilter>().mesh = null;
+        Destroy(this.GetComponent<MeshFilter>().mesh);
         Destroy(this.GetComponent<MeshHandler>());
     }
 
@@ -59,7 +59,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         MeshHandler meshHandler = this.gameObject.AddComponent<MeshHandler>();
         this.GetComponent<MeshFilter>().mesh = meshHandler.Init(this.vertices);
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
+        this.gameObject.AddComponent<MeshCollider>();
         this.GetComponent<MeshCollider>().sharedMesh = mesh;
+        this.GetComponent<MeshCollider>().enabled = true;
         if (!isFixed && mesh.triangles.Length + 1 < 3 * (vertices.Length - 2))
         {
             System.Array.Reverse(vertices);
@@ -71,7 +73,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     private void Setup()
     {
-        this.GetComponent<MeshCollider>().enabled = true;
         this.GetComponent<MeshRenderer>().material = this.material;
         this.GetComponent<MeshRenderer>().enabled = true;
         Destroy(this.GetComponent<MeshHandler>());
