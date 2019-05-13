@@ -119,11 +119,16 @@ public class ShapeCreator : GhostHandler
         return true;
     }
 
-    public override void OnCancel()
+    public override bool OnCancel()
     {
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
-        foreach (ShapePoint point in points)
-            Destroy(point.gameObject);
+        for (int i = points.Count -1; i >= 0; i--)
+        {
+            Destroy(points[i].gameObject);
+            points.RemoveAt(i);
+        }
+        Destroy(flowerBed.gameObject);
+        return false;
     }
 
     private void DrawLines()

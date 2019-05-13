@@ -20,9 +20,10 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
             this.neighbors[i].RemoveFromNeighbor(this);
     }
 
-    public virtual void OnCancel()
+    public virtual bool OnCancel()
     {
         Camera.main.GetComponent<UIController>().Cancel();
+        return true;
     }
 
     public virtual void Positioning(Vector3 position) { this.transform.position = position; }

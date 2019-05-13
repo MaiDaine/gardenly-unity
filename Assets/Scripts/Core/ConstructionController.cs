@@ -84,8 +84,10 @@ public class ConstructionController : MonoBehaviour
     {
         if (this.ghost != null && this.currentState != ConstructionState.Editing)
         {
-            this.ghost.OnCancel();
-            Destroy(ghost.gameObject);
+            if (this.ghost.OnCancel())
+                Destroy(ghost.gameObject);
+            else
+                ghost.gameObject.SetActive(false);
             this.ghost = null;
             this.gridState = false;
             this.Grid.activ = false;
