@@ -119,11 +119,16 @@ public class ShapeCreator : GhostHandler
         return true;
     }
 
-    public override void OnCancel()
+    public override bool OnCancel()
     {
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
-        foreach (ShapePoint point in points)
-            Destroy(point.gameObject);
+        for (int i = points.Count -1; i >= 0; i--)
+        {
+            Destroy(points[i].gameObject);
+            points.RemoveAt(i);
+        }
+        Destroy(flowerBed.gameObject);
+        return false;
     }
 
     private void DrawLines()
@@ -160,12 +165,32 @@ public class ShapeCreator : GhostHandler
         flowerBed.OnShapeFinished();
         MeshCollider collider = flowerBed.GetComponent<MeshCollider>();
         foreach (FlowerBed fb in ConstructionController.instance.flowerBeds)
-            if (fb.GetComponent<MeshCollider>().bounds.Intersects(collider.bounds))
-            {
-                flowerBed.ActivationCancel();
-                return false;
-            }
+            foreach (Vector2 point in fb.vertices)
+                if (pointInPolygon(flowerBed.vertices, point.x, point.y))
+                {
+                    flowerBed.ActivationCancel();
+                    return false;
+                }
         return true;
+    }
+
+    bool pointInPolygon(Vector2[] pointList, float x, float y)
+    {
+        int polyCorners = pointList.Length;
+        int i, j = polyCorners - 1;
+        bool oddNodes = false;
+
+        for (i = 0; i < polyCorners; i++)
+        {
+            if ((pointList[i].y < y && pointList[j].y >= y || pointList[j].y < y && pointList[i].y >= y) && (pointList[i].x <= x || pointList[j].x <= x))
+            {
+                if (pointList[i].x + (y - pointList[i].y) / (pointList[j].y - pointList[i].y) * (pointList[j].x - pointList[i].x) < x)
+                    oddNodes = !oddNodes;
+            }
+            j = i;
+        }
+
+        return oddNodes;
     }
 
     private bool CheckIntersectWithOtherObjects(Vector3 start, Vector3 end)

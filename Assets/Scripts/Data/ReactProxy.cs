@@ -40,37 +40,14 @@ public class ReactProxy : MonoBehaviour
             Destroy(this);
     }
 
-    public void Test(string test)
-    {
-        PlantData plantData = externalData.plants["Fleur"]["Pétunia"];
-        image.texture = plantData.image;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-            ExportScene();
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-        {
-            if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Abricotier\"}},{\"node\":{\"name\":\"Campanule\"}},{\"node\":{\"name\":\"Capucine\"}},{\"node\":{\"name\":\"Coquelicot\"}},{\"node\":{\"name\":\"Crocus\"}},{\"node\":{\"name\":\"Edelweiss\"}},{\"node\":{\"name\":\"Gardénia\"}},{\"node\":{\"name\":\"Jacinthe\"}},{\"node\":{\"name\":\"Lys\"}},{\"node\":{\"name\":\"Narcisse\"}},{\"node\":{\"name\":\"Œillet\"}},{\"node\":{\"name\":\"Oeillet d'Inde\"}},{\"node\":{\"name\":\"Orchidées\"}},{\"node\":{\"name\":\"Pensée\"}},{\"node\":{\"name\":\"Pétunia\"}},{\"node\":{\"name\":\"Phalaenopsis\"}},{\"node\":{\"name\":\"Pivoine\"}}]}}}");
-            else
-                query(graphQL.GetPlantsOfType("Fleur", externalData.plantsTypes["Fleur"]));
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad9))
-        {
-            if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"blossomingEnd\":[4],\"blossomingStart\":[2],\"color\":[\"Vert\",\"Rose\"],\"createdAt\":\"Sat, 04 May 2019 23:45:58 +0000\",\"groundTypes\":[{\"id\":\"e060619a-7977-4280-ba21-f5673ebb6817\"},{\"id\":\"e09f04bf-57a0-45cc-8e89-00f3657bd287\"},{\"id\":\"f6ddd7f8-329e-4809-a869-40281392823b\"}],\"heightLow\":10000,\"heightHigh\":null,\"id\":\"6bcc1cc7-32dd-4e38-b516-7b70d341707f\",\"periodicities\":[{\"name\":\"Vivace\"}],\"phRangeLow\":7,\"phRangeHigh\":7,\"photo\":\"https://i.ytimg.com/vi/9L0HzzrE-ck/hqdefault.jpg\",\"rusticity\":5,\"shapes\":[{\"name\":\"Arrondi\"}],\"sunNeed\":8,\"thumbnail\":\"https://i.ytimg.com/vi/9L0HzzrE-ck/hqdefault.jpg\",\"type\":{\"name\":\"Fleur\"},\"updatedAt\":\"Sat, 04 May 2019 23:45:59 +0000\"}}}");
-            else
-                query(graphQL.GetPlantData(externalData.plants["Fleur"]["Pétunia"].plantID));
-        }
-    }
-
     //Link To REACT
     public void ExportScene()
     {
         SerializationController.instance.Serialize();
-        save(SerializationController.instance.GetSerializedData());
+        if (Application.isEditor)
+            Debug.Log(SerializationController.instance.GetSerializedData());
+        else
+            save(SerializationController.instance.GetSerializedData());
     }
 
     public void UpdateSaveState(bool state)
