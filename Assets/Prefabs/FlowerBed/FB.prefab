@@ -106,5 +106,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
-  name: PLACEHOLDER
+  name: Entrer un nom
   soilType: PLACEHOLDER

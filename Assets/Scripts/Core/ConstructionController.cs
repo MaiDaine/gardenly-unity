@@ -85,9 +85,9 @@ public class ConstructionController : MonoBehaviour
         if (this.ghost != null && this.currentState != ConstructionState.Editing)
         {
             this.ghost.OnCancel();
-            //Destroy(ghost.gameObject);
+            if (this.currentState != ConstructionState.Off)
+                Destroy(ghost.gameObject);
             this.ghost = null;
-            this.gridState = false;
             this.Grid.activ = false;
             this.currentState = ConstructionState.Off;
         }
@@ -96,8 +96,7 @@ public class ConstructionController : MonoBehaviour
     public void SpawnGhost(GhostHandler GhostRef)
     {
         this.Camera.GetComponent<UIController>().Cancel();
-        if (currentState != ConstructionState.Off)
-            Cancel();
+        Cancel();
         this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
         this.currentState = ConstructionState.Positioning;
         if (this.gridState)

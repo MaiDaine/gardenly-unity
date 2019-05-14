@@ -37,7 +37,7 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    public void ToogleButtons()
+    /*public void ToogleButtons()
     {
         Debug.Log(this.buttons[0].name);
         Debug.Log(this.buttons[1].name);
@@ -50,7 +50,7 @@ public class ViewController : MonoBehaviour
                 && button.GetComponentInChildren<ConstructionMenu>().state)
                 button.ExecuteClick();
         }
-    }
+    }*/
 
     public void ResetButtons()
     {
@@ -88,7 +88,7 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    public void DesactivateButtons()
+   /* public void DesactivateButtons()
     {
         if (startCount == true)
             return;
@@ -103,7 +103,7 @@ public class ViewController : MonoBehaviour
             button.gameObject.SetActive(true); 
         }
         this.isToogle = !this.isToogle;
-    }
+    }*/
 
     public void AddPlants()
     {

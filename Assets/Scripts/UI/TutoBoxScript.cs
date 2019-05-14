@@ -10,15 +10,12 @@ public class TutoBoxScript : MonoBehaviour
     public UIView tutoPanel;
     public Transform content;
     public TextMeshProUGUI tutorialText;
-    public bool isOn;
+    public static bool isOn = true;
 
     public void SetTutorial(string msg)
-    {
-        if (isOn)
-        {
-            tutoPanel.Show();
-            tutorialText.text = msg;
-        }
+    {      
+        tutoPanel.Show();
+        tutorialText.text = msg;
     }
 
     public void SwitchState()

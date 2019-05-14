@@ -45,7 +45,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         uIController = Camera.main.GetComponent<UIController>();
-        if (state == ConstructionController.ConstructionState.Off)
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
             if (this.GetData() != null)

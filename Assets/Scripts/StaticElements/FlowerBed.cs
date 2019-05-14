@@ -104,18 +104,20 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     public void SetTutorial()
     {
-        UIController controller = Camera.main.GetComponent<UIController>();
-        controller.SetFlowerBedDataPanel(this);
-        controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("TTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEE" +
-            "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" +
-            "\n\n\n" + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIIIIIII"
-            + "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" + "\n\n\n" + "ok last one");
+        if (TutoBoxScript.isOn)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("TTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEE" +
+                "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" +
+                "\n\n\n" + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIIIIIII"
+                + "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" + "\n\n\n" + "ok last one");
+        }
     }
     //ISelectable
     public GameObject GetGameObject() { return this.gameObject; }
     public void Select(ConstructionController.ConstructionState state)
     {
-        if (state == ConstructionController.ConstructionState.Off || state == ConstructionController.ConstructionState.Editing)
+        if (state == ConstructionController.ConstructionState.Off)// || state == ConstructionController.ConstructionState.Editing)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
             controller.SetFlowerBedDataPanel(this);
@@ -136,11 +138,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
         {
-            // uIController.GetFlowerBedMenuScript().DestroyMenu();
-            //uIController.SetFlowerBedDataPanel(this);
+            Debug.Log("DESELECT");
             uIController.flowerBedDataPanel.Hide();
             uIController.tutoView.Hide();
-            //uIController.flowerBedDataPanel.gameObject.SetActive(false);
         }
     }
 

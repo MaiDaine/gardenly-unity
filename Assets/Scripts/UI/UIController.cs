@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public FlowerBedPanelScript flowerBedPanelScript;
+    public TextMeshProUGUI gardenName;
 
     protected Transform previewUI = null;
     protected MenuScript menu = null;
@@ -25,23 +26,10 @@ public class UIController : MonoBehaviour
     protected GhostHandler ghost = null;
     protected FlowerBed flowerBed = null;
 
-   /* private void LateUpdate()
+    private void Awake()
     {
-        if (this.menu != null && !this.menu.rotateState && !this.menu.isMoving)
-            DisplayMenu(this.menu);
-        if (flowerBedMenuScript != null)
-            DisplayMenu(this.flowerBedMenuScript);
+        gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
     }
-
-    private void DisplayMenu(IMenu menu)
-    {
-        if (Mathf.Abs(menu.GetGameObject().transform.position.x - Camera.main.transform.position.x) > 40
-           || Mathf.Abs(menu.GetGameObject().transform.position.y - Camera.main.transform.position.y) > 20
-           || Mathf.Abs(menu.GetGameObject().transform.position.z - Camera.main.transform.position.z) > 40)
-            menu.GetGameObject().SetActive(false);
-        else
-            menu.GetGameObject().SetActive(true);
-    }*/
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
     {
@@ -68,12 +56,22 @@ public class UIController : MonoBehaviour
         //redoActionSet.items
     }
 
+    public FlowerBed GetFlowerBed()
+    {
+        return this.flowerBed;
+    }
+
+    public GhostHandler GetGhost()
+    {
+        return this.ghost;
+    }
+
     public void Cancel()
     {
-       /* if (menuOpen)
+        if (menuOpen)
             this.menu.DestroyMenu();
         if (flowerBedMenuOpen)
-            this.flowerBedMenuScript.DestroyMenu();*/
+            this.flowerBedMenuScript.DestroyMenu();
     }
 
     public Transform GetPreviewUI() { return this.previewUI; }
@@ -86,7 +84,7 @@ public class UIController : MonoBehaviour
     {
         if (this.menu != null && this.menu.rotateState)
           return;
-
+        Debug.Log("SPAWN DYN");
         SpawnMenu(ghost, typeMenu);
         this.menu.SetGhostRef(ghost);
     }
@@ -146,11 +144,9 @@ public class UIController : MonoBehaviour
         SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
         if (!this.flowerBedDataPanel.IsVisible)
-             this.flowerBedDataPanel.Toggle();
+             this.flowerBedDataPanel.Show();
         foreach (TextMeshProUGUI txt in texts)
         {
-            if (txt.name == "Type")
-                txt.text = flowerBed.soilType;
             if (txt.name == "Name")
                 txt.text = flowerBed.name;
         }        
@@ -176,13 +172,7 @@ public class UIController : MonoBehaviour
     }
 
     public void UpdateTypeFlowerBed(string updateType)
-    {
-        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-        foreach (TextMeshProUGUI txt in texts)
-        {
-            if (txt.name == "Type")
-                txt.text = updateType;
-        }
+    {        
         this.flowerBed.soilType = updateType;
     }
 }

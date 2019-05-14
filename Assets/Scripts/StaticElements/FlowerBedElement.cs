@@ -26,8 +26,10 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
       UIController uIController = Camera.main.GetComponent<UIController>();
-        if (state == ConstructionController.ConstructionState.Off)
+
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
+            
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
             if (uIController.dataPanel.IsHidden)
                 uIController.SetDataPanel(this.data.name, "Fleur");
