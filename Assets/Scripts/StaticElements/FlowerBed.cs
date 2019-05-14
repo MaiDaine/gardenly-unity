@@ -144,8 +144,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         UIController uIController = Camera.main.GetComponent<UIController>();
         if (uIController.GetFlowerBedMenuScript() != null)
         {
-            Debug.Log("DESELECT");
-            uIController.flowerBedDataPanel.Hide();
+           // uIController.flowerBedDataPanel.Hide();
             uIController.tutoView.Hide();
         }
     }

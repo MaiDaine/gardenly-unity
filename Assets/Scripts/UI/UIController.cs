@@ -140,6 +140,7 @@ public class UIController : MonoBehaviour
     public void SetFlowerBedDataPanel(FlowerBed flowerBed)
     {
         TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        TMP_Dropdown type = this.flowerBedDataPanel.GetComponentInChildren<TMP_Dropdown>();
 
         SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
@@ -149,7 +150,18 @@ public class UIController : MonoBehaviour
         {
             if (txt.name == "Name")
                 txt.text = flowerBed.name;
-        }        
+        }
+        if (flowerBed.soilType != "PLACEHOLDER")
+        {
+            foreach (TMP_Dropdown.OptionData data in type.options)
+            {
+                if (data.text == flowerBed.soilType)
+                { 
+                    Debug.Log("SOIL TYPE" + flowerBed.soilType);
+                    type.value = type.options.IndexOf(data);
+                }
+            }
+        }
         this.flowerBed = flowerBed;
     }
 

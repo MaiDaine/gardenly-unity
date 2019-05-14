@@ -13,7 +13,7 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.nameInputField != null && this.typeDropDown != null)
+        if (this.nameInputField != null && this.typeDropDown != null && Camera.main != null)
             Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
     }
 
@@ -21,18 +21,16 @@ public class FlowerBedPanelScript : MonoBehaviour
     {
         if (this.typeDropDown != null && this.typeDropDown.IsActive())
         {
-            if (this.typeDropDown.IsExpanded)
-            {
-                Camera.main.GetComponentInChildren<CameraController>().inputEnabled = false;
-            }
-           /* else
+            if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null 
+                && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text
+                )
             {
                 ValidateTypeChange();
-            }*/
+            }
         }
     }
 
-    public void SetType()
+    /*public void SetType()
     {
         UIController uIController = Camera.main.GetComponentInChildren<UIController>();
 
@@ -40,7 +38,6 @@ public class FlowerBedPanelScript : MonoBehaviour
         {
             foreach (TMP_Dropdown.OptionData data in this.typeDropDown.options)
             {
-                Debug.Log("SET");
                 if (data.text == uIController.GetFlowerBed().soilType)
                 {
                     this.typeDropDown.value = this.typeDropDown.options.IndexOf(data);
@@ -48,7 +45,7 @@ public class FlowerBedPanelScript : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     public void EnableCameraMovement(bool state)
     {
@@ -62,7 +59,9 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     public void ValidateTypeChange()
     {
+        
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
         Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[this.typeDropDown.value].text);
+        Debug.Log("VALIDATE TYPE " + typeDropDown.options[this.typeDropDown.value].text);
     }
 }
