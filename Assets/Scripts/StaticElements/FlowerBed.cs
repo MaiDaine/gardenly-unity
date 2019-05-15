@@ -78,7 +78,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         Destroy(this.GetComponent<MeshHandler>());
         this.gameObject.layer = 10;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
-        ConstructionController.instance.flowerbedCount++;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
         PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
         ConstructionController.instance.flowerBeds.Add(this);
@@ -95,7 +94,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     private void OnDisable()
     {
-        ConstructionController.instance.flowerbedCount--;
+        ConstructionController.instance.flowerBeds.Remove(this);
         SerializationController.instance.RemoveFromList(this);
         foreach (FlowerBedElement elem in flowerBedElements)
             elem.gameObject.SetActive(false);
