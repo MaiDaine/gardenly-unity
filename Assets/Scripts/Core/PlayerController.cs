@@ -43,7 +43,10 @@ public class PlayerController : MonoBehaviour
             return;
 
         if (Input.GetKey(KeyCode.Escape))
+        {
             this.constructionController.Cancel();
+            Camera.main.GetComponentInChildren<UIController>().Cancel();
+        }
         
         //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
@@ -192,8 +195,8 @@ public class PlayerController : MonoBehaviour
     public void SpawnFlowerBedMesh()
     {
         Camera.main.GetComponent<UIController>().Cancel();
-        SpawnController.instance.SpawnFlowerBed();
         constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        SpawnController.instance.SpawnFlowerBed();
     }
 
     private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }

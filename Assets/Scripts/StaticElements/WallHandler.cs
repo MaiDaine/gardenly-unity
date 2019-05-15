@@ -122,7 +122,7 @@ public class WallHandler : GhostHandler, ISerializable
     {
         MenuScript menuScript = this.uIController.GetMenuScript();
 
-        if (this.text.gameObject != null)
+        if (this.text != null && this.text.gameObject != null)
             this.text.gameObject.SetActive(false);
 
         if (menuScript != null)
@@ -139,6 +139,9 @@ public class WallHandler : GhostHandler, ISerializable
     protected override void OnDisable()
     {
         SerializationController.instance.RemoveFromList(this);
+        if (text != null)
+            GameObject.Destroy(text);
+        DeSelect();
     }
 
     //ISnapable

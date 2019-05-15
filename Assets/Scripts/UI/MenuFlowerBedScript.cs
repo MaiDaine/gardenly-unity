@@ -12,20 +12,13 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         this.constructionController = ConstructionController.instance;
     }
 
-   /* private void LateUpdate()
-    {
-        Quaternion rotation;
-        Vector3 relativePos;
-
-        relativePos = this.transform.position - Camera.main.transform.position;
-        rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        this.transform.rotation = rotation;
-    }*/
-
     public void DestroyMenu()
     {
-      //  Destroy(this.gameObject);
-        UIController.flowerBedMenuOpen = false;
+        UIController uIController = Camera.main.GetComponentInChildren<UIController>();
+
+        if (uIController.flowerBedDataPanel.IsVisible)
+            uIController.flowerBedDataPanel.Hide();
+            UIController.flowerBedMenuOpen = false;
     }
 
     public void SetFlowerBedHandler(FlowerBed handler) { this.flowerBed = handler; }

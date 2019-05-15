@@ -38,14 +38,18 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void DestroyMenu()
     {
-        UIController controller = Camera.main.GetComponent<UIController>();
-        if (controller.dynamicObjectMenu.IsVisible)
-            controller.dynamicObjectMenu.Hide();
-        if (controller.wallMenu.IsVisible)
-            controller.wallMenu.Hide();
-        this.rotateState = false;
-        this.isMoving = false;
-        UIController.menuOpen = false;
+        if (Camera.main != null)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+       
+            if (controller.dynamicObjectMenu.IsVisible)
+                controller.dynamicObjectMenu.Hide();
+            if (controller.wallMenu.IsVisible)
+                controller.wallMenu.Hide();
+            this.rotateState = false;
+            this.isMoving = false;
+            UIController.menuOpen = false;
+        }
     }
 
     public void MoveGhost()
@@ -76,6 +80,7 @@ public class MenuScript : MonoBehaviour, IMenu
         }
         this.rotateState = false;
         this.isMoving = false;
+        GridController.instance.activ = false;
     }
 
     public GameObject GetGameObject() { return this.gameObject; }

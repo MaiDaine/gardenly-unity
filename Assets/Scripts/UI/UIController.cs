@@ -33,8 +33,8 @@ public class UIController : MonoBehaviour
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
     {
-        if (menuOpen)
-            this.menu.DestroyMenu();
+     //   if (menuOpen)
+       //     this.menu.DestroyMenu();
         menuType.Show();
         this.menu = menuType.GetComponent<MenuScript>();
         menuOpen = true;
@@ -42,8 +42,8 @@ public class UIController : MonoBehaviour
 
     private void SpawnFlowerBedMenu(FlowerBed flowerBed, UIView menuType)
     {
-        if (flowerBedMenuOpen)
-            this.flowerBedMenuScript.DestroyMenu();
+     //   if (flowerBedMenuOpen)
+      //      this.flowerBedMenuScript.DestroyMenu();
         this.flowerBedMenuScript = menuType.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
     }
@@ -68,9 +68,9 @@ public class UIController : MonoBehaviour
 
     public void Cancel()
     {
-        if (menuOpen)
+        if (this.menu != null)
             this.menu.DestroyMenu();
-        if (flowerBedMenuOpen)
+        if (this.flowerBedMenuScript)
             this.flowerBedMenuScript.DestroyMenu();
     }
 
@@ -156,10 +156,7 @@ public class UIController : MonoBehaviour
             foreach (TMP_Dropdown.OptionData data in type.options)
             {
                 if (data.text == flowerBed.soilType)
-                { 
-                    Debug.Log("SOIL TYPE" + flowerBed.soilType);
                     type.value = type.options.IndexOf(data);
-                }
             }
         }
         this.flowerBed = flowerBed;

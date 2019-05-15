@@ -22,30 +22,13 @@ public class FlowerBedPanelScript : MonoBehaviour
         if (this.typeDropDown != null && this.typeDropDown.IsActive())
         {
             if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null 
-                && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text
-                )
+                && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text)
             {
                 ValidateTypeChange();
             }
         }
     }
 
-    /*public void SetType()
-    {
-        UIController uIController = Camera.main.GetComponentInChildren<UIController>();
-
-        if (uIController.GetFlowerBed() != null && uIController.GetFlowerBed().soilType != "PLACEHOLDER")
-        {
-            foreach (TMP_Dropdown.OptionData data in this.typeDropDown.options)
-            {
-                if (data.text == uIController.GetFlowerBed().soilType)
-                {
-                    this.typeDropDown.value = this.typeDropDown.options.IndexOf(data);
-                    Debug.Log(this.typeDropDown.options.IndexOf(data) + " " + uIController.GetFlowerBed().soilType);
-                }
-            }
-        }
-    }*/
 
     public void EnableCameraMovement(bool state)
     {
@@ -62,6 +45,5 @@ public class FlowerBedPanelScript : MonoBehaviour
         
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
         Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[this.typeDropDown.value].text);
-        Debug.Log("VALIDATE TYPE " + typeDropDown.options[this.typeDropDown.value].text);
     }
 }

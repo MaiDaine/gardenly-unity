@@ -22,7 +22,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool OnCancel()
     {
-        Camera.main.GetComponent<UIController>().Cancel();
+       // Camera.main.GetComponent<UIController>().Cancel();
         return true;
     }
 
