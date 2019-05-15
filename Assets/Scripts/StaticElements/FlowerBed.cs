@@ -97,7 +97,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         ConstructionController.instance.flowerBeds.Remove(this);
         SerializationController.instance.RemoveFromList(this);
         foreach (FlowerBedElement elem in flowerBedElements)
-            elem.gameObject.SetActive(false);
+            if (elem != null)
+                elem.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
