@@ -9,8 +9,6 @@ public class FlowerBedPanelScript : MonoBehaviour
     public TMP_InputField nameInputField;
     public TMP_Dropdown typeDropDown;
 
-    private bool inputDisable = false;
-
     private void OnDisable()
     {
         if (this.nameInputField != null && this.typeDropDown != null && Camera.main != null)

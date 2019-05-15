@@ -31,23 +31,29 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         {
             
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
+            /*if (!uIController.plantsBtn.IsSelected)
+                uIController.plantsBtn.ExecuteClick();
+            if (!uIController.flowerBtn.IsSelected)
+                uIController.flowerBtn.ExecuteClick();
             if (uIController.dataPanel.IsHidden)
-                uIController.SetDataPanel(this.data.name, "Fleur");
+                uIController.SetDataPanel(this.data.name, "Fleur");*/
         }
     }
 
     public override void DeSelect()
     {
-      UIController uIController = Camera.main.GetComponent<UIController>();
-      if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-      {
-          uIController.GetMenuScript().rotateState = false;
-          uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-          if (uIController.dataPanel.IsVisible)
-            uIController.dataPanel.Hide();
-      }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+        if (Camera.main != null)
+        {
+            UIController uIController = Camera.main.GetComponent<UIController>();
+            if (uIController.GetMenuScript() != null)
+            {
+                uIController.GetMenuScript().rotateState = false;
+                uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+               /* if (uIController.dataPanel.IsVisible)
+                    uIController.dataPanel.Hide();*/
+                uIController.GetMenuScript().DestroyMenu();
+            }
+        }
     }
 
     //Serialization

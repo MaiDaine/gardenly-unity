@@ -13,6 +13,8 @@ public class UIController : MonoBehaviour
     public UIView flowerBedDataPanel;
     public UIView tutoView;
     public UIButton fbBtn;
+    public UIButton plantsBtn;
+    public UIButton flowerBtn;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
@@ -29,24 +31,18 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
-        // TMP
-      
+        gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;      
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
     {
-     //   if (menuOpen)
-       //     this.menu.DestroyMenu();
         menuType.Show();
         this.menu = menuType.GetComponent<MenuScript>();
         menuOpen = true;
     }
 
     private void SpawnFlowerBedMenu(FlowerBed flowerBed, UIView menuType)
-    {
-     //   if (flowerBedMenuOpen)
-      //      this.flowerBedMenuScript.DestroyMenu();
+    { 
         this.flowerBedMenuScript = menuType.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
     }
@@ -65,7 +61,6 @@ public class UIController : MonoBehaviour
 
         foreach(LabelScript script in tmp)
         {
-            Debug.Log("DEBUG");
             script.ResetColor();
         }
     }
@@ -98,7 +93,6 @@ public class UIController : MonoBehaviour
     {
         if (this.menu != null && this.menu.rotateState)
           return;
-        Debug.Log("SPAWN DYN");
         SpawnMenu(ghost, typeMenu);
         this.menu.SetGhostRef(ghost);
     }
@@ -120,13 +114,17 @@ public class UIController : MonoBehaviour
 
     public void SetDataPanel(string plantName, string plantType)
     {
+        if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName)
+        {
+            this.dataPanel.Hide();
+            return;
+        }
         PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         UIButton[] button = this.dataPanel.GetComponentsInChildren<UIButton>();
         ButtonScript script = button[0].GetComponent<ButtonScript>();
-
         if (tmp == null)
             return;
 

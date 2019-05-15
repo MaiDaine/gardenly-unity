@@ -50,7 +50,6 @@ public class ViewController : MonoBehaviour
                     constructionMenu.ChangeState();
                 foreach (LabelScript labelScript in tmp)
                 {
-                    Debug.Log(button.name + " Reset color");
                     labelScript.ResetColor();
                     if (labelScript.view != null && labelScript.view.IsVisible)
                         labelScript.view.Hide();
@@ -71,7 +70,6 @@ public class ViewController : MonoBehaviour
                     constructionMenu.ChangeState();
                 foreach (LabelScript labelScript in tmp)
                 {
-                    Debug.Log(button.name + " Reset color");
                     labelScript.ResetColor();
                     if (labelScript.view != null && labelScript.view.IsVisible)
                         labelScript.view.Hide();
