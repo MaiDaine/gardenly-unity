@@ -15,10 +15,12 @@ MonoBehaviour:
   CategoryName: Gardenly
   DatabaseType: 2
   Names:
-  - ToolBar
-  - ToolBar
   - BackGround
-  - ToolBarSubMenu
-  - SettingsMenu
-  - PlantsDataPanel
   - FlowerBedDataPanel
+  - PlantsDataPanel
+  - PlantsSubView
+  - PlantsToolBarSubMenu
+  - SettingsMenu
+  - ToolBar
+  - ToolBar
+  - ToolBarSubMenu

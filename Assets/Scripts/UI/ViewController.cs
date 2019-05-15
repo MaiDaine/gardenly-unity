@@ -9,6 +9,7 @@ public class ViewController : MonoBehaviour
 {
     // FlowerBed after click define soil type + tutorial world space object
     public UIButton[] buttons;
+    public UIView plantView;
     public List<UIButton> dynButtons;
     public Transform view;
     public GameObject plantButton;
@@ -37,21 +38,6 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    /*public void ToogleButtons()
-    {
-        Debug.Log(this.buttons[0].name);
-        Debug.Log(this.buttons[1].name);
-        Debug.Log(this.buttons[2].name);
-        foreach (UIButton button in this.buttons)
-        {
-            if (button.isActiveAndEnabled 
-                && !button.IsSelected
-                && button.GetComponentInChildren<ConstructionMenu>() != null
-                && button.GetComponentInChildren<ConstructionMenu>().state)
-                button.ExecuteClick();
-        }
-    }*/
-
     public void ResetButtons()
     {
         foreach(UIButton button in this.buttons)
@@ -64,9 +50,12 @@ public class ViewController : MonoBehaviour
                     constructionMenu.ChangeState();
                 foreach (LabelScript labelScript in tmp)
                 {
+                    Debug.Log(button.name + " Reset color");
                     labelScript.ResetColor();
+                    if (labelScript.view != null && labelScript.view.IsVisible)
+                        labelScript.view.Hide();
                 }
-            }
+            }   
         }
     }
 
@@ -82,40 +71,30 @@ public class ViewController : MonoBehaviour
                     constructionMenu.ChangeState();
                 foreach (LabelScript labelScript in tmp)
                 {
+                    Debug.Log(button.name + " Reset color");
                     labelScript.ResetColor();
+                    if (labelScript.view != null && labelScript.view.IsVisible)
+                        labelScript.view.Hide();
                 }
             }
         }
     }
-
-   /* public void DesactivateButtons()
-    {
-        if (startCount == true)
-            return;
-        if (!this.isToogle)
-        {
-            startCount = !startCount;
-            this.isToogle = !this.isToogle;
-            return;
-        }
-        foreach (UIButton button in this.buttons)
-        {        
-            button.gameObject.SetActive(true); 
-        }
-        this.isToogle = !this.isToogle;
-    }*/
-
+ 
     public void AddPlants()
     {
-        foreach (PlantData plant in ReactProxy.instance.externalData.plants[this.plantType].Values)
+        ViewController viewController = dynamicButtonListener.GetComponent<ViewController>();
+        if (viewController.dynButtons.Count == 0)
         {
-            GameObject obj = Instantiate(this.plantButton, view.transform);
-            ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
-            UIButton btn = obj.GetComponent<UIButton>();
-            
-            dynamicButtonListener.GetComponent<ViewController>().dynButtons.Add(btn);
-            btn.TextMeshProLabel.text = plant.name;
-            buttonScript.SetGhost(this.plantType);
+            foreach (PlantData plant in ReactProxy.instance.externalData.plants[this.plantType].Values)
+            {
+                GameObject obj = Instantiate(this.plantButton, view.transform);
+                ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+                UIButton btn = obj.GetComponent<UIButton>();
+
+                viewController.dynButtons.Add(btn);
+                btn.TextMeshProLabel.text = plant.name;
+                buttonScript.SetGhost(this.plantType);
+            }
         }
     }
 }

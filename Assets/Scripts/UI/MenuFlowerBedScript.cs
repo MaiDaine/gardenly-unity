@@ -34,7 +34,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             DestroyMenu();
-           // Destroy(this.flowerBed.gameObject);
+            Destroy(this.flowerBed.gameObject);
         }
     }
 }

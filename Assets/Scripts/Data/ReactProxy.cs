@@ -35,6 +35,8 @@ public class ReactProxy : MonoBehaviour
                 DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"f025e92f-e115-4cbf-902b-f9551118d2a8\"},{\"name\":\"Arbuste\",\"id\":\"3741e754-c514-4715-a219-732bee92e9e7\"},{\"name\":\"Fleur\",\"id\":\"ca9c6046-38bc-4a2a-a698-0030174d8cbc\"},{\"name\":\"Legume\",\"id\":\"18d21ebd-e124-48b9-83ec-38c888257a02\"}]}}");
             else
                 query(graphQL.GetPlantsTypes());
+            this.GetPlantsType();
+            this.GetPlantsData();
         }
         else
             Destroy(this);

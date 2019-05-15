@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     public UIView dataPanel;
     public UIView flowerBedDataPanel;
     public UIView tutoView;
+    public UIButton fbBtn;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
@@ -29,6 +30,8 @@ public class UIController : MonoBehaviour
     private void Awake()
     {
         gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
+        // TMP
+      
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
@@ -54,6 +57,17 @@ public class UIController : MonoBehaviour
         //update visual
         //revertActionSet.items
         //redoActionSet.items
+    }
+
+    public void ResetButton()
+    {
+        LabelScript[] tmp = this.fbBtn.GetComponentsInChildren<LabelScript>();
+
+        foreach(LabelScript script in tmp)
+        {
+            Debug.Log("DEBUG");
+            script.ResetColor();
+        }
     }
 
     public FlowerBed GetFlowerBed()

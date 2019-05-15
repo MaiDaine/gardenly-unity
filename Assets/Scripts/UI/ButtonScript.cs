@@ -16,7 +16,7 @@ public class ButtonScript : MonoBehaviour
         if (ghostType != null)
         {
             RawImage img = this.GetComponentInChildren<RawImage>();
-            if (img != null && img.texture == null)
+            if (img != null && img.texture == null && this.GetComponent<UIButton>() != null)
             {
                 img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
             }

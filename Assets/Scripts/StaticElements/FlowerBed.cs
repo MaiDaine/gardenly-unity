@@ -68,6 +68,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(meshHandler);
             Destroy(mesh);
             CreateMesh(true);
+            Debug.Log("CREATE MESH");
+            Camera.main.GetComponentInChildren<UIController>().ResetButton();
         }
     }
 
