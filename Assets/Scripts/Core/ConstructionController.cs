@@ -81,7 +81,14 @@ public class ConstructionController : MonoBehaviour
     //Ghost Handling functions
     public void Cancel()
     {
-        if (this.ghost != null && this.currentState != ConstructionState.Editing)
+        if (this.currentState == ConstructionState.Off || this.currentState == ConstructionState.Editing)
+        {
+            PlayerController.instance.DeSelect(true);
+            this.ghost = null;
+            return;
+        }
+
+        if (this.ghost != null)
         {
             if (this.ghost.OnCancel())
                 Destroy(ghost.gameObject);
