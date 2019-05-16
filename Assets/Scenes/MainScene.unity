@@ -21578,7 +21578,6 @@ MonoBehaviour:
   currentState: 0
   editionState: 0
   snapDistance: 0.15
-  flowerbedCount: 0
   flowerBeds: []
 --- !u!114 &534669909
 MonoBehaviour:
@@ -21680,8 +21679,13 @@ MonoBehaviour:
   flowerBedDataPanel: {fileID: 1498750255}
   tutoView: {fileID: 2141465984}
   fbBtn: {fileID: 424425214353298864}
-  plantsBtn: {fileID: 424425213468452085}
-  flowerBtn: {fileID: 424425213414470437}
+  plantsViews:
+  - {fileID: 697912037}
+  - {fileID: 279882602}
+  - {fileID: 2041964100}
+  - {fileID: 985670293}
+  - {fileID: 1418433526}
+  uIButtonListener: {fileID: 538496935}
   revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
   redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
   flowerBedPanelScript: {fileID: 0}
@@ -55029,6 +55033,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178235849840969, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 8.98
+      objectReference: {fileID: 0}
     - target: {fileID: 4382178236768059297, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -55137,7 +55146,7 @@ PrefabInstance:
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: ShowBehavior.Animation.Scale.Duration
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
@@ -55342,7 +55351,7 @@ PrefabInstance:
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: HideBehavior.Animation.Move.Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
@@ -55357,7 +55366,7 @@ PrefabInstance:
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: HideBehavior.Animation.Move.Duration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
@@ -55372,7 +55381,7 @@ PrefabInstance:
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: HideBehavior.Animation.Scale.Duration
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4121712406277074455, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
@@ -63972,7 +63981,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         StartDelay: 0
-        Duration: 0.3
+        Duration: 0
       Fade:
         AnimationType: 2
         Enabled: 0
@@ -64418,7 +64427,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         StartDelay: 0
-        Duration: 0.3
+        Duration: 0
       Fade:
         AnimationType: 1
         Enabled: 0
@@ -69840,13 +69849,12 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 534669908}
-            m_MethodName: SpawnGhost
-            m_Mode: 2
+          - m_Target: {fileID: 1839922010}
+            m_MethodName: BuildFunction
+            m_Mode: 1
             m_Arguments:
-              m_ObjectArgument: {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1,
-                type: 3}
-              m_ObjectArgumentAssemblyTypeName: GhostHandler, Assembly-CSharp
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -71162,6 +71170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf37566d074774e45ad16d4901eb18e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantName: {fileID: 505484905}
   ghosts:
   - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
   - {fileID: 1523221669236193997, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}

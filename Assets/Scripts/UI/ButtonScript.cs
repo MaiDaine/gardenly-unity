@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Doozy.Engine.UI;
+using TMPro;
 
 public class ButtonScript : MonoBehaviour
 {
+    public TextMeshProUGUI plantName;
     public GhostHandler[] ghosts;
     public int idxObject;
 
@@ -34,6 +36,7 @@ public class ButtonScript : MonoBehaviour
 
     public void BuildFunction()
     {
+        this.ghosts[this.idxObject].SetData(ReactProxy.instance.externalData.plants[this.ghostType][this.plantName.text]);
         ConstructionController.instance.SpawnGhost(this.ghosts[this.idxObject]);
     }
 

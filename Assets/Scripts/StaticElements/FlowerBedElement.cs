@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.UI;
+using TMPro;
 
 public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
@@ -31,12 +33,13 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         {
             
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            /*if (!uIController.plantsBtn.IsSelected)
-                uIController.plantsBtn.ExecuteClick();
-            if (!uIController.flowerBtn.IsSelected)
-                uIController.flowerBtn.ExecuteClick();
-            if (uIController.dataPanel.IsHidden)
-                uIController.SetDataPanel(this.data.name, "Fleur");*/
+
+            if (!uIController.PlantsViewsDisplay())
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -113.9f, 0);
+            else
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+            if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
+                    uIController.SetDataPanel(this.data.name, "Fleur");
         }
     }
 
@@ -47,8 +50,12 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
             {
-                uIController.GetMenuScript().rotateState = false;
                 uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+               /* foreach (UIView view in uIController.plantsViews)
+                {
+                    if (view.IsVisible)
+                        view.Hide();
+                }*/
                /* if (uIController.dataPanel.IsVisible)
                     uIController.dataPanel.Hide();*/
                 uIController.GetMenuScript().DestroyMenu();

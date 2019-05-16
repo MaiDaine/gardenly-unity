@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Doozy.Engine.UI;
 
 public class MenuScript : MonoBehaviour, IMenu
 {
@@ -46,6 +47,14 @@ public class MenuScript : MonoBehaviour, IMenu
                 controller.dynamicObjectMenu.Hide();
             if (controller.wallMenu.IsVisible)
                 controller.wallMenu.Hide();
+            foreach (UIView view in controller.plantsViews)
+            {
+                if (view.IsVisible)
+                    view.Hide();
+            }
+            controller.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+            if (controller.dataPanel.IsVisible)
+                controller.dataPanel.Hide();
             this.rotateState = false;
             this.isMoving = false;
             UIController.menuOpen = false;

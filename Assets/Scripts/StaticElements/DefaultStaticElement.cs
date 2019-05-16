@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.UI;
+using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
@@ -50,7 +52,13 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
             if (this.GetData() != null)
             {
-                uIController.SetDataPanel(this.data.name, "Arbre");
+                if (!uIController.PlantsViewsDisplay())
+                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -113.9f, 0);
+                else
+                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+                if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
+                    uIController.SetDataPanel(this.data.name, "Arbre");
+
             }
         }
     }
@@ -60,9 +68,15 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         MenuScript menuScript = uIController.GetMenuScript();
         if (menuScript != null)
         {
+            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
             menuScript.DestroyMenu();
-            if (uIController.dataPanel.IsVisible)
-                uIController.dataPanel.Hide();
+            /*foreach (UIView view in uIController.plantsViews)
+            {
+                if (view.IsVisible)
+                    view.Hide();
+            }*/
+           /* if (uIController.dataPanel.IsVisible)
+                uIController.dataPanel.Hide();*/
         }
     }
 

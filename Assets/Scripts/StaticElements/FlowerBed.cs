@@ -115,10 +115,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (TutoBoxScript.isOn)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
-            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("TTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEE" +
-                "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" +
-                "\n\n\n" + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIIIIIII"
-                + "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" + "\n\n\n" + "ok last one");
+            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("");
         }
     }
     //ISelectable

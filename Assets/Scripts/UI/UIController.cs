@@ -13,8 +13,8 @@ public class UIController : MonoBehaviour
     public UIView flowerBedDataPanel;
     public UIView tutoView;
     public UIButton fbBtn;
-    public UIButton plantsBtn;
-    public UIButton flowerBtn;
+    public UIView[] plantsViews;
+    public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
@@ -63,6 +63,16 @@ public class UIController : MonoBehaviour
         {
             script.ResetColor();
         }
+    }
+
+    public bool PlantsViewsDisplay()
+    {
+        foreach (UIView view in plantsViews)
+        {
+            if (view.IsVisible)
+                return true;
+        }
+        return false;
     }
 
     public FlowerBed GetFlowerBed()
@@ -114,20 +124,23 @@ public class UIController : MonoBehaviour
 
     public void SetDataPanel(string plantName, string plantType)
     {
-        if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName)
+        if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName && this.dataPanel.IsVisible)
         {
             this.dataPanel.Hide();
             return;
         }
+        if (this.PlantsViewsDisplay())
+            this.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+
         PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
-        UIButton[] button = this.dataPanel.GetComponentsInChildren<UIButton>();
-        ButtonScript script = button[0].GetComponent<ButtonScript>();
+        ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
+
+        Debug.Log(script.Length);
         if (tmp == null)
             return;
-
         if (labels != null && labels.Length > 0)
         {
             labels[0].text = tmp.name;
@@ -143,6 +156,8 @@ public class UIController : MonoBehaviour
         }
         if (icon != null)
             icon.texture = tmp.image;
+        if (script[0] != null)
+            script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)
         {
             this.dataPanel.Show();

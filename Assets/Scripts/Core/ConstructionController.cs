@@ -109,6 +109,7 @@ public class ConstructionController : MonoBehaviour
         Cancel();
         this.currentState = ConstructionState.Positioning;
         this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+        this.ghost.SetData(GhostRef.GetData());
         if (this.gridState)
             this.Grid.activ = true;
     }
