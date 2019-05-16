@@ -1,8 +1,4 @@
 {
-  "succes": {
-    "save_sucessfull": "Sauvegarde réussite"
-  },
-
   "errors": {
     "action": {
       "no_cancel": "Pas d'action à annuler",
@@ -18,5 +14,9 @@
       "line_cross": "Vous ne pouvez pas croiser les lignes"
     },
     "loading_error": "Erreur lors du chargement, veuillez recharger la page"
+  },
+
+  "succes": {
+    "save_sucessfull": "Sauvegarde réussite"
   }
 }

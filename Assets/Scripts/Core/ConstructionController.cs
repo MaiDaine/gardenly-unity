@@ -11,7 +11,6 @@ public class ConstructionController : MonoBehaviour
     public ConstructionState currentState = ConstructionState.Off;
     public EditionType editionState = EditionType.Off;
     public float snapDistance = 0.15f;
-    public int flowerbedCount = 0;
     public RaycastHit lastCastHit;
     public List<FlowerBed> flowerBeds = new List<FlowerBed>();
 
@@ -82,7 +81,14 @@ public class ConstructionController : MonoBehaviour
     //Ghost Handling functions
     public void Cancel()
     {
-        if (this.ghost != null && this.currentState != ConstructionState.Editing)
+        if (this.currentState == ConstructionState.Off || this.currentState == ConstructionState.Editing)
+        {
+            PlayerController.instance.DeSelect(true);
+            this.ghost = null;
+            return;
+        }
+
+        if (this.ghost != null)
         {
             if (this.currentState != ConstructionState.Off)
             {

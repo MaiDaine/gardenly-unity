@@ -1,8 +1,4 @@
 {
-  "succes": {
-    "save_sucessfull": "Save sucessfull"
-  },
-
   "errors": {
     "action": {
       "no_cancel": "No action to cancel",
@@ -18,5 +14,9 @@
       "line_cross": "You can't cross the lines"
     },
     "loading_error": "Error while loading, please reload the page"
+  },
+
+  "succes": {
+    "save_sucessfull": "Save sucessfull"
   }
 }

@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void DeSelect(bool forced = false)
+    public void DeSelect(bool forced = false)
     {
         if (this.selectionList.Count > 0 && (!Input.GetKey(KeyCode.LeftShift)) || forced)
         {
