@@ -33,13 +33,13 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         camera = GetComponent<Camera>();
-        this.lowerPlaneBound = new Vector2(
-            this.plane.transform.position.x - (5f * this.plane.transform.localScale.x),
-            this.plane.transform.position.z - (5f * this.plane.transform.localScale.z)
+        lowerPlaneBound = new Vector2(
+            plane.transform.position.x - (5f * plane.transform.localScale.x),
+            plane.transform.position.z - (5f * plane.transform.localScale.z)
             );
-        this.upperPlaneBound = new Vector2(
-            this.plane.transform.position.x + (5f * this.plane.transform.localScale.x),
-            this.plane.transform.position.z + (5f * this.plane.transform.localScale.z)
+        upperPlaneBound = new Vector2(
+            plane.transform.position.x + (5f * plane.transform.localScale.x),
+            plane.transform.position.z + (5f * plane.transform.localScale.z)
             );
         if (Screen.width == 0f || Screen.height == 0f)
             aspect = 1.7f;
@@ -52,34 +52,34 @@ public class CameraController : MonoBehaviour
     public void ChangeViewMod()
     {
         changeMod = false;
-        if (!this.camera.orthographic)
+        if (!camera.orthographic)
         {
-            this.transform.eulerAngles = new Vector3(90f, 0f, -this.transform.eulerAngles.y);
-            float tmp = this.transform.position.y * To2D;
-            this.camera.orthographic = true;
-            this.camera.projectionMatrix = Matrix4x4.Ortho(-tmp * this.aspect, tmp * this.aspect, -tmp, tmp, this.near, this.far);
-            this.camera.orthographicSize = tmp;
-            this.transform.position = new Vector3(
-                this.transform.position.x,
+            transform.eulerAngles = new Vector3(90f, 0f, -transform.eulerAngles.y);
+            float tmp = transform.position.y * To2D;
+            camera.orthographic = true;
+            camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+            camera.orthographicSize = tmp;
+            transform.position = new Vector3(
+                transform.position.x,
                 maxAltitude,
-                this.transform.position.z);
+                transform.position.z);
         }
         else
         {
-            this.transform.eulerAngles = new Vector3(89f, this.transform.eulerAngles.y, 0f);
-            this.camera.orthographic = false;
-            this.camera.projectionMatrix = this.perspective;
-            this.transform.position = new Vector3(
-                this.transform.position.x,
-                this.camera.orthographicSize * From2D,
-                this.transform.position.z);
+            transform.eulerAngles = new Vector3(89f, transform.eulerAngles.y, 0f);
+            camera.orthographic = false;
+            camera.projectionMatrix = perspective;
+            transform.position = new Vector3(
+                transform.position.x,
+                camera.orthographicSize * From2D,
+                transform.position.z);
         }
     }
 
     private void Update()
     {
-        Vector3 currentPos = this.transform.position;
-        Quaternion currentRot = this.transform.rotation;
+        Vector3 currentPos = transform.position;
+        Quaternion currentRot = transform.rotation;
 
         if (!inputEnabled)
             return;
@@ -92,7 +92,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0f)
             currentPos = MoveRight(currentPos, Input.GetAxis("Horizontal"));
 
-        if (!this.camera.orthographic)
+        if (!camera.orthographic)
         {
             if (Input.GetMouseButton(1))
             {
@@ -110,8 +110,8 @@ public class CameraController : MonoBehaviour
                 Zoom2D(Input.GetAxis("Mouse ScrollWheel"));
         }
 
-        this.transform.position = currentPos;
-        this.transform.rotation = currentRot;
+        transform.position = currentPos;
+        transform.rotation = currentRot;
 
         if (changeMod)
             ChangeViewMod();
@@ -158,9 +158,9 @@ public class CameraController : MonoBehaviour
 
     private void Zoom2D(float axisInput)
     {
-        float tmp = this.camera.orthographicSize - axisInput * To2D;
-        this.camera.projectionMatrix = Matrix4x4.Ortho(-tmp * this.aspect, tmp * this.aspect, -tmp, tmp, this.near, this.far);
-        this.camera.orthographicSize = tmp;
+        float tmp = camera.orthographicSize - axisInput * To2D;
+        camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+        camera.orthographicSize = tmp;
     }
 
     private Quaternion RotateYaw(Quaternion currentRotation, float axisInput)
