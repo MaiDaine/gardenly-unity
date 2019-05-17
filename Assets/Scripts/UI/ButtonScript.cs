@@ -10,6 +10,7 @@ public class ButtonScript : MonoBehaviour
     public TextMeshProUGUI plantName;
     public GhostHandler[] ghosts;
     public int idxObject;
+    public Texture refTexture;
 
     protected string ghostType;
 
@@ -18,7 +19,8 @@ public class ButtonScript : MonoBehaviour
         if (ghostType != null)
         {
             RawImage img = this.GetComponentInChildren<RawImage>();
-            if (img != null && img.texture == null && this.GetComponent<UIButton>() != null)
+
+            if (img != null && img.texture == refTexture && this.GetComponent<UIButton>() != null && ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image != null)
             {
                 img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
             }

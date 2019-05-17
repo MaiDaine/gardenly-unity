@@ -34,8 +34,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
             RectTransform menuTransform = uIController.extendMenu.RectTransform;
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-
-            Debug.Log(uIController.extendMenu.RectTransform.sizeDelta.x + uIController.plantsViews[0].RectTransform.sizeDelta.x);
+            Debug.Log("IN SEELCT" + uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text + " " + this.data.name);
             if (!uIController.PlantsViewsDisplay())
                 uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -115.1f, 0);
             else

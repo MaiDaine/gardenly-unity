@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public ActionRuntimeSet redoActionSet;
     public FlowerBedPanelScript flowerBedPanelScript;
     public TextMeshProUGUI gardenName;
+    public Texture2D textureRef;
 
     protected Transform previewUI = null;
     protected MenuScript menu = null;
@@ -66,6 +67,18 @@ public class UIController : MonoBehaviour
                 {
                     script.ResetColor();
                 }
+            }
+        }
+    }
+
+    public void ForceResetButton()
+    {
+        foreach (UIButton btn in this.tmpBtn)
+        {
+            LabelScript[] tmp = btn.GetComponentsInChildren<LabelScript>();
+            foreach (LabelScript script in tmp)
+            {
+                script.ResetColor();
             }
         }
     }
@@ -139,7 +152,6 @@ public class UIController : MonoBehaviour
             this.dataPanel.Hide();
             return;
         }
-        Debug.Log(this.extendMenu.RectTransform.sizeDelta.x + this.plantsViews[0].RectTransform.sizeDelta.x);
 
         if (this.PlantsViewsDisplay())
             this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -115.1f, 0);
@@ -150,7 +162,6 @@ public class UIController : MonoBehaviour
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
 
-        Debug.Log(script.Length);
         if (tmp == null)
             return;
         if (labels != null && labels.Length > 0)
@@ -159,15 +170,18 @@ public class UIController : MonoBehaviour
             labels[1].text = tmp.description;
             labels[11].text = tmp.phRangeLow + ", " + tmp.phRangeHigh;
         }
-        // TMP
         if (sliders != null && sliders.Length > 0)
         {
             sliders[0].value = tmp.waterNeed;
             sliders[1].value = tmp.sunNeed;
             sliders[2].value = tmp.rusticity;
         }
-        if (icon != null)
+        if (icon != null && tmp.image != null)
+        {
             icon.texture = tmp.image;
+        }
+        if (tmp.image == null)
+            icon.texture = this.textureRef;
         if (script[0] != null)
             script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)
@@ -216,7 +230,7 @@ public class UIController : MonoBehaviour
                 txt.text = updateName;
         }
         
-        this.flowerBed.name = updateName;
+        this.flowerBed.flowerBedName = updateName;
     }
 
     public void UpdateTypeFlowerBed(string updateType)

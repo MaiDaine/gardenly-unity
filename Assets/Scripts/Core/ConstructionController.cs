@@ -107,7 +107,7 @@ public class ConstructionController : MonoBehaviour
     {
         if (this.currentState == ConstructionState.Off)
         {
-            this.Camera.GetComponent<UIController>().Cancel();
+            this.Camera.GetComponent<UIController>().Cancel(true);
             Cancel();
             this.currentState = ConstructionState.Positioning;
             this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);

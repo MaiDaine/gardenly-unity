@@ -41,6 +41,7 @@ public class MenuScript : MonoBehaviour, IMenu
     {
         if (Camera.main != null)
         {
+            Debug.Log("DESTROY ");
             UIController controller = Camera.main.GetComponent<UIController>();
        
             if (controller.dynamicObjectMenu.IsVisible)
