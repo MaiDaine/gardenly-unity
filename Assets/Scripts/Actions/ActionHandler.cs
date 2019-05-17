@@ -27,7 +27,7 @@ public class ActionHandler : ScriptableObject
     {
         constructionController.currentState = ConstructionController.ConstructionState.Editing;
         redoActionSet.ClearSet();
-
+        currentSelection.GetGameObject().GetComponent<GhostHandler>().StartAction();
         switch (type)
         {
             case ConstructionController.EditionType.Position:
@@ -54,6 +54,8 @@ public class ActionHandler : ScriptableObject
 
     public void ActionComplete(bool updateState)
     {
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Editing)
+            PlayerController.instance.currentSelection.GetGameObject().GetComponent<GhostHandler>().EndAction();
         this.currentAction.Complete();
         revertActionSet.Add(currentAction);
         this.currentAction = null;
