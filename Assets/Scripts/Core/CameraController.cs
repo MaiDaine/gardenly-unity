@@ -7,18 +7,17 @@ public class CameraController : MonoBehaviour
     public GameObject plane;
     public bool inputEnabled = true;
 
-    public const float cameraMoveSpeed = 20f;
-    public const float cameraRotateSpeed = 100f;
-    public const float cameraZoomSpeed = 250f;
-    public const bool canMoveCameraWithMouse = false;
-    public const float moveBorderThickness = 10f;
-    public const float mousePitchDirection = -1f; //Inverse Pitch
-    public const float minAltitude = 0.5f;
-    public const float maxAltitude = 100f;
-    public const float minAltitude2D = 0.5f;
-    public const float maxAltitude2D = 58f;
+    private const float cameraBaseMoveSpeed = 10f;
+    private const float cameraRotateSpeed = 100f;
+    private const float cameraZoomSpeed = 250f;
+    private const float mousePitchDirection = -1f; //Inverse Pitch
+    private const float minAltitude = 0.5f;
+    private const float maxAltitude = 100f;
+    private const float minAltitude2D = 0.5f;
+    private const float maxAltitude2D = 58f;
 
     private Camera camera;
+    private float cameraMoveSpeed = cameraBaseMoveSpeed;
     private Vector2 lowerPlaneBound;
     private Vector2 upperPlaneBound;
     private bool changeMod = false;
@@ -47,6 +46,7 @@ public class CameraController : MonoBehaviour
         else
             aspect = (float)Screen.width / (float)Screen.height;
         perspective = Matrix4x4.Perspective(fov, aspect, near, far);
+        cameraMoveSpeed = cameraBaseMoveSpeed + cameraBaseMoveSpeed * transform.position.y * 10f / maxAltitude;
     }
 
     public void ChangeViewMod()
@@ -86,35 +86,21 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad5))//TODO UI BUTTON
             changeMod = true;
 
+        if (Input.GetAxis("Vertical") != 0f)
+            currentPos = MoveForward(currentPos, Input.GetAxis("Vertical"));
 
-        if ((!Input.GetKey(KeyCode.LeftControl) && Input.GetKey("z")) || (canMoveCameraWithMouse && Input.mousePosition.y >= Screen.height - moveBorderThickness))
-            currentPos = MoveForward(currentPos, 1f);
-        if (Input.GetKey("s") || (canMoveCameraWithMouse && Input.mousePosition.y <= moveBorderThickness))
-            currentPos = MoveForward(currentPos, -1f);
-
-        if (Input.GetKey("d") || (canMoveCameraWithMouse && Input.mousePosition.x >= Screen.width - moveBorderThickness))
-            currentPos = MoveRight(currentPos, 1f);
-        if (Input.GetKey("q") || (canMoveCameraWithMouse && Input.mousePosition.x <= moveBorderThickness))
-            currentPos = MoveRight(currentPos, -1f);
-
-        if (Input.GetKey("e"))
-            currentRot = RotateYaw(currentRot, 1f);
-        if (Input.GetKey("a"))
-            currentRot = RotateYaw(currentRot, -1f);
+        if (Input.GetAxis("Horizontal") != 0f)
+            currentPos = MoveRight(currentPos, Input.GetAxis("Horizontal"));
 
         if (!this.camera.orthographic)
         {
-            if (Input.GetKey("r"))
-                currentRot = RotatePitch(currentRot, -1f);
-            if (Input.GetKey("f"))
-                currentRot = RotatePitch(currentRot, 1f);
             if (Input.GetMouseButton(1))
             {
                 currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
                 currentRot = RotatePitch(currentRot, mousePitchDirection * Input.GetAxis("Mouse Y"));
             }
-
-            currentPos = Zoom3D(currentPos, -Input.GetAxis("Mouse ScrollWheel"));
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+                currentPos = Zoom3D(currentPos, -Input.GetAxis("Mouse ScrollWheel"));
         }
         else
         {
@@ -134,7 +120,7 @@ public class CameraController : MonoBehaviour
     private Vector3 MoveForward(Vector3 currentPos, float axisInput)
     {
         Vector3 newPos = currentPos;
-        Vector3 step = (transform.forward + transform.up) * axisInput * cameraMoveSpeed * Time.deltaTime;
+        Vector3 step = ((transform.forward + transform.up) / 2f) * axisInput * cameraMoveSpeed * Time.deltaTime;
 
         newPos.x += step.x;
         if (newPos.x < lowerPlaneBound.x || newPos.x > upperPlaneBound.x)
@@ -166,6 +152,7 @@ public class CameraController : MonoBehaviour
         float tmp = currentPos.y + (axisInput * cameraZoomSpeed * Time.deltaTime);
         if ((axisInput <= 0 && tmp > minAltitude) || (axisInput > 0 && tmp < maxAltitude))
             currentPos.y = tmp;
+        cameraMoveSpeed = cameraBaseMoveSpeed + cameraBaseMoveSpeed * currentPos.y * 10f / maxAltitude;
         return currentPos;
     }
 
