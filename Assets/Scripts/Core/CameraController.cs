@@ -4,73 +4,123 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float cameraMoveSpeed = 20f;
-    public float cameraRotateSpeed = 100f;
-    public float cameraZoomSpeed = 250f;
-    public bool canMoveCameraWithMouse = true;
-    public bool inputEnabled = true;
-    public float moveBorderThickness = 10f;
-    public float mousePitchDirection = -1f; //Inverse Pitch
-    public float minAltitude = 0.5f;
-    public float maxAltitude = 100f;
     public GameObject plane;
+    public bool inputEnabled = true;
 
+    private const float cameraBaseMoveSpeed = 10f;
+    private const float cameraRotateSpeed = 100f;
+    private const float cameraZoomSpeed = 250f;
+    private const float mousePitchDirection = -1f; //Inverse Pitch
+    private const float minAltitude = 0.5f;
+    private const float maxAltitude = 100f;
+    private const float minAltitude2D = 0.5f;
+    private const float maxAltitude2D = 58f;
+
+    private Camera camera;
+    private float cameraMoveSpeed = cameraBaseMoveSpeed;
     private Vector2 lowerPlaneBound;
     private Vector2 upperPlaneBound;
+    private bool changeMod = false;
+
+    private Matrix4x4 perspective;
+    private float aspect;
+    private float far = 1000f;
+    private float near = .3f;
+    private const float fov = 60f;
+    private const float To2D = ((maxAltitude2D - minAltitude2D) / (maxAltitude - minAltitude));
+    private const float From2D = ((maxAltitude - minAltitude) / (maxAltitude2D - minAltitude2D));
 
     private void Start()
     {
+        camera = GetComponent<Camera>();
         lowerPlaneBound = new Vector2(
-            plane.transform.position.x - (5f * plane.transform.localScale.x), 
+            plane.transform.position.x - (5f * plane.transform.localScale.x),
             plane.transform.position.z - (5f * plane.transform.localScale.z)
             );
         upperPlaneBound = new Vector2(
             plane.transform.position.x + (5f * plane.transform.localScale.x),
             plane.transform.position.z + (5f * plane.transform.localScale.z)
             );
+        if (Screen.width == 0f || Screen.height == 0f)
+            aspect = 1.7f;
+        else
+            aspect = (float)Screen.width / (float)Screen.height;
+        perspective = Matrix4x4.Perspective(fov, aspect, near, far);
+        cameraMoveSpeed = cameraBaseMoveSpeed + cameraBaseMoveSpeed * transform.position.y * 10f / maxAltitude;
     }
 
-    void Update()
+    public void ChangeViewMod()
+    {
+        changeMod = false;
+        if (!camera.orthographic)
+        {
+            transform.eulerAngles = new Vector3(90f, 0f, -transform.eulerAngles.y);
+            float tmp = transform.position.y * To2D;
+            camera.orthographic = true;
+            camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+            camera.orthographicSize = tmp;
+            transform.position = new Vector3(
+                transform.position.x,
+                maxAltitude,
+                transform.position.z);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(89f, transform.eulerAngles.y, 0f);
+            camera.orthographic = false;
+            camera.projectionMatrix = perspective;
+            transform.position = new Vector3(
+                transform.position.x,
+                camera.orthographicSize * From2D,
+                transform.position.z);
+        }
+    }
+
+    private void Update()
     {
         Vector3 currentPos = transform.position;
         Quaternion currentRot = transform.rotation;
 
         if (!inputEnabled)
             return;
+        if (Input.GetKeyDown(KeyCode.Keypad5))//TODO UI BUTTON
+            changeMod = true;
 
-        if ((!Input.GetKey(KeyCode.LeftControl) && Input.GetKey("z")) || (canMoveCameraWithMouse && Input.mousePosition.y >= Screen.height - moveBorderThickness))
-            currentPos = MoveForward(currentPos, 1f);
-        if (Input.GetKey("s") || (canMoveCameraWithMouse && Input.mousePosition.y <= moveBorderThickness))
-            currentPos = MoveForward(currentPos, -1f);
-        if (Input.GetKey("d") || (canMoveCameraWithMouse && Input.mousePosition.x >= Screen.width - moveBorderThickness))
-            currentPos = MoveRight(currentPos, 1f);
-        if (Input.GetKey("q") || (canMoveCameraWithMouse && Input.mousePosition.x <= moveBorderThickness))
-            currentPos = MoveRight(currentPos, -1f);
+        if (Input.GetAxis("Vertical") != 0f)
+            currentPos = MoveForward(currentPos, Input.GetAxis("Vertical"));
 
-        if (Input.GetKey("e"))
-            currentRot = RotateYaw(currentRot, 1f);
-        if (Input.GetKey("a"))
-            currentRot = RotateYaw(currentRot, -1f);
-        if (Input.GetKey("f"))
-            currentRot = RotatePitch(currentRot, 1f);
-        if (Input.GetKey("r"))
-            currentRot = RotatePitch(currentRot, -1f);
-        if (Input.GetMouseButton(1))
+        if (Input.GetAxis("Horizontal") != 0f)
+            currentPos = MoveRight(currentPos, Input.GetAxis("Horizontal"));
+
+        if (!camera.orthographic)
         {
-            currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
-            currentRot = RotatePitch(currentRot, mousePitchDirection * Input.GetAxis("Mouse Y"));
+            if (Input.GetMouseButton(1))
+            {
+                currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
+                currentRot = RotatePitch(currentRot, mousePitchDirection * Input.GetAxis("Mouse Y"));
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+                currentPos = Zoom3D(currentPos, -Input.GetAxis("Mouse ScrollWheel"));
         }
-
-        currentPos = Zoom(currentPos, -1f * Input.GetAxis("Mouse ScrollWheel"));
+        else
+        {
+            if (Input.GetMouseButton(1))
+                currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+                Zoom2D(Input.GetAxis("Mouse ScrollWheel"));
+        }
 
         transform.position = currentPos;
         transform.rotation = currentRot;
+
+        if (changeMod)
+            ChangeViewMod();
     }
 
-    Vector3 MoveForward(Vector3 currentPos, float axisInput)
+    private Vector3 MoveForward(Vector3 currentPos, float axisInput)
     {
         Vector3 newPos = currentPos;
-        Vector3 step = (transform.forward + transform.up) * axisInput * cameraMoveSpeed * Time.deltaTime;
+        Vector3 step = ((transform.forward + transform.up) / 2f) * axisInput * cameraMoveSpeed * Time.deltaTime;
 
         newPos.x += step.x;
         if (newPos.x < lowerPlaneBound.x || newPos.x > upperPlaneBound.x)
@@ -78,11 +128,11 @@ public class CameraController : MonoBehaviour
 
         newPos.z += step.z;
         if (newPos.z < lowerPlaneBound.y || newPos.z > upperPlaneBound.y)
-            return currentPos; 
+            return currentPos;
         return newPos;
     }
 
-    Vector3 MoveRight(Vector3 currentPos, float axisInput)
+    private Vector3 MoveRight(Vector3 currentPos, float axisInput)
     {
         Vector3 newPos = currentPos;
         Vector3 step = transform.right * axisInput * cameraMoveSpeed * Time.deltaTime;
@@ -97,15 +147,23 @@ public class CameraController : MonoBehaviour
         return newPos;
     }
 
-    Vector3 Zoom(Vector3 currentPos, float axisInput)
+    private Vector3 Zoom3D(Vector3 currentPos, float axisInput)
     {
         float tmp = currentPos.y + (axisInput * cameraZoomSpeed * Time.deltaTime);
         if ((axisInput <= 0 && tmp > minAltitude) || (axisInput > 0 && tmp < maxAltitude))
             currentPos.y = tmp;
+        cameraMoveSpeed = cameraBaseMoveSpeed + cameraBaseMoveSpeed * currentPos.y * 10f / maxAltitude;
         return currentPos;
     }
 
-    Quaternion RotateYaw(Quaternion currentRotation, float axisInput)
+    private void Zoom2D(float axisInput)
+    {
+        float tmp = camera.orthographicSize - axisInput * To2D;
+        camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+        camera.orthographicSize = tmp;
+    }
+
+    private Quaternion RotateYaw(Quaternion currentRotation, float axisInput)
     {
         Quaternion tmp = currentRotation;
 
@@ -114,7 +172,7 @@ public class CameraController : MonoBehaviour
         return tmp;
     }
 
-    Quaternion RotatePitch(Quaternion currentRotation, float axisInput)
+    private Quaternion RotatePitch(Quaternion currentRotation, float axisInput)
     {
         Quaternion tmp = currentRotation;
 

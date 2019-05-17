@@ -8,7 +8,7 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
-    public new string name = "PLACEHOLDER";
+    public string flowerBedName = "PLACEHOLDER";
     public string soilType = "PLACEHOLDER";
     public Vector2[] vertices;
 
@@ -166,7 +166,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         SerializedFlowerBed data;
         int i = 0;
         
-        data.name = this.name;
+        data.name = this.flowerBedName;
         data.soilType = this.soilType;
         data.points = vertices;
         data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
@@ -187,7 +187,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void DeSerialize(string json)
     {
         SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
-        this.name = tmp.name;
+        this.flowerBedName = tmp.name;
         this.soilType = tmp.soilType;
         this.vertices = tmp.points;
         foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
