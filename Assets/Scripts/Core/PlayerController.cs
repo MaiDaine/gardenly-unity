@@ -167,6 +167,11 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < this.selectionList.Count; i++)
                 this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
             this.selectionList.Clear();
+            UIController uIController = Camera.main.GetComponentInChildren<UIController>();
+            if (uIController.GetMenuScript() != null)
+                uIController.GetMenuScript().DestroyMenu();
+            if (uIController.GetFlowerBedMenuScript() != null)
+                uIController.GetFlowerBedMenuScript().DestroyMenu();
         }
     }
 

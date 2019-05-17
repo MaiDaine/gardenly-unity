@@ -51,13 +51,6 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
             if (uIController.GetMenuScript() != null)
             {
                 uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-               /* foreach (UIView view in uIController.plantsViews)
-                {
-                    if (view.IsVisible)
-                        view.Hide();
-                }*/
-               /* if (uIController.dataPanel.IsVisible)
-                    uIController.dataPanel.Hide();*/
                 uIController.GetMenuScript().DestroyMenu();
             }
         }

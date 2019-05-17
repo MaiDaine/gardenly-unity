@@ -70,13 +70,6 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         {
             uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
             menuScript.DestroyMenu();
-            /*foreach (UIView view in uIController.plantsViews)
-            {
-                if (view.IsVisible)
-                    view.Hide();
-            }*/
-           /* if (uIController.dataPanel.IsVisible)
-                uIController.dataPanel.Hide();*/
         }
     }
 

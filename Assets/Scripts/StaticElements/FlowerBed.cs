@@ -68,8 +68,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(meshHandler);
             Destroy(mesh);
             CreateMesh(true);
-            Debug.Log("CREATE MESH");
-            Camera.main.GetComponentInChildren<UIController>().ResetButton();
         }
     }
 
@@ -83,6 +81,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
         PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
         ConstructionController.instance.flowerBeds.Add(this);
+        Camera.main.GetComponentInChildren<UIController>().ResetButton();
     }
 
     public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
