@@ -31,13 +31,15 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
-            
+            RectTransform menuTransform = uIController.extendMenu.RectTransform;
+            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
 
+            Debug.Log(uIController.extendMenu.RectTransform.sizeDelta.x + uIController.plantsViews[0].RectTransform.sizeDelta.x);
             if (!uIController.PlantsViewsDisplay())
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -113.9f, 0);
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -115.1f, 0);
             else
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -115.1f, 0);
             if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
                     uIController.SetDataPanel(this.data.name, "Fleur");
         }

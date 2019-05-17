@@ -8,6 +8,7 @@ using TMPro;
 public class ViewController : MonoBehaviour
 {
     // FlowerBed after click define soil type + tutorial world space object
+    public TextMeshProUGUI[] labels;
     public UIButton[] buttons;
     public UIView plantView;
     public List<UIButton> dynButtons;
@@ -15,28 +16,7 @@ public class ViewController : MonoBehaviour
     public GameObject plantButton;
     public UIButtonListener dynamicButtonListener;
     public string plantType;
-
-    protected bool isToogle = false;
-    private bool startCount = false;
-    private float timer = 0.5f;
-
-    private void Update()
-    {
-        if (this.startCount)
-        {
-            this.timer -= Time.deltaTime;
-
-            if (this.timer <= 0)
-            {
-                foreach (UIButton button in this.buttons)
-                {
-                    button.gameObject.SetActive(false);
-                }
-                this.timer = 0.5f;
-                this.startCount = false;
-            }
-        }
-    }
+    public bool isPressed = false;
 
     public void ResetButtons()
     {
@@ -77,10 +57,35 @@ public class ViewController : MonoBehaviour
             }
         }
     }
- 
-    public void AddPlants()
+
+    public void SwitchState()
     {
-        ViewController viewController = dynamicButtonListener.GetComponent<ViewController>();
+        this.isPressed = !this.isPressed;
+    }
+
+    public void ExtendMenuMode()
+    {
+        RectTransform rect = this.GetComponent<RectTransform>();
+        this.isPressed = !this.isPressed;
+
+        Camera.main.GetComponent<UIController>().HideViews();
+        Camera.main.GetComponent<UIController>().uIButtonListener.GetComponent<ViewController>().ResetButtons();
+        foreach (TextMeshProUGUI text in this.labels)
+        {
+            text.gameObject.SetActive(this.isPressed);
+        }
+        if (this.isPressed)
+            rect.sizeDelta = new Vector2(122.4f, rect.sizeDelta.y);
+        else
+            rect.sizeDelta = new Vector2(60.82f, rect.sizeDelta.y);
+    }
+ 
+    public void AddPlants(UIView viewRef)
+    {
+        ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
+        UIController controller = Camera.main.GetComponent<UIController>();
+        
+        viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f,-115, 0);
         if (viewController.dynButtons.Count == 0)
         {
             foreach (PlantData plant in ReactProxy.instance.externalData.plants[this.plantType].Values)

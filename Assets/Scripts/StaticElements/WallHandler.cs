@@ -104,7 +104,7 @@ public class WallHandler : GhostHandler, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (state == ConstructionController.ConstructionState.Off)
-            this.uIController.SpawnDynMenu(this, this.uIController.wallMenu);
+            this.uIController.SpawnDynMenu(this, this.uIController.dynamicObjectMenu);
 
         this.text.gameObject.SetActive(true);
     }

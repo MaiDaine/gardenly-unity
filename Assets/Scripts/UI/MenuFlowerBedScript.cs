@@ -12,7 +12,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         this.constructionController = ConstructionController.instance;
     }
 
-    public void DestroyMenu()
+    public void DestroyMenu(bool spawn = false)
     {
         UIController uIController = Camera.main.GetComponentInChildren<UIController>();
 

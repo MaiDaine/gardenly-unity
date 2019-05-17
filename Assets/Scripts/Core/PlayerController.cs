@@ -199,9 +199,12 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnFlowerBedMesh()
     {
-        Camera.main.GetComponent<UIController>().Cancel();
-        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
-        SpawnController.instance.SpawnFlowerBed();
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
+        {
+            Camera.main.GetComponent<UIController>().Cancel();
+            constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+            SpawnController.instance.SpawnFlowerBed();
+        }
     }
 
     private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }

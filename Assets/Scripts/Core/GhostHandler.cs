@@ -36,7 +36,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool Building(Vector3 position) { return true; }
 
-    public virtual void EndConstruction(Vector3 position) { this.gameObject.layer = 10; }
+    public virtual void EndConstruction(Vector3 position)
+    {
+        this.gameObject.layer = 10;
+        Camera.main.GetComponent<UIController>().ResetButton();
+    }
 
     public virtual void Move(Vector3 position) { this.transform.position = position; }
 

@@ -7,13 +7,13 @@ using Doozy.Engine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public UIView extendMenu;
     public UIView dynamicObjectMenu;
-    public UIView wallMenu;
     public UIView dataPanel;
     public UIView flowerBedDataPanel;
     public UIView tutoView;
-    public UIButton fbBtn;
     public UIView[] plantsViews;
+    public UIButton[] tmpBtn;
     public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
@@ -57,11 +57,16 @@ public class UIController : MonoBehaviour
 
     public void ResetButton()
     {
-        LabelScript[] tmp = this.fbBtn.GetComponentsInChildren<LabelScript>();
-
-        foreach(LabelScript script in tmp)
+        foreach (UIButton btn in this.tmpBtn)
         {
-            script.ResetColor();
+            if (!btn.IsSelected)
+            {
+                LabelScript[] tmp = btn.GetComponentsInChildren<LabelScript>();
+                foreach (LabelScript script in tmp)
+                {
+                    script.ResetColor();
+                }
+            }
         }
     }
 
@@ -75,6 +80,15 @@ public class UIController : MonoBehaviour
         return false;
     }
 
+    public void HideViews()
+    {
+        foreach (UIView view in plantsViews)
+        {
+            if (view.IsVisible)
+                view.Hide();   
+        }
+    }
+
     public FlowerBed GetFlowerBed()
     {
         return this.flowerBed;
@@ -85,12 +99,13 @@ public class UIController : MonoBehaviour
         return this.ghost;
     }
 
-    public void Cancel()
+    public void Cancel(bool spawn = false)
     {
         if (this.menu != null)
-            this.menu.DestroyMenu();
+            this.menu.DestroyMenu(spawn);
         if (this.flowerBedMenuScript)
             this.flowerBedMenuScript.DestroyMenu();
+        this.ResetButton();
     }
 
     public Transform GetPreviewUI() { return this.previewUI; }
@@ -113,24 +128,21 @@ public class UIController : MonoBehaviour
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
-    public void SpawnWallMenu(GhostHandler ghost)
-    {
-        if (this.menu != null && this.menu.rotateState)
-            return;
-
-        SpawnMenu(ghost, this.wallMenu);
-        this.menu.SetGhostRef(ghost);
-    }
 
     public void SetDataPanel(string plantName, string plantType)
     {
+        RectTransform menuTransform = this.extendMenu.RectTransform;
+        RectTransform viewTransform = this.plantsViews[0].RectTransform;
+
         if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName && this.dataPanel.IsVisible)
         {
             this.dataPanel.Hide();
             return;
         }
+        Debug.Log(this.extendMenu.RectTransform.sizeDelta.x + this.plantsViews[0].RectTransform.sizeDelta.x);
+
         if (this.PlantsViewsDisplay())
-            this.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+            this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -115.1f, 0);
 
         PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
@@ -176,7 +188,7 @@ public class UIController : MonoBehaviour
         foreach (TextMeshProUGUI txt in texts)
         {
             if (txt.name == "Name")
-                txt.text = flowerBedRef.name;
+                txt.text = flowerBedRef.flowerBedName;
         }
         if (flowerBedRef.soilType != "PLACEHOLDER")
         {

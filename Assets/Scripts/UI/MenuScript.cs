@@ -37,7 +37,7 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public GhostHandler GetGhost() { return this.ghost; }
 
-    public void DestroyMenu()
+    public void DestroyMenu(bool spawn = false)
     {
         if (Camera.main != null)
         {
@@ -45,16 +45,17 @@ public class MenuScript : MonoBehaviour, IMenu
        
             if (controller.dynamicObjectMenu.IsVisible)
                 controller.dynamicObjectMenu.Hide();
-            if (controller.wallMenu.IsVisible)
-                controller.wallMenu.Hide();
-            foreach (UIView view in controller.plantsViews)
-            {
-                if (view.IsVisible)
-                    view.Hide();
-            }
             controller.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
-            if (controller.dataPanel.IsVisible)
-                controller.dataPanel.Hide();
+            if (spawn)
+            {
+                foreach (UIView view in controller.plantsViews)
+                {
+                    if (view.IsVisible)
+                        view.Hide();
+                }
+                if (controller.dataPanel.IsVisible)
+                    controller.dataPanel.Hide();
+            }
             this.rotateState = false;
             this.isMoving = false;
             UIController.menuOpen = false;
@@ -80,7 +81,6 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void EditionEnd()
     {
-        Debug.Log("EDITION END");
         LabelScript[] tmpScripts = this.GetComponentsInChildren<LabelScript>();
 
         foreach (LabelScript labelScript in tmpScripts)

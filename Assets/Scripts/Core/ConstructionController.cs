@@ -105,13 +105,16 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
-        this.Camera.GetComponent<UIController>().Cancel();
-        Cancel();
-        this.currentState = ConstructionState.Positioning;
-        this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
-        this.ghost.SetData(GhostRef.GetData());
-        if (this.gridState)
-            this.Grid.activ = true;
+        if (this.currentState == ConstructionState.Off)
+        {
+            this.Camera.GetComponent<UIController>().Cancel();
+            Cancel();
+            this.currentState = ConstructionState.Positioning;
+            this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+            this.ghost.SetData(GhostRef.GetData());
+            if (this.gridState)
+                this.Grid.activ = true;
+        }
     }
 
     public void SetGhost(GhostHandler ghost)

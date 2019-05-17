@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IMenu
 {
     GameObject GetGameObject();
-    void DestroyMenu();
+    void DestroyMenu(bool spawn = false);
     void DestroyObject();
     bool IsHidden();
 }
