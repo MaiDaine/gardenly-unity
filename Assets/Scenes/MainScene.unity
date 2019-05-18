@@ -430,7 +430,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: '12 : 00
+  m_text: '14 : 00
 
 '
   m_isRightToLeft: 0
@@ -3844,7 +3844,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.4999998
+  m_Value: 0.49999988
   m_Size: 0.33012348
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6765,7 +6765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 170076734}
   secondsInFullDay: 120
-  currentTimeOfDay: 0.6
+  currentTimeOfDay: 0.5833333
   timeMultiplier: 1
 --- !u!1 &183907540
 GameObject:
