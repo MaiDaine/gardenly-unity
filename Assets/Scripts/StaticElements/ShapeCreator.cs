@@ -13,6 +13,7 @@ public class ShapeCreator : GhostHandler
     public float minStep = 25;
     public FlowerBed flowerBed;
 
+    private LineTextHandler lineDistanceText;
     private ShapePoint firstPoint = null;
     private Color color = new Color(1f, 0f, 0f, 1f);
 
@@ -24,6 +25,8 @@ public class ShapeCreator : GhostHandler
         this.firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
         this.points.Add(firstPoint);
         this.currentPoint = firstPoint;
+        lineDistanceText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
+        lineDistanceText.enabled = false;
     }
 
     public void SelfClear()
@@ -33,12 +36,18 @@ public class ShapeCreator : GhostHandler
         foreach (ShapePoint point in points)
             Destroy(point.gameObject);
         this.points.Clear();
+        lineDistanceText.enabled = false;
     }
 
     //GhostHandler overrides
     public override void Positioning(Vector3 position)
     {
         this.currentPoint.transform.position = new Vector3(position.x, 0.2f, position.z);
+        if (lineDistanceText.enabled)
+        {
+            lineDistanceText.transform.position = (points[points.Count - 1].transform.position + points[points.Count - 2].transform.position) / 2f;
+            lineDistanceText.SetText(string.Format("{0:F1}m", (points[points.Count - 1].transform.position - points[points.Count - 2].transform.position).magnitude));
+        }
     }
 
     public override bool FromPositioningToBuilding(Vector3 position)
@@ -48,6 +57,7 @@ public class ShapeCreator : GhostHandler
             if (ConstructionController.instance.lastCastHit.collider.gameObject.tag == "FlowerBed")
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             CreatePoint();
+            lineDistanceText.enabled = true;
             return false;
         }
 
@@ -69,6 +79,7 @@ public class ShapeCreator : GhostHandler
                 this.points.Add(currentPoint);
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             }
+            lineDistanceText.enabled = false;
             return true;
         }
 
@@ -122,7 +133,7 @@ public class ShapeCreator : GhostHandler
     public override bool OnCancel()
     {
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
-        for (int i = points.Count -1; i >= 0; i--)
+        for (int i = points.Count - 1; i >= 0; i--)
         {
             Destroy(points[i].gameObject);
             points.RemoveAt(i);

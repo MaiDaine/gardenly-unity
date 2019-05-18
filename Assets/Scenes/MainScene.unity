@@ -1420,6 +1420,8 @@ MonoBehaviour:
   - {fileID: 849124044653278933, guid: 6a70ef9be1a358c4e9c44ce9dfc4ee63, type: 3}
   FBElements:
   - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
+  lineText: {fileID: 7051908953812569222, guid: 5526e780127008f4196e018d21e29b66,
+    type: 3}
 --- !u!114 &534669911
 MonoBehaviour:
   m_ObjectHideFlags: 0

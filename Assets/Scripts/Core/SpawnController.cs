@@ -16,6 +16,7 @@ public class SpawnController : MonoBehaviour
     public ShapeCreator ShapeCreator;
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
     public FlowerBedElement[] FBElements = new FlowerBedElement[1];
+    public LineTextHandler lineText;
 
     private ShapeCreator shapeCreator;
 
