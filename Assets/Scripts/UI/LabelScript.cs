@@ -88,14 +88,11 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             TextMeshProUGUI txt = btn.TextMeshProLabel;
             string formatTxt = txt.text.Substring(0, 2);
-            Debug.Log(formatTxt);
             if (int.TryParse(formatTxt, out int hour))
             {
                 if (add)
                 {
-                    if (hour == 24)
-                        hour = 0;
-                    hour = hour + 1;
+                    hour = (hour + 1) % 24;
                     if (hour >= 10)
                         txt.SetText("{0} : 00", hour);
                     else
@@ -103,15 +100,14 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 }
                 else
                 {
-                    if (hour == 1)
-                        hour = 25;
-                    hour = hour - 1;
+                    hour = (hour - 1) % 24;
+                    if (hour < 0)
+                        hour = 24 + hour;
                     if (hour >= 10)
                         txt.SetText("{0} : 00", hour);
                     else
                         txt.SetText("0{0} : 00", hour);
                 }
-                Debug.Log(hour);
             }
             this.dayNightController.SetTimeOfDay(hour);
         }

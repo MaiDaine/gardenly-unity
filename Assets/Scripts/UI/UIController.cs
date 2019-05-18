@@ -170,7 +170,7 @@ public class UIController : MonoBehaviour
 
         if (tmp == null)
             return;
-        if (labels != null && labels.Length > 0)
+       /* if (labels != null && labels.Length > 0)
         {
             labels[0].text = tmp.name;
             labels[1].text = tmp.description;
@@ -189,7 +189,7 @@ public class UIController : MonoBehaviour
         if (tmp.image == null)
             icon.texture = this.textureRef;
         if (script[0] != null)
-            script[0].SetGhost(plantType);
+            script[0].SetGhost(plantType);*/
         if (!this.dataPanel.IsVisible)
         {
             this.dataPanel.Show();
