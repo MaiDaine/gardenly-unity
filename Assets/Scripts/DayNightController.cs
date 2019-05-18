@@ -24,10 +24,11 @@ public class DayNightController : MonoBehaviour
         UpdateSun();
     }
 
-    private void Update()
-    {
-        UpdateSun();
-    }
+    //Only for testing
+    //private void Update()
+    //{
+    //    UpdateSun();
+    //}
 
     void UpdateSun()
     {
