@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(TextMesh))]
-public class WallTextHandler : MonoBehaviour
+public class LineTextHandler : MonoBehaviour
 {
     public float textSize = 0.5f;
 

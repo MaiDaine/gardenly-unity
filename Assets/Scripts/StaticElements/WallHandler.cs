@@ -9,12 +9,12 @@ using UnityEngine;
 [RequireComponent(typeof(Material))]
 public class WallHandler : GhostHandler, ISerializable
 {
-    public WallTextHandler TextRef;
+    public LineTextHandler TextRef;
 
     protected UIController uIController;
 
     private SerializableItem serializableItem;
-    private WallTextHandler text = null;
+    private LineTextHandler text = null;
     private Vector3 start;
     private Vector3 end;
     private bool initFromSerialization = false;
@@ -51,7 +51,7 @@ public class WallHandler : GhostHandler, ISerializable
     public override bool FromPositioningToBuilding(Vector3 position)
     {
         if (this.text == null)
-            this.text = Instantiate(this.TextRef, this.transform.position, Quaternion.identity) as WallTextHandler;
+            this.text = Instantiate(this.TextRef, this.transform.position, Quaternion.identity) as LineTextHandler;
         else
             this.text.transform.position = position;
         this.text.gameObject.SetActive(true);

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DayNightController : MonoBehaviour
 {
@@ -11,7 +9,9 @@ public class DayNightController : MonoBehaviour
     [HideInInspector]
     public float timeMultiplier = 1f;
 
-    float sunInitialIntensity;
+    private int timeAnimation;
+    private float targetTime;
+    private float sunInitialIntensity;
 
     void Start()
     {
@@ -20,15 +20,24 @@ public class DayNightController : MonoBehaviour
 
     public void SetTimeOfDay(int time)
     {
-        currentTimeOfDay = (float)time / 24f;
-        UpdateSun();
+        targetTime = (float)time / 24f;
+        timeAnimation = (targetTime > currentTimeOfDay) ? 1 : -1;
     }
 
-    //Only for testing
-    //private void Update()
-    //{
-    //    UpdateSun();
-    //}
+    private void Update()
+    {
+        if (timeAnimation != 0)
+        {
+            currentTimeOfDay += (timeAnimation * Time.deltaTime) / 2f;
+            if ((timeAnimation > 0 && currentTimeOfDay > targetTime)
+                || (timeAnimation < 0 && currentTimeOfDay < targetTime))
+            {
+                currentTimeOfDay = targetTime;
+                timeAnimation = 0;
+            }
+            UpdateSun();
+        }
+    }
 
     void UpdateSun()
     {
