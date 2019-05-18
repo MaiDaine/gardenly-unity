@@ -14,7 +14,9 @@ public class ShapeCreator : GhostHandler
     public FlowerBed flowerBed;
 
     private LineTextHandler lineDistanceText;
+    private LineTextHandler lineAngleText;
     private ShapePoint firstPoint = null;
+    private Vector2 a, b, c;
     private Color color = new Color(1f, 0f, 0f, 1f);
 
     public void Init()
@@ -26,7 +28,9 @@ public class ShapeCreator : GhostHandler
         this.points.Add(firstPoint);
         this.currentPoint = firstPoint;
         lineDistanceText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
-        lineDistanceText.enabled = false;
+        lineAngleText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
+        lineDistanceText.gameObject.SetActive(false);
+        lineAngleText.gameObject.SetActive(false);
     }
 
     public void SelfClear()
@@ -36,17 +40,28 @@ public class ShapeCreator : GhostHandler
         foreach (ShapePoint point in points)
             Destroy(point.gameObject);
         this.points.Clear();
-        lineDistanceText.enabled = false;
+        lineDistanceText.gameObject.SetActive(false);
+        lineAngleText.gameObject.SetActive(false);
     }
 
     //GhostHandler overrides
     public override void Positioning(Vector3 position)
     {
         this.currentPoint.transform.position = new Vector3(position.x, 0.2f, position.z);
-        if (lineDistanceText.enabled)
+        if (lineDistanceText.isActiveAndEnabled)
         {
-            lineDistanceText.transform.position = (points[points.Count - 1].transform.position + points[points.Count - 2].transform.position) / 2f;
-            lineDistanceText.SetText(string.Format("{0:F1}m", (points[points.Count - 1].transform.position - points[points.Count - 2].transform.position).magnitude));
+            Vector3 p1 = points[points.Count - 1].transform.position;
+            Vector3 p2 = points[points.Count - 2].transform.position;
+
+            lineDistanceText.transform.position = (p1 + p2) / 2f;
+            lineDistanceText.SetText(string.Format("{0:F1}m", (p1 - p2).magnitude));
+
+            if (lineAngleText.isActiveAndEnabled)
+            {
+                c = new Vector2(p1.x, p1.z);
+                lineAngleText.SetText(string.Format("{0:F1}°", Vector2.Angle(a - b, c - b)));
+                lineAngleText.transform.position = p2 + (p1 - p2).normalized - (p2 - points[points.Count - 3].transform.position).normalized;
+            }
         }
     }
 
@@ -57,7 +72,7 @@ public class ShapeCreator : GhostHandler
             if (ConstructionController.instance.lastCastHit.collider.gameObject.tag == "FlowerBed")
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             CreatePoint();
-            lineDistanceText.enabled = true;
+            lineDistanceText.gameObject.SetActive(true);
             return false;
         }
 
@@ -79,7 +94,6 @@ public class ShapeCreator : GhostHandler
                 this.points.Add(currentPoint);
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             }
-            lineDistanceText.enabled = false;
             return true;
         }
 
@@ -90,6 +104,9 @@ public class ShapeCreator : GhostHandler
             return false;
 
         CreatePoint();
+        lineAngleText.gameObject.SetActive(true);
+        a = new Vector2(points[points.Count - 3].transform.position.x, points[points.Count - 3].transform.position.z);
+        b = new Vector2(points[points.Count - 2].transform.position.x, points[points.Count - 2].transform.position.z);
         return false;
     }
 
@@ -98,23 +115,27 @@ public class ShapeCreator : GhostHandler
     public override void EndConstruction(Vector3 position)
     {
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
+        lineDistanceText.gameObject.SetActive(false);
+        lineAngleText.gameObject.SetActive(false);
         Destroy(currentPoint);
         this.eventShapeConstructionFinished.Invoke();
     }
 
-    public bool RemovePoint(ShapePoint point)
+    public override bool OnCancel()
     {
-        this.points.Remove(point);
-        if (this.points.Count == 1)
+        GridController.instance.eventPostRender.RemoveListener(DrawLines);
+        for (int i = points.Count - 1; i >= 0; i--)
         {
-            this.currentPoint.DeActivate();
-            this.gameObject.SetActive(false);
-            GridController.instance.eventPostRender.RemoveListener(DrawLines);
-            return false;
+            Destroy(points[i].gameObject);
+            points.RemoveAt(i);
         }
-        return true;
+        Destroy(flowerBed.gameObject);
+        lineDistanceText.gameObject.SetActive(false);
+        lineAngleText.gameObject.SetActive(false);
+        return false;
     }
 
+    //Actions
     public bool AddPoint(ShapePoint point)
     {
         this.points.Remove(currentPoint);
@@ -130,30 +151,21 @@ public class ShapeCreator : GhostHandler
         return true;
     }
 
-    public override bool OnCancel()
+    public bool RemovePoint(ShapePoint point)
     {
-        GridController.instance.eventPostRender.RemoveListener(DrawLines);
-        for (int i = points.Count - 1; i >= 0; i--)
+        this.points.Remove(point);
+        if (this.points.Count == 1)
         {
-            Destroy(points[i].gameObject);
-            points.RemoveAt(i);
+            this.currentPoint.DeActivate();
+            this.gameObject.SetActive(false);
+            GridController.instance.eventPostRender.RemoveListener(DrawLines);
+            return false;
         }
-        Destroy(flowerBed.gameObject);
-        return false;
+        return true;
     }
 
-    private void DrawLines()
-    {
-        if (this.points.Count < 1)
-            return;
-        ShapePoint tmp = firstPoint;
-        foreach (ShapePoint point in points)
-        {
-            GridController.instance.DrawLimited(tmp.transform.position, point.transform.position, color);
-            tmp = point;
-        }
-    }
-
+    //Internal
+    
     private void CreatePoint()
     {
         Vector3 position;
@@ -171,6 +183,7 @@ public class ShapeCreator : GhostHandler
         }
     }
 
+    //Collision Detection
     private bool CheckContainOtherObjects()
     {
         flowerBed.OnShapeFinished();
@@ -185,7 +198,7 @@ public class ShapeCreator : GhostHandler
         return true;
     }
 
-    bool pointInPolygon(Vector2[] pointList, float x, float y)
+    private bool pointInPolygon(Vector2[] pointList, float x, float y)
     {
         int polyCorners = pointList.Length;
         int i, j = polyCorners - 1;
@@ -244,5 +257,18 @@ public class ShapeCreator : GhostHandler
             }
         }
         return false;
+    }
+
+    //Visual
+    private void DrawLines()
+    {
+        if (this.points.Count < 1)
+            return;
+        ShapePoint tmp = firstPoint;
+        foreach (ShapePoint point in points)
+        {
+            GridController.instance.DrawLimited(tmp.transform.position, point.transform.position, color);
+            tmp = point;
+        }
     }
 }
