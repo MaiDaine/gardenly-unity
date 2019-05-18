@@ -53,9 +53,9 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             if (this.GetData() != null)
             {
                 if (!uIController.PlantsViewsDisplay())
-                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -113.9f, 0);
+                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -33.46f, 0);
                 else
-                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -113.9f, 0);
+                    uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -33.46f, 0);
                 if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
                     uIController.SetDataPanel(this.data.name, "Arbre");
 

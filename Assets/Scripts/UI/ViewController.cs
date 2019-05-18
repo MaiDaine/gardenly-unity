@@ -85,7 +85,7 @@ public class ViewController : MonoBehaviour
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
         UIController controller = Camera.main.GetComponent<UIController>();
         
-        viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f,-115, 0);
+        viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
         if (viewController.dynButtons.Count == 0)
         {
             if (ReactProxy.instance.externalData.plants[this.plantType].Values.Count > 0)
