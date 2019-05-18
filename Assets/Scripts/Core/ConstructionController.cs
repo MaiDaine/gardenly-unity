@@ -143,7 +143,7 @@ public class ConstructionController : MonoBehaviour
         if (MouseRayCast(out tmp, out hit))
         {
             lastCastHit = hit;
-            if (tmp == this.lastValidPos && !Input.GetMouseButtonDown(0))
+            if (tmp == this.lastValidPos && !PlayerController.instance.PlaneClick())
                 return;
             this.lastValidPos = tmp;
             snapable = hit.collider.gameObject.GetComponent<ISnapable>();
@@ -165,7 +165,7 @@ public class ConstructionController : MonoBehaviour
     private void UpdateGhostPositioning(Vector3 pos, ISelectable neighbor)
     {
         this.ghost.Positioning(pos);
-        if (Input.GetMouseButtonDown(0))
+        if (PlayerController.instance.PlaneClick())
         {
             if (this.ghost.needFlowerBed)
             {
@@ -194,7 +194,7 @@ public class ConstructionController : MonoBehaviour
 
     public void UpdateGhostBuilding(Vector3 pos, ISelectable neighbor)
     {
-        if (this.ghost.Building(pos) || Input.GetMouseButtonDown(0))
+        if (this.ghost.Building(pos) || PlayerController.instance.PlaneClick())
         {
             AddNeighbor(neighbor);
             this.currentState = ConstructionState.Off;

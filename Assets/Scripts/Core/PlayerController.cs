@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         //Selection
         if (this.constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (PlaneClick())
                 SelectBuilding();
             else if (Input.GetKey(KeyCode.Delete))
                 DestroySelection();
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             {
                 case ConstructionController.EditionType.Off:
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if (PlaneClick())
                         SelectBuilding();
                     else if (Input.GetMouseButton(0) && interactible != null)
                         this.constructionController.UpdateGhostEditing(interactible);
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
                      break;
                  }
             }
-            if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
+            if (PlaneClick() && constructionController.editionState != ConstructionController.EditionType.Off)
             {
                 if (constructionController.editionState == ConstructionController.EditionType.Position)
                 {
@@ -215,6 +215,13 @@ public class PlayerController : MonoBehaviour
             constructionController.currentState = ConstructionController.ConstructionState.Positioning;
             SpawnController.instance.SpawnFlowerBed();
         }
+    }
+
+    public bool PlaneClick()
+    {
+        if (Input.GetMouseButtonDown(0) && !IsPointerOnUi())
+            return true;
+        return false;
     }
 
     private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }
