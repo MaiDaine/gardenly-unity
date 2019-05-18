@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,11 +20,11 @@ public class ShapeCreator : GhostHandler
     public void Init()
     {
         GridController.instance.eventPostRender.AddListener(DrawLines);
-        this.transform.position = new Vector3(0, 0, 0);
-        this.firstPoint = Instantiate(pointPrefab);
-        this.firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
-        this.points.Add(firstPoint);
-        this.currentPoint = firstPoint;
+        transform.position = new Vector3(0, 0, 0);
+        firstPoint = Instantiate(pointPrefab);
+        firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
+        points.Add(firstPoint);
+        currentPoint = firstPoint;
         lineDistanceText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
         lineAngleText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
         lineDistanceText.gameObject.SetActive(false);
@@ -35,11 +33,11 @@ public class ShapeCreator : GhostHandler
 
     public void SelfClear()
     {
-        Destroy(this.firstPoint.gameObject);
-        Destroy(this.currentPoint.gameObject);
+        Destroy(firstPoint.gameObject);
+        Destroy(currentPoint.gameObject);
         foreach (ShapePoint point in points)
             Destroy(point.gameObject);
-        this.points.Clear();
+        points.Clear();
         lineDistanceText.gameObject.SetActive(false);
         lineAngleText.gameObject.SetActive(false);
     }
@@ -47,7 +45,7 @@ public class ShapeCreator : GhostHandler
     //GhostHandler overrides
     public override void Positioning(Vector3 position)
     {
-        this.currentPoint.transform.position = new Vector3(position.x, 0.2f, position.z);
+        currentPoint.transform.position = new Vector3(position.x, 0.2f, position.z);
         if (lineDistanceText.isActiveAndEnabled)
         {
             Vector3 p1 = points[points.Count - 1].transform.position;
@@ -79,28 +77,28 @@ public class ShapeCreator : GhostHandler
         if (CheckIntersectWithOtherObjects(points[points.Count - 2].transform.position, position))
             return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
 
-        if (this.currentPoint != this.firstPoint
-          && Vector2.Distance(new Vector2(this.firstPoint.transform.position.x, this.firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 0.5f)
+        if (currentPoint != firstPoint
+          && Vector2.Distance(new Vector2(firstPoint.transform.position.x, firstPoint.transform.position.z), new Vector2(position.x, position.z)) < 0.5f)
         {
-            if (this.points.Count < 4)
+            if (points.Count < 4)
                 return MessageHandler.instance.ErrorMessage("shape_creator", "lessthan_3points");
 
-            Vector3 tmp = this.currentPoint.transform.position;
-            this.currentPoint.transform.position = this.firstPoint.transform.position;
-            this.points.Remove(currentPoint);
+            Vector3 tmp = currentPoint.transform.position;
+            currentPoint.transform.position = firstPoint.transform.position;
+            points.Remove(currentPoint);
             if (!CheckContainOtherObjects())
             {
                 currentPoint.transform.position = tmp;
-                this.points.Add(currentPoint);
+                points.Add(currentPoint);
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             }
             return true;
         }
 
-        if (this.points.Count > 3 && CheckIntersection(new Vector2(position.x, position.z)))
+        if (points.Count > 3 && CheckIntersection(new Vector2(position.x, position.z)))
             return MessageHandler.instance.ErrorMessage("shape_creator", "line_cross");
 
-        if (this.points.Count > 1 && Vector3.Distance(position, this.points[this.points.Count - 1].transform.position) < 0.1f)
+        if (points.Count > 1 && Vector3.Distance(position, points[points.Count - 1].transform.position) < 0.1f)
             return false;
 
         CreatePoint();
@@ -118,7 +116,7 @@ public class ShapeCreator : GhostHandler
         lineDistanceText.gameObject.SetActive(false);
         lineAngleText.gameObject.SetActive(false);
         Destroy(currentPoint);
-        this.eventShapeConstructionFinished.Invoke();
+        eventShapeConstructionFinished.Invoke();
     }
 
     public override bool OnCancel()
@@ -138,14 +136,14 @@ public class ShapeCreator : GhostHandler
     //Actions
     public bool AddPoint(ShapePoint point)
     {
-        this.points.Remove(currentPoint);
-        this.points.Add(point);
-        this.points.Add(currentPoint);
+        points.Remove(currentPoint);
+        points.Add(point);
+        points.Add(currentPoint);
 
-        if (this.points.Count == 2)
+        if (points.Count == 2)
         {
-            this.currentPoint.Activate();
-            this.gameObject.SetActive(true);
+            currentPoint.Activate();
+            gameObject.SetActive(true);
             GridController.instance.eventPostRender.AddListener(DrawLines);
         }
         return true;
@@ -153,19 +151,18 @@ public class ShapeCreator : GhostHandler
 
     public bool RemovePoint(ShapePoint point)
     {
-        this.points.Remove(point);
-        if (this.points.Count == 1)
+        points.Remove(point);
+        if (points.Count == 1)
         {
-            this.currentPoint.DeActivate();
-            this.gameObject.SetActive(false);
+            currentPoint.DeActivate();
+            gameObject.SetActive(false);
             GridController.instance.eventPostRender.RemoveListener(DrawLines);
             return false;
         }
         return true;
     }
 
-    //Internal
-    
+
     private void CreatePoint()
     {
         Vector3 position;
@@ -174,12 +171,12 @@ public class ShapeCreator : GhostHandler
 
         if (ConstructionController.instance.MouseRayCast(out position, out hit))
         {
-            this.currentPoint.EndConstruction();
-            PlayerController.instance.actionHandler.NewStateAction("AddLineShape", this.gameObject, false);
-            tmp = Instantiate(pointPrefab, this.transform);
+            currentPoint.EndConstruction();
+            PlayerController.instance.actionHandler.NewStateAction("AddLineShape", gameObject, false);
+            tmp = Instantiate(pointPrefab, transform);
             tmp.transform.position = new Vector3(position.x, 0.2f, position.z);
-            this.points.Add(tmp);
-            this.currentPoint = tmp;
+            points.Add(tmp);
+            currentPoint = tmp;
         }
     }
 
@@ -262,7 +259,7 @@ public class ShapeCreator : GhostHandler
     //Visual
     private void DrawLines()
     {
-        if (this.points.Count < 1)
+        if (points.Count < 1)
             return;
         ShapePoint tmp = firstPoint;
         foreach (ShapePoint point in points)
