@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Doozy.Engine.UI;
+using TMPro;
 
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,6 +13,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Color actionColor;
     public bool pressed = false;
     public UIView view;
+    public DayNightController dayNightController; 
 
     protected Image image;
     
@@ -76,6 +78,42 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 this.text.color = this.color;
             if (this.image != null)
                 this.image.color = this.color;
+        }
+    }
+
+    public void UpdateHour(bool add = true)
+    {
+        UIButton btn = this.GetComponent<UIButton>();
+        if (btn != null)
+        {
+            TextMeshProUGUI txt = btn.TextMeshProLabel;
+            string formatTxt = txt.text.Substring(0, 2);
+            Debug.Log(formatTxt);
+            if (int.TryParse(formatTxt, out int hour))
+            {
+                if (add)
+                {
+                    if (hour == 24)
+                        hour = 0;
+                    hour = hour + 1;
+                    if (hour >= 10)
+                        txt.SetText("{0} : 00", hour);
+                    else
+                        txt.SetText("0{0} : 00", hour);
+                }
+                else
+                {
+                    if (hour == 1)
+                        hour = 25;
+                    hour = hour - 1;
+                    if (hour >= 10)
+                        txt.SetText("{0} : 00", hour);
+                    else
+                        txt.SetText("0{0} : 00", hour);
+                }
+                Debug.Log(hour);
+            }
+            this.dayNightController.SetTimeOfDay(hour);
         }
     }
 }

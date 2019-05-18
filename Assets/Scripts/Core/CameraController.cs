@@ -76,6 +76,12 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    public void SetChangeMod(bool state)
+    {
+        this.changeMod = state;
+    }
+
+
     private void Update()
     {
         Vector3 currentPos = transform.position;

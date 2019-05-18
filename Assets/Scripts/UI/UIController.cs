@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public UIView tutoView;
     public UIView[] plantsViews;
     public UIButton[] tmpBtn;
+    public UIButton cameraModeButton;
     public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
@@ -32,7 +33,12 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;      
+        this.gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
+        if (this.cameraModeButton != null)
+        {
+            this.cameraModeButton.SelectButton();
+            this.cameraModeButton.DisableButton();
+        }
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
