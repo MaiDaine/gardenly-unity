@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: _SoundyDatabase
   m_EditorClassIdentifier: 
   DatabaseNames:
-  - 
   - Example Alerts
   - Example Clicks
   - Example Music
