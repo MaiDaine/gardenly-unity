@@ -1,21 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Doozy.Engine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Transform gardenMenu;
-    public Transform dynamicObjectMenu;
-    public Transform flowerBedMenu;
-    public Transform wallMenu;
-    public Transform dataPanel;
-    public Transform flowerBedDataPanel;
+    public UIView extendMenu;
+    public UIView dynamicObjectMenu;
+    public UIView dataPanel;
+    public UIView flowerBedDataPanel;
+    public UIView tutoView;
+    public UIView[] plantsViews;
+    public UIButton[] tmpBtn;
+    public UIButton cameraModeButton;
+    public UIButton dataPanelInitBtn;
+    public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public FlowerBedPanelScript flowerBedPanelScript;
+    public TextMeshProUGUI gardenName;
+    public Texture2D textureRef;
 
     protected Transform previewUI = null;
     protected MenuScript menu = null;
@@ -23,56 +31,29 @@ public class UIController : MonoBehaviour
     protected bool subMenuOpen = true;
     protected GhostHandler ghost = null;
     protected FlowerBed flowerBed = null;
+    protected string plantType;
+    protected string plantName;
 
-    private void LateUpdate()
+    private void Awake()
     {
-        if (this.menu != null && !this.menu.rotateState && !this.menu.isMoving)
-            DisplayMenu(this.menu);
-        if (flowerBedMenuScript != null)
-            DisplayMenu(this.flowerBedMenuScript);
+        this.gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
+        if (this.cameraModeButton != null)
+        {
+            this.cameraModeButton.SelectButton();
+            this.cameraModeButton.DisableButton();
+        }
     }
 
-    private void DisplayMenu(IMenu menu)
+    private void SpawnMenu(GhostHandler selectable, UIView menuType)
     {
-        if (Mathf.Abs(menu.GetGameObject().transform.position.x - Camera.main.transform.position.x) > 40
-           || Mathf.Abs(menu.GetGameObject().transform.position.y - Camera.main.transform.position.y) > 20
-           || Mathf.Abs(menu.GetGameObject().transform.position.z - Camera.main.transform.position.z) > 40)
-            menu.GetGameObject().SetActive(false);
-        else
-            menu.GetGameObject().SetActive(true);
-    }
-
-    private void SpawnMenu(GhostHandler selectable, Transform menuType)
-    {
-        Canvas canvas;
-        Vector3 position;
-
-        if (menuOpen)
-            this.menu.DestroyMenu();
-
-        position = new Vector3(selectable.transform.position.x, selectable.transform.position.y + 3, selectable.transform.position.z);
-        this.previewUI = Instantiate(menuType, position, Quaternion.identity);
-        canvas = this.previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;       
-        this.menu = this.previewUI.GetComponent<MenuScript>();
+        menuType.Show();
+        this.menu = menuType.GetComponent<MenuScript>();
         menuOpen = true;
     }
 
-    private void SpawnFlowerBedMenu(FlowerBed flowerBed, Transform menuType)
-    {
-        Canvas canvas;
-        Vector3 position;
-
-        if (flowerBedMenuOpen)
-            this.flowerBedMenuScript.DestroyMenu();
-
-        // TODO Vector3.x = middle of flowerbed
-        position = new Vector3(flowerBed.GetVertices()[0].x, flowerBed.transform.position.y + 3, flowerBed.transform.position.z + 3);
-
-        this.previewUI = Instantiate(menuType, position, Quaternion.identity);
-        canvas = this.previewUI.GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
-        this.flowerBedMenuScript = this.previewUI.GetComponent<MenuFlowerBedScript>();
+    private void SpawnFlowerBedMenu(FlowerBed flowerBed, UIView menuType)
+    { 
+        this.flowerBedMenuScript = menuType.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
     }
 
@@ -84,12 +65,69 @@ public class UIController : MonoBehaviour
         //redoActionSet.items
     }
 
-    public void Cancel()
+    public void ResetButton()
     {
-        if (menuOpen)
-            this.menu.DestroyMenu();
-        if (flowerBedMenuOpen)
+        foreach (UIButton btn in this.tmpBtn)
+        {
+            if (!btn.IsSelected)
+            {
+                LabelScript[] tmp = btn.GetComponentsInChildren<LabelScript>();
+                foreach (LabelScript script in tmp)
+                {
+                    script.ResetColor();
+                }
+            }
+        }
+    }
+
+    public void ForceResetButton()
+    {
+        foreach (UIButton btn in this.tmpBtn)
+        {
+            LabelScript[] tmp = btn.GetComponentsInChildren<LabelScript>();
+            foreach (LabelScript script in tmp)
+            {
+                script.ResetColor();
+            }
+        }
+    }
+
+    public bool PlantsViewsDisplay()
+    {
+        foreach (UIView view in plantsViews)
+        {
+            if (view.IsVisible)
+                return true;
+        }
+        return false;
+    }
+
+    public void HideViews()
+    {
+        foreach (UIView view in plantsViews)
+        {
+            if (view.IsVisible)
+                view.Hide();   
+        }
+    }
+
+    public FlowerBed GetFlowerBed()
+    {
+        return this.flowerBed;
+    }
+
+    public GhostHandler GetGhost()
+    {
+        return this.ghost;
+    }
+
+    public void Cancel(bool spawn = false)
+    {
+        if (this.menu != null)
+            this.menu.DestroyMenu(spawn);
+        if (this.flowerBedMenuScript)
             this.flowerBedMenuScript.DestroyMenu();
+        this.ResetButton();
     }
 
     public Transform GetPreviewUI() { return this.previewUI; }
@@ -98,83 +136,227 @@ public class UIController : MonoBehaviour
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
 
-    public void SpawnDynMenu(GhostHandler ghost, Transform typeMenu)
+    public void SpawnDynMenu(GhostHandler ghost, UIView typeMenu)
     {
         if (this.menu != null && this.menu.rotateState)
           return;
-
         SpawnMenu(ghost, typeMenu);
         this.menu.SetGhostRef(ghost);
     }
 
     public void SpawnFlowerBedMenu(FlowerBed flowerBed)
     {
-        SpawnFlowerBedMenu(flowerBed, this.flowerBedMenu);
+        SpawnFlowerBedMenu(flowerBed, this.flowerBedDataPanel);
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
-    public void SpawnWallMenu(GhostHandler ghost)
+    public void SetDescriptionDataPanel()
     {
-        if (this.menu != null && this.menu.rotateState)
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Description" && tmp.description != null)
+            {
+                label.text = tmp.description;
+            }
+            if (label.name == "Advices" && tmp.description != null)
+            {
+
+            }
+        }
+    }
+
+    public string GetMonth(int month)
+    {
+        switch (month)
+        {
+            case 1:
+                return "Janvier";
+            case 2:
+                return "Février";
+            case 3:
+                return "Mars";
+            case 4:
+                return "Avril";
+            case 5:
+                return "Mai";
+            case 6:
+                return "Juin";
+            case 7:
+                return "Juillet";
+            case 8:
+                return "Août";
+            case 9:
+                return "Septembre";
+            case 10:
+                return "Octobre";
+            case 11:
+                return "Novembre";
+            case 12:
+                return "Décembre";
+            default:
+                break;
+        }
+        return "";
+    }
+
+    public void SetMaintainDataPanel()
+    {
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Flowering" && tmp.floweringPeriodBegin != 0 && tmp.floweringPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
+            }
+            if (label.name == "Cutting" && tmp.cuttingPeriodBegin != 0 && tmp.cuttingPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
+            }
+            if (label.name == "Planting" && tmp.plantingPeriodBegin != 0 && tmp.plantingPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
+            }
+        }
+    }
+
+    public void SetInformationsDataPanel()
+    {
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "HeightMin" && tmp.heightMin != 0)
+            {
+                label.text = tmp.heightMin + "cm";
+            }
+            if (label.name == "HeightMax" && tmp.heightMax != 0)
+            {
+                label.text = tmp.heightMax + "cm";
+            }
+            if (label.name == "Shape" && tmp.shape != null)
+            {
+                label.text = tmp.shape;
+            }
+            if (label.name == "Colors" && tmp.plantColor != null)
+            {
+                label.text = tmp.plantColor;
+            }
+            if (label.name == "SoilType" && tmp.soilType != null)
+            {
+                label.text = tmp.soilType;
+            }
+            if (label.name == "SoilPh")
+            {
+                label.text = tmp.phRangeLow + " " + tmp.phRangeHigh;
+            }
+        }
+        sliders[0].value = tmp.waterNeed;
+        sliders[1].value = tmp.rusticity;
+        sliders[2].value = tmp.sunNeed;
+    }
+
+
+    public void SetDataPanel(string plantName, string plantType)
+    {
+        RectTransform menuTransform = this.extendMenu.RectTransform;
+        RectTransform viewTransform = this.plantsViews[0].RectTransform;
+
+        this.plantName = plantName;
+        this.plantType = plantType;
+
+        if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName && this.dataPanel.IsVisible)
+        {
+            this.dataPanel.Hide();
+            return;
+        }
+
+        if (this.PlantsViewsDisplay())
+            this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
+        RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
+        ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
+
+        if (tmp == null)
             return;
 
-        SpawnMenu(ghost, this.wallMenu);
-        this.menu.SetGhostRef(ghost);
+        foreach(TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Name")
+            {
+                label.text = tmp.name;
+            }
+               
+        }
+        if (icon != null && tmp.image != null)
+        {
+            icon.texture = tmp.image;
+        }
+        if (tmp.image == null)
+            icon.texture = this.textureRef;
+        if (script[0] != null)
+            script[0].SetGhost(plantType);
+        if (!this.dataPanel.IsVisible)
+        {
+            this.dataPanel.Show();
+        }
+        this.dataPanelInitBtn.ExecuteClick();
     }
 
-    public void SetDataPanel(GhostHandler handler)
+    public void SetFlowerBedDataPanel(FlowerBed flowerBedRef)
     {
-        PlantData tmp = handler.GetData();
-        Text[] labels = this.dataPanel.GetComponentsInChildren<Text>();
-        Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
-        Image[] icons = this.dataPanel.GetComponentsInChildren<Image>();
-        Button[] button = this.dataPanel.GetComponentsInChildren<Button>();
-        ButtonScript script = button[1].GetComponent<ButtonScript>();
+        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        TMP_Dropdown type = this.flowerBedDataPanel.GetComponentInChildren<TMP_Dropdown>();
 
-        if (tmp != null)
-            return ;
-        this.gardenMenu.gameObject.SetActive(true);
-        this.dataPanel.gameObject.SetActive(true);
-
-        script.SetGhost(handler);
-
-        labels[0].text = tmp.name;
-        labels[1].text = tmp.description;
-
-        // TMP
-
-        sliders[0].gameObject.SetActive(true);
-        sliders[0].value = tmp.waterNeed;
-        sliders[1].gameObject.SetActive(true);
-        sliders[1].value = tmp.sunNeed;
-        sliders[2].value = tmp.rusticity;
-        sliders[2].gameObject.SetActive(true);
-      
-        icons[4].color = Color.green;
-        
-    }
-
-    public void SetFlowerBedDataPanel(FlowerBed flowerBed)
-    {
-        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
-
-        this.gardenMenu.gameObject.SetActive(true);
-        this.flowerBedDataPanel.gameObject.SetActive(true);
-        texts[1].text = flowerBed.soilType;
-        texts[0].text = flowerBed.name;
-        this.flowerBed = flowerBed;
+        SpawnFlowerBedMenu(flowerBedRef, this.flowerBedDataPanel);
+        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBedRef);
+        if (!this.flowerBedDataPanel.IsVisible)
+             this.flowerBedDataPanel.Show();
+        foreach (TextMeshProUGUI txt in texts)
+        {
+            if (txt.name == "Name")
+                txt.text = flowerBedRef.flowerBedName;
+        }
+        if (flowerBedRef.soilType != "PLACEHOLDER")
+        {
+            foreach (TMP_Dropdown.OptionData data in type.options)
+            {
+                if (data.text == flowerBedRef.soilType)
+                    type.value = type.options.IndexOf(data);
+            }
+        }
+        this.flowerBed = flowerBedRef;
     }
 
     public void ResetFlowerBedDataPanel()
     {
-        this.flowerBed.name = "PLACEHOLDER";
+        this.flowerBed.name = "";
+        this.flowerBed.soilType = "";
     }
 
-    public void UpdateFlowerBedDataPanel(string updateName)
+    public void UpdateNameFlowerBed(string updateName)
     {
-        Text[] texts = this.flowerBedDataPanel.GetComponentsInChildren<Text>();
+        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI txt in texts)
+        {
+            if (txt.name == "Name")
+                txt.text = updateName;
+        }
+        
+        this.flowerBed.flowerBedName = updateName;
+    }
 
-        texts[0].text = updateName;
-        this.flowerBed.name = updateName;
+    public void UpdateTypeFlowerBed(string updateType)
+    {        
+        this.flowerBed.soilType = updateType;
     }
 }

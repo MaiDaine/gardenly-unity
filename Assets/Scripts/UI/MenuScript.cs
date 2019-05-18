@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Doozy.Engine.UI;
 
 public class MenuScript : MonoBehaviour, IMenu
 {
@@ -16,32 +17,33 @@ public class MenuScript : MonoBehaviour, IMenu
         this.playerController = PlayerController.instance;
     }
 
-    private void LateUpdate()
-    {
-        Quaternion rotation;
-        Vector3 relativePos;
-
-        if (this.ghost != null && !this.rotateState)
-            this.transform.position = new Vector3(this.ghost.transform.position.x, 
-                this.ghost.transform.position.y + 3, this.ghost.transform.position.z);
-        
-        relativePos = this.transform.position - Camera.main.transform.position;
-        rotation = Quaternion.LookRotation(relativePos,Vector3.up);
-        this.transform.rotation = rotation;
-        
-    }
-
-
     public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
 
     public GhostHandler GetGhost() { return this.ghost; }
 
-    public void DestroyMenu()
+    public void DestroyMenu(bool spawn = false)
     {
-        Destroy(this.gameObject);
-        this.rotateState = false;
-        this.isMoving = false;
-        UIController.menuOpen = false;
+        if (Camera.main != null)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+       
+            if (controller.dynamicObjectMenu.IsVisible)
+                controller.dynamicObjectMenu.Hide();
+            controller.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+            if (spawn)
+            {
+                foreach (UIView view in controller.plantsViews)
+                {
+                    if (view.IsVisible)
+                        view.Hide();
+                }
+                if (controller.dataPanel.IsVisible)
+                    controller.dataPanel.Hide();
+            }
+            this.rotateState = false;
+            this.isMoving = false;
+            UIController.menuOpen = false;
+        }
     }
 
     public void MoveGhost()
@@ -63,11 +65,15 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void EditionEnd()
     {
-        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+        LabelScript[] tmpScripts = this.GetComponentsInChildren<LabelScript>();
 
-        tmpScript.ResetColor();
+        foreach (LabelScript labelScript in tmpScripts)
+        {
+            labelScript.ResetColor();
+        }
         this.rotateState = false;
         this.isMoving = false;
+        GridController.instance.activ = false;
     }
 
     public GameObject GetGameObject() { return this.gameObject; }

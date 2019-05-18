@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Doozy.Engine.UI;
+using TMPro;
 
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Text text;
     public Color color;
     public Color actionColor;
-    public Sprite defaultPicture;
-    public Sprite newPicture;
-    public string defaultAnimation;
-    public string updateAnimation;
+    public bool pressed = false;
+    public UIView view;
+    public DayNightController dayNightController; 
 
     protected Image image;
-    protected bool pressed;
+    
 
     private void Start()
     {
         this.image = transform.GetComponent<Image>();
-        this.pressed = false;
         if (this.image != null)
             this.image.color = this.color;
     }
@@ -59,22 +59,6 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         this.pressed = false;
     }
 
-    public void UpdateImage(Image image)
-    {
-        if (image.sprite == this.defaultPicture)
-            image.sprite = this.newPicture;
-        else
-            image.sprite = this.defaultPicture;
-    }
-
-    public void UpdateAnimator(Animator animator)
-    {
-        if (this.pressed)
-            animator.Play(defaultAnimation);
-        else
-            animator.Play(updateAnimation);
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!this.pressed)
@@ -94,6 +78,38 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 this.text.color = this.color;
             if (this.image != null)
                 this.image.color = this.color;
+        }
+    }
+
+    public void UpdateHour(bool add = true)
+    {
+        UIButton btn = this.GetComponent<UIButton>();
+        if (btn != null)
+        {
+            TextMeshProUGUI txt = btn.TextMeshProLabel;
+            string formatTxt = txt.text.Substring(0, 2);
+            if (int.TryParse(formatTxt, out int hour))
+            {
+                if (add)
+                {
+                    hour = (hour + 1) % 24;
+                    if (hour >= 10)
+                        txt.SetText("{0} : 00", hour);
+                    else
+                        txt.SetText("0{0} : 00", hour);
+                }
+                else
+                {
+                    hour = (hour - 1) % 24;
+                    if (hour < 0)
+                        hour = 24 + hour;
+                    if (hour >= 10)
+                        txt.SetText("{0} : 00", hour);
+                    else
+                        txt.SetText("0{0} : 00", hour);
+                }
+            }
+            this.dayNightController.SetTimeOfDay(hour);
         }
     }
 }

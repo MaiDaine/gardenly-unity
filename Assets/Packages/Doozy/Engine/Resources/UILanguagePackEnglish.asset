@@ -1,0 +1,688 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd2045d4b9bcaa439feeb324ea46212, type: 3}
+  m_Name: UILanguagePackEnglish
+  m_EditorClassIdentifier: 
+  TargetLanguage: 1
+  Language: Language
+  Actions: Actions
+  Disabled: Disabled
+  Installed: Installed
+  NotInstalled: Not Installed
+  Clear: Clear
+  After: After
+  AnimateValue: Animate Value
+  Arrow: Arrow
+  Behavior: Behavior
+  Cancel: Cancel
+  Category: Category
+  Center: Center
+  ClearSearch: Clear Search
+  Close: Close
+  Closed: Closed
+  Connected: Connected
+  Continue: Continue
+  Copy: Copy
+  Create: Create
+  CreateNode: Create Node
+  Custom: Custom
+  Cut: Cut
+  Database: Database
+  Delete: Delete
+  Description: Description
+  Deselect: Deselect
+  Disable: Disable
+  Disconnect: Disconnect
+  Down: Down
+  Duration: Duration
+  Ease: Ease
+  Empty: Empty
+  Enabled: Enabled
+  Error: Error
+  Event: Event
+  Fade: Fade
+  Height: Height
+  Help: Help
+  Hide: Hide
+  IgnoreTimescale: Ignore Timescale
+  Image: Image
+  Info: Info
+  Left: Left
+  Load: Load
+  LoopSound: Loop Sound
+  Max: Max
+  MaxValue: Max Value
+  Min: Min
+  MinValue: Min Value
+  MinimumSize: Minimum Size
+  Move: Move
+  MoveDown: Move Down
+  MoveUp: Move Up
+  Multiplier: Multiplier
+  Name: Name
+  New: New
+  No: No
+  Ok: Ok
+  Open: Open
+  Opened: Opened
+  Overlay: Overlay
+  Override: Override
+  Overview: Overview
+  Paste: Paste
+  PitchSemitones: Pitch (semitones)
+  PlayMode: Play Mode
+  Prefix: Prefix
+  Progress: Progress
+  Recent: Recent
+  Remove: Remove
+  Rename: Rename
+  RenameTo: Rename to
+  Reset: Reset
+  ReversedProgress: Reversed Progress
+  Right: Right
+  Rotate: Rotate
+  Save: Save
+  SaveAs: SaveAs
+  Scale: Scale
+  Search: Search
+  Seconds: Seconds
+  Select: Select
+  Send: Send
+  Settings: Settings
+  Show: Show
+  Simulate: Simulate
+  Sound: Sound
+  SoundName: Sound Name
+  SoundSource: Sound Source
+  Sounds: Sounds
+  Sources: Sources
+  Speed: Speed
+  Suffix: Suffix
+  Target: Target
+  Text: Text
+  Up: Up
+  Value: Value
+  VolumeDb: Volume (dB)
+  Warning: Warning
+  WholeNumbers: Whole Numbers
+  Width: Width
+  X: X
+  Y: Y
+  Yes: Yes
+  Action: Action
+  EnablePlugin: Enable Plugin
+  DisablePlugin: Disable Plugin
+  Compiling: Compiling
+  FsmName: FSM Name
+  TargetFsm: Target FSM
+  NodySettings: Nody Settings
+  AddCategory: Add Category
+  AddItem: Add Item
+  DispatchGameEvents: Dispatch Game Events
+  DispatchButtonClicks: Dispatch Button Clicks
+  AddToPopupQueue: Add to Popup Queue
+  AlternateInput: Alternate Input
+  AlternateKeyCode: Alternate Key Code
+  AlternateVirtualButton: Alternate Virtual Button
+  Animation: Animation
+  AnimationCurve: Animation Curve
+  AnimationType: Animation NamesDatabaseType
+  Animator: Animator
+  AnimatorEvents: Animator Events
+  Animators: Animators
+  AnotherEntryExists: There is another entry with the same name.
+  AnyGameEvent: Any GameEvent
+  AnyGameEventWillTriggerThisListener: Any game event will trigger this listener
+  AnyUIButtonWillTriggerThisListener: Any UIButton will trigger this listener
+  AnyUIDrawerWillTriggerThisListener: Any UIDrawer will trigger this listener
+  AnyUIViewWillTriggerThisListener: Any UIView will trigger this listener
+  ApplicationQuit: Application Quit
+  AreYouSureYouWantToDeleteDatabase: Are you sure you want to delete the database?
+  AreYouSureYouWantToDeletePopupReference: Are you sure you want to delete the popup
+    reference?
+  AreYouSureYouWantToRemoveCategory: Are you sure you want to remove the category?
+  AreYouSureYouWantToRemoveTheEntry: Are you sure you want to remove the database
+    entry?
+  AreYouSureYouWantToResetDatabase: Are you sure you want to reset this database?
+  ArrowComponents: Arrow Components
+  AtFinish: '@FINISH'
+  AtStart: '@START'
+  AutoSort: Auto Sort
+  AutoStartLoopAnimation: Auto Start Loop Animation
+  BackButton: Back Button
+  BehaviorAtStart: Behavior at Start
+  ButtonLabel: Button Label
+  Buttons: UIButton
+  CannotAddEmptyEntry: Cannot add an empty entry.
+  Canvas: Canvas
+  CategoryIsEmpty: Category is empty...
+  CenterSelectedNodes: Center Selected Nodes
+  CloseDirection: Close Direction
+  CloseDrawer: Close Drawer
+  CloseSpeed: Close Speed
+  ClosedPosition: Closed Position
+  ComponentDisabled: Component disabled
+  Container: Container
+  ContainerSize: Container Size
+  ControllerName: Controller Name
+  CreateAnimation: Create Animation
+  CreateNewCategory: Create a new category
+  CreateParentAndCenterPivot: Create Parent and Center Pivot
+  CustomName: Custom Name
+  CustomPosition: Custom Position
+  CustomResetValue: Custom Reset Value
+  CustomSortingLayer: Custom Sorting Layer
+  CustomSortingOrder: Custom Sorting Order
+  DatabaseAlreadyExists: Database name already exists. Enter a new name and try again.
+  DatabaseHasBeenReset: Database has been reset
+  DatabaseIsEmpty: Database is empty...
+  DatabaseName: Database Name
+  DatabaseRefreshed: Database Refreshed
+  DatabaseSorted: Database Sorted
+  DebugMode: Debug Mode
+  DeleteDatabase: Delete Database
+  DeletePopupReference: Delete Popup Reference
+  DeletePreset: Delete Preset
+  DeletedPopupReference: Deleted Popup Reference
+  DetectGestures: Detect Gestures
+  Direction: Direction
+  DisableCanvas: Disable Canvas
+  DisableGameObject: Disable GameObject
+  DisplayTarget: Display Target
+  DontDestroyGameObjectOnLoad: Don't destroy GameObject on scene change
+  DragDrawer: Drag Drawer
+  DrawerName: Drawer Name
+  EaseType: Ease NamesDatabaseType
+  Effect: Effect
+  Elasticity: Elasticity
+  EnterCategoryName: Enter a category name
+  EnterDatabaseName: Enter a database name
+  EnterGameEventToListenFor: Enter a game event to listen for
+  EveryLongTapWillTriggerThisListener: Every LongTap will trigger this listener
+  EverySwipeWillTriggerThisListener: Every Swipe will trigger this listener
+  EveryTapWillTriggerThisListener: Every Tap will trigger this listener
+  FadeBy: Fade By Alpha Value (0-1)
+  FadeFrom: Fade From Alpha Value (0-1)
+  FadeOutContainer: Fade Out Container
+  FadeTo: Fade To Alpha Value (0-1)
+  FixedSize: FixedSize
+  GameEvent: Game Event
+  GameEvents: Game Events
+  GameObject: Game Object
+  GeneralSettings: General Settings
+  GestureType: Gesture NamesDatabaseType
+  GlobalListener: Global Listener
+  GoToEnterNode: Go to OnEnterNode Node
+  GoToExitNode: Go to OnExitNode Node
+  GoToStartNode: Go to Start Node
+  Graph: Graph
+  GraphHasNoNodes: Graph has no nodes
+  GraphId: Graph Id
+  GraphicRaycaster: Graphic Raycaster
+  HasBeenAddedToClipboard: has been added to clipboard...
+  HidePopup: Hide Popup
+  HideProgressor: Hide Progressor
+  HideView: Hide View
+  HideViews: Hide UIView
+  Images: Images
+  IncludeAudioClipNamesInSearch: Include AudioClip names in search
+  InstantAction: Instant Action
+  IsNotPrefab: is not a prefab.
+  KeyCode: Key Code
+  Label: Label
+  Labels: Labels
+  LastModified: Last Modified
+  ListIsEmpty: List is empty...
+  ListenForAllGameEvents: Listen for all GameEvents
+  ListenForAllUIButtons: Listen for all UIButtons
+  ListenForAllUIDrawers: Listen for all UIDrawers
+  ListenForAllUIViews: Listen for all UIViews
+  ListeningForGameEvent: Listening for GameEvent
+  LoadBehavior: Load Behavior
+  LoadPreset: Load Preset
+  LoadSceneBy: Load Scene By
+  LoadSceneMode: Load Scene Mode
+  LoadSelectedPresetAtRuntime: Load selected preset at runtime.
+  LoadedGraph: Loaded Graph
+  LoopType: Loop NamesDatabaseType
+  Manual: Manual
+  MissingPrefabReference: Missing prefab reference
+  MoveBy: Move By
+  MoveFrom: Move From
+  MoveTo: Move To
+  NewCategory: New Category
+  NewCategoryNameCannotBeEmpty: Category name cannot be empty. Please enter a category
+    name.
+  NewDatabase: New Database
+  NewPopup: New Popup
+  NewPreset: New Preset
+  NewPresetNameCannotBeEmpty: Preset name cannot be empty. Please enter a new preset
+    name.
+  NoGraphReferenced: No graph referenced
+  NumberOfLoops: Loops
+  OnAnimationFinished: OnAnimationFinished
+  OnAnimationStart: OnAnimationStart
+  OnLoadScene: On Load Scene
+  OnSceneLoaded: On Scene Loaded
+  OnTrigger: OnTrigger
+  OpenControlPanel: Open Control Panel
+  OpenDatabase: Open Database
+  OpenDrawer: Open Drawer
+  OpenSpeed: Open Speed
+  OpenedPosition: Opened Position
+  OperationCannotBeUndone: Operation cannot be undone.
+  OutputMixerGroup: Output Mixer Group
+  OverrideColor: Override Color
+  ParticleSystem: Particle System
+  PercentageOfScreenZeroToOne: Percentage Of Screen (0 - 1)
+  PleaseEnterNewName: Please enter a new name.
+  PopupName: Popup Name
+  PopupPrefab: Popup Prefab
+  PresetCategory: Preset Category
+  PresetName: Preset Name
+  PreviewAnimation: Preview Animation
+  ProgressTargets: Progress Targets
+  Progressor: Progressor
+  Progressors: Progressors
+  PunchBy: Punch By
+  RefreshDatabase: Refresh Database
+  RemoveCategory: Remove Category
+  RemoveDuplicates: Remove Duplicates
+  RemoveEmptyCategories: Remove Empty Categories
+  RemoveEmptyEntries: Remove Empty Categories
+  RemoveItem: Remove Item
+  RemoveNullEntries: Remove Null Entries
+  RemovedDuplicateEntries: Removed duplicate entries
+  RemovedEntriesWithNoName: Removed entries with no name
+  RemovedEntriesWithNullPrefabs: Removed entries with null prefabs
+  RemovedEntry: Removed Entry
+  RemovedNullEntries: Removed null entries
+  RenameCategory: Rename Category
+  RenameCategoryDialogMessage: All the UI settings (and code references) that use
+    this category name, will not get automatically changed.
+  RenameGameObjectTo: Rename GameObject to
+  ResetAnimationSettings: Reset Animation Settings
+  ResetClosedPosition: Reset Closed Position
+  ResetDatabase: Reset Database
+  ResetOpenedPosition: Reset Opened Position
+  ResetRoot: Reset Root
+  ResetValue: Reset Value
+  RotateBy: Rotate By
+  RotateFrom: Rotate From
+  RotateMode: Rotate Mode
+  RotateTo: Rotate To
+  RuntimeOptions: Runtime Options
+  RuntimePreset: Runtime Preset
+  SavePreset: Save Preset
+  ScaleBy: Scale By
+  ScaleFrom: Scale From
+  ScaleTo: Scale To
+  SceneActivationDelay: Scene Activation Delay
+  SceneBuildIndex: Scene Build Index
+  SceneName: Scene Name
+  SearchForUnregisteredDatabases: Search for unregistered databases
+  SecondsDelay: Seconds Delay
+  SelectSwipeDirection: Select Swipe Direction
+  SendGameEvent: Send Game Event
+  SendGameEvents: Send Game Events
+  SetTargetGameObject: Set Target GameObject
+  SetUIButtonToListenFor: Set an UIButton to listen for
+  SetUIDrawerToListenFor: Set an UIDrawer to listen for
+  SetUIViewToListenFor: Set an UIView to listen for
+  SetValue: Set Value
+  ShowCurveModifier: Show Curve Modifier
+  ShowPopup: Show Popup
+  ShowProgressor: Show Progressor
+  ShowView: Show View
+  ShowViews: Show UIView
+  Sort: Sort
+  SortDatabase: Sort Database
+  SortingSteps: Sorting Steps
+  Soundy: Soundy
+  SoundySettings: Soundy Settings
+  StartDelay: Start Delay
+  StopAnimation: Stop Animation
+  StopBehavior: Stop Behavior
+  SubGraph: SubGraph
+  SwipeDirection: Swipe Direction
+  TargetCanvas: Target Canvas
+  TargetGameObject: Target GameObject
+  TargetLabel: Target Label
+  TargetProgress: Target Progress
+  TargetVariable: Target Variable
+  TextLabel: Text Label
+  TextMeshPro: TextMeshPro
+  TextMeshProLabel: TextMeshPro Label
+  ToggleLabel: Toggle Label
+  ToggleOFF: Toggle OFF
+  ToggleON: Toggle ON
+  ToggleProgressor: Toggle Progressor
+  ToggleSettings: Toggle Settings
+  TouchySettings: Touchy Settings
+  TriggerAction: Trigger Action
+  TriggerEventsAfterAnimation: Trigger events after animation
+  UIPopupDatabase: UIPopup Database
+  UnityEvent: Unity Event
+  UnityEvents: Unity Events
+  UpdateContainer: Update Container
+  UpdateEffect: Update Effect
+  UpdateOnHide: Update on Hide
+  UpdateOnShow: Update on Show
+  UpdatePopupName: Update Popup Name
+  UpdatePopupPrefab: Update Popup Prefab
+  UpdateValue: Update Value
+  UseCustomFromAndTo: Custom From & To
+  UseMultiplier: Use Multiplier
+  Version: Version
+  Vibrato: Vibrato
+  VirtualButton: Virtual Button
+  WhenClosed: When Closed
+  YouCanOnlyAddPrefabsToDatabase: You can only add prefabs to the database
+  YouTube: YouTube
+  PlaySound: Play Sound
+  StopSound: Stop Sound
+  SoundAction: Sound Action
+  AllSoundsBeforePlaying: all sounds before playing
+  GetSceneBy: Get Scene By
+  WaitFor: Wait For
+  Time: Time
+  SceneLoad: Scene Load
+  SceneUnload: Scene Unload
+  ActiveSceneChange: Active Scene Change
+  Scene: Scene
+  BuildIndex: Build Index
+  AnyScene: Any Scene
+  RandomDuration: Random Duration
+  WaitForAnimationToFinish: Wait for Animation to Finish
+  TargetValue: Target Value
+  CurrentTimeScale: Current Time Scale
+  TargetTimeScale: Target Time Scale
+  Weight: Weight
+  Chance: Chance
+  Behaviors: Behaviors
+  ToggleComponentBehaviors: Toggle component Behaviors
+  DefaultValues: Default Values
+  DefaultValuesDescription: Default values for newly created components
+  RenamePrefix: Rename Prefix
+  RenameSuffix: Rename Suffix
+  Debug: Debug
+  SoundyDatabase: Soundy Database
+  CheckingForIssues: Checking for issues
+  ScriptingDefineSymbol: Scripting Define Symbol
+  RemoveSymbolFromAllBuildTargetGroups: Remove symbol from all the BuildTargetGroups?
+  AddSymbolToAllBuildTargetGroups: Add symbol to all the BuildTargetGroups?
+  Enable: Enable
+  Integrations: Integrations
+  ToggleSupportForThirdPartyPlugins: Toggle support for third party plug-ins
+  Functionality: Functionality
+  FunctionalityDescription: Toggle system capabilities
+  DisableFunctionality: Disable Functionality
+  EnableFunctionality: Enable Functionality
+  OrientationDetectorDescription: Detect the current screen orientation of the target
+    device
+  News: News
+  NoteworthyInformation: Noteworthy information
+  SupportEmail: Support Email
+  HelpResources: Help Resources
+  SocialLinks: Social Links
+  GetInTouch: Get in touch
+  OtherReferences: Other References
+  UsefulLinks: Useful Links
+  HowToUse: How To Use
+  ActivateLoadedScenesNodeName: Activate Loaded Scenes
+  ActiveNode: Active Node
+  AddSource: Add Source
+  AllowSceneActivation: Allow Scene Activation
+  AreYouSureConvertToGraph: Are you sure you want to convert this SubGraph into a
+    Graph?
+  AreYouSureConvertToSubGraph: Are you sure you want to convert this Graph into a
+    SubGraph
+  BackButtonNodeName: Back Button
+  ConnectionPoint: Connection Point
+  Connections: Connections
+  ConvertToGraph: Convert to Graph
+  ConvertToSubGraph: Convert to SubGraph
+  CreateGraph: Create Graph
+  CreateNewGraph: Create a new Graph
+  CreateNewGraphAsSubGraph: Create a new Graph as a SubGraph
+  CreateSubGraph: Create SubGraph
+  DefaultZoom: Default Zoom
+  DefaultZoomDescription: Default zoom value used when creating a new graph
+  DotAnimationSpeed: Dot Animation Speed
+  DefaultDotAnimationSpeedDescription: Animation speed for the dot that travels across
+    connections
+  EnterNodeName: Enter
+  ExitNodeName: Exit
+  SetActiveNode: Set Active Node
+  GraphModel: Graph Model
+  InputConnected: Input Connected
+  InputConnections: Input Connections
+  InputNotConnected: Input Not Connected
+  LoadSceneNodeName: Load Scene
+  MuteAllSounds: Mute All Sounds
+  NoAnimationEnabled: No Animation Enabled
+  NoSound: No Sound
+  Node: Node
+  NodeId: Node Id
+  NodeName: Node Name
+  NodeNameTooltip: The name of this node. Should be an unique name inside the graph.
+  NodeState: Node State
+  NodeWidth: Node Width
+  Nodes: Nodes
+  NotConnected: Not connected
+  OnEnter: On Enter
+  OnEnterNode: On Enter Node
+  OnExit: On Exit
+  OnExitNode: On Exit Node
+  OnFixedUpdate: On FixedUpdate
+  OnLateUpdate: On LateUpdate
+  OnNodeFixedUpdate: On Node FixedUpdate
+  OnNodeLateUpdate: On Node LateUpdate
+  OnNodeUpdate: On Node Update
+  OnUpdate: On Update
+  OpenGraph: Open Graph
+  OpenNody: Open Nody
+  OpenSubGraph: Open SubGraph
+  OutputConnected: Output Connected
+  OutputConnections: Output Connections
+  OutputNotConnected: Output Not Connected
+  OverviewZoom: Overview Zoom
+  PauseAllSounds: Pause All Sounds
+  Play: Play
+  Portal: Portal
+  PortalNodeName: Portal Node
+  RandomNodeName: Random
+  RenameNodeTo: Rename Node to
+  ClearRecentOpenedGraphsList: Clear Recent Graphs
+  ClearRecentOpenedGraphsListDescription: Clears the list of recently opened graphs
+  Socket: Socket
+  SoundNodeName: Sound Node
+  SourceName: Source Name
+  StartNodeName: Start
+  StopAllSounds: Stop All Sounds
+  SubGraphNodeName: SubGraph
+  SwitchBackNodeName: Switch Back
+  TimeScaleNodeName: TimeScale
+  UINodeNodeName: UI Node
+  UnloadSceneNodeName: Unload Scene
+  UnmuteAllSounds: Unmute All Sounds
+  UnpauseAllSounds: Unpause All Sounds
+  WaitForSceneToUnload: Wait for Scene to Unload
+  WaitNodeName: Wait
+  UIDrawerNodeName: UIDrawer
+  AudioClip: Audio Clip
+  AutoKillIdleControllers: Auto Kill Idle Controllers
+  AutoKillIdleControllersDescription: Auto kill any Soundy Controllers that are have
+    been unused for the set idle kill duration
+  AutoResetSequence: Auto Reset Sequence
+  ControllerIdleKillDuration: Controller Idle Kill Duration
+  ControllerIdleKillDurationDescription: The duration (in seconds) a Soundy Controller
+    needs to be idle to be considered killable
+  IdleCheckInterval: Idle Check Interval
+  IdleCheckIntervalDescription: Time interval (in seconds) to check for idle Soundy
+    Controllers to kill them
+  IgnoreListenerPause: Ignore Listener Pause
+  EnableSupportForMasterAudio: Enable support for MasterAudio in the Control Panel
+  NewSoundDatabase: New Sound Database
+  OutputAudioMixerGroup: Output Audio Mixer Group
+  RenameSoundDatabase: Rename Sound Database
+  RenameSoundDatabaseDialogMessage: All the UI settings (and code references) that
+    use this database name, will not get automatically changed.
+  SetAsSoundName: Set as Sound Name
+  SpatialBlend: Spatial Blend (0-1)
+  WhenUIDrawerIsClosed: When this UIDrawer is closed
+  YouAreResponsibleToUpdateYourCode: You are responsible to update your code and the
+    UI settings.
+  MinimumNumberOfControllers: Minimum Number of Controllers
+  MinimumNumberOfControllersDescription: The minimum number of Soundy Controllers
+    that should be available in the Soundy Pooler, that will not get automatically
+    killed even if they are killable
+  SwipeLength: Swipe Length
+  SwipeLengthDescription: Minimum travel distance, for a sliding a finger or a stylus
+    pen across a touch-sensitive screen, to be considered a swipe
+  LongTapDuration: Long Tap Duration
+  LongTapDurationDescription: Time duration, for a light touch on a touch-sensitive
+    screen, to be considered a long tap (long press)
+  CanvasName: Canvas Name
+  AnimateAllUIViewsWithSameCategoryAndName: Animate all UIViews with the same category
+    & name
+  AutoHideAfterShow: Auto Hide after Show
+  AutoSelectButtonAfterShow: Auto selected button after Show
+  CustomStartPosition: Custom Start Position
+  DeselectAnyButton: If any button is selected, deselect it on
+  GetPosition: Get Position
+  HideAnimationWillNotWork: Hide animation will not work.
+  LoopView: View Loop
+  PlayAnimationInZeroSeconds: Play the animation in zero seconds (instant action)
+  ResetPosition: Reset Position
+  SetPosition: Set Position
+  ShowAnimationWillNotWork: Show animation will not work.
+  TargetOrientation: Target Orientation
+  ViewCategory: View Category
+  ViewName: View Name
+  WhenUIViewIsHiddenDisable: When UIView is hidden disable
+  WhenUIPopupIsHiddenDisable: When this UIPopup is hidden disable the Container
+  AllowMultipleClicks: Allow Multiple Clicks
+  ButtonCategory: Button Category
+  ButtonName: Button Name
+  ClickMode: Click Mode
+  DeselectButton: Deselect Button
+  DeselectButtonAfterClick: Deselect Button After Click
+  DisableButtonInterval: Disable Button Interval
+  DisableInterval: Disable Interval
+  InputMode: Input Mode
+  NormalLoopAnimation: Normal Loop Animation
+  OnClick: OnClick
+  OnDeselected: OnDeselected
+  OnDoubleClick: OnDoubleClick
+  OnLongClick: OnLongClick
+  OnPointerDown: OnPointerDown
+  OnPointerEnter: OnPointerEnter
+  OnPointerExit: OnPointerExit
+  OnPointerUp: OnPointerUp
+  OnSelected: OnSelected
+  RegisterInterval: Register Interval
+  SelectButton: Select Button
+  SelectedLoopAnimation: Selected Loop Animation
+  NoAnimatorFound: No Animator Found
+  ParameterName: Parameter Name
+  ParameterType: Parameter NamesDatabaseType
+  ResetTrigger: Reset Trigger
+  SetBoolValueTo: Set Bool value to
+  SetFloatValueTo: Set Float value to
+  SetIntValueTo: Set Int value to
+  TargetAnimator: Target Animator
+  TargetAnimatorDoesNotHaveAnAnimatorController: Target Animator does not have an
+    Animator Controller
+  TargetAnimatorDoesNotHaveAnyParameters: Target Animator does not have any parameters
+  TriggerName: Trigger Name
+  MissingTargetFsmMessage: Missing Target Fsm
+  SelectListenerToActivateMessage: Select at least one listener
+  HowToUsePlaymakerEventDispatcherMessage: 'This dispatcher auto targets the first
+    FSM on this GameObject.
+
+    You can override that and reference the FSM you want to target.
+
+
+    For this dispatcher to work with the target Playmaker FSM you have to create FSM
+    Events named exactly as the Game Events or Button Names that you want to listen
+    for and react to.The FSM Events, Game Events and Button Names are case sensitive.
+
+
+    To dispatch Game Events, you have to create, in the target FSM, Events named exactly
+    as the Game Event commands you wants to catch.
+
+
+    To dispatch Button Clicks, you have to create, in the target FSM, Events named
+    exactly as the Button Names you wants to catch.'
+  MissingDrawerNameTitle: Missing Drawer Name
+  MissingDrawerNameMessage: Please enter a drawer name.
+  MissingGameEventTitle: Missing Game Event
+  MissingGameEventMessage: Please enter a game event.
+  MissingSceneNameTitle: Missing Scene Name
+  MissingSceneNameMessage: Please enter a scene name.
+  WrongSceneBuildIndexTitle: Wrong Scene Build Index
+  WrongSceneBuildIndexMessage: Check the 'Scenes in Build' in the 'Build Settings'
+    window.
+  DoubleClickNodeToOpenSubGraphMessage: In the Nody Graph Window, you can double click
+    on a Sub-Graph Node's header or footer to open it's referenced SubGraph
+  DuplicateNodeMessage: "There is another node with the same node name in this graph.
+    \n\nPlease rename this node to an unique name."
+  DuplicateNodeTitle: Duplicate Node Name
+  NoGraphReferencedMessage: Please reference a Graph asset.
+  NoGraphReferencedTitle: No Graph asset has been referenced
+  NoSourceConnectedMessage: Please connect at least one Source Input and Output Sockets
+    pair, that will be considered as one of the Sources Paths.
+  NoSourceConnectedTitle: No Source
+  NoSubGraphReferencedMessage: Please reference a Sub-Graph asset.
+  NoSubGraphReferencedTitle: No Graph asset has been referenced
+  NoTargetConnectedMessage: Please connect the Target Input and Output Sockets to
+    create the Target Path.
+  NoTargetConnectedTitle: No Target
+  NotConnectedMessage: "This node should to be connected in order for the graph to
+    work as expected. \n\nPlease connect this node to another other node."
+  NotConnectedTitle: Node is not connected
+  NotListeningForAnyGameEventMessage: Please enter a non-empty GameEvent to fix this
+    issue.
+  NotListeningForAnyGameEventTitle: Not listening for any GameEvent.
+  NotSendingAnyGameEventMessage: Please enter a non-empty GameEvent to fix this issue.
+  NotSendingAnyGameEventTitle: Not sending any GameEvents
+  ProgressTargetAnimatorParameterInfo: 'The ParameterName variable name should be
+    a float parameter defined in the Animator.
+
+
+    The float parameter should be set as the ''Normalized Time'' parameter for the
+    target Animation.
+
+
+    See documentation and videos for more details.'
+  ReferencedGraphIsNotSubGraphMessage: "Please reference a Graph that is set to work
+    as a Sub-Graph. \n\nA Graph that is set to work as a Sub-Graph will have an Enter
+    Node and an Exit Node, unlike a Graph that has only a Start Node."
+  ReferencedGraphIsNotSubGraphTitle: The referenced Graph is NOT a Sub-Graph
+  ReferencedGraphIsSubGraphMessage: "Please reference a Graph that is NOT set to work
+    as a Sub-Graph. \n\nA Graph that is set to work as a Sub-Graph will have an Enter
+    Node and an Exit Node, unlike a Graph that has only a Start Node."
+  ReferencedGraphIsSubGraphTitle: The referenced Graph is a Sub-Graph
+  SomeProgressTargetsGetUpdatedOnlyInPlayMode: Some Progress Targets (like the Animator)
+    get updated only in Play Mode. Thus the simulation will not work in Edit Mode
+    for those targets.
+  SupportForMasterAudioNotEnabled: Support for Master Audio has not been enabled in
+    the Control Panel
+  SupportForPlaymakerNotEnabled: Support for Playmaker has not been enabled in the
+    Control Panel
+  SupportForTextMeshProNotEnabled: Support for TextMeshPro has not been enabled in
+    the Control Panel
+  ThisClassShouldBeExtended: This class should not be used like this. Use another
+    class that inherits from this one to work as expected.
+  UnnamedNodeMessage: "This node does not have a name. \n\nPlease enter an unique
+    name for this node."
+  UnnamedNodeTitle: Unnamed Node

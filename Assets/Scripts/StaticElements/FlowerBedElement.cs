@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.UI;
+using TMPro;
 
 public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
@@ -26,23 +28,33 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
       UIController uIController = Camera.main.GetComponent<UIController>();
-        if (state == ConstructionController.ConstructionState.Off)
+
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
+            Debug.Log(this.data.name);
+            RectTransform menuTransform = uIController.extendMenu.RectTransform;
+            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
-            uIController.SetDataPanel(this);
+            if (!uIController.PlantsViewsDisplay())
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            else
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
+                    uIController.SetDataPanel(this.data.name, "Fleur");
         }
     }
 
     public override void DeSelect()
     {
-      UIController uIController = Camera.main.GetComponent<UIController>();
-      if (uIController.GetMenuScript() != null && uIController.GetMenuScript().rotateState)
-      {
-          uIController.GetMenuScript().rotateState = false;
-          uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-      }
-        // TODO si le menu bloque le ray cast appel destroymenu
-        //uIController.GetMenuScript().DestroyMenu();
+        if (Camera.main != null)
+        {
+            UIController uIController = Camera.main.GetComponent<UIController>();
+            if (uIController.GetMenuScript() != null)
+            {
+                uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+                uIController.GetMenuScript().DestroyMenu();
+            }
+        }
     }
 
     //Serialization

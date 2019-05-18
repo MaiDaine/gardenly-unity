@@ -43,7 +43,11 @@ public class PlayerController : MonoBehaviour
             return;
 
         if (Input.GetKey(KeyCode.Escape))
+        {
             this.constructionController.Cancel();
+            Camera.main.GetComponentInChildren<UIController>().Cancel(true);
+            Camera.main.GetComponentInChildren<UIController>().ForceResetButton();
+        }
         
         //Redo - Revert
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
@@ -173,6 +177,11 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < this.selectionList.Count; i++)
                 this.actionHandler.NewStateAction("Destroy", this.selectionList[i].GetGameObject());
             this.selectionList.Clear();
+            UIController uIController = Camera.main.GetComponentInChildren<UIController>();
+            if (uIController.GetMenuScript() != null)
+                uIController.GetMenuScript().DestroyMenu();
+            if (uIController.GetFlowerBedMenuScript() != null)
+                uIController.GetFlowerBedMenuScript().DestroyMenu();
         }
     }
 
@@ -200,9 +209,12 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnFlowerBedMesh()
     {
-        Camera.main.GetComponent<UIController>().Cancel();
-        SpawnController.instance.SpawnFlowerBed();
-        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
+        {
+            Camera.main.GetComponent<UIController>().Cancel();
+            constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+            SpawnController.instance.SpawnFlowerBed();
+        }
     }
 
     private bool IsPointerOnUi() { return (EventSystem.current.IsPointerOverGameObject()); }

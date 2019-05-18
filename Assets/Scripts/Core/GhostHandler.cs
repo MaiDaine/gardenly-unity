@@ -22,7 +22,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool OnCancel()
     {
-        Camera.main.GetComponent<UIController>().Cancel();
+       // Camera.main.GetComponent<UIController>().Cancel();
         return true;
     }
 
@@ -36,7 +36,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool Building(Vector3 position) { return true; }
 
-    public virtual void EndConstruction(Vector3 position) { this.gameObject.layer = 10; }
+    public virtual void EndConstruction(Vector3 position)
+    {
+        this.gameObject.layer = 10;
+        Camera.main.GetComponent<UIController>().ResetButton();
+    }
 
     public virtual void StartAction() { this.gameObject.layer = 0; }
 
@@ -63,6 +67,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public PlantData GetData()
     {
         return this.data;
+    }
+
+    public void SetData(PlantData data)
+    {
+        if (data != null)
+            this.data = data;
     }
 
 

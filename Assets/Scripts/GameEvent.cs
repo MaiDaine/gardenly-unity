@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class GameEvent : ScriptableObject
 {
-    private readonly List<GameEventListener> eventListeners =
-        new List<GameEventListener>();
+    private readonly List<GEventListener> eventListeners =
+        new List<GEventListener>();
 
     public void Raise()
     {
@@ -13,13 +13,13 @@ public class GameEvent : ScriptableObject
             this.eventListeners[i].OnEventRaised();
     }
 
-    public void RegisterListener(GameEventListener listener)
+    public void RegisterListener(GEventListener listener)
     {
         if (!this.eventListeners.Contains(listener))
             this.eventListeners.Add(listener);
     }
 
-    public void UnregisterListener(GameEventListener listener)
+    public void UnregisterListener(GEventListener listener)
     {
         if (this.eventListeners.Contains(listener))
             this.eventListeners.Remove(listener);

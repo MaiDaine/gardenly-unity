@@ -90,12 +90,14 @@ public class ConstructionController : MonoBehaviour
 
         if (this.ghost != null)
         {
-            if (this.ghost.OnCancel())
-                Destroy(ghost.gameObject);
-            else
-                ghost.gameObject.SetActive(false);
+            if (this.currentState != ConstructionState.Off)
+            {
+                if (this.ghost.OnCancel())
+                    Destroy(ghost.gameObject);
+                else
+                    ghost.gameObject.SetActive(false);
+            }
             this.ghost = null;
-            this.gridState = false;
             this.Grid.activ = false;
             this.currentState = ConstructionState.Off;
         }
@@ -103,13 +105,16 @@ public class ConstructionController : MonoBehaviour
 
     public void SpawnGhost(GhostHandler GhostRef)
     {
-        this.Camera.GetComponent<UIController>().Cancel();
-        if (currentState != ConstructionState.Off)
+        if (this.currentState == ConstructionState.Off)
+        {
+            this.Camera.GetComponent<UIController>().Cancel(true);
             Cancel();
-        this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
-        this.currentState = ConstructionState.Positioning;
-        if (this.gridState)
-            this.Grid.activ = true;
+            this.currentState = ConstructionState.Positioning;
+            this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
+            this.ghost.SetData(GhostRef.GetData());
+            if (this.gridState)
+                this.Grid.activ = true;
+        }
     }
 
     public void SetGhost(GhostHandler ghost)
