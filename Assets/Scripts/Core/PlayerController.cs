@@ -106,7 +106,16 @@ public class PlayerController : MonoBehaviour
                  }
             }
             if (Input.GetMouseButtonDown(0) && constructionController.editionState != ConstructionController.EditionType.Off)
+            {
+                if (constructionController.editionState == ConstructionController.EditionType.Position)
+                {
+                    Vector3 pos;
+                    RaycastHit hit;
+                    if (!(constructionController.MouseRayCast(out pos, out hit) && constructionController.CompleteEditPosition(pos)))
+                        return;
+                }
                 actionHandler.ActionComplete(true);
+            } 
         }
         else
             this.constructionController.UpdateGhost();

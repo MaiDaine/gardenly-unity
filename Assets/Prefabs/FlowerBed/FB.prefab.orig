@@ -91,6 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
+<<<<<<< HEAD
+  name: Entrer un nom
+=======
   flowerBedName: PLACEHOLDER
+>>>>>>> 62bcc2bf37aa8210804c632ecf0b7d6ca4017064
   soilType: PLACEHOLDER
   vertices: []

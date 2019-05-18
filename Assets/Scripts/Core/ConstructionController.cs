@@ -139,7 +139,7 @@ public class ConstructionController : MonoBehaviour
         RaycastHit hit;
         ISelectable neighbor = null;
         ISnapable snapable = null;
-        
+
         if (MouseRayCast(out tmp, out hit))
         {
             lastCastHit = hit;
@@ -227,9 +227,28 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
-    public void EditPosition(Vector3 position)//TODO TMP
+    public void EditPosition(Vector3 position)
     {
         this.ghost.Move(position);
+    }
+
+    public bool CompleteEditPosition(Vector3 position)
+    {
+        if (this.ghost.needFlowerBed)
+        {
+            Vector3 currentPos;
+            RaycastHit hit;
+
+            MouseRayCast(out currentPos, out hit);
+            if (hit.collider.gameObject.tag != "FlowerBed")
+            {
+                MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
+                return false;
+            }
+        }
+
+        this.ghost.Move(position);
+        return true;
     }
 
     public void EditRotation(float input)
