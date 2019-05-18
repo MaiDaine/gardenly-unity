@@ -2,31 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(TextMesh))]
+[RequireComponent(typeof(TextMesh))]
 public class LineTextHandler : MonoBehaviour
 {
     public float textSize = 0.5f;
 
+    private Camera mainCamera;
     private TextMesh text;
-    
-    void Awake()
+
+    private void Awake()
     {
-        this.text = GetComponent<TextMesh>();
+        text = GetComponent<TextMesh>();
+        mainCamera = Camera.main;
     }
 
     private void OnDestroy()
     {
-        GameObject.Destroy(this.gameObject);
+        GameObject.Destroy(gameObject);
     }
 
     private void LateUpdate()
     {
-        this.transform.rotation = Quaternion.LookRotation(this.transform.position - Camera.main.transform.position, Vector3.up);
-        this.text.characterSize = this.textSize * (transform.position - Camera.main.transform.position).magnitude / 100f;
+        if (mainCamera.orthographic)
+        {
+            transform.eulerAngles = new Vector3(90f, 180 + mainCamera.transform.eulerAngles.y / 90 * 90, 0f);
+            text.characterSize = textSize * (transform.position.y - (mainCamera.orthographicSize * CameraController.From2D)) / 100f;
+        }
+        else
+        {
+
+            transform.eulerAngles = new Vector3(90f, mainCamera.transform.eulerAngles.y / 90 * 90, 0f);
+            text.characterSize = textSize * (transform.position - mainCamera.transform.position).magnitude / 100f;
+        }
+    }
+
+    public void SetColor(Color color)
+    {
+        text.color = color;
     }
 
     public void SetText(string inText)
     {
-        this.text.text = inText;
+        text.text = inText;
     }
 }

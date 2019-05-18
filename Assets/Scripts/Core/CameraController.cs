@@ -7,6 +7,9 @@ public class CameraController : MonoBehaviour
     public GameObject plane;
     public bool inputEnabled = true;
 
+    public const float To2D = ((maxAltitude2D - minAltitude2D) / (maxAltitude - minAltitude));
+    public const float From2D = ((maxAltitude - minAltitude) / (maxAltitude2D - minAltitude2D));
+
     private const float cameraBaseMoveSpeed = 10f;
     private const float cameraRotateSpeed = 100f;
     private const float cameraZoomSpeed = 250f;
@@ -27,8 +30,6 @@ public class CameraController : MonoBehaviour
     private float far = 1000f;
     private float near = .3f;
     private const float fov = 60f;
-    private const float To2D = ((maxAltitude2D - minAltitude2D) / (maxAltitude - minAltitude));
-    private const float From2D = ((maxAltitude - minAltitude) / (maxAltitude2D - minAltitude2D));
 
     private void Start()
     {
