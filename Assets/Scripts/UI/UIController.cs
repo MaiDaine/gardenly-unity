@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public UIView[] plantsViews;
     public UIButton[] tmpBtn;
     public UIButton cameraModeButton;
+    public UIButton dataPanelInitBtn;
     public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
@@ -30,6 +31,8 @@ public class UIController : MonoBehaviour
     protected bool subMenuOpen = true;
     protected GhostHandler ghost = null;
     protected FlowerBed flowerBed = null;
+    protected string plantType;
+    protected string plantName;
 
     private void Awake()
     {
@@ -147,11 +150,126 @@ public class UIController : MonoBehaviour
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
+    public void SetDescriptionDataPanel()
+    {
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Description" && tmp.description != null)
+            {
+                label.text = tmp.description;
+            }
+            if (label.name == "Advices" && tmp.description != null)
+            {
+
+            }
+        }
+    }
+
+    public string GetMonth(int month)
+    {
+        switch (month)
+        {
+            case 1:
+                return "Janvier";
+            case 2:
+                return "Février";
+            case 3:
+                return "Mars";
+            case 4:
+                return "Avril";
+            case 5:
+                return "Mai";
+            case 6:
+                return "Juin";
+            case 7:
+                return "Juillet";
+            case 8:
+                return "Août";
+            case 9:
+                return "Septembre";
+            case 10:
+                return "Octobre";
+            case 11:
+                return "Novembre";
+            case 12:
+                return "Décembre";
+            default:
+                break;
+        }
+        return "";
+    }
+
+    public void SetMaintainDataPanel()
+    {
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Flowering" && tmp.floweringPeriodBegin != 0 && tmp.floweringPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
+            }
+            if (label.name == "Cutting" && tmp.cuttingPeriodBegin != 0 && tmp.cuttingPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
+            }
+            if (label.name == "Planting" && tmp.plantingPeriodBegin != 0 && tmp.plantingPeriodEnd != 0)
+            {
+                label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
+            }
+        }
+    }
+
+    public void SetInformationsDataPanel()
+    {
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "HeightMin" && tmp.heightMin != 0)
+            {
+                label.text = tmp.heightMin + "cm";
+            }
+            if (label.name == "HeightMax" && tmp.heightMax != 0)
+            {
+                label.text = tmp.heightMax + "cm";
+            }
+            if (label.name == "Shape" && tmp.shape != null)
+            {
+                label.text = tmp.shape;
+            }
+            if (label.name == "Colors" && tmp.plantColor != null)
+            {
+                label.text = tmp.plantColor;
+            }
+            if (label.name == "SoilType" && tmp.soilType != null)
+            {
+                label.text = tmp.soilType;
+            }
+            if (label.name == "SoilPh")
+            {
+                label.text = tmp.phRangeLow + " " + tmp.phRangeHigh;
+            }
+        }
+        sliders[0].value = tmp.waterNeed;
+        sliders[1].value = tmp.rusticity;
+        sliders[2].value = tmp.sunNeed;
+    }
+
 
     public void SetDataPanel(string plantName, string plantType)
     {
         RectTransform menuTransform = this.extendMenu.RectTransform;
         RectTransform viewTransform = this.plantsViews[0].RectTransform;
+
+        this.plantName = plantName;
+        this.plantType = plantType;
 
         if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName && this.dataPanel.IsVisible)
         {
@@ -170,17 +288,14 @@ public class UIController : MonoBehaviour
 
         if (tmp == null)
             return;
-       /* if (labels != null && labels.Length > 0)
+
+        foreach(TextMeshProUGUI label in labels)
         {
-            labels[0].text = tmp.name;
-            labels[1].text = tmp.description;
-            labels[11].text = tmp.phRangeLow + ", " + tmp.phRangeHigh;
-        }
-        if (sliders != null && sliders.Length > 0)
-        {
-            sliders[0].value = tmp.waterNeed;
-            sliders[1].value = tmp.sunNeed;
-            sliders[2].value = tmp.rusticity;
+            if (label.name == "Name")
+            {
+                label.text = tmp.name;
+            }
+               
         }
         if (icon != null && tmp.image != null)
         {
@@ -189,11 +304,12 @@ public class UIController : MonoBehaviour
         if (tmp.image == null)
             icon.texture = this.textureRef;
         if (script[0] != null)
-            script[0].SetGhost(plantType);*/
+            script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)
         {
             this.dataPanel.Show();
         }
+        this.dataPanelInitBtn.ExecuteClick();
     }
 
     public void SetFlowerBedDataPanel(FlowerBed flowerBedRef)

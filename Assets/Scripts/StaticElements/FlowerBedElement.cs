@@ -31,6 +31,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
+            Debug.Log(this.data.name);
             RectTransform menuTransform = uIController.extendMenu.RectTransform;
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
