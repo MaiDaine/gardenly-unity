@@ -9,36 +9,24 @@ public class MeshHandler : MonoBehaviour
 
     public Mesh Init(Vector2[] vertices2D, int qualitySettings = 0)
     {
+        mesh = new Mesh();
+        List<Vector2> points = new List<Vector2>(vertices2D);
+        List<int> indices = null;
+        List<Vector3> vertices = null;
 
-        mattatz.Triangulation2DSystem.Polygon2D polygon = mattatz.Triangulation2DSystem.Polygon2D.Contour(vertices2D);
-        mattatz.Triangulation2DSystem.Triangulation2D triangulation = new mattatz.Triangulation2DSystem.Triangulation2D(polygon, 22.5f);
-        mesh = triangulation.Build();
+        Triangulate.triangulate(points, null, out indices, out vertices);
 
-        for (int i = 0; i < qualitySettings; i++)
-            ApplyQuality();
+        mesh.Clear();
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = indices.ToArray();
+        mesh.Optimize();
+
         GenerateUV();
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
-        return mesh;
-    }
 
-    public Mesh AddPoint(Vector3 point, int[] triangles)
-    {
-        Vector3[] tmpV = new Vector3[mesh.vertexCount + 1];
-        Array.Copy(mesh.vertices, tmpV, mesh.vertexCount);
-        tmpV[mesh.vertexCount] = point;
-        int[] tmpT = new int[mesh.triangles.Length + 3];
-        Array.Copy(mesh.triangles, tmpT, mesh.triangles.Length);
-        tmpT[mesh.triangles.Length] = triangles[0];
-        tmpT[mesh.triangles.Length + 1] = triangles[1];
-        tmpT[mesh.triangles.Length + 2] = triangles[2];
-        mesh.vertices = tmpV;
-        mesh.triangles = tmpT;
-        mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
-        mesh.RecalculateTangents();
         return mesh;
     }
 
