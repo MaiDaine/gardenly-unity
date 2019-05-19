@@ -16,6 +16,10 @@
     "loading_error": "Erreur lors du chargement, veuillez recharger la page"
   },
 
+  "names": {
+    "flowerbed":  "Parterre"
+  },
+
   "succes": {
     "save_sucessfull": "Sauvegarde réussite"
   }

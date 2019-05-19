@@ -16,6 +16,10 @@
     "loading_error": "Error while loading, please reload the page"
   },
 
+  "names": {
+    "flowerbed": "Flowerbed"
+  },
+
   "succes": {
     "save_sucessfull": "Save sucessfull"
   }
