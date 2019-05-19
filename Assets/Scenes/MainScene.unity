@@ -3844,7 +3844,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.49999988
+  m_Value: 0.49999994
   m_Size: 0.33012348
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6765,7 +6765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 170076734}
   secondsInFullDay: 120
-  currentTimeOfDay: 0.5833333
+  targetTime: 0.6246667
   timeMultiplier: 1
 --- !u!1 &183907540
 GameObject:
