@@ -33,6 +33,7 @@ public class UIController : MonoBehaviour
     protected FlowerBed flowerBed = null;
     protected string plantType;
     protected string plantName;
+    protected List<UIView> currentHideViews = new List<UIView>();
 
     private void Awake()
     {
@@ -42,6 +43,11 @@ public class UIController : MonoBehaviour
             this.cameraModeButton.SelectButton();
             this.cameraModeButton.DisableButton();
         }
+    }
+
+    private void Udpate()
+    {
+        Debug.Log(this.currentHideViews.Count);
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
@@ -63,6 +69,16 @@ public class UIController : MonoBehaviour
         //update visual
         //revertActionSet.items
         //redoActionSet.items
+    }
+
+    public void SetCurrentHideViews(UIView view)
+    {
+        this.currentHideViews.Add(view);
+    }
+
+    public List<UIView> GetCurrentHideView()
+    {
+        return this.currentHideViews;
     }
 
     public void ResetButton()
@@ -125,7 +141,9 @@ public class UIController : MonoBehaviour
     {
         if (this.menu != null)
             this.menu.DestroyMenu(spawn);
-        if (this.flowerBedMenuScript)
+        else
+            this.DestroyMenu(spawn);
+        if (this.flowerBedMenuScript != null)
             this.flowerBedMenuScript.DestroyMenu();
         this.ResetButton();
     }
@@ -135,6 +153,37 @@ public class UIController : MonoBehaviour
     public MenuScript GetMenuScript() { return this.menu; }
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
+
+    public void DestroyMenu(bool spawn = false)
+    {
+        if (this.dynamicObjectMenu.IsVisible)
+            this.dynamicObjectMenu.Hide();
+        this.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+        
+        foreach (UIView view in this.plantsViews)
+        {
+     
+            if (view.IsVisible)
+            {
+                view.Hide();
+            }
+        }
+        if (this.dataPanel.IsVisible)
+            this.dataPanel.Hide();
+        
+    }
+
+    public void SaveViews()
+    {
+        foreach (UIView view in this.plantsViews)
+        {
+
+            if (view.IsVisible && view.name != "TutoBox")
+                this.currentHideViews.Add(view);
+        }
+        if (this.dataPanel.IsVisible)
+            this.currentHideViews.Add(this.dataPanel);
+    }
 
     public void SpawnDynMenu(GhostHandler ghost, UIView typeMenu)
     {
@@ -267,11 +316,14 @@ public class UIController : MonoBehaviour
     {
         RectTransform menuTransform = this.extendMenu.RectTransform;
         RectTransform viewTransform = this.plantsViews[0].RectTransform;
+        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+
+        Animator animator = null;
 
         this.plantName = plantName;
         this.plantType = plantType;
 
-        if (this.dataPanel.GetComponentInChildren<TextMeshProUGUI>().text == plantName && this.dataPanel.IsVisible)
+        if (labels[labels.Length - 1].text == plantName && this.dataPanel.IsVisible)
         {
             this.dataPanel.Hide();
             return;
@@ -281,7 +333,6 @@ public class UIController : MonoBehaviour
             this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
 
         PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
-        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
@@ -297,12 +348,22 @@ public class UIController : MonoBehaviour
             }
                
         }
+
+        animator = icon.GetComponentInChildren<Animator>();
+
         if (icon != null && tmp.image != null)
         {
+            if (animator != null)
+                animator.enabled = false;
             icon.texture = tmp.image;
+            icon.transform.localEulerAngles = new Vector3(0, 0, 0);
+            Debug.Log(icon.transform.localEulerAngles.z);
         }
         if (tmp.image == null)
+        {
+            animator.enabled = true;
             icon.texture = this.textureRef;
+        }
         if (script[0] != null)
             script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)

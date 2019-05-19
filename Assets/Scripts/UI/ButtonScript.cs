@@ -14,7 +14,7 @@ public class ButtonScript : MonoBehaviour
 
     protected string ghostType;
 
-    private void Update()
+    /*private void Update()
     {
         if (ghostType != null)
         {
@@ -25,7 +25,7 @@ public class ButtonScript : MonoBehaviour
                 img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
             }
         }
-    }
+    }*/
 
     public void SetGhost(string ghostType)
     {

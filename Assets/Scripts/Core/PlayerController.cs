@@ -39,28 +39,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!cameraController.inputEnabled)
-            return;
 
         if (Input.GetKey(KeyCode.Escape))
         {
             this.constructionController.Cancel();
             Camera.main.GetComponentInChildren<UIController>().Cancel(true);
             Camera.main.GetComponentInChildren<UIController>().ForceResetButton();
-        }
-        
-        //Redo - Revert
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-        {
-            GhostAction currentAction = actionHandler.RedoAction();
-            if (currentAction != null)
-                UpdateSelectionAfterAction(currentAction);
-        }
-        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-        {
-            GhostAction currentAction = actionHandler.RevertAction();
-            if (currentAction != null)
-                UpdateSelectionAfterAction(currentAction);
         }
 
         //Selection
@@ -119,6 +103,23 @@ public class PlayerController : MonoBehaviour
         }
         else
             this.constructionController.UpdateGhost();
+
+        if (!cameraController.inputEnabled)
+            return;
+
+        //Redo - Revert
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+        {
+            GhostAction currentAction = actionHandler.RedoAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+        {
+            GhostAction currentAction = actionHandler.RevertAction();
+            if (currentAction != null)
+                UpdateSelectionAfterAction(currentAction);
+        }
     }
 
     //Selection Handle

@@ -82,6 +82,11 @@ public class CameraController : MonoBehaviour
         this.changeMod = state;
     }
 
+    public void SetInputEnable(bool state)
+    {
+        this.inputEnabled = state;
+    }
+
 
     private void Update()
     {

@@ -75,7 +75,7 @@ public class ViewController : MonoBehaviour
             text.gameObject.SetActive(this.isPressed);
         }
         if (this.isPressed)
-            rect.sizeDelta = new Vector2(122.4f, rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(200f, rect.sizeDelta.y);
         else
             rect.sizeDelta = new Vector2(60.82f, rect.sizeDelta.y);
     }
@@ -86,6 +86,7 @@ public class ViewController : MonoBehaviour
         UIController controller = Camera.main.GetComponent<UIController>();
         
         viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
+        Camera.main.GetComponentInChildren<CameraController>().inputEnabled = false;
         if (viewController.dynButtons.Count == 0)
         {
             if (ReactProxy.instance.externalData.plants[this.plantType].Values.Count > 0)
@@ -102,6 +103,14 @@ public class ViewController : MonoBehaviour
                     buttonScript.SetGhost(this.plantType);
                 }
             }
+        }
+    }
+
+    public void ManageHide(UIView view)
+    {
+        if (view.IsVisible || view.IsShowing)
+        {
+            view.Hide();
         }
     }
 }
