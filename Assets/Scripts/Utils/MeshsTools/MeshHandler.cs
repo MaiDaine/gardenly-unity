@@ -10,11 +10,7 @@ public class MeshHandler : MonoBehaviour
     public Mesh Init(Vector2[] vertices2D, int qualitySettings = 0)
     {
         mesh = new Mesh();
-
-        // FIXME vertices2D as list
-        List<Vector2> points = new List<Vector2>();
-        points.AddRange(vertices2D);
-
+        List<Vector2> points = new List<Vector2>(vertices2D);
         List<int> indices = null;
         List<Vector3> vertices = null;
 
@@ -31,24 +27,6 @@ public class MeshHandler : MonoBehaviour
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
 
-        return mesh;
-    }
-
-    public Mesh AddPoint(Vector3 point, int[] triangles)
-    {
-        Vector3[] tmpV = new Vector3[mesh.vertexCount + 1];
-        Array.Copy(mesh.vertices, tmpV, mesh.vertexCount);
-        tmpV[mesh.vertexCount] = point;
-        int[] tmpT = new int[mesh.triangles.Length + 3];
-        Array.Copy(mesh.triangles, tmpT, mesh.triangles.Length);
-        tmpT[mesh.triangles.Length] = triangles[0];
-        tmpT[mesh.triangles.Length + 1] = triangles[1];
-        tmpT[mesh.triangles.Length + 2] = triangles[2];
-        mesh.vertices = tmpV;
-        mesh.triangles = tmpT;
-        mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
-        mesh.RecalculateTangents();
         return mesh;
     }
 

@@ -116,7 +116,6 @@ public class ShapeCreator : GhostHandler
         lineDistanceText.gameObject.SetActive(false);
         lineAngleText.gameObject.SetActive(false);
         Destroy(currentPoint);
-        Debug.Log("Trigger event");
         eventShapeConstructionFinished.Invoke();
     }
 

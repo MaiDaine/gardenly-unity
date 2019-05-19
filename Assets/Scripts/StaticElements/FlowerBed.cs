@@ -62,14 +62,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         this.gameObject.AddComponent<MeshCollider>();
         this.GetComponent<MeshCollider>().sharedMesh = mesh;
         this.GetComponent<MeshCollider>().enabled = true;
-        // FIXME
-        // if (!isFixed && mesh.triangles.Length + 1 < 3 * (vertices.Length - 2))
-        // {
-        //     System.Array.Reverse(vertices);
-        //     Destroy(meshHandler);
-        //     Destroy(mesh);
-        //     CreateMesh(true);
-        // }
     }
 
     private void Setup()
