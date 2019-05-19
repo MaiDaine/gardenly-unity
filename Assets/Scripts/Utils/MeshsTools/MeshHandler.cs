@@ -9,18 +9,28 @@ public class MeshHandler : MonoBehaviour
 
     public Mesh Init(Vector2[] vertices2D, int qualitySettings = 0)
     {
+        mesh = new Mesh();
 
-        mattatz.Triangulation2DSystem.Polygon2D polygon = mattatz.Triangulation2DSystem.Polygon2D.Contour(vertices2D);
-        mattatz.Triangulation2DSystem.Triangulation2D triangulation = new mattatz.Triangulation2DSystem.Triangulation2D(polygon, 22.5f);
-        mesh = triangulation.Build();
+        // FIXME vertices2D as list
+        List<Vector2> points = new List<Vector2>();
+        points.AddRange(vertices2D);
 
-        for (int i = 0; i < qualitySettings; i++)
-            ApplyQuality();
+        List<int> indices = null;
+        List<Vector3> vertices = null;
+
+        Triangulate.triangulate(points, null, out indices, out vertices);
+
+        mesh.Clear();
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = indices.ToArray();
+        mesh.Optimize();
+
         GenerateUV();
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
+
         return mesh;
     }
 
