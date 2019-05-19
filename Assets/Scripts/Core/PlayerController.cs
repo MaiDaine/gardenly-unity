@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     public const int layerMaskInteractible = (1 << 9);
     public const int layerMaskStatic = (1 << 10);
 
-    public GameObject canvas;
     public List<ISelectable> selectionList = new List<ISelectable>();
     public ISelectable currentSelection = null;
     public ActionHandler actionHandler;

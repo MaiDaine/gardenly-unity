@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class GardenData : MonoBehaviour, ISerializable
 {
+    public UIController uiController;
     public string gardenName = "PlaceHolder";
+
     private Vector2[] boundaries = new Vector2[2] { new Vector2(0, 0), new Vector2(100, 100) };
 
     private void Start()
     {
         SerializationController.instance.SetGardenData(StoreData());
+    }
+
+    public void SetGardenName(string name)
+    {
+        gardenName = name;
+        uiController.gardenName.text = name;
     }
 
     //Serialization

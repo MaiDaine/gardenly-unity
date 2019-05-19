@@ -36,7 +36,6 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        this.gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
         if (this.cameraModeButton != null)
         {
             this.cameraModeButton.SelectButton();

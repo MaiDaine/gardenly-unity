@@ -42,6 +42,16 @@ public class ReactProxy : MonoBehaviour
             Destroy(this);
     }
 
+    private void Start()
+    {
+        //Fake InitScene
+        if (Application.isEditor)
+        {
+            SerializationController.instance.GetComponent<GardenData>().SetGardenName("Offline Garden");
+            LocalisationController.instance.Init("FR");//TODO USERPREF
+        }
+    }
+
     //Link To REACT
     public void ExportScene()
     {
@@ -68,9 +78,11 @@ public class ReactProxy : MonoBehaviour
     public void InitScene(string json)
     {
         if (json != "")
-            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
-        if (!Application.isEditor)
+        {
+            SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json)["name"]);
             LocalisationController.instance.Init("FR");//TODO USERPREF
+            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
+        }
     }
 
     public void DispatchQueryResult(string json)
