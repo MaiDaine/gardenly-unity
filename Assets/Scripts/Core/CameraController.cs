@@ -82,6 +82,13 @@ public class CameraController : MonoBehaviour
         this.changeMod = state;
     }
 
+    public void ChangeZoom(int amount)
+    {
+        if (camera.orthographic)
+            Zoom2D(amount);
+        else
+            this.transform.position = Zoom3D(this.transform.position, amount);
+    }
 
     private void Update()
     {
