@@ -1,15 +1,15 @@
-{
+ï»¿{
   "errors": {
     "action": {
-      "no_cancel": "Pas d'action à annuler",
-      "no_revert": "Pas d'action à refaire"
+      "no_cancel": "Pas d'action Ã  annuler",
+      "no_revert": "Pas d'action Ã  refaire"
     },
     "flower_bed": {
-      "invalid_pos": "Cet élément doit être placé dans un parterre",
+      "invalid_pos": "Cet Ã©lÃ©ment doit Ãªtre placÃ© dans un parterre",
       "no_flowerbed": "Vous devez d'abord placer un parterre"
     },
     "shape_creator": {
-      "elements_overlap": "Ces éléments ne peuvent pas se chevaucher",
+      "elements_overlap": "Ces Ã©lÃ©ments ne peuvent pas se chevaucher",
       "lessthan_3points": "Placez au moins 3 points",
       "line_cross": "Vous ne pouvez pas croiser les lignes"
     },
@@ -21,6 +21,6 @@
   },
 
   "succes": {
-    "save_sucessfull": "Sauvegarde réussite"
+    "save_sucessfull": "Sauvegarde rÃ©ussite"
   }
 }
