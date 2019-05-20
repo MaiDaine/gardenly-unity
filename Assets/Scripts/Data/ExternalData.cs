@@ -59,11 +59,10 @@ public class ExternalData : MonoBehaviour
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
-        plantData.requested = true;
-        StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
+        plantData.imgUrl = tmp["thumbnail"];
     }
 
-    private IEnumerator GetTexture(PlantData plantData, string imageUrl)
+    public IEnumerator GetTexture(PlantData plantData, string imageUrl)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageUrl);
         yield return www.SendWebRequest();

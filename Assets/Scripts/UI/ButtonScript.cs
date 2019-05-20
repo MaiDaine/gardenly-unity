@@ -16,9 +16,8 @@ public class ButtonScript : MonoBehaviour
 
     public void OnImageDownload(Texture texture)
     {
-        RawImage img = this.GetComponentInChildren<RawImage>();
-        img.texture = texture;
-        Camera.main.GetComponent<UIController>().SetDataPanel(this.GetComponent<UIButton>().TextMeshProLabel.text, ghostType);
+        string plantName = this.GetComponent<UIButton>().TextMeshProLabel.text;
+        Camera.main.GetComponent<UIController>().SetPlantImg(plantName, this.ghostType, texture);
     }
 
     public void SetGhost(string ghostType)

@@ -88,10 +88,10 @@ public class ViewController : MonoBehaviour
         viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
         if (viewController.dynButtons.Count == 0)
         {
-            string[] plantNames = ReactProxy.instance.GetPlantsType(plantType);
+            string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
             if (plantNames != null)
             {
-                view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
+                this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
                 for (int i = 0; i < plantNames.Length; i++)
                 {
                     GameObject obj = Instantiate(this.plantButton, view.transform);

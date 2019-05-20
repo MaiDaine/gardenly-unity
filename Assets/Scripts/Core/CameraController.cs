@@ -115,7 +115,6 @@ public class CameraController : MonoBehaviour
         Quaternion currentRot = transform.rotation;
 
         this.zoomEnabled = this.IsMouseOverScrollView();
-        Debug.Log(zoomEnabled);
         if (!inputEnabled)
             return;
         if (Input.GetKeyDown(KeyCode.Keypad5))//TODO UI BUTTON

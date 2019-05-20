@@ -78,7 +78,7 @@ public class UIController : MonoBehaviour
     {
         if (ConstructionController.instance.GetGhost() != null || SpawnController.instance.ShapeCreator.gameObject.activeSelf)
             afterClickTrigger = !afterClickTrigger;
-        Debug.Log(afterClickTrigger);
+
     }
 
     public void SetCurrentHideViews(UIView view)
@@ -322,6 +322,25 @@ public class UIController : MonoBehaviour
         sliders[2].value = tmp.sunNeed;
     }
 
+    public void SetPlantImg(string plantName, string plantType, Texture img)
+    {
+        RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
+        Animator animator = icon.GetComponentInChildren<Animator>();
+
+        if (icon != null && img != null)
+        {
+            if (animator != null)
+                animator.enabled = false;
+            icon.texture = img;
+            icon.transform.localEulerAngles = new Vector3(0, 0, 0);
+            Debug.Log(icon.transform.localEulerAngles.z);
+        }
+        if (img == null)
+        {
+            animator.enabled = true;
+            icon.texture = this.textureRef;
+        }
+    }
 
     public void SetDataPanel(string plantName, string plantType)
     {
@@ -329,12 +348,10 @@ public class UIController : MonoBehaviour
         RectTransform viewTransform = this.plantsViews[0].RectTransform;
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
-        Animator animator = null;
-
         this.plantName = plantName;
         this.plantType = plantType;
 
-        if (labels[labels.Length - 1].text == plantName && this.dataPanel.IsVisible)
+        if (labels[labels.Length - 1].text == this.plantName && this.dataPanel.IsVisible)
         {
             this.dataPanel.Hide();
             return;
@@ -345,9 +362,7 @@ public class UIController : MonoBehaviour
 
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
-        RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
-
         if (tmp == null)
             return;
 
@@ -359,22 +374,8 @@ public class UIController : MonoBehaviour
             }
                
         }
-
-        animator = icon.GetComponentInChildren<Animator>();
-
-        if (icon != null && tmp.image != null)
-        {
-            if (animator != null)
-                animator.enabled = false;
-            icon.texture = tmp.image;
-            icon.transform.localEulerAngles = new Vector3(0, 0, 0);
-            Debug.Log(icon.transform.localEulerAngles.z);
-        }
-        if (tmp.image == null)
-        {
-            animator.enabled = true;
-            icon.texture = this.textureRef;
-        }
+        StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+      
         if (script[0] != null)
             script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)
