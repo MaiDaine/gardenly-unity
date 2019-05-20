@@ -28,6 +28,10 @@ public class ExternalData : MonoBehaviour
             var tmp = jsonObject["data"]["getTypes"][i];
             plantsTypes[tmp["name"]] = tmp["id"];
             plants[tmp["name"]] = new Dictionary<string, PlantData>();
+            if (Application.isEditor)
+                ReactProxy.instance.GetPlantsType("Fleur");
+            else
+                ReactProxy.instance.GetPlantsType(tmp["name"]);
         }
     }
 
