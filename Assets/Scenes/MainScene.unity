@@ -2964,12 +2964,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
+      - m_Target: {fileID: 53625877}
+        m_MethodName: AddPlants
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2041964100}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -46052,7 +46052,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1058875892}
-            m_MethodName: AddPlants
+            m_MethodName: SetViewAnchor
             m_Mode: 2
             m_Arguments:
               m_ObjectArgument: {fileID: 279882602}
@@ -46087,17 +46087,6 @@ MonoBehaviour:
           - m_Target: {fileID: 279882602}
             m_MethodName: Toggle
             m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -55468,12 +55457,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
+      - m_Target: {fileID: 1058875892}
+        m_MethodName: AddPlants
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 279882602}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -75185,12 +75174,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
+      - m_Target: {fileID: 1591151454}
+        m_MethodName: AddPlants
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1418433526}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -81192,12 +81181,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
+      - m_Target: {fileID: 1786989299}
+        m_MethodName: AddPlants
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 697912037}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -93309,12 +93298,12 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
+      - m_Target: {fileID: 2018309879}
+        m_MethodName: AddPlants
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 985670293}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -107313,7 +107302,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1786989299}
-            m_MethodName: AddPlants
+            m_MethodName: SetViewAnchor
             m_Mode: 2
             m_Arguments:
               m_ObjectArgument: {fileID: 697912037}
@@ -107356,17 +107345,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 0
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
@@ -112702,7 +112680,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 2018309879}
-            m_MethodName: AddPlants
+            m_MethodName: SetViewAnchor
             m_Mode: 2
             m_Arguments:
               m_ObjectArgument: {fileID: 985670293}
@@ -112737,17 +112715,6 @@ MonoBehaviour:
           - m_Target: {fileID: 985670293}
             m_MethodName: Toggle
             m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -122616,7 +122583,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 53625877}
-            m_MethodName: AddPlants
+            m_MethodName: SetViewAnchor
             m_Mode: 2
             m_Arguments:
               m_ObjectArgument: {fileID: 2041964100}
@@ -122651,17 +122618,6 @@ MonoBehaviour:
           - m_Target: {fileID: 2041964100}
             m_MethodName: Toggle
             m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -125270,7 +125226,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1591151454}
-            m_MethodName: AddPlants
+            m_MethodName: SetViewAnchor
             m_Mode: 2
             m_Arguments:
               m_ObjectArgument: {fileID: 1418433526}
@@ -125279,7 +125235,7 @@ MonoBehaviour:
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
-            m_CallState: 0
+            m_CallState: 2
           - m_Target: {fileID: 1407105809}
             m_MethodName: ResetDynButtons
             m_Mode: 1
@@ -125305,17 +125261,6 @@ MonoBehaviour:
           - m_Target: {fileID: 1418433526}
             m_MethodName: Toggle
             m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

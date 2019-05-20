@@ -79,7 +79,14 @@ public class ViewController : MonoBehaviour
         else
             rect.sizeDelta = new Vector2(61.854f, rect.sizeDelta.y);
     }
- 
+
+    public void SetViewAnchor(UIView viewRef)
+    {
+        UIController controller = Camera.main.GetComponent<UIController>();
+        if (controller != null)
+            viewRef.CustomStartAnchoredPosition = new Vector3(-controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
+    }
+
     public void AddPlants(UIView viewRef)
     {
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
@@ -89,7 +96,6 @@ public class ViewController : MonoBehaviour
         viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
         if (viewController.dynButtons.Count == 0)
         {
-            Debug.Log("Type : " + plantType);
             string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
             if (plantNames != null)
             {
@@ -98,7 +104,6 @@ public class ViewController : MonoBehaviour
                     this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
                 for (int i = 0; i < plantNames.Length; i++)
                 {
-                    Debug.Log(plantNames[i]);
                     GameObject obj = Instantiate(this.plantButton, view.transform);
                     ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
                     UIButton btn = obj.GetComponent<UIButton>();

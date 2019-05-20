@@ -218,16 +218,19 @@ public class UIController : MonoBehaviour
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-        
-        foreach (TextMeshProUGUI label in labels)
-        {
-            if (label.name == "Description" && tmp.description != null)
-            {
-                label.text = tmp.description;
-            }
-            if (label.name == "Advices" && tmp.description != null)
-            {
 
+        if (tmp != null)
+        {
+            foreach (TextMeshProUGUI label in labels)
+            {
+                if (label.name == "Description" && tmp.description != null)
+                {
+                    label.text = tmp.description;
+                }
+                if (label.name == "Advices" && tmp.maintainAdvice != null)
+                 {
+                     label.text = tmp.maintainAdvice;
+                 }
             }
         }
     }
@@ -271,19 +274,22 @@ public class UIController : MonoBehaviour
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
-        foreach (TextMeshProUGUI label in labels)
+        if (tmp != null)
         {
-            if (label.name == "Flowering" && tmp.floweringPeriodBegin != 0 && tmp.floweringPeriodEnd != 0)
+            foreach (TextMeshProUGUI label in labels)
             {
-                label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
-            }
-            if (label.name == "Cutting" && tmp.cuttingPeriodBegin != 0 && tmp.cuttingPeriodEnd != 0)
-            {
-                label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
-            }
-            if (label.name == "Planting" && tmp.plantingPeriodBegin != 0 && tmp.plantingPeriodEnd != 0)
-            {
-                label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
+                if (label.name == "Flowering" && tmp.floweringPeriodBegin != 0 && tmp.floweringPeriodEnd != 0)
+                {
+                    label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
+                }
+                if (label.name == "Cutting" && tmp.cuttingPeriodBegin != 0 && tmp.cuttingPeriodEnd != 0)
+                {
+                    label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
+                }
+                if (label.name == "Planting" && tmp.plantingPeriodBegin != 0 && tmp.plantingPeriodEnd != 0)
+                {
+                    label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
+                }
             }
         }
     }
@@ -294,36 +300,43 @@ public class UIController : MonoBehaviour
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
 
-        foreach (TextMeshProUGUI label in labels)
+        if (tmp != null)
         {
-            if (label.name == "HeightMin" && tmp.heightMin != 0)
+            foreach (TextMeshProUGUI label in labels)
             {
-                label.text = tmp.heightMin + "cm";
+                if (label.name == "HeightMin" && tmp.heightMin != 0)
+                {
+                    label.text = tmp.heightMin + "cm";
+                }
+                if (label.name == "HeightMax" && tmp.heightMax != 0)
+                {
+                    label.text = tmp.heightMax + "cm";
+                }
+                if (label.name == "Shape" && tmp.shape != null)
+                {
+                    label.text = tmp.shape;
+                }
+                if (label.name == "Colors" && tmp.plantColor != null)
+                {
+                    foreach (string color in tmp.plantColor)
+                    {
+                        label.text = label.text + " " + color;
+                    }
+                }
+                if (label.name == "SoilType" && tmp.soilType != null)
+                {
+                    label.text = tmp.soilType;
+                }
+                if (label.name == "SoilPh")
+                {
+                    label.text = "De : " + tmp.phRangeLow + " A " + tmp.phRangeHigh;
+                }
             }
-            if (label.name == "HeightMax" && tmp.heightMax != 0)
-            {
-                label.text = tmp.heightMax + "cm";
-            }
-            if (label.name == "Shape" && tmp.shape != null)
-            {
-                label.text = tmp.shape;
-            }
-            if (label.name == "Colors" && tmp.plantColor != null)
-            {
-                label.text = tmp.plantColor[0];//TODO
-            }
-            if (label.name == "SoilType" && tmp.soilType != null)
-            {
-                label.text = tmp.soilType;
-            }
-            if (label.name == "SoilPh")
-            {
-                label.text = "De : " + tmp.phRangeLow + " A " + tmp.phRangeHigh;
-            }
+
+            sliders[0].value = tmp.waterNeed;
+            sliders[1].value = tmp.rusticity;
+            sliders[2].value = tmp.sunNeed;
         }
-        sliders[0].value = tmp.waterNeed;
-        sliders[1].value = tmp.rusticity;
-        sliders[2].value = tmp.sunNeed;
     }
 
     public void SetPlantImg(string plantName, string plantType, Texture img)
@@ -374,7 +387,6 @@ public class UIController : MonoBehaviour
                 label.text = tmp.name;
             }   
         }
-        Debug.Log(tmp.imgUrl);
         if (tmp.imgUrl != null)
             StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else
