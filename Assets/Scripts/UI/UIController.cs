@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     public UIButtonListener uIButtonListener;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
+    public static bool afterClickTrigger = false;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public FlowerBedPanelScript flowerBedPanelScript;
@@ -71,6 +72,13 @@ public class UIController : MonoBehaviour
         //update visual
         //revertActionSet.items
         //redoActionSet.items
+    }
+
+    public void SetClickTrigger()
+    {
+        if (ConstructionController.instance.GetGhost() != null || SpawnController.instance.ShapeCreator.gameObject.activeSelf)
+            afterClickTrigger = !afterClickTrigger;
+        Debug.Log(afterClickTrigger);
     }
 
     public void SetCurrentHideViews(UIView view)
@@ -172,7 +180,8 @@ public class UIController : MonoBehaviour
         }
         if (this.dataPanel.IsVisible)
             this.dataPanel.Hide();
-        
+        if (this.tutoView.IsVisible)
+            this.tutoView.Hide();
     }
 
     public void SaveViews()
@@ -305,7 +314,7 @@ public class UIController : MonoBehaviour
             }
             if (label.name == "SoilPh")
             {
-                label.text = tmp.phRangeLow + " " + tmp.phRangeHigh;
+                label.text = "De : " + tmp.phRangeLow + " A " + tmp.phRangeHigh;
             }
         }
         sliders[0].value = tmp.waterNeed;
@@ -335,7 +344,6 @@ public class UIController : MonoBehaviour
             this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
 
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-        TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();

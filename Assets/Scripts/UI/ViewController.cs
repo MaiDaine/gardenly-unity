@@ -86,7 +86,6 @@ public class ViewController : MonoBehaviour
         UIController controller = Camera.main.GetComponent<UIController>();
         
         viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
-        Camera.main.GetComponentInChildren<CameraController>().inputEnabled = false;
         if (viewController.dynButtons.Count == 0)
         {
             string[] plantNames = ReactProxy.instance.GetPlantsType(plantType);

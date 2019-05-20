@@ -14,10 +14,6 @@ public class ButtonScript : MonoBehaviour
 
     protected string ghostType;
 
-    private void Update()
-    {
-    }
-
     public void OnImageDownload(Texture texture)
     {
         RawImage img = this.GetComponentInChildren<RawImage>();

@@ -8,7 +8,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     public bool needFlowerBed = false;
     protected PlantData data = null;
     protected List<ISelectable> neighbors = new List<ISelectable>();
-    //TODO UI : add UI controller here 
 
     void Start()
     {
@@ -23,7 +22,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool OnCancel()
     {
-       // Camera.main.GetComponent<UIController>().Cancel();
         return true;
     }
 
@@ -42,7 +40,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         UIController uIController = Camera.main.GetComponent<UIController>();
         this.gameObject.layer = 10;
         uIController.ResetButton();
-        Debug.Log(uIController.GetCurrentHideView().Count);
         if (uIController.GetCurrentHideView() != null && uIController.GetCurrentHideView().Count > 0)
         {
             foreach (UIView view in uIController.GetCurrentHideView())
