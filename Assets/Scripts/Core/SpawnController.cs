@@ -15,8 +15,9 @@ public class SpawnController : MonoBehaviour
     //public FlowerBedHandler FlowerBedHandlerRef;
     public ShapeCreator ShapeCreator;
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
-    public FlowerBedElement[] FBElements = new FlowerBedElement[1];
+    public FlowerBedElement[] FBElements = new FlowerBedElement[2];
     public LineTextHandler lineText;
+    public ModelList plantModels;
 
     private ShapeCreator shapeCreator;
 
@@ -32,6 +33,34 @@ public class SpawnController : MonoBehaviour
     {
         this.shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
         this.shapeCreator.gameObject.SetActive(false);
+    }
+
+    public GhostHandler GetPlantGhost(string type, string name)
+    {
+        PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
+        if (tmp == null)
+            return null;
+        if (tmp.model != -1)
+        {
+            Debug.Log(tmp.model);
+            Debug.Log(plantModels.datas.Count);
+            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
+            elem.subID = tmp.plantID;
+            return elem;
+        }
+        switch (type)
+        {
+            case "Arbre":
+                return DSElements[2];
+            case "Arbuste":
+                return DSElements[3];
+            case "Legume":
+                return FBElements[1];
+            case "Fleur":
+                return FBElements[1];
+            default:
+                return null;
+        }
     }
 
     public void SpawnScene(SerializationData[] data)
@@ -98,21 +127,9 @@ public class SpawnController : MonoBehaviour
 
     public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
     {
-        FlowerBedElement tmp = null;
-        switch (elem.subID)
-        {
-            case FlowerBedElement.FlowerBedElementType.Flower01:
-                tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
-                tmp.InnerDeSerialize(elem);
-                break;
-            default :
-                //TMP FOR FRONT CANVAS
-                tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
-                tmp.InnerDeSerialize(elem);
-                return tmp;
-                //ErrorHandler.instance.ErrorMessage("loading_error");
-                return null;
-        }
+        //TODO MODEL
+        FlowerBedElement tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
+        tmp.InnerDeSerialize(elem);
         return tmp;
     }
 }
