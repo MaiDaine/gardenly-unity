@@ -51,11 +51,6 @@ public class ReactProxy : MonoBehaviour
         Camera.main.GetComponent<UIController>().gardenName.text = this.GetComponent<GardenData>().gardenName;
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("DESTROY");
-    }
-
     //Link To REACT
     public void ExportScene()
     {
