@@ -11,8 +11,8 @@ public class ShapeCreator : GhostHandler
     public float minStep = 25;
     public FlowerBed flowerBed;
 
-    private LineTextHandler lineDistanceText;
-    private LineTextHandler lineAngleText;
+    private LineTextHandler lineInfoText;
+    private bool displayAngle = false;
     private ShapePoint firstPoint = null;
     private Vector2 a, b, c;
     private Color color = new Color(1f, 0f, 0f, 1f);
@@ -25,10 +25,8 @@ public class ShapeCreator : GhostHandler
         firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
         points.Add(firstPoint);
         currentPoint = firstPoint;
-        lineDistanceText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
-        lineAngleText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
-        lineDistanceText.gameObject.SetActive(false);
-        lineAngleText.gameObject.SetActive(false);
+        lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
+        lineInfoText.gameObject.SetActive(false);
     }
 
     public void SelfClear()
@@ -38,28 +36,30 @@ public class ShapeCreator : GhostHandler
         foreach (ShapePoint point in points)
             Destroy(point.gameObject);
         points.Clear();
-        lineDistanceText.gameObject.SetActive(false);
-        lineAngleText.gameObject.SetActive(false);
+        lineInfoText.gameObject.SetActive(false);
+        displayAngle = false;
     }
 
     //GhostHandler overrides
     public override void Positioning(Vector3 position)
     {
         currentPoint.transform.position = new Vector3(position.x, 0.2f, position.z);
-        if (lineDistanceText.isActiveAndEnabled)
+        if (lineInfoText.isActiveAndEnabled)
         {
             Vector3 p1 = points[points.Count - 1].transform.position;
             Vector3 p2 = points[points.Count - 2].transform.position;
 
-            lineDistanceText.transform.position = (p1 + p2) / 2f;
-            lineDistanceText.SetText(string.Format("{0:F1}m", (p1 - p2).magnitude));
+            lineInfoText.transform.position = p1 - (p1 - p2).normalized * 2f;
 
-            if (lineAngleText.isActiveAndEnabled)
+            if (displayAngle)
             {
                 c = new Vector2(p1.x, p1.z);
-                lineAngleText.SetText(string.Format("{0:F1}°", Vector2.Angle(a - b, c - b)));
-                lineAngleText.transform.position = p2 + (p1 - p2).normalized - (p2 - points[points.Count - 3].transform.position).normalized;
+
+                lineInfoText.SetText(string.Format("{0:F1}m\n {1:F1}°", (p1 - p2).magnitude, Vector2.Angle(a - b, c - b)));
             }
+            else
+                lineInfoText.SetText(string.Format("{0:F1}m", (p1 - p2).magnitude));
+
         }
     }
 
@@ -70,7 +70,7 @@ public class ShapeCreator : GhostHandler
             if (ConstructionController.instance.lastCastHit.collider.gameObject.tag == "FlowerBed")
                 return MessageHandler.instance.ErrorMessage("shape_creator", "elements_overlap");
             CreatePoint();
-            lineDistanceText.gameObject.SetActive(true);
+            lineInfoText.gameObject.SetActive(true);
             return false;
         }
 
@@ -102,7 +102,7 @@ public class ShapeCreator : GhostHandler
             return false;
 
         CreatePoint();
-        lineAngleText.gameObject.SetActive(true);
+        displayAngle = true;
         a = new Vector2(points[points.Count - 3].transform.position.x, points[points.Count - 3].transform.position.z);
         b = new Vector2(points[points.Count - 2].transform.position.x, points[points.Count - 2].transform.position.z);
         return false;
@@ -113,8 +113,7 @@ public class ShapeCreator : GhostHandler
     public override void EndConstruction(Vector3 position)
     {
         GridController.instance.eventPostRender.RemoveListener(DrawLines);
-        lineDistanceText.gameObject.SetActive(false);
-        lineAngleText.gameObject.SetActive(false);
+        lineInfoText.gameObject.SetActive(false);
         Destroy(currentPoint);
         eventShapeConstructionFinished.Invoke();
     }
@@ -128,8 +127,8 @@ public class ShapeCreator : GhostHandler
             points.RemoveAt(i);
         }
         Destroy(flowerBed.gameObject);
-        lineDistanceText.gameObject.SetActive(false);
-        lineAngleText.gameObject.SetActive(false);
+        lineInfoText.gameObject.SetActive(false);
+        displayAngle = false;
         return false;
     }
 
