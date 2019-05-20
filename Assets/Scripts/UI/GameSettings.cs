@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameSettings : MonoBehaviour
+public class GameSettings
 {
     public bool music;
     public Resolution resolution;

@@ -10,8 +10,6 @@ public class ConstructionMenu : MonoBehaviour
     public bool state = false;
     public bool open = false;
 
-    private bool startCount = false;
-    private float timer = 1;
     private UIController uIController = null;
 
     private void Start()

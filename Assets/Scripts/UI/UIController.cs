@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     public UIView dataPanel;
     public UIView flowerBedDataPanel;
     public UIView tutoView;
+    public UIView keyBindsBox;
     public UIView[] plantsViews;
     public UIButton[] tmpBtn;
     public UIButton gridButton;
@@ -41,7 +42,6 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        //this.gardenName.text = ReactProxy.instance.GetComponent<GardenData>().gardenName;
         if (this.cameraModeButton != null)
         {
             this.cameraModeButton.SelectButton();
@@ -51,7 +51,8 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        reactProxy = ReactProxy.instance;   
+        reactProxy = ReactProxy.instance;
+        this.keyBindsBox.Show();
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
@@ -184,6 +185,8 @@ public class UIController : MonoBehaviour
             this.dataPanel.Hide();
         if (this.tutoView.IsVisible)
             this.tutoView.Hide();
+        if (this.keyBindsBox.IsVisible)
+            this.keyBindsBox.Hide();
     }
 
     public void SaveViews()
@@ -349,6 +352,7 @@ public class UIController : MonoBehaviour
         RectTransform viewTransform = this.plantsViews[0].RectTransform;
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
+
         this.plantName = plantName;
         this.plantType = plantType;
 
@@ -372,11 +376,11 @@ public class UIController : MonoBehaviour
             if (label.name == "Name")
             {
                 label.text = tmp.name;
-            }
-               
+            }   
         }
+
         StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
-      
+
         if (script[0] != null)
             script[0].SetGhost(plantType);
         if (!this.dataPanel.IsVisible)

@@ -209,6 +209,16 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnFlowerBedMesh()
     {
+        UIController tmp = Camera.main.GetComponentInChildren<UIController>();
+        LabelScript labelScript = null;
+
+        if (tmp != null)
+            labelScript = tmp.tmpBtn[0].GetComponentInChildren<LabelScript>();
+        if (labelScript != null && !labelScript.pressed)
+        {
+            ConstructionController.instance.Cancel();
+            return;
+        }
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
             Camera.main.GetComponent<UIController>().Cancel();

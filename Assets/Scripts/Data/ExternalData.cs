@@ -53,13 +53,14 @@ public class ExternalData : MonoBehaviour
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
         plantData.plantID = tmp["id"];
-        plantData.requested = true;
         plantData.phRangeLow = tmp["phRangeLow"];
         plantData.phRangeHigh = tmp["phRangeHigh"];
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
         plantData.imgUrl = tmp["thumbnail"];
+
+        plantData.requested = true;
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)
