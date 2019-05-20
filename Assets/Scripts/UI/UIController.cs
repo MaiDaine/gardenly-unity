@@ -339,15 +339,12 @@ public class UIController : MonoBehaviour
             icon.texture = img;
             icon.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
-        if (img == null)
-        {
-            animator.enabled = true;
-            icon.texture = this.textureRef;
-        }
     }
 
     public void SetDataPanel(string plantName, string plantType)
     {
+        RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
+        Animator animator = icon.GetComponentInChildren<Animator>();
         RectTransform menuTransform = this.extendMenu.RectTransform;
         RectTransform viewTransform = this.plantsViews[0].RectTransform;
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
@@ -378,8 +375,14 @@ public class UIController : MonoBehaviour
                 label.text = tmp.name;
             }   
         }
-
-        StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+        Debug.Log(tmp.imgUrl);
+        if (tmp.imgUrl != null)
+            StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+        else
+        {
+            animator.enabled = true;
+            icon.texture = this.textureRef;
+        }
 
         if (script[0] != null)
             script[0].SetGhost(plantType);
