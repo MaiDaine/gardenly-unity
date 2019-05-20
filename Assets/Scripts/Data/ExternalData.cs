@@ -28,6 +28,10 @@ public class ExternalData : MonoBehaviour
             var tmp = jsonObject["data"]["getTypes"][i];
             plantsTypes[tmp["name"]] = tmp["id"];
             plants[tmp["name"]] = new Dictionary<string, PlantData>();
+            if (Application.isEditor)
+                ReactProxy.instance.GetPlantsType("Fleur");
+            else
+                ReactProxy.instance.GetPlantsType(tmp["name"]);
         }
     }
 
@@ -53,14 +57,16 @@ public class ExternalData : MonoBehaviour
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
         plantData.plantID = tmp["id"];
+        plantData.plantColor = new string[tmp["colors"].AsArray.Count];
+        for (int i = 0; i < tmp["colors"].AsArray.Count; i++)
+            plantData.plantColor[i] = tmp["colors"].AsArray[i]["name"];
         plantData.phRangeLow = tmp["phRangeLow"];
         plantData.phRangeHigh = tmp["phRangeHigh"];
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
-        plantData.imgUrl = tmp["thumbnail"];
-
-        plantData.requested = true;
+        plantData.status = PlantData.DataStatus.Received;
+        //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)

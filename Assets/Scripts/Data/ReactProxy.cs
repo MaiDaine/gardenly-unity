@@ -120,15 +120,18 @@ public class ReactProxy : MonoBehaviour
 
     public PlantData GetPlantsData(string plantType, string plantName)
     {
-        if (!externalData.plants.ContainsKey(plantType) || !externalData.plants[plantType].ContainsKey(plantName))
+        if (!externalData.plants.ContainsKey(plantType) 
+            || !externalData.plants[plantType].ContainsKey(plantName)
+            || externalData.plants[plantType][plantName].status == PlantData.DataStatus.Requested)
             return null;
-        if (!externalData.plants[plantType][plantName].requested)
+        if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"blossomingEnd\":[4],\"blossomingStart\":[2],\"color\":[\"Vert\",\"Rose\"],\"createdAt\":\"Sat, 04 May 2019 23:45:58 +0000\",\"groundTypes\":[{\"id\":\"e060619a-7977-4280-ba21-f5673ebb6817\"},{\"id\":\"e09f04bf-57a0-45cc-8e89-00f3657bd287\"},{\"id\":\"f6ddd7f8-329e-4809-a869-40281392823b\"}],\"heightLow\":10000,\"heightHigh\":null,\"id\":\"6bcc1cc7-32dd-4e38-b516-7b70d341707f\",\"periodicities\":[{\"name\":\"Vivace\"}],\"phRangeLow\":7,\"phRangeHigh\":7,\"photo\":\"https://i.ytimg.com/vi/9L0HzzrE-ck/hqdefault.jpg\",\"rusticity\":5,\"shapes\":[{\"name\":\"Arrondi\"}],\"sunNeed\":8,\"thumbnail\":\"https://i.ytimg.com/vi/9L0HzzrE-ck/hqdefault.jpg\",\"type\":{\"name\":\"Fleur\"},\"updatedAt\":\"Sat, 04 May 2019 23:45:59 +0000\"}}}");
-            else
+                DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
+            else 
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
-          //  return null;
+            externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
+            return null;
         }
         return externalData.plants[plantType][plantName];
     }

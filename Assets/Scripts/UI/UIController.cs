@@ -310,7 +310,7 @@ public class UIController : MonoBehaviour
             }
             if (label.name == "Colors" && tmp.plantColor != null)
             {
-                label.text = tmp.plantColor;
+                label.text = tmp.plantColor[0];//TODO
             }
             if (label.name == "SoilType" && tmp.soilType != null)
             {
