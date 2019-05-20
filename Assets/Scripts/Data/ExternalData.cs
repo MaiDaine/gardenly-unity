@@ -65,6 +65,8 @@ public class ExternalData : MonoBehaviour
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
+        plantData.description = tmp["description"];
+
         plantData.status = PlantData.DataStatus.Received;
         StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
     }
