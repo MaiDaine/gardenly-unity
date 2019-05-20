@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public UIView tutoView;
     public UIView[] plantsViews;
     public UIButton[] tmpBtn;
+    public UIButton gridButton;
     public UIButton cameraModeButton;
     public UIButton dataPanelInitBtn;
     public UIButtonListener uIButtonListener;
@@ -40,7 +41,7 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        this.gardenName.text = Camera.main.GetComponent<GardenData>().gardenName;
+        //this.gardenName.text = ReactProxy.instance.GetComponent<GardenData>().gardenName;
         if (this.cameraModeButton != null)
         {
             this.cameraModeButton.SelectButton();
@@ -74,13 +75,6 @@ public class UIController : MonoBehaviour
         //redoActionSet.items
     }
 
-    public void SetClickTrigger()
-    {
-        if (ConstructionController.instance.GetGhost() != null || SpawnController.instance.ShapeCreator.gameObject.activeSelf)
-            afterClickTrigger = !afterClickTrigger;
-
-    }
-
     public void SetCurrentHideViews(UIView view)
     {
         this.currentHideViews.Add(view);
@@ -89,6 +83,14 @@ public class UIController : MonoBehaviour
     public List<UIView> GetCurrentHideView()
     {
         return this.currentHideViews;
+    }
+
+    public bool GridButtonIsTrigger()
+    {
+        LabelScript tmp = this.gridButton.GetComponentInChildren<LabelScript>();
+        if (tmp != null)
+            return tmp.pressed;
+        return false;
     }
 
     public void ResetButton()
@@ -333,7 +335,6 @@ public class UIController : MonoBehaviour
                 animator.enabled = false;
             icon.texture = img;
             icon.transform.localEulerAngles = new Vector3(0, 0, 0);
-            Debug.Log(icon.transform.localEulerAngles.z);
         }
         if (img == null)
         {

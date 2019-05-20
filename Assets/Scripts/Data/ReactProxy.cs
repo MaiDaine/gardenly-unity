@@ -40,12 +40,6 @@ public class ReactProxy : MonoBehaviour
             Destroy(this);
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("AUCUN SENS");
-        
-    }
-
     private void Start()
     {
         //Fake InitScene

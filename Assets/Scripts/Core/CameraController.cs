@@ -93,28 +93,12 @@ public class CameraController : MonoBehaviour
             this.transform.position = Zoom3D(this.transform.position, amount);
     }
 
-    public bool IsMouseOverScrollView()
-    {
-        PointerEventData pointer = new PointerEventData(EventSystem.current);
-        List<RaycastResult> rays = new List<RaycastResult>();
-
-        pointer.position = Input.mousePosition;
-        EventSystem.current.RaycastAll(pointer, rays);
-         foreach (RaycastResult ray in rays)
-        {
-            if (ray.gameObject.GetComponentInChildren<ScrollRect>() != null)
-                return false;
-        }
-        return true;
-    }
-
 
     private void Update()
     {
         Vector3 currentPos = transform.position;
         Quaternion currentRot = transform.rotation;
 
-        this.zoomEnabled = this.IsMouseOverScrollView();
         if (!inputEnabled)
             return;
         if (Input.GetKeyDown(KeyCode.Keypad5))//TODO UI BUTTON

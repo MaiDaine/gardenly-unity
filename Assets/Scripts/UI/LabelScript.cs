@@ -62,6 +62,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (this.gameObject.GetComponent<RectTransform>() != null)
+        {
+            Camera.main.GetComponent<CameraController>().zoomEnabled = false;
+        }
         if (!this.pressed)
         {
             if (this.text != null)
@@ -73,6 +77,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Camera.main.GetComponent<CameraController>().zoomEnabled = true;
         if (!this.pressed)
         {
             if (this.text != null)

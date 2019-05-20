@@ -84,6 +84,7 @@ public class ViewController : MonoBehaviour
     {
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
         UIController controller = Camera.main.GetComponent<UIController>();
+        RawImage img;
         
         viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
         if (viewController.dynButtons.Count == 0)
@@ -91,7 +92,9 @@ public class ViewController : MonoBehaviour
             string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
             if (plantNames != null)
             {
-                this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
+                img = this.view.GetComponentInChildren<RawImage>();
+                if (img != null)
+                    this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
                 for (int i = 0; i < plantNames.Length; i++)
                 {
                     GameObject obj = Instantiate(this.plantButton, view.transform);

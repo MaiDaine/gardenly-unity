@@ -89,7 +89,7 @@ public class ConstructionController : MonoBehaviour
             this.ghost = null;
             return;
         }
-        if (this.ghost != null && UIController.afterClickTrigger)
+        if (this.ghost != null)
         {
             if (this.currentState != ConstructionState.Off)
             {
@@ -184,7 +184,7 @@ public class ConstructionController : MonoBehaviour
                 {
                     hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
                     this.currentState = ConstructionState.Off;
-                    if (this.gridState)
+                    if (this.gridState && !Camera.main.GetComponent<UIController>().GridButtonIsTrigger())
                         this.Grid.activ = false;
                     this.ghost.EndConstruction(pos);
                     PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
@@ -208,7 +208,8 @@ public class ConstructionController : MonoBehaviour
                 PlayerController.instance.OnFlowerBedSpawn();
             else
                 PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
-            this.Grid.activ = false;
+            if (this.gridState && !Camera.main.GetComponent<UIController>().GridButtonIsTrigger())
+                this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
                 uIController.GetMenuScript().isMoving = false;
