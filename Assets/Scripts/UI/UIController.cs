@@ -52,7 +52,6 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         reactProxy = ReactProxy.instance;
-        this.keyBindsBox.Show();
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
