@@ -34,6 +34,8 @@ public class UIController : MonoBehaviour
     protected string plantType;
     protected string plantName;
 
+    private ReactProxy reactProxy;
+
     private void Awake()
     {
         if (this.cameraModeButton != null)
@@ -41,6 +43,11 @@ public class UIController : MonoBehaviour
             this.cameraModeButton.SelectButton();
             this.cameraModeButton.DisableButton();
         }
+    }
+
+    private void Start()
+    {
+        reactProxy = ReactProxy.instance;   
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
@@ -152,8 +159,8 @@ public class UIController : MonoBehaviour
     public void SetDescriptionDataPanel()
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
-
+        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
+        
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Description" && tmp.description != null)
@@ -204,7 +211,7 @@ public class UIController : MonoBehaviour
     public void SetMaintainDataPanel()
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
         foreach (TextMeshProUGUI label in labels)
         {
@@ -226,7 +233,7 @@ public class UIController : MonoBehaviour
     public void SetInformationsDataPanel()
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
 
         foreach (TextMeshProUGUI label in labels)
@@ -279,7 +286,7 @@ public class UIController : MonoBehaviour
         if (this.PlantsViewsDisplay())
             this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
 
-        PlantData tmp = ReactProxy.instance.externalData.plants[plantType][plantName];
+        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();

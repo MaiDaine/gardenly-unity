@@ -16,15 +16,13 @@ public class ButtonScript : MonoBehaviour
 
     private void Update()
     {
-        if (ghostType != null)
-        {
-            RawImage img = this.GetComponentInChildren<RawImage>();
+    }
 
-            if (img != null && img.texture == refTexture && this.GetComponent<UIButton>() != null && ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image != null)
-            {
-                img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
-            }
-        }
+    public void OnImageDownload(Texture texture)
+    {
+        RawImage img = this.GetComponentInChildren<RawImage>();
+        img.texture = texture;
+        Camera.main.GetComponent<UIController>().SetDataPanel(this.GetComponent<UIButton>().TextMeshProLabel.text, ghostType);
     }
 
     public void SetGhost(string ghostType)
@@ -33,17 +31,22 @@ public class ButtonScript : MonoBehaviour
             idxObject = 1;
         else
             idxObject = 0;
-        this.ghostType = ghostType; 
+        this.ghostType = ghostType;
     }
 
     public void BuildFunction()
     {
-        this.ghosts[this.idxObject].SetData(ReactProxy.instance.externalData.plants[this.ghostType][this.plantName.text]);
+        PlantData tmp = ReactProxy.instance.GetPlantsData(this.ghostType, this.plantName.text);
+        if (tmp == null)
+            return;
+        this.ghosts[this.idxObject].SetData(tmp);
         ConstructionController.instance.SpawnGhost(this.ghosts[this.idxObject]);
     }
 
     public void SetPanelFunction()
     {
-        Camera.main.GetComponent<UIController>().SetDataPanel(this.GetComponent<UIButton>().TextMeshProLabel.text, ghostType);
+        string tmp = this.GetComponent<UIButton>().TextMeshProLabel.text;
+        ReactProxy.instance.externalData.callbackFinishDownloadImage[tmp] = OnImageDownload;
+        Camera.main.GetComponent<UIController>().SetDataPanel(tmp, ghostType);
     }
 }

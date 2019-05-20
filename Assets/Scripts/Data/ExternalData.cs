@@ -9,7 +9,7 @@ public class ExternalData : MonoBehaviour
 {
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
-    public Action<string> callbackFinishDownloadImage;
+    public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
 
     public void Init(Dictionary<string, Action<string>> callbacks)
     {
@@ -18,7 +18,7 @@ public class ExternalData : MonoBehaviour
         callbacks["getPlant"] = SetPlantData;
     }
 
-    public void SetPlantsTypes(string json)
+    private void SetPlantsTypes(string json)
     {
         var jsonObject = JSONObject.Parse(json);
 
@@ -31,7 +31,7 @@ public class ExternalData : MonoBehaviour
         }
     }
 
-    public void SetPlantOfType(string json)
+    private void SetPlantOfType(string json)
     {
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getAllPlants"].Keys;
@@ -47,17 +47,19 @@ public class ExternalData : MonoBehaviour
         }
     }
 
-    public void SetPlantData(string json)
+    private void SetPlantData(string json)
     {
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
         plantData.plantID = tmp["id"];
+        plantData.requested = true;
         plantData.phRangeLow = tmp["phRangeLow"];
         plantData.phRangeHigh = tmp["phRangeHigh"];
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
+        plantData.requested = true;
         StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
     }
 
@@ -70,6 +72,7 @@ public class ExternalData : MonoBehaviour
             Debug.Log(www.error);
         else
             plantData.image = ((DownloadHandlerTexture)www.downloadHandler).texture;
-        //callbackFinishDownloadImage.Invoke(plantData.name);
+        if (callbackFinishDownloadImage.ContainsKey(plantData.name))
+            callbackFinishDownloadImage[plantData.name].Invoke(plantData.image);
     }
 }

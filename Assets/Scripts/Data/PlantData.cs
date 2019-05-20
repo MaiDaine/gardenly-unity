@@ -26,6 +26,7 @@ public class PlantData
     public int sunNeed;
     public int rusticity;
     public Texture2D image;
+    public bool requested = false;
 
     public PlantData(string name) { this.name = name; }
 
