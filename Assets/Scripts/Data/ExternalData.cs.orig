@@ -57,12 +57,9 @@ public class ExternalData : MonoBehaviour
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
         plantData.plantID = tmp["id"];
-<<<<<<< HEAD
-=======
         plantData.plantColor = new string[tmp["colors"].AsArray.Count];
         for (int i = 0; i < tmp["colors"].AsArray.Count; i++)
             plantData.plantColor[i] = tmp["colors"].AsArray[i]["name"];
->>>>>>> c4aa820bb001c9bcd9f1c2ee448e605f32d356f2
         plantData.phRangeLow = tmp["phRangeLow"];
         plantData.phRangeHigh = tmp["phRangeHigh"];
         plantData.rusticity = tmp["rusticity"];
@@ -70,12 +67,12 @@ public class ExternalData : MonoBehaviour
         plantData.waterNeed = tmp["sunNeed"];
 <<<<<<< HEAD
         plantData.imgUrl = tmp["thumbnail"];
-
-        plantData.requested = true;
 =======
+        plantData.description = tmp["description"];
+
+>>>>>>> ca9f9a3ddfa026eb063022947e10265d7ac9568d
         plantData.status = PlantData.DataStatus.Received;
-        StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
->>>>>>> c4aa820bb001c9bcd9f1c2ee448e605f32d356f2
+        //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)

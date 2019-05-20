@@ -13,6 +13,7 @@ public class PlantData
     public string periodicity;
     public string soilType;
     public string shape;
+    public string imgUrl;
     public string[] plantColor;
     public int heightMin;
     public int heightMax;
