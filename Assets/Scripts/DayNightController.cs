@@ -5,22 +5,23 @@ public class DayNightController : MonoBehaviour
     public Light sun;
     public float secondsInFullDay = 120f;
     [Range(0, 1)]
-    public float currentTimeOfDay = 0;
+    public float targetTime = 0.6246667f;
     [HideInInspector]
     public float timeMultiplier = 1f;
 
     private int timeAnimation;
-    private float targetTime;
+    private float currentTimeOfDay;
     private float sunInitialIntensity;
 
     void Start()
     {
         sunInitialIntensity = sun.intensity;
+        currentTimeOfDay = targetTime;
     }
 
-    public void SetTimeOfDay(int time)
+    public void SetTimeOfDay(float time)
     {
-        targetTime = (float)time / 24f;
+        targetTime = time;
         timeAnimation = (targetTime > currentTimeOfDay) ? 1 : -1;
     }
 
@@ -28,7 +29,7 @@ public class DayNightController : MonoBehaviour
     {
         if (timeAnimation != 0)
         {
-            currentTimeOfDay += (timeAnimation * Time.deltaTime) / 2f;
+            currentTimeOfDay += (timeAnimation * Time.deltaTime) / 10f;
             if ((timeAnimation > 0 && currentTimeOfDay > targetTime)
                 || (timeAnimation < 0 && currentTimeOfDay < targetTime))
             {

@@ -3844,7 +3844,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
+<<<<<<< HEAD
   m_Value: 0.4999998
+=======
+  m_Value: 0.49999994
+>>>>>>> 3ed612b6b330956c432b59a25d343681e0a4ece3
   m_Size: 0.33012348
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6867,7 +6871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 170076734}
   secondsInFullDay: 120
-  currentTimeOfDay: 0.5833333
+  targetTime: 0.6246667
   timeMultiplier: 1
 --- !u!1 &183907540
 GameObject:
@@ -19163,8 +19167,6 @@ GameObject:
   - component: {fileID: 534669909}
   - component: {fileID: 534669912}
   - component: {fileID: 534669911}
-  - component: {fileID: 534669913}
-  - component: {fileID: 534669914}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -19401,6 +19403,7 @@ MonoBehaviour:
   redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
   flowerBedPanelScript: {fileID: 0}
   gardenName: {fileID: 1979017820}
+<<<<<<< HEAD
   textureRef: {fileID: 2800000, guid: caa478b7447a859438a1a9dfc9f9dd91, type: 3}
 --- !u!114 &534669913
 MonoBehaviour:
@@ -19427,6 +19430,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gardenName: PlaceHolder
+=======
+  textureRef: {fileID: 2800000, guid: 7ec8dee98182cee43aaf1145a1d90d00, type: 3}
+>>>>>>> 3ed612b6b330956c432b59a25d343681e0a4ece3
 --- !u!1 &537686114
 GameObject:
   m_ObjectHideFlags: 0
@@ -30144,6 +30150,7 @@ GameObject:
   - component: {fileID: 783192052}
   - component: {fileID: 783192053}
   - component: {fileID: 783192054}
+  - component: {fileID: 783192055}
   m_Layer: 0
   m_Name: ReactProxy
   m_TagString: Untagged
@@ -30203,6 +30210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03da565f58684f48846049f83d7d67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiController: {fileID: 534669912}
   gardenName: PlaceHolder
 --- !u!114 &783192054
 MonoBehaviour:
@@ -30214,6 +30222,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 766e62db1b7c93c4ba99d89d3b1b283f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &783192055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783192049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73891656deaf2746ac4ad94c1ec36b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &784379902

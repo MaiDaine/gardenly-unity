@@ -1,4 +1,4 @@
-{
+﻿{
   "errors": {
     "action": {
       "no_cancel": "No action to cancel",
@@ -14,6 +14,10 @@
       "line_cross": "You can't cross the lines"
     },
     "loading_error": "Error while loading, please reload the page"
+  },
+
+  "names": {
+    "flowerbed": "Flowerbed"
   },
 
   "succes": {

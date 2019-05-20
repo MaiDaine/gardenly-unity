@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public GameObject plane;
     public bool inputEnabled = true;
+    public bool zoomEnabled = true;
 
     public const float To2D = ((maxAltitude2D - minAltitude2D) / (maxAltitude - minAltitude));
     public const float From2D = ((maxAltitude - minAltitude) / (maxAltitude2D - minAltitude2D));
@@ -82,9 +83,12 @@ public class CameraController : MonoBehaviour
         this.changeMod = state;
     }
 
-    public void SetInputEnable(bool state)
+    public void ChangeZoom(int amount)
     {
-        this.inputEnabled = state;
+        if (camera.orthographic)
+            Zoom2D(amount);
+        else
+            this.transform.position = Zoom3D(this.transform.position, amount);
     }
 
 
@@ -111,14 +115,14 @@ public class CameraController : MonoBehaviour
                 currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
                 currentRot = RotatePitch(currentRot, mousePitchDirection * Input.GetAxis("Mouse Y"));
             }
-            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f && zoomEnabled)
                 currentPos = Zoom3D(currentPos, -Input.GetAxis("Mouse ScrollWheel"));
         }
         else
         {
             if (Input.GetMouseButton(1))
                 currentRot = RotateYaw(currentRot, Input.GetAxis("Mouse X"));
-            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f && zoomEnabled)
                 Zoom2D(Input.GetAxis("Mouse ScrollWheel"));
         }
 

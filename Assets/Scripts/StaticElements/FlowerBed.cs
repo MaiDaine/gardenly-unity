@@ -8,8 +8,8 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
-    public string flowerBedName = "PLACEHOLDER";
-    public string soilType = "PLACEHOLDER";
+    public string flowerBedName = "";
+    public string soilType = "";
     public Vector2[] vertices;
 
     private ShapeCreator shapeCreator;
@@ -74,6 +74,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
         PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
         ConstructionController.instance.flowerBeds.Add(this);
+        this.flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
         Camera.main.GetComponentInChildren<UIController>().ResetButton();
     }
 

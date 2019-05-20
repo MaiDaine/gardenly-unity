@@ -13,7 +13,7 @@ public class GraphQL
 
     public string GetPlantsOfType(string name, string typeId)
     {
-        return "{\"query\": \"query GetAllPlants($typeId: ID!, $name: String!) {getAllPlants(name: $name,filters:{typeId: $typeId}){" + name + ": edges{node{name, id}}}}\", \"variables\": {\"typeId\": \"" + typeId + "\", \"name\": \"\"}}";
+        return "{\"query\": \"query GetAllPlants($typeIds: [ID!], $name: String!) {getAllPlants(name: $name,filters:{typeIds: $typeIds}){" + name + ": edges{node{name, id}}}}\", \"variables\": {\"typeId\": [\"" + typeId + "\"], \"name\": \"\"}}";
     }
         
     public string GetPlantData(string plantId)

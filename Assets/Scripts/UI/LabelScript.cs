@@ -13,10 +13,11 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Color actionColor;
     public bool pressed = false;
     public UIView view;
-    public DayNightController dayNightController; 
+    public DayNightController dayNightController;
 
     protected Image image;
-    
+
+    private const float hourModif = 1f / 24f;
 
     private void Start()
     {
@@ -87,29 +88,23 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (btn != null)
         {
             TextMeshProUGUI txt = btn.TextMeshProLabel;
-            string formatTxt = txt.text.Substring(0, 2);
-            if (int.TryParse(formatTxt, out int hour))
+            float vHour = dayNightController.targetTime;
+
+            if (add)
+                vHour = (vHour + hourModif) % 1f;
+            else
             {
-                if (add)
-                {
-                    hour = (hour + 1) % 24;
-                    if (hour >= 10)
-                        txt.SetText("{0} : 00", hour);
-                    else
-                        txt.SetText("0{0} : 00", hour);
-                }
-                else
-                {
-                    hour = (hour - 1) % 24;
-                    if (hour < 0)
-                        hour = 24 + hour;
-                    if (hour >= 10)
-                        txt.SetText("{0} : 00", hour);
-                    else
-                        txt.SetText("0{0} : 00", hour);
-                }
+                vHour -= hourModif;
+                if (vHour < 0)
+                    vHour = 1 + vHour;
             }
-            this.dayNightController.SetTimeOfDay(hour);
+
+            int hour = (int)(vHour * 24f);
+            if (hour >= 10)
+                txt.SetText("{0} : 00", hour);
+            else
+                txt.SetText("0{0} : 00", hour);
+            this.dayNightController.SetTimeOfDay(vHour);
         }
     }
 }
