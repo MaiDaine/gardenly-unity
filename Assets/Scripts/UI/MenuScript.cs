@@ -39,6 +39,7 @@ public class MenuScript : MonoBehaviour, IMenu
                         view.Hide();
                     }
                 }
+                Debug.Log(controller.dataPanel.IsVisible);
                 if (controller.dataPanel.IsVisible)
                 {
                     controller.dataPanel.Hide();

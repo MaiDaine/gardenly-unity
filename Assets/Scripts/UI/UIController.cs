@@ -36,6 +36,7 @@ public class UIController : MonoBehaviour
     protected FlowerBed flowerBed = null;
     protected string plantType;
     protected string plantName;
+    protected PlantData dataRef;
     protected List<UIView> currentHideViews = new List<UIView>();
 
     private ReactProxy reactProxy;
@@ -52,6 +53,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         reactProxy = ReactProxy.instance;
+        this.dataRef = new PlantData("Inconnu");
     }
 
     private void SpawnMenu(GhostHandler selectable, UIView menuType)
@@ -214,6 +216,21 @@ public class UIController : MonoBehaviour
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
+    public void SetDefaultDescriptionDataPanel(TextMeshProUGUI[] labels)
+    {
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Description" && this.dataRef.description != null)
+            {
+                label.text = this.dataRef.description;
+            }
+            if (label.name == "Advices" && this.dataRef.maintainAdvice != null)
+            {
+                label.text = this.dataRef.maintainAdvice;
+            }
+        } 
+    }
+
     public void SetDescriptionDataPanel()
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
@@ -228,17 +245,21 @@ public class UIController : MonoBehaviour
                     label.text = tmp.description;
                 }
                 if (label.name == "Advices" && tmp.maintainAdvice != null)
-                 {
-                     label.text = tmp.maintainAdvice;
-                 }
+                {
+                    label.text = tmp.maintainAdvice;
+                }
             }
         }
+        else
+            this.SetDefaultDescriptionDataPanel(labels);
     }
 
     public string GetMonth(int month)
     {
         switch (month)
         {
+            case 0:
+                return "Absent";
             case 1:
                 return "Janvier";
             case 2:
@@ -269,6 +290,25 @@ public class UIController : MonoBehaviour
         return "";
     }
 
+    public void SetDefaultMaintainDataPanel(TextMeshProUGUI[] labels)
+    {
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Flowering")
+            {
+                label.text = "Absent" + "  A  " + "Absent";
+            }
+            if (label.name == "Cutting")
+            {
+                label.text = "Absent" + "  A  " + "Absent";
+            }
+            if (label.name == "Planting")
+            {
+                label.text = "Absent" + "  A  " + "Absent";
+            }
+        }
+    }
+
     public void SetMaintainDataPanel()
     {
         TextMeshProUGUI[] labels = this.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
@@ -278,20 +318,57 @@ public class UIController : MonoBehaviour
         {
             foreach (TextMeshProUGUI label in labels)
             {
-                if (label.name == "Flowering" && tmp.floweringPeriodBegin != 0 && tmp.floweringPeriodEnd != 0)
+                if (label.name == "Flowering" )
                 {
                     label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
                 }
-                if (label.name == "Cutting" && tmp.cuttingPeriodBegin != 0 && tmp.cuttingPeriodEnd != 0)
+                if (label.name == "Cutting")
                 {
                     label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
                 }
-                if (label.name == "Planting" && tmp.plantingPeriodBegin != 0 && tmp.plantingPeriodEnd != 0)
+                if (label.name == "Planting")
                 {
                     label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
                 }
             }
         }
+        else
+            this.SetDefaultMaintainDataPanel(labels);
+    }
+    public void SetInformationsDataPanelDefault(TextMeshProUGUI[] labels, Slider[] sliders)
+    {
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "HeightMin")
+            {
+
+                label.text = this.dataRef.heightMin + "cm";
+            }
+            if (label.name == "HeightMax")
+            {
+                label.text = this.dataRef.heightMax + "cm";
+            }
+            if (label.name == "Shape")
+            {
+                label.text = "Absent";
+            }
+            if (label.name == "Colors" && this.dataRef.plantColor != null)
+            {
+                label.text = "absent";
+            }
+            if (label.name == "SoilType" && this.dataRef.soilType != null)
+            {
+                label.text = this.dataRef.soilType;
+            }
+            if (label.name == "SoilPh")
+            {
+                label.text = "De : " + this.dataRef.phRangeLow + " A " + this.dataRef.phRangeHigh;
+            }
+        }
+
+        sliders[0].value = this.dataRef.waterNeed;
+        sliders[1].value = this.dataRef.rusticity;
+        sliders[2].value = this.dataRef.sunNeed;
     }
 
     public void SetInformationsDataPanel()
@@ -304,11 +381,12 @@ public class UIController : MonoBehaviour
         {
             foreach (TextMeshProUGUI label in labels)
             {
-                if (label.name == "HeightMin" && tmp.heightMin != 0)
+                if (label.name == "HeightMin")
                 {
+
                     label.text = tmp.heightMin + "cm";
                 }
-                if (label.name == "HeightMax" && tmp.heightMax != 0)
+                if (label.name == "HeightMax")
                 {
                     label.text = tmp.heightMax + "cm";
                 }
@@ -316,12 +394,18 @@ public class UIController : MonoBehaviour
                 {
                     label.text = tmp.shape;
                 }
-                if (label.name == "Colors" && tmp.plantColor != null)
+                if (label.name == "Colors")
                 {
-                    foreach (string color in tmp.plantColor)
+                    if (tmp.plantColor != null)
                     {
-                        label.text = label.text + " " + color;
+                        label.text = "";
+                        foreach (string color in tmp.plantColor)
+                        {
+                            label.text = label.text + color + " ";
+                        }
                     }
+                    else
+                        label.text = "Absent";
                 }
                 if (label.name == "SoilType" && tmp.soilType != null)
                 {
@@ -337,6 +421,8 @@ public class UIController : MonoBehaviour
             sliders[1].value = tmp.rusticity;
             sliders[2].value = tmp.sunNeed;
         }
+        else
+            this.SetInformationsDataPanelDefault(labels, sliders);
     }
 
     public void SetPlantImg(string plantName, string plantType, Texture img)
@@ -364,8 +450,7 @@ public class UIController : MonoBehaviour
 
         this.plantName = plantName;
         this.plantType = plantType;
-
-        if (labels[labels.Length - 1].text == this.plantName && this.dataPanel.IsVisible)
+        if (labels[labels.Length - 1].text == plantName && this.dataPanel.IsVisible)
         {
             this.dataPanel.Hide();
             return;
@@ -377,17 +462,13 @@ public class UIController : MonoBehaviour
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();
-        if (tmp == null)
-            return;
 
-        foreach(TextMeshProUGUI label in labels)
+        foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
-            {
-                label.text = tmp.name;
-            }   
+                label.text = plantName;
         }
-        if (tmp.imgUrl != null)
+        if (tmp != null && tmp.imgUrl != null)
             StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else
         {

@@ -113,7 +113,7 @@ public class ReactProxy : MonoBehaviour
             {
                 SendQuery(graphQL.GetPlantsOfType(plantType, externalData.plantsTypes[plantType]));
             }
-          // return null;
+          return null;
         }
         return externalData.plants[plantType].Values.Select(x => x.name).ToArray();
     }
@@ -131,7 +131,7 @@ public class ReactProxy : MonoBehaviour
             else 
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
-         //   return null;
+         return null;
         }
         return externalData.plants[plantType][plantName];
     }
