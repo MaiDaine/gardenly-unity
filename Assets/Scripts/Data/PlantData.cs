@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlantData
 {
+    public enum DataStatus { None, Requested, Received };
+
     public string plantID;
     public string name;
     public string description;
@@ -11,7 +13,7 @@ public class PlantData
     public string periodicity;
     public string soilType;
     public string shape;
-    public string plantColor;
+    public string[] plantColor;
     public int heightMin;
     public int heightMax;
     public int plantingPeriodBegin;
@@ -26,7 +28,7 @@ public class PlantData
     public int sunNeed;
     public int rusticity;
     public Texture2D image;
-    public bool requested = false;
+    public DataStatus status = DataStatus.None;
 
     public PlantData(string name) { this.name = name; }
 
