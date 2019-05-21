@@ -36,7 +36,7 @@ public class WallHandler : GhostHandler, ISerializable
         else
         {
             this.gameObject.layer = 0;
-            this.transform.localScale = new Vector3(0.1f, 1f, 0.1f);
+            this.transform.localScale = new Vector3(0.1f, 3f, 0.1f);
         }
     }
 
