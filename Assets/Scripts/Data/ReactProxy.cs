@@ -83,7 +83,6 @@ public class ReactProxy : MonoBehaviour
 
     public void DispatchQueryResult(string json)
     {
-        Debug.Log(json);
         var jsonObject = JSONObject.Parse(json);
         if (jsonObject["errors"] != null)
         {

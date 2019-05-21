@@ -73,7 +73,7 @@ public class ExternalData : MonoBehaviour
         StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
 
         plantData.status = PlantData.DataStatus.Received;
-        if (callbackLoadData.ContainsKey(plantData.plantID))
+        if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.plantID))
             callbackLoadData[plantData.plantID].Invoke(plantData);
     }
 

@@ -40,7 +40,7 @@ public class SpawnController : MonoBehaviour
         PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
         if (tmp == null)
             return null;
-        if (tmp.model != -1)
+        if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
         {
             FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
             elem.subID = tmp.plantID;
