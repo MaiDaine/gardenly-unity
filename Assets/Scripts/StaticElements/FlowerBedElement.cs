@@ -47,11 +47,14 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         if (Camera.main != null)
         {
             UIController uIController = Camera.main.GetComponent<UIController>();
+
             if (uIController.GetMenuScript() != null)
             {
                 uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
                 uIController.GetMenuScript().DestroyMenu();
             }
+            else
+                uIController.DestroyMenu();
         }
     }
 

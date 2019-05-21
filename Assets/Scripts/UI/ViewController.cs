@@ -94,9 +94,9 @@ public class ViewController : MonoBehaviour
         UIController controller = Camera.main.GetComponent<UIController>();
         UIView parentView = view.GetComponentInParent<UIView>();
         RawImage img;
-              
-            if (viewController.dynButtons.Count == 0)
-            {
+
+        if (viewController.dynButtons.Count == 0)
+            {  
                 string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
                 if (plantNames != null)
                 {

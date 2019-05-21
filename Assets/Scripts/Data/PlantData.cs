@@ -9,7 +9,7 @@ public class PlantData
     public string plantID;
     public string name;
     public string description = "La description est absente";
-    public string maintainAdvice = "Les conseils d'entretien sont absent";
+    public string maintainAdvice = "Les conseils d'entretien sont absents"; //
     public string periodicity = "";
     public string soilType = "Absent";
     public string shape = "Absent";

@@ -71,6 +71,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
             menuScript.DestroyMenu();
         }
+        else
+            uIController.DestroyMenu();
     }
 
 

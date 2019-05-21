@@ -39,11 +39,10 @@ public class MenuScript : MonoBehaviour, IMenu
                         view.Hide();
                     }
                 }
-                Debug.Log(controller.dataPanel.IsVisible);
-                if (controller.dataPanel.IsVisible)
-                {
-                    controller.dataPanel.Hide();
-                }
+            }
+            if (controller.dataPanel.IsVisible)
+            {
+                controller.dataPanel.Hide();
             }
             this.rotateState = false;
             this.isMoving = false;

@@ -114,6 +114,7 @@ public class ReactProxy : MonoBehaviour
             }
           return null;
         }
+        
         return externalData.plants[plantType].Values.Select(x => x.name).ToArray();
     }
 

@@ -2918,7 +2918,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53625875}
-  - component: {fileID: 53625876}
   - component: {fileID: 53625877}
   m_Layer: 0
   m_Name: ShrubsButton Listener
@@ -2946,39 +2945,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &53625876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53625874}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7e59016d37c7c4bb2685ebfb450926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonCategory: Gardenly
-  ButtonName: PlantsSubButton
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 53625877}
-        m_MethodName: AddPlants
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2041964100}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  ListenForAllUIButtons: 0
-  TriggerAction: 0
 --- !u!114 &53625877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4337,8 +4303,8 @@ RectTransform:
   m_Father: {fileID: 1525245177}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.73, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: -0.000011444092, y: 0}
   m_SizeDelta: {x: 3.12, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -17470,6 +17436,11 @@ PrefabInstance:
       propertyPath: m_Spacing
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178236627861243, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Name
+      value: TreeContent
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
 --- !u!224 &279882601 stripped
@@ -17514,7 +17485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &296219888
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17549,10 +17520,10 @@ RectTransform:
   m_Father: {fileID: 779811947}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 206.9, y: -120.7}
+  m_SizeDelta: {x: 413.8, y: 241.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296219889
 MonoBehaviour:
@@ -17752,7 +17723,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: 1.5149994, y: 0}
   m_SizeDelta: {x: 3.03, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23648,7 +23619,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Pas de conseils d'enretien disponible
+  m_text: Les conseils d'entretien sont absents
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24686,7 +24657,7 @@ MonoBehaviour:
   - {fileID: 424425213414470437}
   - {fileID: 424425213804204616}
   - {fileID: 424425214944245262}
-  plantView: {fileID: 697912037}
+  plantView: {fileID: 0}
   dynButtons: []
   view: {fileID: 0}
   plantButton: {fileID: 0}
@@ -37726,6 +37697,11 @@ PrefabInstance:
       propertyPath: m_Spacing
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178236627861243, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Name
+      value: FlowerContent
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
 --- !u!114 &697912037 stripped
@@ -50612,6 +50588,11 @@ PrefabInstance:
       propertyPath: m_Spacing
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178236627861243, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Name
+      value: VegetableContent
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
 --- !u!224 &985670292 stripped
@@ -55423,7 +55404,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1058875890}
-  - component: {fileID: 1058875891}
   - component: {fileID: 1058875892}
   m_Layer: 0
   m_Name: TreesButton Listener
@@ -55451,39 +55431,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1058875891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058875889}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7e59016d37c7c4bb2685ebfb450926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonCategory: Gardenly
-  ButtonName: PlantsSubButton
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1058875892}
-        m_MethodName: AddPlants
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 279882602}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  ListenForAllUIButtons: 0
-  TriggerAction: 0
 --- !u!114 &1058875892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56023,8 +55970,8 @@ RectTransform:
   m_Father: {fileID: 1703512292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.73, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: -0.000011444092, y: 0}
   m_SizeDelta: {x: 3.12, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -59083,7 +59030,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: 1.5149994, y: 0}
   m_SizeDelta: {x: 3.03, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -68411,6 +68358,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178236627861243, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Name
+      value: AquaticContent
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
 --- !u!224 &1418433525 stripped
@@ -68470,7 +68422,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: 1.5149994, y: 0}
   m_SizeDelta: {x: 3.03, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -73285,8 +73237,8 @@ RectTransform:
   m_Father: {fileID: 756252858}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.73, y: 0}
+  m_AnchorMax: {x: 0.73, y: 1}
   m_AnchoredPosition: {x: -0.000011444092, y: 0}
   m_SizeDelta: {x: 3.12, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -75140,7 +75092,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591151452}
-  - component: {fileID: 1591151453}
   - component: {fileID: 1591151454}
   m_Layer: 0
   m_Name: AquaticPlantsButton Listener
@@ -75168,39 +75119,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1591151453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591151451}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7e59016d37c7c4bb2685ebfb450926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonCategory: Gardenly
-  ButtonName: PlantsSubButton
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1591151454}
-        m_MethodName: AddPlants
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1418433526}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  ListenForAllUIButtons: 0
-  TriggerAction: 0
 --- !u!114 &1591151454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78138,7 +78056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1718394824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -78157,10 +78075,10 @@ RectTransform:
   m_Father: {fileID: 779811947}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 206.9, y: -120.7}
-  m_SizeDelta: {x: 413.8, y: 241.4}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1718394825
 MonoBehaviour:
@@ -81147,7 +81065,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1786989297}
-  - component: {fileID: 1786989298}
   - component: {fileID: 1786989299}
   m_Layer: 0
   m_Name: FlowersButton Listener
@@ -81175,39 +81092,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1786989298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786989296}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7e59016d37c7c4bb2685ebfb450926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonCategory: Gardenly
-  ButtonName: PlantsSubButton
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1786989299}
-        m_MethodName: AddPlants
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 697912037}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  ListenForAllUIButtons: 0
-  TriggerAction: 0
 --- !u!114 &1786989299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81807,7 +81691,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Pas de description disponible
+  m_text: La description est absente
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -81876,7 +81760,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1837634576}
-    characterCount: 29
+    characterCount: 26
     spriteCount: 0
     spaceCount: 3
     wordCount: 4
@@ -93264,7 +93148,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2018309877}
-  - component: {fileID: 2018309878}
   - component: {fileID: 2018309879}
   m_Layer: 0
   m_Name: VegetableButton Listener
@@ -93292,39 +93175,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2018309878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018309876}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7e59016d37c7c4bb2685ebfb450926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonCategory: Gardenly
-  ButtonName: PlantsSubButton
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2018309879}
-        m_MethodName: AddPlants
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 985670293}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  ListenForAllUIButtons: 0
-  TriggerAction: 0
 --- !u!114 &2018309879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96231,6 +96081,11 @@ PrefabInstance:
       propertyPath: m_Spacing
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4382178236627861243, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Name
+      value: ShrubContent
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
 --- !u!224 &2041964099 stripped
@@ -97306,9 +97161,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 0
-          - m_Target: {fileID: 0}
-            m_MethodName: Toggle
-            m_Mode: 6
+          - m_Target: {fileID: 534669908}
+            m_MethodName: Cancel
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
