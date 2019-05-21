@@ -29,7 +29,6 @@ public class ReactProxy : MonoBehaviour
             graphQL = new GraphQL();
             externalData = this.GetComponent<ExternalData>();
             externalData.Init(callbacks);
-            // externalData.callbackFinishDownloadImage = Test;
             if (Application.isEditor)
                 DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"f025e92f-e115-4cbf-902b-f9551118d2a8\"},{\"name\":\"Arbuste\",\"id\":\"3741e754-c514-4715-a219-732bee92e9e7\"},{\"name\":\"Fleur\",\"id\":\"ca9c6046-38bc-4a2a-a698-0030174d8cbc\"},{\"name\":\"Legume\",\"id\":\"18d21ebd-e124-48b9-83ec-38c888257a02\"}]}}");
             else
@@ -85,10 +84,10 @@ public class ReactProxy : MonoBehaviour
 
     public void DispatchQueryResult(string json)
     {
+        Debug.Log(json);
         var jsonObject = JSONObject.Parse(json);
         if (jsonObject["errors"] != null)
         {
-            Debug.Log(jsonObject["errors"].Value);//FIXME
             MessageHandler.instance.ErrorMessage("loading_error");
             return;
         }
@@ -134,5 +133,10 @@ public class ReactProxy : MonoBehaviour
          return null;
         }
         return externalData.plants[plantType][plantName];
+    }
+
+    public void LoadPlantDataFromId(string plantID, Action<PlantData> callback)
+    {
+        SendQuery(graphQL.GetPlantData(plantID));
     }
 }

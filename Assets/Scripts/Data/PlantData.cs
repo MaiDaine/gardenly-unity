@@ -7,6 +7,7 @@ public class PlantData
     public enum DataStatus { None, Requested, Received };
 
     public string plantID;
+    public string type;
     public string name;
     public string description = "La description est absente";
     public string maintainAdvice = "Les conseils d'entretien sont absents"; //

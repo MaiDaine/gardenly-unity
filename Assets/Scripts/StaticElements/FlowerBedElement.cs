@@ -9,6 +9,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
     public SerializationController.ItemType type;
     public string subID;
+    public PlantData plantData;
     public Vector3 correctedRotation;
 
     private SerializedFBE serializableItem;
@@ -38,7 +39,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
             else
                 uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
             if (labels[labels.Length - 1].text != this.data.name || uIController.dataPanel.IsHidden)
-                    uIController.SetDataPanel(this.data.name, "Fleur");
+                    uIController.SetDataPanel(plantData.name, plantData.type);
         }
     }
 
@@ -59,7 +60,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     }
 
     //Serialization
-    [Serializable] //Create struct to stock in upper class
+    [Serializable]
     public struct SerializedFBE
     {
         public string subID;
@@ -89,6 +90,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     public void InnerDeSerialize(SerializedFBE elem)
     {
         this.subID = elem.subID;
+        ReactProxy.instance.LoadPlantDataFromId(this.subID, OnPlantDataLoad);
         this.transform.position = elem.position;
         this.transform.rotation = elem.rotation;
     }
@@ -99,4 +101,10 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         this.transform.position = serializableItem.position;
         this.transform.rotation = serializableItem.rotation;
     }
+
+    public void OnPlantDataLoad(PlantData plantData)
+    {
+        this.plantData = plantData;
+    }
 }
+    

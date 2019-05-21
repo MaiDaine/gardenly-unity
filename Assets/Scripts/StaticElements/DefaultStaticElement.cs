@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Doozy.Engine.UI;
 using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
@@ -12,6 +9,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
+    public PlantData plantData;
 
     protected UIController uIController;
 
@@ -57,8 +55,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
                 else
                     uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -33.46f, 0);
                 if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
-                    uIController.SetDataPanel(this.data.name, "Arbre");
-
+                    uIController.SetDataPanel(plantData.name, plantData.type);
             }
         }
     }
@@ -102,5 +99,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
         this.transform.position = this.serializableItem.position;
         this.transform.rotation = this.serializableItem.rotation;
+    }
+
+    public void OnPlantDataLoad(PlantData plantData)
+    {
+        this.plantData = plantData;
     }
 }

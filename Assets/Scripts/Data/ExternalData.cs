@@ -9,6 +9,7 @@ public class ExternalData : MonoBehaviour
 {
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
+    public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
     public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
 
     public void Init(Dictionary<string, Action<string>> callbacks)
@@ -56,6 +57,7 @@ public class ExternalData : MonoBehaviour
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
+        plantData.type = tmp["type"];
         plantData.plantID = tmp["id"];
         plantData.plantColor = new string[tmp["colors"].AsArray.Count];
         for (int i = 0; i < tmp["colors"].AsArray.Count; i++)
@@ -66,9 +68,11 @@ public class ExternalData : MonoBehaviour
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
         plantData.description = tmp["description"];
-        plantData.imgUrl = tmp["thumbnail"];
+        plantData.model = tmp["model"];
+	plantData.imgUrl = tmp["thumbnail"];
         plantData.status = PlantData.DataStatus.Received;
-        //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
+        if (callbackLoadData.ContainsKey(plantData.plantID))
+            callbackLoadData[plantData.plantID].Invoke(plantData);
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)

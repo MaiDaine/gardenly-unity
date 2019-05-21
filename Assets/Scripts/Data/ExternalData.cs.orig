@@ -9,6 +9,7 @@ public class ExternalData : MonoBehaviour
 {
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
+    public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
     public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
 
     public void Init(Dictionary<string, Action<string>> callbacks)
@@ -42,7 +43,6 @@ public class ExternalData : MonoBehaviour
         tmp.MoveNext();
         string plantType = tmp.Current.Value;
         int count = jsonObject["data"]["getAllPlants"][plantType].Count;
-        Debug.Log(count);
         for (int i = 0; i < count; i++)
         {
             var tmpPlant = jsonObject["data"]["getAllPlants"][plantType][i]["node"];
@@ -57,6 +57,7 @@ public class ExternalData : MonoBehaviour
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
+        plantData.type = tmp["type"];
         plantData.plantID = tmp["id"];
         plantData.plantColor = new string[tmp["colors"].AsArray.Count];
         for (int i = 0; i < tmp["colors"].AsArray.Count; i++)
@@ -68,12 +69,18 @@ public class ExternalData : MonoBehaviour
         plantData.waterNeed = tmp["sunNeed"];
         plantData.description = tmp["description"];
 <<<<<<< HEAD
-	    plantData.imgUrl = tmp["thumbnail"];
-=======
-        plantData.model = tmp["model"];
->>>>>>> 2a251cbcf7a6531a4b1ef750a4b72fb30dd7c64c
+        plantData.imgUrl = tmp["thumbnail"];
         plantData.status = PlantData.DataStatus.Received;
         //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
+=======
+        plantData.model = tmp["model"];
+
+        StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
+
+        plantData.status = PlantData.DataStatus.Received;
+        if (callbackLoadData.ContainsKey(plantData.plantID))
+            callbackLoadData[plantData.plantID].Invoke(plantData);
+>>>>>>> 5637d07e193b99f7dadcccd55ea78c85a5edfed0
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)
