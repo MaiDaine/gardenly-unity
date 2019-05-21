@@ -137,7 +137,7 @@ public class SpawnController : MonoBehaviour
     public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
     {
         //TODO MODEL
-        FlowerBedElement tmp = Instantiate(FBElements[0], Vector3.zero, Quaternion.identity);
+        FlowerBedElement tmp = Instantiate(FBElements[1], Vector3.zero, Quaternion.identity);
         tmp.InnerDeSerialize(elem);
         return tmp;
     }

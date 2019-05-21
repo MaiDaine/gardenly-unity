@@ -9,7 +9,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
-    public PlantData plantData;
+    public string plantName;
+    public string plantType;
 
     protected UIController uIController;
 
@@ -54,8 +55,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
                     uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(122.37f, -33.46f, 0);
                 else
                     uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(244.67f, -33.46f, 0);
-                if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != this.data.name || uIController.dataPanel.IsHidden)
-                    uIController.SetDataPanel(plantData.name, plantData.type);
+                if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != plantName || uIController.dataPanel.IsHidden)
+                    uIController.SetDataPanel(plantName, plantType);
             }
         }
     }
@@ -103,6 +104,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     public void OnPlantDataLoad(PlantData plantData)
     {
-        this.plantData = plantData;
+        plantName = plantData.name;
+        plantType = plantData.type;
     }
 }

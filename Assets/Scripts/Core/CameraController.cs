@@ -101,8 +101,6 @@ public class CameraController : MonoBehaviour
 
         if (!inputEnabled)
             return;
-        if (Input.GetKeyDown(KeyCode.Keypad5))//TODO UI BUTTON
-            changeMod = true;
 
         if (Input.GetAxis("Vertical") != 0f)
             currentPos = MoveForward(currentPos, Input.GetAxis("Vertical"));

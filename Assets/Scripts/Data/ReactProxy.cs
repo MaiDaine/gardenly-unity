@@ -68,7 +68,16 @@ public class ReactProxy : MonoBehaviour
 
     public void SendQuery(string payload)
     {
-        query(payload);
+        if (Application.isEditor)
+            DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
+        else
+            query(payload);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Keypad5))
+            InitScene("{\"name\":\"Offline Garden\",\"boundaries\":[{\"x\":0,\"y\":0},{\"x\":100,\"y\":100}],\"garden\":[{\"type\":\"FlowerBed\",\"data\":{\"name\":\"Parterre 1\",\"soilType\":\"Argileux\",\"points\":[{\"x\":65.96473693847656,\"y\":-56.58185577392578},{\"x\":57.210060119628906,\"y\":-62.110374450683594},{\"x\":60,\"y\":-64},{\"x\":62.411865234375,\"y\":-63.446311950683594}],\"elements\":[{\"subID\":\"\",\"position\":{\"x\":59.495323181152344,\"y\":0,\"z\":-62.03126525878906},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":61,\"y\":0,\"z\":-63},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":61.25973892211914,\"y\":0,\"z\":-60.508094787597656},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":62.30310821533203,\"y\":0,\"z\":-61.42021560668945},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":63.37784957885742,\"y\":0,\"z\":-59.27602767944336},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}}]}}]}");
     }
 
     //Called from REACT
@@ -103,13 +112,9 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType].Keys.Count == 0)
         {
             if (Application.isEditor)
-            {
                 DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Abricotier\"}},{\"node\":{\"name\":\"Campanule\"}},{\"node\":{\"name\":\"Capucine\"}},{\"node\":{\"name\":\"Coquelicot\"}},{\"node\":{\"name\":\"Crocus\"}},{\"node\":{\"name\":\"Edelweiss\"}},{\"node\":{\"name\":\"Gardénia\"}},{\"node\":{\"name\":\"Jacinthe\"}},{\"node\":{\"name\":\"Lys\"}},{\"node\":{\"name\":\"Narcisse\"}},{\"node\":{\"name\":\"Œillet\"}},{\"node\":{\"name\":\"Oeillet d'Inde\"}},{\"node\":{\"name\":\"Orchidées\"}},{\"node\":{\"name\":\"Pensée\"}},{\"node\":{\"name\":\"Pétunia\"}},{\"node\":{\"name\":\"Phalaenopsis\"}},{\"node\":{\"name\":\"Pivoine\"}}]}}}");
-            }
             else if (externalData.plants[plantType].Keys.Count == 0)
-            {
                 SendQuery(graphQL.GetPlantsOfType(plantType, externalData.plantsTypes[plantType]));
-            }
           return null;
         }
         

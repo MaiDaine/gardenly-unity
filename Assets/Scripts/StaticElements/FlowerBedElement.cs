@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Doozy.Engine.UI;
 using TMPro;
 
 public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
     public SerializationController.ItemType type;
     public string subID;
-    public PlantData plantData;
+    public string plantName;
+    public string plantType;
     public Vector3 correctedRotation;
 
     private SerializedFBE serializableItem;
@@ -38,8 +36,8 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
                 uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
             else
                 uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
-            if (labels[labels.Length - 1].text != this.data.name || uIController.dataPanel.IsHidden)
-                    uIController.SetDataPanel(plantData.name, plantData.type);
+            if (labels[labels.Length - 1].text != plantName || uIController.dataPanel.IsHidden)
+                    uIController.SetDataPanel(plantName, plantType);
         }
     }
 
@@ -104,7 +102,8 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
     public void OnPlantDataLoad(PlantData plantData)
     {
-        this.plantData = plantData;
+        plantName = plantData.name;
+        plantType = plantData.type;
     }
 }
     
