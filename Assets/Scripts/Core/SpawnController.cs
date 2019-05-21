@@ -43,7 +43,6 @@ public class SpawnController : MonoBehaviour
         if (tmp.model != -1)
         {
             FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
-            elem.SetData(tmp);
             elem.subID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
             return elem;
