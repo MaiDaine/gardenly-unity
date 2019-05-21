@@ -13,7 +13,6 @@ public class ReactProxy : MonoBehaviour
     public GraphQL graphQL;
     public ExternalData externalData;
     public Dictionary<string, Action<string>> callbacks = new Dictionary<string, Action<string>>();
-    public RawImage image;
 
     [DllImport("__Internal")]
     private static extern void save(string json);

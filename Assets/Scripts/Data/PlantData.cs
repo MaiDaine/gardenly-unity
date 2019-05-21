@@ -29,6 +29,7 @@ public class PlantData
     public int sunNeed = 0;
     public int rusticity = 0;
     public Texture2D image;
+    public int model = -1;
     public DataStatus status = DataStatus.None;
 
     public PlantData(string name) { this.name = name; }

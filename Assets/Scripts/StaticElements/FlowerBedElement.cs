@@ -7,10 +7,8 @@ using TMPro;
 
 public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 {
-    public enum FlowerBedElementType { Flower01, Flower02, Flower03 };
-
     public SerializationController.ItemType type;
-    public FlowerBedElementType subType;
+    public string subID;
     public Vector3 correctedRotation;
 
     private SerializedFBE serializableItem;
@@ -32,7 +30,6 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
-            Debug.Log(this.data.name);
             RectTransform menuTransform = uIController.extendMenu.RectTransform;
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
@@ -62,7 +59,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     [Serializable] //Create struct to stock in upper class
     public struct SerializedFBE
     {
-        public FlowerBedElementType subID;
+        public string subID;
         public Vector3 position;
         public Quaternion rotation;
     }
@@ -82,15 +79,13 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
         tmp.position = this.transform.position;
         tmp.rotation = this.transform.rotation;
-        //TMPFRONT
-        tmp.subID = (FlowerBedElementType)UnityEngine.Random.Range(0, 3);
-        //tmp.subID = subType;
+        tmp.subID = subID;
         return (tmp);
     }
 
     public void InnerDeSerialize(SerializedFBE elem)
     {
-        this.subType = elem.subID;
+        this.subID = elem.subID;
         this.transform.position = elem.position;
         this.transform.rotation = elem.rotation;
     }

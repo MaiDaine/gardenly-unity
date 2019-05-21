@@ -18,7 +18,7 @@ public class GraphQL
         
     public string GetPlantData(string plantId)
     {
-        return "{\"query\": \"query GetPlant($id: ID!) {getPlant(id: $id){type{name}, name, colors{name}, phRangeLow, phRangeHigh, thumbnail, rusticity, sunNeed, waterNeed, description}}\", \"variables\": {\"id\": \"" + plantId + "\"}}";
+        return "{\"query\": \"query GetPlant($id: ID!) {getPlant(id: $id){type{name}, name, colors{name}, phRangeLow, phRangeHigh, thumbnail, rusticity, sunNeed, waterNeed, description, model}}\", \"variables\": {\"id\": \"" + plantId + "\"}}";
     }
 
 }

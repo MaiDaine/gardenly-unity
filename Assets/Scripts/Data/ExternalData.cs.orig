@@ -42,6 +42,7 @@ public class ExternalData : MonoBehaviour
         tmp.MoveNext();
         string plantType = tmp.Current.Value;
         int count = jsonObject["data"]["getAllPlants"][plantType].Count;
+        Debug.Log(count);
         for (int i = 0; i < count; i++)
         {
             var tmpPlant = jsonObject["data"]["getAllPlants"][plantType][i]["node"];
@@ -65,12 +66,12 @@ public class ExternalData : MonoBehaviour
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
-<<<<<<< HEAD
-        plantData.imgUrl = tmp["thumbnail"];
-=======
         plantData.description = tmp["description"];
-
->>>>>>> ca9f9a3ddfa026eb063022947e10265d7ac9568d
+<<<<<<< HEAD
+	    plantData.imgUrl = tmp["thumbnail"];
+=======
+        plantData.model = tmp["model"];
+>>>>>>> 2a251cbcf7a6531a4b1ef750a4b72fb30dd7c64c
         plantData.status = PlantData.DataStatus.Received;
         //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
     }
