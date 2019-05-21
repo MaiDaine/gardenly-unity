@@ -44,7 +44,7 @@ public class ConstructionController : MonoBehaviour
     {
         Ray ray = this.Camera.ScreenPointToRay(Input.mousePosition);
         float rayDistance;
-
+        
         if (this.groundPlane.Raycast(ray, out rayDistance)
            && Physics.Raycast(ray, out hit, rayDistance, layer) && hit.collider.tag != "Invalid")
         {
@@ -81,13 +81,14 @@ public class ConstructionController : MonoBehaviour
     //Ghost Handling functions
     public void Cancel()
     {
+        this.Camera.GetComponent<UIController>().SaveViews();
+        this.Camera.GetComponent<UIController>().Cancel(true);
         if (this.currentState == ConstructionState.Off || this.currentState == ConstructionState.Editing)
         {
             PlayerController.instance.DeSelect(true);
             this.ghost = null;
             return;
         }
-
         if (this.ghost != null)
         {
             if (this.currentState != ConstructionState.Off)
@@ -107,7 +108,6 @@ public class ConstructionController : MonoBehaviour
     {
         if (this.currentState == ConstructionState.Off)
         {
-            this.Camera.GetComponent<UIController>().Cancel(true);
             Cancel();
             this.currentState = ConstructionState.Positioning;
             this.ghost = Instantiate(GhostRef, Vector3.zero, Quaternion.identity);
@@ -123,6 +123,11 @@ public class ConstructionController : MonoBehaviour
         //this.currentState = ConstructionState.Positioning;
         if (this.gridState)
             this.Grid.activ = true;
+    }
+
+    public GhostHandler GetGhost()
+    {
+        return this.ghost;
     }
 
     public void EditPositioning(GhostHandler GhostRef)
@@ -179,7 +184,7 @@ public class ConstructionController : MonoBehaviour
                 {
                     hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
                     this.currentState = ConstructionState.Off;
-                    if (this.gridState)
+                    if (this.gridState && !Camera.main.GetComponent<UIController>().GridButtonIsTrigger())
                         this.Grid.activ = false;
                     this.ghost.EndConstruction(pos);
                     PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
@@ -203,7 +208,8 @@ public class ConstructionController : MonoBehaviour
                 PlayerController.instance.OnFlowerBedSpawn();
             else
                 PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
-            this.Grid.activ = false;
+            if (this.gridState && !Camera.main.GetComponent<UIController>().GridButtonIsTrigger())
+                this.Grid.activ = false;
             UIController uIController = Camera.main.GetComponent<UIController>();
             if (uIController.GetMenuScript() != null)
                 uIController.GetMenuScript().isMoving = false;

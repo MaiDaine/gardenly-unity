@@ -14,11 +14,25 @@ public class ButtonScript : MonoBehaviour
 
     protected string ghostType;
 
+    /*private void Update()
+    {
+    }
+
+<<<<<<< HEAD
+            if (img != null && img.texture == refTexture && this.GetComponent<UIButton>() != null && ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image != null)
+            {
+                img.texture = ReactProxy.instance.externalData.plants[this.ghostType][this.GetComponent<UIButton>().TextMeshProLabel.text].image;
+            }
+        }
+    }*/
+=======
     public void OnImageDownload(Texture texture)
     {
-        string plantName = this.GetComponent<UIButton>().TextMeshProLabel.text;
-        Camera.main.GetComponent<UIController>().SetPlantImg(plantName, this.ghostType, texture);
+        RawImage img = this.GetComponentInChildren<RawImage>();
+        img.texture = texture;
+        Camera.main.GetComponent<UIController>().SetDataPanel(this.GetComponent<UIButton>().TextMeshProLabel.text, ghostType);
     }
+>>>>>>> 3ed612b6b330956c432b59a25d343681e0a4ece3
 
     public void SetGhost(string ghostType)
     {
@@ -34,9 +48,8 @@ public class ButtonScript : MonoBehaviour
         PlantData tmp = ReactProxy.instance.GetPlantsData(this.ghostType, this.plantName.text);
         if (tmp == null)
             return;
-        //this.ghosts[this.idxObject].SetData(tmp);
-        //ConstructionController.instance.SpawnGhost(this.ghosts[this.idxObject]);
-        ConstructionController.instance.SpawnGhost(SpawnController.instance.GetPlantGhost(this.ghostType, tmp.name));
+        this.ghosts[this.idxObject].SetData(tmp);
+        ConstructionController.instance.SpawnGhost(this.ghosts[this.idxObject]);
     }
 
     public void SetPanelFunction()

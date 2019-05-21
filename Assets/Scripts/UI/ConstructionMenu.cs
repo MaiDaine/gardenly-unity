@@ -10,30 +10,12 @@ public class ConstructionMenu : MonoBehaviour
     public bool state = false;
     public bool open = false;
 
-    private bool startCount = false;
-    private float timer = 1;
     private UIController uIController = null;
 
     private void Start()
     {
         this.gameObject.SetActive(this.state);
         this.uIController = Camera.main.GetComponentInChildren<UIController>();
-    }
-
-    private void Update()
-    {
-        if (this.startCount
-            && !this.uIController.dataPanel.gameObject.activeSelf && !this.uIController.flowerBedDataPanel.gameObject.activeSelf)
-        {
-            this.timer -= Time.deltaTime;
-
-            if (this.timer <= 0)
-            {
-                this.gameObject.SetActive(this.state);
-                this.timer = 1;
-                this.startCount = false;
-            }
-        }
     }
 
     public void ChangeState(bool sleepMode = false)
@@ -46,18 +28,6 @@ public class ConstructionMenu : MonoBehaviour
         if (!sleepMode)
             this.gameObject.SetActive(!this.state);
         this.state = !this.state;
-    }
-
-    public void UpdateAnimator(Animator animator)
-    {
-        if (state)
-            animator.Play(defaultAnimation);
-        else
-        {
-            animator.Play(updateAnimation);
-            this.startCount = true;
-            this.open = false;
-        }
     }
 
     public void SetState(bool state)

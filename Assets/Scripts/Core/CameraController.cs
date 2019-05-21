@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
@@ -90,6 +92,7 @@ public class CameraController : MonoBehaviour
         else
             this.transform.position = Zoom3D(this.transform.position, amount);
     }
+
 
     private void Update()
     {

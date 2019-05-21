@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MessageHandler : MonoBehaviour
 {
     public static MessageHandler instance = null;
+    public Color colorRef;
 
     private float timer = 5;
-    private Text errorMsg;
+    private TextMeshProUGUI errorMsg;
     private bool startCount = false;
 
     private void Awake()
@@ -40,10 +42,11 @@ public class MessageHandler : MonoBehaviour
     {
         msg = LocalisationController.instance.GetText("errors", msg);
         this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<Text>();
+        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
         if (this.errorMsg != null)
         {
             this.errorMsg.text = msg;
+            this.errorMsg.color = this.colorRef;
             this.startCount = true;
         }
         return false;
@@ -53,10 +56,11 @@ public class MessageHandler : MonoBehaviour
     {
         msg = LocalisationController.instance.GetText("errors", subCategory, msg);
         this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<Text>();
+        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
         if (this.errorMsg != null)
         {
             this.errorMsg.text = msg;
+            this.errorMsg.color = this.colorRef;
             this.startCount = true;
         }
         return false;
@@ -66,7 +70,7 @@ public class MessageHandler : MonoBehaviour
     {
         msg = LocalisationController.instance.GetText("succes", msg);
         this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<Text>();
+        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
         if (this.errorMsg != null)
         {
             this.errorMsg.text = msg;

@@ -35,10 +35,14 @@ public class MenuScript : MonoBehaviour, IMenu
                 foreach (UIView view in controller.plantsViews)
                 {
                     if (view.IsVisible)
+                    {
                         view.Hide();
+                    }
                 }
-                if (controller.dataPanel.IsVisible)
-                    controller.dataPanel.Hide();
+            }
+            if (controller.dataPanel.IsVisible)
+            {
+                controller.dataPanel.Hide();
             }
             this.rotateState = false;
             this.isMoving = false;

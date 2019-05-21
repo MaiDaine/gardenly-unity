@@ -34,7 +34,7 @@ public class ReactProxy : MonoBehaviour
             else
                 SendQuery(graphQL.GetPlantsTypes());
         }
-        else
+       else
             Destroy(this);
     }
 
@@ -46,6 +46,7 @@ public class ReactProxy : MonoBehaviour
             SerializationController.instance.GetComponent<GardenData>().SetGardenName("Offline Garden");
             LocalisationController.instance.Init("FR");//TODO USERPREF
         }
+        Camera.main.GetComponent<UIController>().gardenName.text = this.GetComponent<GardenData>().gardenName;
     }
 
     //Link To REACT
@@ -102,11 +103,16 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType].Keys.Count == 0)
         {
             if (Application.isEditor)
+            {
                 DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Abricotier\"}},{\"node\":{\"name\":\"Campanule\"}},{\"node\":{\"name\":\"Capucine\"}},{\"node\":{\"name\":\"Coquelicot\"}},{\"node\":{\"name\":\"Crocus\"}},{\"node\":{\"name\":\"Edelweiss\"}},{\"node\":{\"name\":\"Gardénia\"}},{\"node\":{\"name\":\"Jacinthe\"}},{\"node\":{\"name\":\"Lys\"}},{\"node\":{\"name\":\"Narcisse\"}},{\"node\":{\"name\":\"Œillet\"}},{\"node\":{\"name\":\"Oeillet d'Inde\"}},{\"node\":{\"name\":\"Orchidées\"}},{\"node\":{\"name\":\"Pensée\"}},{\"node\":{\"name\":\"Pétunia\"}},{\"node\":{\"name\":\"Phalaenopsis\"}},{\"node\":{\"name\":\"Pivoine\"}}]}}}");
+            }
             else if (externalData.plants[plantType].Keys.Count == 0)
+            {
                 SendQuery(graphQL.GetPlantsOfType(plantType, externalData.plantsTypes[plantType]));
-            return null;
+            }
+          return null;
         }
+        
         return externalData.plants[plantType].Values.Select(x => x.name).ToArray();
     }
 
@@ -123,7 +129,7 @@ public class ReactProxy : MonoBehaviour
             else 
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
-            return null;
+         return null;
         }
         return externalData.plants[plantType][plantName];
     }

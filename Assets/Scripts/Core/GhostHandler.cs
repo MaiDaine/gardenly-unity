@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.UI;
 
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public bool needFlowerBed = false;
     protected PlantData data = null;
     protected List<ISelectable> neighbors = new List<ISelectable>();
-    //TODO UI : add UI controller here 
 
     void Start()
     {
@@ -22,7 +22,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool OnCancel()
     {
-       // Camera.main.GetComponent<UIController>().Cancel();
         return true;
     }
 
@@ -38,8 +37,15 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual void EndConstruction(Vector3 position)
     {
+        UIController uIController = Camera.main.GetComponent<UIController>();
         this.gameObject.layer = 10;
-        Camera.main.GetComponent<UIController>().ResetButton();
+        uIController.ResetButton();
+        if (uIController.GetCurrentHideView() != null && uIController.GetCurrentHideView().Count > 0)
+        {
+            foreach (UIView view in uIController.GetCurrentHideView())
+                view.Show();
+            uIController.GetCurrentHideView().Clear();
+        }
     }
 
     public virtual void StartAction() { this.gameObject.layer = 0; }
