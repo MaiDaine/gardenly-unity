@@ -44,21 +44,32 @@ public class SpawnController : MonoBehaviour
         {
             FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
             elem.subID = tmp.plantID;
+            elem.OnPlantDataLoad(tmp);
             return elem;
         }
+        GhostHandler ghost;
         switch (type)
         {
             case "Arbre":
-                return DSElements[2];
+                ghost = DSElements[2];
+                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                break;
             case "Arbuste":
-                return DSElements[3];
+                ghost = DSElements[3];
+                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                break;
             case "Legume":
-                return FBElements[1];
+                ghost = FBElements[1];
+                ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
+                break;
             case "Fleur":
-                return FBElements[1];
+                ghost = FBElements[1];
+                ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
+                break;
             default:
                 return null;
         }
+        return ghost;
     }
 
     public void SpawnScene(SerializationData[] data)
