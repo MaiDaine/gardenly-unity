@@ -430,6 +430,7 @@ public class UIController : MonoBehaviour
         RawImage icon = this.dataPanel.GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
+        Debug.Log("SET IMG" + icon + " " + img);
         if (icon != null && img != null)
         {
             if (animator != null)
@@ -468,6 +469,8 @@ public class UIController : MonoBehaviour
             if (label.name == "Name")
                 label.text = plantName;
         }
+        if (tmp != null)
+            Debug.Log("TMP " + tmp.imgUrl);
         if (tmp != null && tmp.imgUrl != null)
             StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else

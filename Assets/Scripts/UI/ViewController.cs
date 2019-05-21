@@ -88,33 +88,33 @@ public class ViewController : MonoBehaviour
     }
 
 
-    public void AddPlants(UIView viewRef)
+    public void AddPlants()
     {
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
         UIController controller = Camera.main.GetComponent<UIController>();
+        UIView parentView = view.GetComponentInParent<UIView>();
         RawImage img;
-        
-        viewRef.CustomStartAnchoredPosition = new Vector3(- controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
-        if (viewController.dynButtons.Count == 0)
-        {
-            string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
-            if (plantNames != null)
+              
+            if (viewController.dynButtons.Count == 0)
             {
-                img = this.view.GetComponentInChildren<RawImage>();
-                if (img != null)
-                    this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
-                for (int i = 0; i < plantNames.Length; i++)
+                string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
+                if (plantNames != null)
                 {
-                    GameObject obj = Instantiate(this.plantButton, view.transform);
-                    ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
-                    UIButton btn = obj.GetComponent<UIButton>();
+                    img = this.view.GetComponentInChildren<RawImage>();
+                    if (img != null)
+                        this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
+                    for (int i = 0; i < plantNames.Length; i++)
+                    {
+                        GameObject obj = Instantiate(this.plantButton, view.transform);
+                        ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+                        UIButton btn = obj.GetComponent<UIButton>();
 
-                    viewController.dynButtons.Add(btn);
-                    btn.TextMeshProLabel.text = plantNames[i];
-                    buttonScript.SetGhost(this.plantType);
+                        viewController.dynButtons.Add(btn);
+                        btn.TextMeshProLabel.text = plantNames[i];
+                        buttonScript.SetGhost(this.plantType);
+                    }
                 }
             }
-        }
     }
 
     public void ManageHide(UIView view)
