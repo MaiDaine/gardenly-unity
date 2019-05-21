@@ -71,8 +71,7 @@ public class ExternalData : MonoBehaviour
         plantData.model = tmp["model"];
 	    plantData.imgUrl = tmp["thumbnail"];
         plantData.status = PlantData.DataStatus.Received;
-
-        if (callbackLoadData.ContainsKey(plantData.plantID))
+        if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.plantID))
             callbackLoadData[plantData.plantID].Invoke(plantData);
     }
 

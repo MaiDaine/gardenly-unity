@@ -458,7 +458,6 @@ public class UIController : MonoBehaviour
 
         if (this.PlantsViewsDisplay())
             this.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
-
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = this.dataPanel.GetComponentsInChildren<Slider>();
         ButtonScript[] script = this.dataPanel.GetComponentsInChildren<ButtonScript>();

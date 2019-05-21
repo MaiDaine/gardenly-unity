@@ -68,19 +68,16 @@ public class ExternalData : MonoBehaviour
         plantData.sunNeed = tmp["sunNeed"];
         plantData.waterNeed = tmp["sunNeed"];
         plantData.description = tmp["description"];
-<<<<<<< HEAD
-        plantData.imgUrl = tmp["thumbnail"];
-        plantData.status = PlantData.DataStatus.Received;
-        //StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
-=======
         plantData.model = tmp["model"];
-
-        StartCoroutine(GetTexture(plantData, tmp["thumbnail"]));
-
+	    plantData.imgUrl = tmp["thumbnail"];
         plantData.status = PlantData.DataStatus.Received;
+<<<<<<< HEAD
+
         if (callbackLoadData.ContainsKey(plantData.plantID))
+=======
+        if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.plantID))
+>>>>>>> 8d40fb319f6f5fef8993b2869fc360af8003cf26
             callbackLoadData[plantData.plantID].Invoke(plantData);
->>>>>>> 5637d07e193b99f7dadcccd55ea78c85a5edfed0
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)
