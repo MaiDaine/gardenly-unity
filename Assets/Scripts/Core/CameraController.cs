@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -22,7 +18,7 @@ public class CameraController : MonoBehaviour
     private const float minAltitude2D = 0.5f;
     private const float maxAltitude2D = 58f;
 
-    private Camera camera;
+    private Camera currentCamera;
     private float cameraMoveSpeed = cameraBaseMoveSpeed;
     private Vector2 lowerPlaneBound;
     private Vector2 upperPlaneBound;
@@ -36,7 +32,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        camera = GetComponent<Camera>();
+        currentCamera = GetComponent<Camera>();
         lowerPlaneBound = new Vector2(
             plane.transform.position.x - (5f * plane.transform.localScale.x),
             plane.transform.position.z - (5f * plane.transform.localScale.z)
@@ -56,13 +52,13 @@ public class CameraController : MonoBehaviour
     public void ChangeViewMod()
     {
         changeMod = false;
-        if (!camera.orthographic)
+        if (!currentCamera.orthographic)
         {
             transform.eulerAngles = new Vector3(90f, 0f, -transform.eulerAngles.y);
             float tmp = transform.position.y * To2D;
-            camera.orthographic = true;
-            camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
-            camera.orthographicSize = tmp;
+            currentCamera.orthographic = true;
+            currentCamera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+            currentCamera.orthographicSize = tmp;
             transform.position = new Vector3(
                 transform.position.x,
                 maxAltitude,
@@ -71,26 +67,23 @@ public class CameraController : MonoBehaviour
         else
         {
             transform.eulerAngles = new Vector3(89f, transform.eulerAngles.y, 0f);
-            camera.orthographic = false;
-            camera.projectionMatrix = perspective;
+            currentCamera.orthographic = false;
+            currentCamera.projectionMatrix = perspective;
             transform.position = new Vector3(
                 transform.position.x,
-                camera.orthographicSize * From2D,
+                currentCamera.orthographicSize * From2D,
                 transform.position.z);
         }
     }
 
-    public void SetChangeMod(bool state)
-    {
-        this.changeMod = state;
-    }
+    public void SetChangeMod(bool state) { changeMod = state; }
 
     public void ChangeZoom(int amount)
     {
-        if (camera.orthographic)
+        if (currentCamera.orthographic)
             Zoom2D(amount);
         else
-            this.transform.position = Zoom3D(this.transform.position, amount);
+            transform.position = Zoom3D(transform.position, amount);
     }
 
 
@@ -108,7 +101,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0f)
             currentPos = MoveRight(currentPos, Input.GetAxis("Horizontal"));
 
-        if (!camera.orthographic)
+        if (!currentCamera.orthographic)
         {
             if (Input.GetMouseButton(1))
             {
@@ -133,6 +126,7 @@ public class CameraController : MonoBehaviour
             ChangeViewMod();
     }
 
+    //Move
     private Vector3 MoveForward(Vector3 currentPos, float axisInput)
     {
         Vector3 newPos = currentPos;
@@ -163,6 +157,7 @@ public class CameraController : MonoBehaviour
         return newPos;
     }
 
+    //Zoom
     private Vector3 Zoom3D(Vector3 currentPos, float axisInput)
     {
         float tmp = currentPos.y + (axisInput * cameraZoomSpeed * Time.deltaTime);
@@ -174,11 +169,12 @@ public class CameraController : MonoBehaviour
 
     private void Zoom2D(float axisInput)
     {
-        float tmp = camera.orthographicSize - axisInput * To2D;
-        camera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
-        camera.orthographicSize = tmp;
+        float tmp = currentCamera.orthographicSize - axisInput * To2D;
+        currentCamera.projectionMatrix = Matrix4x4.Ortho(-tmp * aspect, tmp * aspect, -tmp, tmp, near, far);
+        currentCamera.orthographicSize = tmp;
     }
 
+    //Rotation
     private Quaternion RotateYaw(Quaternion currentRotation, float axisInput)
     {
         Quaternion tmp = currentRotation;

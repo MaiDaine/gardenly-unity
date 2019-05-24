@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private IInteractible interactible;
     private ConstructionController constructionController;
     private CameraController cameraController;
+    private Raycaster raycaster;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
         this.constructionController = ConstructionController.instance;
         this.actionHandler.Initialize();
         this.cameraController = Camera.main.GetComponent<CameraController>();
+        raycaster = Camera.main.GetComponent<Raycaster>();
         if (Application.isEditor)
             LocalisationController.instance.Init("FR");
     }
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
                  {
                      Vector3 pos;
                      RaycastHit hit;
-                     if (constructionController.MouseRayCast(out pos, out hit))
+                     if (raycaster.MouseRayCast(out pos, out hit))
                          constructionController.EditPosition(pos);
                      break;
                  }
@@ -94,7 +96,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Vector3 pos;
                     RaycastHit hit;
-                    if (!(constructionController.MouseRayCast(out pos, out hit) && constructionController.CompleteEditPosition(pos)))
+                    if (!(raycaster.MouseRayCast(out pos, out hit) && constructionController.CompleteEditPosition(pos)))
                         return;
                 }
                 actionHandler.ActionComplete(true);
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         DeSelect();
-        if (constructionController.MouseRayCast(out pos, out hit, layerMaskStatic))
+        if (raycaster.MouseRayCast(out pos, out hit, layerMaskStatic))
         {
             ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
 

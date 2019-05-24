@@ -9216,7 +9216,7 @@ Light:
   m_BounceIntensity: 0.58
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: -3.11e-43, y: 6.05e-43, z: 6e-45, w: 9e-44}
+  m_BoundingSphereOverride: {x: NaN, y: 5.969306e-39, z: -9.1835e-41, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -24219,10 +24219,11 @@ GameObject:
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
+  - component: {fileID: 534669913}
+  - component: {fileID: 534669909}
   - component: {fileID: 534669907}
   - component: {fileID: 534669908}
   - component: {fileID: 534669910}
-  - component: {fileID: 534669909}
   - component: {fileID: 534669912}
   - component: {fileID: 534669911}
   m_Layer: 0
@@ -24466,6 +24467,18 @@ MonoBehaviour:
   flowerBedPanelScript: {fileID: 0}
   gardenName: {fileID: 1979017820}
   textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
+--- !u!114 &534669913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7041c3f583b0844db4dca9cadd55aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &537686114
 GameObject:
   m_ObjectHideFlags: 0
@@ -68237,11 +68250,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.000015258789
       objectReference: {fileID: 0}
-    - target: {fileID: 4382178236544122439, guid: bd169830bb0a8164fa187ecd83cbdab9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4382178235849840971, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: m_Sprite
@@ -68271,6 +68279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Spacing
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382178236544122439, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}

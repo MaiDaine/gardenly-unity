@@ -16,6 +16,7 @@ public class ShapeCreator : GhostHandler
     private ShapePoint firstPoint = null;
     private Vector2 a, b, c;
     private Color color = new Color(1f, 0f, 0f, 1f);
+    private Raycaster raycaster;
 
     public void Init()
     {
@@ -27,6 +28,7 @@ public class ShapeCreator : GhostHandler
         currentPoint = firstPoint;
         lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
         lineInfoText.gameObject.SetActive(false);
+        raycaster = Camera.main.GetComponent<Raycaster>();
     }
 
     public void SelfClear()
@@ -168,7 +170,7 @@ public class ShapeCreator : GhostHandler
         RaycastHit hit;
         ShapePoint tmp;
 
-        if (ConstructionController.instance.MouseRayCast(out position, out hit))
+        if (raycaster.MouseRayCast(out position, out hit))
         {
             currentPoint.EndConstruction();
             PlayerController.instance.actionHandler.NewStateAction("AddLineShape", gameObject, false);
