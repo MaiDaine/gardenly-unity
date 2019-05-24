@@ -11,7 +11,7 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.nameInputField != null && this.typeDropDown != null && Camera.main != null)
+        if (Camera.main != null)
             Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
     }
 

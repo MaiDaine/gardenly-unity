@@ -1526,7 +1526,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669912}
+          - m_Target: {fileID: 1670110616}
             m_MethodName: SetMaintainDataPanel
             m_Mode: 1
             m_Arguments:
@@ -3978,7 +3978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000024
+  m_Value: 0.50000036
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24441,7 +24441,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extendMenu: {fileID: 788000910}
   dynamicObjectMenu: {fileID: 54717438}
-  dataPanel: {fileID: 1670110612}
   flowerBedDataPanel: {fileID: 1498750255}
   tutoView: {fileID: 2141465984}
   keyBindsBox: {fileID: 1222315409}
@@ -24452,20 +24451,19 @@ MonoBehaviour:
   - {fileID: 985670293}
   - {fileID: 1418433526}
   - {fileID: 2141465984}
+  gridButton: {fileID: 802658978}
+  cameraModeButton: {fileID: 2020936804}
+  dataPanelInitBtn: {fileID: 1755187845}
   tmpBtn:
   - {fileID: 424425214353298864}
   - {fileID: 1563489205540976667}
   - {fileID: 666436822}
   - {fileID: 1313221065}
-  gridButton: {fileID: 802658978}
-  cameraModeButton: {fileID: 2020936804}
-  dataPanelInitBtn: {fileID: 1755187845}
   uIButtonListener: {fileID: 538496935}
   revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
   redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
-  flowerBedPanelScript: {fileID: 0}
   gardenName: {fileID: 1979017820}
-  textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
+  dataPanel: {fileID: 1670110616}
 --- !u!1 &537686114
 GameObject:
   m_ObjectHideFlags: 0
@@ -68237,11 +68235,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.000015258789
       objectReference: {fileID: 0}
-    - target: {fileID: 4382178236544122439, guid: bd169830bb0a8164fa187ecd83cbdab9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4382178235849840971, guid: bd169830bb0a8164fa187ecd83cbdab9,
         type: 3}
       propertyPath: m_Sprite
@@ -68271,6 +68264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Spacing
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382178236544122439, guid: bd169830bb0a8164fa187ecd83cbdab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd169830bb0a8164fa187ecd83cbdab9, type: 3}
@@ -76338,6 +76336,7 @@ GameObject:
   - component: {fileID: 1670110612}
   - component: {fileID: 1670110611}
   - component: {fileID: 1670110610}
+  - component: {fileID: 1670110616}
   m_Layer: 0
   m_Name: View - PlantsDataPanel
   m_TagString: Untagged
@@ -77230,6 +77229,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1670110616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670110608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bef2b8a8c728444aa0d617953875c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantName: 
+  plantType: 
+  textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
 --- !u!1 &1670469738
 GameObject:
   m_ObjectHideFlags: 0
@@ -79379,7 +79393,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669912}
+          - m_Target: {fileID: 1670110616}
             m_MethodName: SetDescriptionDataPanel
             m_Mode: 1
             m_Arguments:
@@ -83951,10 +83965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantName: {fileID: 1302836033}
-  ghosts:
-  - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
-  - {fileID: 1523221669236193997, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}
-  idxObject: 0
   refTexture: {fileID: 0}
 --- !u!1 &1840219131
 GameObject:
@@ -102296,7 +102306,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 534669912}
+          - m_Target: {fileID: 1670110616}
             m_MethodName: SetInformationsDataPanel
             m_Mode: 1
             m_Arguments:

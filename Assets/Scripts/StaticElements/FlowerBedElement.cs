@@ -25,18 +25,18 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
       UIController uIController = Camera.main.GetComponent<UIController>();
-        TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+      TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
             RectTransform menuTransform = uIController.extendMenu.RectTransform;
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
-            uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
+            uIController.SpawnDynMenu(this);
             if (!uIController.PlantsViewsDisplay())
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+                uIController.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
             else
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
-            if (labels[labels.Length - 1].text != plantName || uIController.dataPanel.IsHidden)
+                uIController.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            if (labels[labels.Length - 1].text != plantName || uIController.dataPanel.GetView().IsHidden)
                     uIController.SetDataPanel(plantName, plantType);
         }
     }

@@ -96,25 +96,25 @@ public class ViewController : MonoBehaviour
         RawImage img;
 
         if (viewController.dynButtons.Count == 0)
-            {  
-                string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
-                if (plantNames != null)
+        {
+            string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
+            if (plantNames != null)
+            {
+                img = this.view.GetComponentInChildren<RawImage>();
+                if (img != null)
+                    this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
+                for (int i = 0; i < plantNames.Length; i++)
                 {
-                    img = this.view.GetComponentInChildren<RawImage>();
-                    if (img != null)
-                        this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
-                    for (int i = 0; i < plantNames.Length; i++)
-                    {
-                        GameObject obj = Instantiate(this.plantButton, view.transform);
-                        ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
-                        UIButton btn = obj.GetComponent<UIButton>();
+                    GameObject obj = Instantiate(this.plantButton, view.transform);
+                    ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+                    UIButton btn = obj.GetComponent<UIButton>();
 
-                        viewController.dynButtons.Add(btn);
-                        btn.TextMeshProLabel.text = plantNames[i];
-                        buttonScript.SetGhost(this.plantType);
-                    }
+                    viewController.dynButtons.Add(btn);
+                    buttonScript.SetGhostType(this.plantType);
+                    btn.TextMeshProLabel.text = plantNames[i];
                 }
             }
+        }
     }
 
     public void ManageHide(UIView view)

@@ -46,7 +46,6 @@ public class ReactProxy : MonoBehaviour
             SerializationController.instance.GetComponent<GardenData>().SetGardenName("Offline Garden");
             LocalisationController.instance.Init("FR");//TODO USERPREF
         }
-        Camera.main.GetComponent<UIController>().gardenName.text = this.GetComponent<GardenData>().gardenName;
     }
 
     //Link To REACT

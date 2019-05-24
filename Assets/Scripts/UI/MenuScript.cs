@@ -40,9 +40,9 @@ public class MenuScript : MonoBehaviour, IMenu
                     }
                 }
             }
-            if (controller.dataPanel.IsVisible)
+            if (controller.dataPanel.GetView().IsVisible)
             {
-                controller.dataPanel.Hide();
+                controller.dataPanel.GetView().Hide();
             }
             this.rotateState = false;
             this.isMoving = false;
@@ -64,7 +64,7 @@ public class MenuScript : MonoBehaviour, IMenu
     public void StartRotate()
     {
         this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Rotation, this.playerController.currentSelection);
-        this.rotateState = !this.rotateState;//TODO CHECK
+        this.rotateState = !this.rotateState;
     }
 
     public void EditionEnd()
