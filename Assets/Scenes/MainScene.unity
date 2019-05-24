@@ -24453,7 +24453,6 @@ MonoBehaviour:
   - {fileID: 2141465984}
   gridButton: {fileID: 802658978}
   cameraModeButton: {fileID: 2020936804}
-  dataPanelInitBtn: {fileID: 1755187845}
   tmpBtn:
   - {fileID: 424425214353298864}
   - {fileID: 1563489205540976667}
@@ -77244,6 +77243,7 @@ MonoBehaviour:
   plantName: 
   plantType: 
   textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
+  dataPanelInitBtn: {fileID: 1755187845}
 --- !u!1 &1670469738
 GameObject:
   m_ObjectHideFlags: 0

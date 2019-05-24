@@ -14,7 +14,6 @@ public class UIController : MonoBehaviour
     public UIView[] plantsViews;
     public UIButton gridButton;
     public UIButton cameraModeButton;
-    public UIButton dataPanelInitBtn;
     public UIButton[] tmpBtn;
     public UIButtonListener uIButtonListener;
     public ActionRuntimeSet revertActionSet;
@@ -166,16 +165,15 @@ public class UIController : MonoBehaviour
     {
         if (this.dynamicObjectMenu.IsVisible)
             this.dynamicObjectMenu.Hide();
-        this.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+        if (this.uIButtonListener != null)
+            this.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
         
         foreach (UIView view in this.plantsViews)
         {
-     
             if (view.IsVisible)
-            {
                 view.Hide();
-            }
         }
+
         if (this.dataPanel.GetView() != null)
             this.dataPanel.GetView().Hide();
         if (this.tutoView.IsVisible)
@@ -186,9 +184,9 @@ public class UIController : MonoBehaviour
 
     public void SaveViews()
     {
+        this.currentHideViews.Clear();
         foreach (UIView view in this.plantsViews)
         {
-
             if (view.IsVisible && view.name != "TutoBox")
                 this.currentHideViews.Add(view);
         }
@@ -200,7 +198,7 @@ public class UIController : MonoBehaviour
     {
         if (this.menu != null && this.menu.rotateState)
           return;
-        SpawnMenu(ghost, this.dataPanel.GetView());
+        SpawnMenu(ghost, this.dynamicObjectMenu);
         this.menu.SetGhostRef(ghost);
     }
 
@@ -218,12 +216,16 @@ public class UIController : MonoBehaviour
         if (this.PlantsViewsDisplay())
             this.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
 
+        if (this.dataPanel.plantName == plantName && this.dataPanel.GetView().IsVisible)
+        {
+            this.dataPanel.GetView().Hide();
+            return;
+        }
 
         this.dataPanel.plantName = plantName;
         this.dataPanel.plantType = plantType;
 
-
-       
+        this.dataPanel.SetData();
     }
 
     public void SetFlowerBedDataPanel(FlowerBed flowerBedRef)

@@ -11,6 +11,7 @@ public class PlantPanelScript : MonoBehaviour
     public string plantName;
     public string plantType;
     public Texture2D textureRef;
+    public UIButton dataPanelInitBtn;
 
     private PlantData plantDataRef;
     private ReactProxy reactProxy;
@@ -46,7 +47,7 @@ public class PlantPanelScript : MonoBehaviour
         }
     }
 
-    public void SetData(string plantName, string plantType)
+    public void SetData()
     {
         RawImage icon = this.GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
@@ -55,19 +56,17 @@ public class PlantPanelScript : MonoBehaviour
         TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
-        if (labels[labels.Length - 1].text == plantName && this.GetView().IsVisible)
-        {
-            this.GetView().Hide();
-            return;
-        }
-
+        if (!this.GetView().IsVisible)
+            this.GetView().Show();
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
                 label.text = plantName;
         }
+
         if (script != null)
             script.SetGhostType(plantType);
+
         if (tmp != null && tmp.imgUrl != null)
             StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else
@@ -75,12 +74,11 @@ public class PlantPanelScript : MonoBehaviour
             animator.enabled = true;
             icon.texture = this.textureRef;
         }
-        if (!this.GetView().IsVisible)
-        {
-            this.GetView().Show();
-        }
-       // if (tmp != null)
-         //   this.dataPanelInitBtn.ExecuteClick();
+
+        if (this.dataPanelInitBtn.isActiveAndEnabled)
+            this.dataPanelInitBtn.ExecuteClick();
+        else
+            this.SetDescriptionDataPanel();
     }
 
     public void SetDescriptionDataPanel()

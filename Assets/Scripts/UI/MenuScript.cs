@@ -58,7 +58,6 @@ public class MenuScript : MonoBehaviour, IMenu
         this.rotateState = false;
         this.isMoving = true;
         this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Position, this.playerController.currentSelection);
-        //this.constructionController.SetGhost(ghost);
     }
 
     public void StartRotate()
