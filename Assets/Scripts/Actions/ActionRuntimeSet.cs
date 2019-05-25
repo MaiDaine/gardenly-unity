@@ -7,25 +7,25 @@ public class ActionRuntimeSet : RuntimeSet<GhostAction>
 
     public override void Add(GhostAction elem)
     {
-        if (!this.items.Contains(elem))
+        if (!items.Contains(elem))
         {
-            this.items.Add(elem);
+            items.Add(elem);
             onActionSetUpdated.Raise();
         }
     }
 
     public override void Remove(GhostAction elem)
     {
-        if (this.items.Contains(elem))
+        if (items.Contains(elem))
         {
-            this.items.Remove(elem);
+            items.Remove(elem);
             onActionSetUpdated.Raise();
         }
     }
 
     public override void ClearSet()
     {
-        if (this.items.Count != 0)
+        if (items.Count != 0)
         {
             foreach (GhostAction action in items)
                 Destroy(action);
@@ -46,8 +46,8 @@ public class ActionRuntimeSet : RuntimeSet<GhostAction>
 
     public GhostAction GetLastAction()
     {
-        if (this.items.Count == 0)
+        if (items.Count == 0)
             return null;
-        return (this.items[this.items.Count - 1]);
+        return (items[items.Count - 1]);
     }
 }
