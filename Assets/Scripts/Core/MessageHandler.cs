@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
 public class MessageHandler : MonoBehaviour
 {
     public static MessageHandler instance = null;
+
     public Color colorRef;
 
     private float timer = 5;
@@ -15,39 +13,42 @@ public class MessageHandler : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        this.gameObject.SetActive(false);
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+        gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (this.startCount)
+        if (startCount)
             UpdateTime();
     }
 
     private void UpdateTime()
     {
-        this.timer -= Time.deltaTime;
+        timer -= Time.deltaTime;
 
-        if (this.timer <= 0)
+        if (timer <= 0)
         {
-            this.errorMsg.text = "";
-            this.startCount = false;
-            this.timer = 5;
-            this.gameObject.SetActive(false);
+            errorMsg.text = "";
+            startCount = false;
+            timer = 5;
+            gameObject.SetActive(false);
         }
     }
 
     public bool ErrorMessage(string msg)
     {
         msg = LocalisationController.instance.GetText("errors", msg);
-        this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
-        if (this.errorMsg != null)
+        gameObject.SetActive(true);
+        errorMsg = GetComponentInChildren<TextMeshProUGUI>();
+        if (errorMsg != null)
         {
-            this.errorMsg.text = msg;
-            this.errorMsg.color = this.colorRef;
-            this.startCount = true;
+            errorMsg.text = msg;
+            errorMsg.color = colorRef;
+            startCount = true;
         }
         return false;
     }
@@ -55,13 +56,13 @@ public class MessageHandler : MonoBehaviour
     public bool ErrorMessage(string subCategory, string msg)
     {
         msg = LocalisationController.instance.GetText("errors", subCategory, msg);
-        this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
-        if (this.errorMsg != null)
+        gameObject.SetActive(true);
+        errorMsg = GetComponentInChildren<TextMeshProUGUI>();
+        if (errorMsg != null)
         {
-            this.errorMsg.text = msg;
-            this.errorMsg.color = this.colorRef;
-            this.startCount = true;
+            errorMsg.text = msg;
+            errorMsg.color = colorRef;
+            startCount = true;
         }
         return false;
     }
@@ -69,13 +70,13 @@ public class MessageHandler : MonoBehaviour
     public bool SuccesMessage(string msg)
     {
         msg = LocalisationController.instance.GetText("succes", msg);
-        this.gameObject.SetActive(true);
-        this.errorMsg = this.GetComponentInChildren<TextMeshProUGUI>();
-        if (this.errorMsg != null)
+        gameObject.SetActive(true);
+        errorMsg = GetComponentInChildren<TextMeshProUGUI>();
+        if (errorMsg != null)
         {
-            this.errorMsg.text = msg;
-            this.errorMsg.color = Color.green;
-            this.startCount = true;
+            errorMsg.text = msg;
+            errorMsg.color = Color.green;
+            startCount = true;
         }
         return true;
     }

@@ -9216,7 +9216,7 @@ Light:
   m_BounceIntensity: 0.58
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: NaN, y: 5.969306e-39, z: -9.1835e-41, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.8e-43, z: 0, w: 2.3509887e-38}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -24226,6 +24226,7 @@ GameObject:
   - component: {fileID: 534669910}
   - component: {fileID: 534669912}
   - component: {fileID: 534669911}
+  - component: {fileID: 534669914}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -24340,8 +24341,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   editionState: 0
-  snapDistance: 0.15
   flowerBeds: []
+  snapDistance: 0.15
 --- !u!114 &534669909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24359,10 +24360,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  gridSizeX: 10
-  gridSizeZ: 10
-  largeStep: 1
-  smallStep: 0.2
   mainColor: {r: 0, g: 1, b: 0, a: 1}
   subColor: {r: 1, g: 1, b: 1, a: 1}
   lineColor: {r: 1, g: 0, b: 0, a: 1}
@@ -24477,6 +24474,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7041c3f583b0844db4dca9cadd55aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &534669914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ab16626d040154bb35046523e5decf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &537686114
@@ -118738,8 +118747,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669907}
-            m_MethodName: SpawnFlowerBedMesh
+          - m_Target: {fileID: 534669914}
+            m_MethodName: StartNewShape
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}

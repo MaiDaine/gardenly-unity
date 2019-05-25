@@ -64,6 +64,7 @@ public class ConstructionController : MonoBehaviour
 
     public GhostHandler GetGhost() { return ghost; }
 
+    //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
         if (currentState == ConstructionState.Off)
@@ -71,6 +72,7 @@ public class ConstructionController : MonoBehaviour
             Cancel();
             currentState = ConstructionState.Positioning;
             ghost = Instantiate(ghostRef, Vector3.zero, Quaternion.identity);
+            Debug.Log(ghostRef.GetData());
             ghost.SetData(ghostRef.GetData());
             if (gridState)//TODO #73
                 grid.activ = true;

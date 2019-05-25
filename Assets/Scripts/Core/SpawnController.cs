@@ -21,22 +21,24 @@ public class SpawnController : MonoBehaviour
 
     private ShapeCreator shapeCreator;
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
         else if (instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
     }
 
     private void Start()
     {
-        this.shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
-        this.shapeCreator.gameObject.SetActive(false);
+        shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
+        shapeCreator.gameObject.SetActive(false);
     }
 
     public GhostHandler GetPlantGhost(string type, string name)
     {
+        //TODO #74
+        // Instantiate(ghostRef, Vector3.zero, Quaternion.identity);
         PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
         if (tmp == null)
             return null;
@@ -122,15 +124,16 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public FlowerBed SpawnFlowerBed()
+    public FlowerBed StartNewShape(/*final object*/)
     {
         FlowerBed tmp;
 
-        this.shapeCreator.gameObject.SetActive(true);
-        this.shapeCreator.Init();
-        tmp = Instantiate(this.flowerBedRef);
-        tmp.Init(this.shapeCreator);
-        ConstructionController.instance.SetGhost(this.shapeCreator);
+        shapeCreator.gameObject.SetActive(true);
+        shapeCreator.Init();
+        tmp = Instantiate(flowerBedRef);
+        tmp.Init(shapeCreator);
+        ConstructionController.instance.SetGhost(shapeCreator);
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Positioning;
         return tmp;
     }
 
