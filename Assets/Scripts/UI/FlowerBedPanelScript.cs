@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
+// Manage name and type changes
 public class FlowerBedPanelScript : MonoBehaviour
 {
     public TMP_InputField nameInputField;
@@ -15,15 +13,13 @@ public class FlowerBedPanelScript : MonoBehaviour
             Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
     }
 
-    private void LateUpdate()
+    private void LateUpdate() // TODO
     {
         if (this.typeDropDown != null && this.typeDropDown.IsActive())
         {
-            if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null 
+            if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null
                 && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text)
-            {
                 ValidateTypeChange();
-            }
         }
     }
 
@@ -40,7 +36,6 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     public void ValidateTypeChange()
     {
-        
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
         Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[this.typeDropDown.value].text);
     }

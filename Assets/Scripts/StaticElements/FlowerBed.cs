@@ -108,7 +108,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (TutoBoxScript.isOn)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
-            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("");
+            controller.plantsViews[5].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
         }
     }
     //ISelectable
@@ -137,7 +137,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (uIController.GetFlowerBedMenuScript() != null)
         {
             uIController.flowerBedDataPanel.Hide();
-            uIController.tutoView.Hide();
+            uIController.plantsViews[5].Hide();
         }
     }
 

@@ -1,14 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+// Show / Hide UI elements when click are executed
 public class ConstructionMenu : MonoBehaviour
 {
-    public Animator anim;
-    public string defaultAnimation;
-    public string updateAnimation;
     public bool state = false;
-    public bool open = false;
 
     private UIController uIController = null;
 
@@ -18,21 +13,9 @@ public class ConstructionMenu : MonoBehaviour
         this.uIController = Camera.main.GetComponentInChildren<UIController>();
     }
 
-    public void ChangeState(bool sleepMode = false)
+    public void ChangeState()
     {
-        if (sleepMode && !this.open)
-        {
-            this.open = true;
-            this.gameObject.SetActive(!this.state);
-        }
-        if (!sleepMode)
-            this.gameObject.SetActive(!this.state);
+        this.gameObject.SetActive(!this.state);
         this.state = !this.state;
-    }
-
-    public void SetState(bool state)
-    {
-        this.gameObject.SetActive(this.state);
-        this.state = state;
     }
 }

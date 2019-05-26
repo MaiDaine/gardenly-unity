@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Doozy.Engine.UI;
 using UnityEngine.UI;
 using TMPro;
 
+// Manage actions (resize / reset buttons colors / Add prefab buttons) on view when button are clicked
 public class ViewController : MonoBehaviour
 {
-    // FlowerBed after click define soil type + tutorial world space object
     public TextMeshProUGUI[] labels;
     public UIButton[] buttons;
     public UIView plantView;
@@ -18,51 +17,8 @@ public class ViewController : MonoBehaviour
     public string plantType;
     public bool isPressed = false;
 
-    public void ResetButtons()
-    {
-        foreach(UIButton button in this.buttons)
-        {
-            if (!button.IsSelected && button.IsActive())
-            {
-                LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
-                ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();
-                if (constructionMenu != null)
-                    constructionMenu.ChangeState();
-                foreach (LabelScript labelScript in tmp)
-                {
-                    labelScript.ResetColor();
-                    if (labelScript.view != null && labelScript.view.IsVisible)
-                        labelScript.view.Hide();
-                }
-            }   
-        }
-    }
 
-    public void ResetDynButtons()
-    {
-        foreach (UIButton button in this.dynButtons)
-        {
-            if (!button.IsSelected && button.IsActive())
-            {
-                LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
-                ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();
-                if (constructionMenu != null)
-                    constructionMenu.ChangeState();
-                foreach (LabelScript labelScript in tmp)
-                {
-                    labelScript.ResetColor();
-                    if (labelScript.view != null && labelScript.view.IsVisible)
-                        labelScript.view.Hide();
-                }
-            }
-        }
-    }
-
-    public void SwitchState()
-    {
-        this.isPressed = !this.isPressed;
-    }
-
+    // size view
     public void ExtendMenuMode()
     {
         RectTransform rect = this.GetComponent<RectTransform>();
@@ -88,6 +44,41 @@ public class ViewController : MonoBehaviour
     }
 
 
+    // reset buttons
+    public void ResetStateButtons(UIButton button)
+    {
+        if (!button.IsSelected && button.IsActive())
+        {
+            LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
+            ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();
+            if (constructionMenu != null)
+                constructionMenu.ChangeState();
+            foreach (LabelScript labelScript in tmp)
+            {
+                labelScript.ResetColor();
+                if (labelScript.view != null && labelScript.view.IsVisible)
+                    labelScript.view.Hide();
+            }
+        }
+    }
+
+    public void ResetButtons()
+    {
+        foreach(UIButton button in this.buttons)
+        {
+            this.ResetStateButtons(button);
+        }
+    }
+
+    public void ResetDynButtons()
+    {
+        foreach (UIButton button in this.dynButtons)
+        {
+            this.ResetStateButtons(button);
+        }
+    }
+
+    // Add dynamic buttons
     public void AddPlants()
     {
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
@@ -117,11 +108,8 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    public void ManageHide(UIView view)
+    public void SwitchState()
     {
-        if (view.IsVisible || view.IsShowing)
-        {
-            view.Hide();
-        }
+        this.isPressed = !this.isPressed;
     }
 }

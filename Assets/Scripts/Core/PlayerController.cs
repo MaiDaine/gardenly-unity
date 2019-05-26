@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             this.constructionController.Cancel();
             Camera.main.GetComponentInChildren<UIController>().Cancel(true);
-            Camera.main.GetComponentInChildren<UIController>().ForceResetButton();
+            Camera.main.GetComponentInChildren<UIController>().ResetButton(true);
         }
 
         //Selection

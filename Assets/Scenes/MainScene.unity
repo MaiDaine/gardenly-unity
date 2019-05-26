@@ -4435,17 +4435,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   ListenForAllUIButtons: 0
@@ -6744,8 +6733,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!225 &153190952
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -11932,8 +11921,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!225 &232743338
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -14421,8 +14410,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &262780845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16684,8 +16673,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &267176854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16776,8 +16765,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &273259794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17814,11 +17803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &353108786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17911,8 +17896,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &358237705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22869,8 +22854,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   actionColor: {r: 0, g: 0, b: 0, a: 0}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &451291532
 GameObject:
   m_ObjectHideFlags: 0
@@ -23003,11 +22988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!1 &474519206
 GameObject:
   m_ObjectHideFlags: 0
@@ -24443,7 +24424,6 @@ MonoBehaviour:
   dynamicObjectMenu: {fileID: 54717438}
   flowerBedDataPanel: {fileID: 1498750255}
   tutoView: {fileID: 2141465984}
-  keyBindsBox: {fileID: 1222315409}
   plantsViews:
   - {fileID: 697912037}
   - {fileID: 279882602}
@@ -24451,6 +24431,7 @@ MonoBehaviour:
   - {fileID: 985670293}
   - {fileID: 1418433526}
   - {fileID: 2141465984}
+  - {fileID: 1222315409}
   gridButton: {fileID: 802658978}
   cameraModeButton: {fileID: 2020936804}
   tmpBtn:
@@ -27854,8 +27835,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   actionColor: {r: 0.972549, g: 0.42352942, b: 0.41960785, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &653400096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30446,8 +30427,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &666436821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39946,8 +39927,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!225 &802658977
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -42234,17 +42215,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 534669912}
-        m_MethodName: SetClickTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: Doozy.Engine.UI.UIButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   ListenForAllUIButtons: 0
@@ -42329,8 +42299,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!225 &854779989
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -45071,8 +45041,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 279882602}
+  pressed: 0
 --- !u!114 &929079145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50671,8 +50641,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
   actionColor: {r: 0.3019608, g: 0.7411765, b: 0.45490196, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &996473621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59412,8 +59382,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &1209054388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59800,8 +59770,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   actionColor: {r: 0.972549, g: 0.42352942, b: 0.41960785, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &1212151955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62729,61 +62699,6 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 697912037}
-        m_MethodName: Hide
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 279882602}
-        m_MethodName: Hide
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2041964100}
-        m_MethodName: Hide
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 985670293}
-        m_MethodName: Hide
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1418433526}
-        m_MethodName: Hide
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1670110612}
         m_MethodName: Hide
         m_Mode: 6
@@ -62852,6 +62767,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 127626705}
         m_MethodName: ResetButtons
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 534669912}
+        m_MethodName: HideViews
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -63714,8 +63640,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &1313221064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70450,11 +70376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &1508194125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72788,8 +72710,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &1513896317
 GameObject:
   m_ObjectHideFlags: 0
@@ -73072,8 +72994,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &1533611738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83965,7 +83887,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantName: {fileID: 1302836033}
-  refTexture: {fileID: 0}
 --- !u!1 &1840219131
 GameObject:
   m_ObjectHideFlags: 0
@@ -84016,11 +83937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &1840219134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98427,8 +98344,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &2060521785
 GameObject:
   m_ObjectHideFlags: 0
@@ -101310,8 +101227,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
   actionColor: {r: 0.972549, g: 0.42352942, b: 0.41960785, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &2072909334
 GameObject:
   m_ObjectHideFlags: 0
@@ -105243,8 +105160,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425212982080022
 RectTransform:
   m_ObjectHideFlags: 0
@@ -105336,8 +105253,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!222 &424425213083712510
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -105387,11 +105304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!224 &424425213121803468
 RectTransform:
   m_ObjectHideFlags: 0
@@ -105677,8 +105590,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!222 &424425213218777726
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -105960,11 +105873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!222 &424425213385057168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -106017,8 +105926,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425213385057174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -106080,8 +105989,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 697912037}
+  pressed: 0
 --- !u!114 &424425213414470434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108447,11 +108356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!224 &424425213454207940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -108550,8 +108455,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 424425213898751461}
+  pressed: 0
 --- !u!114 &424425213468452082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109536,7 +109441,7 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 424425214743223778}
             m_MethodName: ChangeState
-            m_Mode: 6
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -111092,8 +110997,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425213541079110
 RectTransform:
   m_ObjectHideFlags: 0
@@ -111184,8 +111089,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425213593406750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -111276,8 +111181,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425213727956126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -111485,11 +111390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!224 &424425213804203804
 RectTransform:
   m_ObjectHideFlags: 0
@@ -113859,8 +113760,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 985670293}
+  pressed: 0
 --- !u!222 &424425213804204621
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -114907,8 +114808,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!224 &424425213943925190
 RectTransform:
   m_ObjectHideFlags: 0
@@ -115036,8 +114937,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 424425214491907278}
+  pressed: 0
 --- !u!222 &424425213982445019
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -115981,7 +115882,7 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 424425213121803465}
             m_MethodName: ChangeState
-            m_Mode: 6
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -117466,8 +117367,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &424425214028569962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117555,11 +117456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &424425214293920308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118682,7 +118579,7 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 424425213355355303}
             m_MethodName: ChangeState
-            m_Mode: 6
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -120065,8 +119962,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.16078432, g: 0.18039216, b: 0.20784315, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!222 &424425214353298869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -120164,8 +120061,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &424425214431546602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121166,8 +121063,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &424425214602976058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121296,8 +121193,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!222 &424425214670633990
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -121424,8 +121321,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 2041964100}
+  pressed: 0
 --- !u!222 &424425214723814099
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -123725,11 +123622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &424425214743223780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123858,8 +123751,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.22352943, g: 0.6784314, b: 0.909804, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!222 &424425214804520326
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -123984,11 +123877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!114 &424425214944245256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124078,8 +123967,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 1418433526}
+  pressed: 0
 --- !u!222 &424425214944245259
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -126539,8 +126428,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!114 &424425215006345914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128948,8 +128837,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &1563489206553073234
 GameObject:
   m_ObjectHideFlags: 0
@@ -129040,8 +128929,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
+  pressed: 0
 --- !u!1 &1563489206818423048
 GameObject:
   m_ObjectHideFlags: 0
@@ -129129,11 +129018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!1 &1563489207138780083
 GameObject:
   m_ObjectHideFlags: 0

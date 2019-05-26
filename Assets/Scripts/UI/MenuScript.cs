@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Doozy.Engine.UI;
 
+// Manage action of objects panel other than FB
 public class MenuScript : MonoBehaviour, IMenu
 {
     public bool rotateState = false;
@@ -17,11 +18,8 @@ public class MenuScript : MonoBehaviour, IMenu
         this.playerController = PlayerController.instance;
     }
 
-    public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
 
-    public GhostHandler GetGhost() { return this.ghost; }
-
-    public void DestroyMenu(bool spawn = false)
+    public void DestroyMenu(bool spawn = false) // TODO
     {
         if (Camera.main != null)
         {
@@ -35,9 +33,7 @@ public class MenuScript : MonoBehaviour, IMenu
                 foreach (UIView view in controller.plantsViews)
                 {
                     if (view.IsVisible)
-                    {
                         view.Hide();
-                    }
                 }
             }
             if (controller.dataPanel.GetView().IsVisible)
@@ -79,15 +75,20 @@ public class MenuScript : MonoBehaviour, IMenu
         GridController.instance.activ = false;
     }
 
+    public void DestroyObject()
+    {
+        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
+            PlayerController.instance.DestroySelection();
+    }
+
+    public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
+
+    public GhostHandler GetGhost() { return this.ghost; }
+
     public GameObject GetGameObject() { return this.gameObject; }
 
     public bool IsHidden() { return this.isHidden; }
 
     public void SetHidden(bool state) { this.isHidden = state; }
 
-    public void DestroyObject()
-    {
-        if (constructionController.currentState == ConstructionController.ConstructionState.Off)
-            PlayerController.instance.DestroySelection();
-    }
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using TMPro;
 
+// Class Link to settings panel
 public class SettingsController : MonoBehaviour
 {
-    public TMPro.TMP_Dropdown qualityDropDown;
-    public TMPro.TMP_Dropdown antialiasingDropDown;
+    public TMP_Dropdown qualityDropDown;
+    public TMP_Dropdown antialiasingDropDown;
 
     private GameSettings gameSettings;
 

@@ -5,7 +5,6 @@ using TMPro;
 public class ButtonScript : MonoBehaviour
 {
     public TextMeshProUGUI plantName;
-    public Texture refTexture;
 
     protected string ghostType;
 
@@ -20,6 +19,8 @@ public class ButtonScript : MonoBehaviour
         Camera.main.GetComponent<UIController>().dataPanel.SetPlantImg(plantName, this.ghostType, texture);
     }
 
+    //Function call onDynamicButtonClick
+
     public void BuildFunction()
     {
         PlantData tmp = ReactProxy.instance.GetPlantsData(this.ghostType, this.plantName.text);
@@ -31,6 +32,6 @@ public class ButtonScript : MonoBehaviour
     public void SetPanelFunction()
     {
         ReactProxy.instance.externalData.callbackFinishDownloadImage[this.plantName.text] = OnImageDownload;
-        Camera.main.GetComponent<UIController>().SetDataPanel(this.plantName.text, ghostType);
+        Camera.main.GetComponent<UIController>().SetDataPanel(this.plantName.text, this.ghostType);
     }
 }

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using Doozy.Engine.UI;
 using TMPro;
 
+// Manage the plants panel
 public class PlantPanelScript : MonoBehaviour
 {
     public string plantName;
@@ -15,6 +14,7 @@ public class PlantPanelScript : MonoBehaviour
 
     private PlantData plantDataRef;
     private ReactProxy reactProxy;
+    private Coroutine imageCoroutine;
 
     private void Start()
     {
@@ -22,17 +22,13 @@ public class PlantPanelScript : MonoBehaviour
         this.reactProxy = ReactProxy.instance;
     }
 
-
-    public UIView GetView()
+    private void OnDisable()
     {
-        UIView view = this.GetComponentInChildren<UIView>();
-
-        if (view != null)
-            return view;
-
-        return null;
+        if (this.imageCoroutine != null)
+            StopCoroutine(this.imageCoroutine);
     }
 
+    // Co-routine to download plant img
     public void SetPlantImg(string plantName, string plantType, Texture img)
     {
         RawImage icon = this.GetComponentInChildren<RawImage>();
@@ -47,6 +43,7 @@ public class PlantPanelScript : MonoBehaviour
         }
     }
 
+    // Set data of the panel and show it, "Default" if Graphql request return null.
     public void SetData()
     {
         RawImage icon = this.GetComponentInChildren<RawImage>();
@@ -54,21 +51,22 @@ public class PlantPanelScript : MonoBehaviour
         Slider[] sliders = this.GetComponentsInChildren<Slider>();
         ButtonScript script = this.GetComponentInChildren<ButtonScript>();
         TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
+        PlantData tmp = this.reactProxy.GetPlantsData(this.plantType, this.plantName);
 
         if (!this.GetView().IsVisible)
             this.GetView().Show();
+
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
-                label.text = plantName;
+                label.text = this.plantName;
         }
 
         if (script != null)
-            script.SetGhostType(plantType);
+            script.SetGhostType(this.plantType);
 
         if (tmp != null && tmp.imgUrl != null)
-            StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+            this.imageCoroutine = StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else
         {
             animator.enabled = true;
@@ -99,13 +97,6 @@ public class PlantPanelScript : MonoBehaviour
         
     }
 
-    public string GetMonth(int month)
-    {
-        if (month < 1 || month > 12)
-            return "Absent";
-        return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
-    }
-
     public void SetMaintainDataPanel()
     {
         TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
@@ -124,7 +115,6 @@ public class PlantPanelScript : MonoBehaviour
                     label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
             }
     }
-
 
     public void SetInformationsDataPanel()
     {
@@ -164,5 +154,22 @@ public class PlantPanelScript : MonoBehaviour
             sliders[0].value = tmp.waterNeed;
             sliders[1].value = tmp.rusticity;
             sliders[2].value = tmp.sunNeed;
+    }
+
+    public string GetMonth(int month)
+    {
+        if (month < 1 || month > 12)
+            return "Absent";
+        return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+    }
+
+    public UIView GetView()
+    {
+        UIView view = this.GetComponentInChildren<UIView>();
+
+        if (view != null)
+            return view;
+
+        return null;
     }
 }
