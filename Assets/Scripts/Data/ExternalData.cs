@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ExternalData : MonoBehaviour
+public class ExternalData
 {
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
     public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
     public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
 
-    public void Init(Dictionary<string, Action<string>> callbacks)
+    public ExternalData(Dictionary<string, Action<string>> callbacks)
     {
-        callbacks["getTypes"] = SetPlantsTypes;
+        callbacks["getTypes"] = SetPlantsTypesNames;
         callbacks["getAllPlants"] = SetPlantOfType;
         callbacks["getPlant"] = SetPlantData;
     }
 
-    private void SetPlantsTypes(string json)
+    private void SetPlantsTypesNames(string json)
     {
         var jsonObject = JSONObject.Parse(json);
 
@@ -29,6 +29,7 @@ public class ExternalData : MonoBehaviour
             var tmp = jsonObject["data"]["getTypes"][i];
             plantsTypes[tmp["name"]] = tmp["id"];
             plants[tmp["name"]] = new Dictionary<string, PlantData>();
+
             if (Application.isEditor)
                 ReactProxy.instance.GetPlantsType("Fleur");
             else
@@ -69,7 +70,8 @@ public class ExternalData : MonoBehaviour
         plantData.waterNeed = tmp["sunNeed"];
         plantData.description = tmp["description"];
         plantData.model = tmp["model"];
-	    plantData.imgUrl = tmp["thumbnail"];
+        plantData.imgUrl = tmp["thumbnail"];
+
         plantData.status = PlantData.DataStatus.Received;
         if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.plantID))
             callbackLoadData[plantData.plantID].Invoke(plantData);

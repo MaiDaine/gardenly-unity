@@ -9216,7 +9216,7 @@ Light:
   m_BounceIntensity: 0.58
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.8e-43, z: 0, w: 2.3509887e-38}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 1.51e-43, w: 0.03515625}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -38906,7 +38906,6 @@ GameObject:
   - component: {fileID: 783192050}
   - component: {fileID: 783192052}
   - component: {fileID: 783192053}
-  - component: {fileID: 783192054}
   - component: {fileID: 783192055}
   m_Layer: 0
   m_Name: ReactProxy
@@ -38953,7 +38952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd409662e41115408c366fde8a7df8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  externalData: {fileID: 783192054}
 --- !u!114 &783192053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38968,18 +38966,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiController: {fileID: 534669912}
   gardenName: PlaceHolder
---- !u!114 &783192054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 783192049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 766e62db1b7c93c4ba99d89d3b1b283f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &783192055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118747,8 +118733,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669907}
-            m_MethodName: SpawnFlowerBedMesh
+          - m_Target: {fileID: 534669914}
+            m_MethodName: StartNewShape
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}

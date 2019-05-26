@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -22,6 +21,7 @@ public class PlantModel
         model.GetComponent<MeshRenderer>().material = materials[index];
         return model;
     }
+
     private void RandomizeArray(ref string[] arr)
     {
         for (var i = arr.Length - 1; i > 0; i--)

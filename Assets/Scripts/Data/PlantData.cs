@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlantData
 {
     public enum DataStatus { None, Requested, Received };
+
+    //TODO custom user value + serialization
 
     public string plantID;
     public string type;
@@ -34,6 +34,5 @@ public class PlantData
     public DataStatus status = DataStatus.None;
 
     public PlantData(string name) { this.name = name; }
-
 }
 
