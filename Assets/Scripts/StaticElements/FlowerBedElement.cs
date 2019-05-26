@@ -12,9 +12,9 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
     private SerializedFBE serializableItem;
 
-    void Start()
+    private void Start()
     {
-        this.transform.eulerAngles += this.correctedRotation;
+        transform.eulerAngles += correctedRotation;
         if (ConstructionController.instance.flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
@@ -24,7 +24,7 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
 
     public override void Select(ConstructionController.ConstructionState state)
     {
-      UIController uIController = Camera.main.GetComponent<UIController>();
+        UIController uIController = Camera.main.GetComponent<UIController>();
         TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
 
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
@@ -33,11 +33,11 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
             uIController.SpawnDynMenu(this, uIController.dynamicObjectMenu);
             if (!uIController.PlantsViewsDisplay())
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
             else
-                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
             if (labels[labels.Length - 1].text != plantName || uIController.dataPanel.IsHidden)
-                    uIController.SetDataPanel(plantName, plantType);
+                uIController.SetDataPanel(plantName, plantType);
         }
     }
 
@@ -79,25 +79,25 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
     {
         SerializedFBE tmp;
 
-        tmp.position = this.transform.position;
-        tmp.rotation = this.transform.rotation;
+        tmp.position = transform.position;
+        tmp.rotation = transform.rotation;
         tmp.subID = subID;
         return (tmp);
     }
 
     public void InnerDeSerialize(SerializedFBE elem)
     {
-        this.subID = elem.subID;
-        ReactProxy.instance.LoadPlantDataFromId(this.subID, OnPlantDataLoad);
-        this.transform.position = elem.position;
-        this.transform.rotation = elem.rotation;
+        subID = elem.subID;
+        ReactProxy.instance.LoadPlantDataFromId(subID, OnPlantDataLoad);
+        transform.position = elem.position;
+        transform.rotation = elem.rotation;
     }
 
     public void DeSerialize(string json)
     {
         serializableItem = JsonUtility.FromJson<SerializedFBE>(json);
-        this.transform.position = serializableItem.position;
-        this.transform.rotation = serializableItem.rotation;
+        transform.position = serializableItem.position;
+        transform.rotation = serializableItem.rotation;
     }
 
     public void OnPlantDataLoad(PlantData plantData)
@@ -106,4 +106,3 @@ public class FlowerBedElement : GhostHandler, ISelectable, ISerializable
         plantType = plantData.type;
     }
 }
-    

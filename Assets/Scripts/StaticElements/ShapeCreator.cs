@@ -14,7 +14,7 @@ public class ShapeCreator : GhostHandler
     private LineTextHandler lineInfoText;
     private bool displayAngle = false;
     private ShapePoint firstPoint = null;
-    private Vector2 a, b, c;
+    private Vector2 a, b, c;//angle calculation
     private Color color = new Color(1f, 0f, 0f, 1f);
     private Raycaster raycaster;
 
@@ -22,10 +22,12 @@ public class ShapeCreator : GhostHandler
     {
         GridController.instance.eventPostRender.AddListener(DrawLines);
         transform.position = new Vector3(0, 0, 0);
+
         firstPoint = Instantiate(pointPrefab);
         firstPoint.ChangeColor(new Color(0f, 0f, 1f, 1f));
         points.Add(firstPoint);
         currentPoint = firstPoint;
+
         lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
         lineInfoText.gameObject.SetActive(false);
         raycaster = Camera.main.GetComponent<Raycaster>();
@@ -56,7 +58,6 @@ public class ShapeCreator : GhostHandler
             if (displayAngle)
             {
                 c = new Vector2(p1.x, p1.z);
-
                 lineInfoText.SetText(string.Format("{0:F1}m\n {1:F1}°", (p1 - p2).magnitude, Vector2.Angle(a - b, c - b)));
             }
             else

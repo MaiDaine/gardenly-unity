@@ -24388,8 +24388,9 @@ MonoBehaviour:
   DSElements:
   - {fileID: 6934096047445395356, guid: 146f9595fc488e148928cedd06bfc0b3, type: 3}
   - {fileID: 8309292744526427777, guid: e059a36ed8d62bd4ebf5f873bf4e54ec, type: 3}
-  - {fileID: 1523221669236193997, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}
-  - {fileID: 849124044653278933, guid: 6a70ef9be1a358c4e9c44ce9dfc4ee63, type: 3}
+  plantElements:
+  - {fileID: -8360590082059929716, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}
+  - {fileID: -9032361966629747618, guid: 6a70ef9be1a358c4e9c44ce9dfc4ee63, type: 3}
   FBElements:
   - {fileID: -5999733098042373684, guid: 9172a1fe4a4fdc84ab1e29f23de6157d, type: 3}
   - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
@@ -83961,7 +83962,7 @@ MonoBehaviour:
   plantName: {fileID: 1302836033}
   ghosts:
   - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
-  - {fileID: 1523221669236193997, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}
+  - {fileID: 0}
   idxObject: 0
   refTexture: {fileID: 0}
 --- !u!1 &1840219131
@@ -118744,8 +118745,7 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3012356388731580561, guid: bbd69c87d81f41b46b53eb4d4ea6e9e4,
-              type: 3}
+          - m_Target: {fileID: 534669914}
             m_MethodName: SetTutorial
             m_Mode: 1
             m_Arguments:

@@ -4,7 +4,7 @@ using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
-    public enum StaticElementType { Chair, Table, Tree, Tree2 };
+    public enum StaticElementType { Chair, Table};
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;

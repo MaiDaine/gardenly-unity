@@ -14,8 +14,9 @@ public class SpawnController : MonoBehaviour
     public FlowerBed flowerBedRef;
     //public FlowerBedHandler FlowerBedHandlerRef;
     public ShapeCreator ShapeCreator;
-    public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
-    public FlowerBedElement[] FBElements = new FlowerBedElement[2];
+    public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
+    public PlantElement[] plantElements = new PlantElement[2];
+    public FlowerBedElement[] flowerBedElements = new FlowerBedElement[2];
     public LineTextHandler lineText;
     public ModelList plantModels;
 
@@ -44,7 +45,7 @@ public class SpawnController : MonoBehaviour
             return null;
         if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
         {
-            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
+            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[0], tmp.plantColor);
             elem.subID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
             return elem;
@@ -53,19 +54,19 @@ public class SpawnController : MonoBehaviour
         switch (type)
         {
             case "Arbre":
-                ghost = DSElements[2];
-                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                ghost = plantElements[0];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Arbuste":
-                ghost = DSElements[3];
-                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                ghost = plantElements[1];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Legume":
-                ghost = FBElements[1];
+                ghost = flowerBedElements[1];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Fleur":
-                ghost = FBElements[1];
+                ghost = flowerBedElements[1];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             default:
@@ -105,12 +106,6 @@ public class SpawnController : MonoBehaviour
                         case DefaultStaticElement.StaticElementType.Table:
                             staticElement = Instantiate(DSElements[1], Vector3.zero, Quaternion.identity);
                             break;
-                        case DefaultStaticElement.StaticElementType.Tree:
-                            staticElement = Instantiate(DSElements[2], Vector3.zero, Quaternion.identity);
-                            break;
-                        case DefaultStaticElement.StaticElementType.Tree2:
-                            staticElement = Instantiate(DSElements[3], Vector3.zero, Quaternion.identity);
-                            break;
                         default:
                             MessageHandler.instance.ErrorMessage("loading_error");
                             return;
@@ -140,7 +135,7 @@ public class SpawnController : MonoBehaviour
     public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
     {
         //TODO MODEL
-        FlowerBedElement tmp = Instantiate(FBElements[1], Vector3.zero, Quaternion.identity);
+        FlowerBedElement tmp = Instantiate(flowerBedElements[1], Vector3.zero, Quaternion.identity);
         tmp.InnerDeSerialize(elem);
         return tmp;
     }

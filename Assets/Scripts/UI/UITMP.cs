@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
+//TODO UI
+//search all Camera.main.GetComponent<UITMP>() and remplace calls
 
 public class UITMP : MonoBehaviour
 {
@@ -32,5 +36,49 @@ public class UITMP : MonoBehaviour
             uIController.GetMenuScript().DestroyMenu();
         if (uIController.GetFlowerBedMenuScript() != null)
             uIController.GetFlowerBedMenuScript().DestroyMenu();
+    }
+
+    //from FlowerBed
+    public void SetTutorial()
+    {
+        if (TutoBoxScript.isOn)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("");
+        }
+    }
+
+
+    //from FlowerBedElement
+    public void OnPlantElementSelect()
+    {
+        UIController uIController = Camera.main.GetComponent<UIController>();
+
+        if (uIController.GetMenuScript() != null)
+        {
+            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+            uIController.GetMenuScript().DestroyMenu();
+        }
+        else
+            uIController.DestroyMenu();
+    }
+
+    public void OnPlantElementDeselect(GhostHandler ghost, string plantName, string plantType)
+    {
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
+        {
+            RectTransform menuTransform = uIController.extendMenu.RectTransform;
+            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
+            uIController.SpawnDynMenu(ghost, uIController.dynamicObjectMenu);
+            if (!uIController.PlantsViewsDisplay())
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            else
+                uIController.dataPanel.CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            if (labels[labels.Length - 1].text != plantName || uIController.dataPanel.IsHidden)
+                uIController.SetDataPanel(plantName, plantType);
+        }
     }
 }
