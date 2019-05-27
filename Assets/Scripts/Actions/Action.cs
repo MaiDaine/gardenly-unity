@@ -10,12 +10,13 @@ public abstract class GhostAction : ScriptableObject
         this.gameObject = gameObject;
     }
 
-    public virtual void Complete()
+    public virtual bool Complete()
     {
         UIController uIController = Camera.main.GetComponent<UIController>();
 
         if (uIController != null)
             uIController.GetMenuScript().EditionEnd();
+        return true;
     }
 
     public abstract bool Revert();//Return true if object needs to be selected

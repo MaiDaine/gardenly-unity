@@ -56,7 +56,8 @@ public class ActionHandler : ScriptableObject
     {
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Editing)
             PlayerController.instance.currentSelection.GetGameObject().GetComponent<GhostHandler>().EndAction();
-        currentAction.Complete();
+        if (currentAction.Complete())
+            ReactProxy.instance.UpdateSaveState(true);
         revertActionSet.Add(currentAction);
         currentAction = null;
 
@@ -65,7 +66,6 @@ public class ActionHandler : ScriptableObject
             constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
             constructionController.currentState = ConstructionController.ConstructionState.Off;
         }
-        ReactProxy.instance.UpdateSaveState(true);
     }
 
     public GhostAction RedoAction()

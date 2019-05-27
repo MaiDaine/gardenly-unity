@@ -1,8 +1,9 @@
 ﻿public class Destroy : GhostAction
 {
-    public override void Complete()
+    public override bool Complete()
     {
         gameObject.SetActive(false);
+        return true;
     }
 
     public override bool Revert()

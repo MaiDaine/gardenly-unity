@@ -10,9 +10,10 @@ public class AddLineShape : GhostAction
         tmpAction = true;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
         point = gameObject.GetComponent<ShapeCreator>().currentPoint;
+        return false;
     }
 
     public override bool Revert()

@@ -30,17 +30,21 @@ public class LocalisationController : MonoBehaviour
 
     public string GetText(string category, string name)
     {
+        if (locales == null)
+            return category + ":" + name;
         return locales[category][name];
     }
 
     public string GetText(string category, string subCategory, string name)
     {
+        if (locales == null)
+            return category + ":" + name;
         return locales[category][subCategory][name];
     }
 
     private IEnumerator GetLocal(string locale)
     {
-        UnityWebRequest www = UnityWebRequest.Get("https://s3.greefine.ovh/unity/Locales/Locales_" + locale + ".json");
+        UnityWebRequest www = UnityWebRequest.Get("https://s3.gardenly.app/unity/Locales/Locales_" + locale + ".json");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)

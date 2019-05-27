@@ -11,10 +11,11 @@ public class Move : GhostAction
         oldPosition = gameObject.transform.position;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
         base.Complete();
         newPosition = gameObject.transform.position;
+        return true;
     }
 
     public override bool Revert()

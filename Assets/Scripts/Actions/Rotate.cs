@@ -11,10 +11,11 @@ public class Rotate : GhostAction
         oldRotation = gameObject.transform.rotation;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
         base.Complete();
         newRotation = gameObject.transform.rotation;
+        return true;
     }
 
     public override bool Revert()

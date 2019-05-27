@@ -45,7 +45,7 @@ public class SpawnController : MonoBehaviour
             return null;
         if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
         {
-            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[0], tmp.plantColor);
+            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[1], tmp.plantColor);
             elem.subID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
             return elem;
@@ -62,11 +62,11 @@ public class SpawnController : MonoBehaviour
                 ((PlantElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Legume":
-                ghost = flowerBedElements[1];
+                ghost = flowerBedElements[0];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Fleur":
-                ghost = flowerBedElements[1];
+                ghost = flowerBedElements[0];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             default:

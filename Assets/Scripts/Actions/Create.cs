@@ -1,6 +1,6 @@
 ﻿public class Create : GhostAction
 {
-    public override void Complete() {}
+    public override bool Complete() { return true; }
 
     public override bool Revert()
     {
