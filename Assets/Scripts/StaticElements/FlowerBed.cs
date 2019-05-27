@@ -138,11 +138,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     //Serialization
     [Serializable]
     public struct SerializedFlowerBed
-    {
+    {   
         public string name;
         public string soilType;
         public Vector2[] points;
-        public FlowerBedElement.SerializedFBE[] elements;
+        public PlantElement.SerializedPlantElement[] elements;
     }
 
     public SerializationData Serialize()
@@ -154,7 +154,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         data.name = flowerBedName;
         data.soilType = soilType;
         data.points = vertices;
-        data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
+        data.elements = new PlantElement.SerializedPlantElement[flowerBedElements.Count];
 
         foreach (FlowerBedElement elem in flowerBedElements)
         {
@@ -175,7 +175,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         flowerBedName = tmp.name;
         soilType = tmp.soilType;
         vertices = tmp.points;
-        foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
+        foreach (PlantElement.SerializedPlantElement elem in tmp.elements)
             flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
         CreateMesh();
         Setup();

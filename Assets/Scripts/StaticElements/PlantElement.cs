@@ -7,7 +7,7 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     public string plantName;
     public string plantType;
 
-    private SerializedPlantElement serializableItem;
+    protected SerializedPlantElement serializableItem;
 
 
     protected override void OnEnable()
@@ -42,7 +42,7 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
         public Quaternion rotation;
     }
 
-    public SerializationData Serialize()
+    public virtual SerializationData Serialize()
     {
         SerializationData tmp = new SerializationData();
 

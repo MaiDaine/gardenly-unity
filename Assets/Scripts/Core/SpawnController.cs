@@ -46,7 +46,7 @@ public class SpawnController : MonoBehaviour
         if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
         {
             FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[1], tmp.plantColor);
-            elem.subID = tmp.plantID;
+            elem.plantID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
             return elem;
         }
@@ -113,6 +113,12 @@ public class SpawnController : MonoBehaviour
                     staticElement.DeSerialize(data[i].data);
                     break;
 
+                case SerializationController.ItemType.PlantElement:
+                    PlantElement plantElement;
+                    plantElement = Instantiate(plantElements[1], Vector3.zero, Quaternion.identity);
+                    plantElement.DeSerialize(data[i].data);//TODO LOAD MODEL
+                    break;
+
                 default:
                     break;
             }
@@ -132,7 +138,7 @@ public class SpawnController : MonoBehaviour
         return tmp;
     }
 
-    public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
+    public FlowerBedElement SpawnFlowerBedElement(PlantElement.SerializedPlantElement elem)
     {
         //TODO MODEL
         FlowerBedElement tmp = Instantiate(flowerBedElements[1], Vector3.zero, Quaternion.identity);
