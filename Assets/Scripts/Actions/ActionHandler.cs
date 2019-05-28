@@ -11,9 +11,9 @@ public class ActionHandler : ScriptableObject
 
     public void Initialize()
     {
-        this.revertActionSet.items.Clear();
-        this.redoActionSet.items.Clear();
-        this.constructionController = ConstructionController.instance;
+        revertActionSet.items.Clear();
+        redoActionSet.items.Clear();
+        constructionController = ConstructionController.instance;
     }
 
     public void NewStateAction(string action, GameObject gameObject, bool updateState = true)
@@ -32,18 +32,18 @@ public class ActionHandler : ScriptableObject
         {
             case ConstructionController.EditionType.Position:
                 {
-                    this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-                    this.constructionController.editionState = ConstructionController.EditionType.Position;
+                    constructionController.currentState = ConstructionController.ConstructionState.Editing;
+                    constructionController.editionState = ConstructionController.EditionType.Position;
                     CreateAction("Move", currentSelection);
-                    this.constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
+                    constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
                     break;
                 }
             case ConstructionController.EditionType.Rotation:
                 {
-                    this.constructionController.currentState = ConstructionController.ConstructionState.Editing;
-                    this.constructionController.editionState = ConstructionController.EditionType.Rotation;
+                    constructionController.currentState = ConstructionController.ConstructionState.Editing;
+                    constructionController.editionState = ConstructionController.EditionType.Rotation;
                     CreateAction("Rotate", currentSelection);
-                    this.constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
+                    constructionController.SetGhost(currentSelection.GetGameObject().GetComponent<GhostHandler>());
                     break;
                 }
             default:
@@ -56,28 +56,28 @@ public class ActionHandler : ScriptableObject
     {
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Editing)
             PlayerController.instance.currentSelection.GetGameObject().GetComponent<GhostHandler>().EndAction();
-        this.currentAction.Complete();
+        if (currentAction.Complete())
+            ReactProxy.instance.UpdateSaveState(true);
         revertActionSet.Add(currentAction);
-        this.currentAction = null;
+        currentAction = null;
 
         if (updateState)
         {
-            this.constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
-            this.constructionController.currentState = ConstructionController.ConstructionState.Off;
+            constructionController.editionState = ConstructionController.EditionType.Off;//TODO TMP?
+            constructionController.currentState = ConstructionController.ConstructionState.Off;
         }
-        ReactProxy.instance.UpdateSaveState(true);
     }
 
     public GhostAction RedoAction()
     {
         bool shouldSelect;
-        GhostAction action = this.redoActionSet.GetLastAction();
+        GhostAction action = redoActionSet.GetLastAction();
 
         if (action != null)
         {
             shouldSelect = action.ReDo();
-            this.revertActionSet.Add(action);
-            this.redoActionSet.Remove(action);
+            revertActionSet.Add(action);
+            redoActionSet.Remove(action);
             if (shouldSelect)
                 return action;
         }
@@ -89,13 +89,13 @@ public class ActionHandler : ScriptableObject
     public GhostAction RevertAction()
     {
         bool shouldSelect;
-        GhostAction action = this.revertActionSet.GetLastAction();
+        GhostAction action = revertActionSet.GetLastAction();
 
         if (action != null)
         {
             shouldSelect = action.Revert();
-            this.redoActionSet.Add(action);
-            this.revertActionSet.Remove(action);
+            redoActionSet.Add(action);
+            revertActionSet.Remove(action);
             if (shouldSelect)
                 return action;
         }
@@ -106,13 +106,13 @@ public class ActionHandler : ScriptableObject
 
     private void CreateAction(string action, ISelectable selection)
     {
-        this.currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
-        this.currentAction.Initialize(selection.GetGameObject());
+        currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
+        currentAction.Initialize(selection.GetGameObject());
     }
 
     private void CreateAction(string action, GameObject gameObject)
     {
-        this.currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
-        this.currentAction.Initialize(gameObject);
+        currentAction = ScriptableObject.CreateInstance(action) as GhostAction;
+        currentAction.Initialize(gameObject);
     }
 }

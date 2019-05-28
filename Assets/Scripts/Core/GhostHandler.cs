@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Doozy.Engine.UI;
 
@@ -9,16 +8,17 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     protected PlantData data = null;
     protected List<ISelectable> neighbors = new List<ISelectable>();
 
-    void Start()
+    private void Start()
     {
         this.gameObject.layer = 0;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         for (int i = 0; i < this.neighbors.Count; i++)
             this.neighbors[i].RemoveFromNeighbor(this);
     }
+
 
     public virtual bool OnCancel()
     {
@@ -48,6 +48,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
         }
     }
 
+    //Actions
     public virtual void StartAction() { this.gameObject.layer = 0; }
 
     public virtual void EndAction() { this.gameObject.layer = 10; }
@@ -64,12 +65,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
             this.transform.Rotate(Vector3.forward, -rotx);
     }
 
-    public void FixRotate(float axisInput)
-    {
-        Vector3 rotateValue = new Vector3(0, (axisInput * 10f), 0);
-        this.transform.eulerAngles += rotateValue;
-    }
-
+    //TODO #74
     public PlantData GetData()
     {
         return this.data;
@@ -123,6 +119,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 
     public virtual bool isLinkable() { return true; }
 
+    //Call after Actions
     protected virtual void OnEnable()
     {
         PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());

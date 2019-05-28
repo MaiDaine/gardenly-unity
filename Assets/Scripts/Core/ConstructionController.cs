@@ -64,6 +64,7 @@ public class ConstructionController : MonoBehaviour
 
     public GhostHandler GetGhost() { return ghost; }
 
+    //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
         if (currentState == ConstructionState.Off)

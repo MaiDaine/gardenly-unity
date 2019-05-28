@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShapePoint : MonoBehaviour, IInteractible, ISnapable
 {
@@ -12,7 +10,7 @@ public class ShapePoint : MonoBehaviour, IInteractible, ISnapable
     }
 
     private void Awake() { gameObject.layer = 0; }
-    
+
     public void EndConstruction() { gameObject.layer = 10; }
 
     // IInteractible

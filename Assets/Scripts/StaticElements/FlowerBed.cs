@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ using UnityEngine;
 public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
-    public string flowerBedName = "";
+    public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
     public string soilType = "";
     public Vector2[] vertices;
 
@@ -19,66 +18,41 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         this.shapeCreator = shapeCreator;
         this.shapeCreator.flowerBed = this;
-        this.GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
         shapeCreator.eventShapeConstructionFinished.AddListener(FinalActivation);
     }
 
+    //Activation
     public void ActivationCancel()
     {
-        this.GetComponent<MeshCollider>().sharedMesh = null;
-        this.GetComponent<MeshCollider>().enabled = false;
-        Destroy(this.GetComponent<MeshCollider>());
-        this.GetComponent<MeshFilter>().mesh = null;
-        Destroy(this.GetComponent<MeshFilter>().mesh);
-        Destroy(this.GetComponent<MeshHandler>());
+        GetComponent<MeshCollider>().sharedMesh = null;
+        GetComponent<MeshCollider>().enabled = false;
+        Destroy(GetComponent<MeshCollider>());
+        GetComponent<MeshFilter>().mesh = null;
+        Destroy(GetComponent<MeshFilter>().mesh);
+        Destroy(GetComponent<MeshHandler>());
     }
 
     public void FinalActivation()
     {
-        this.shapeCreator.SelfClear();
-        this.shapeCreator.gameObject.SetActive(false);
-        this.shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
+        shapeCreator.SelfClear();
+        shapeCreator.gameObject.SetActive(false);
+        shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
         Setup();
     }
 
     public void OnShapeFinished()
     {
-        this.vertices = new Vector2[this.shapeCreator.points.Count];
+        vertices = new Vector2[shapeCreator.points.Count];
         int i = 0;
 
-        foreach (ShapePoint point in this.shapeCreator.points)
+        foreach (ShapePoint point in shapeCreator.points)
         {
-            this.vertices[i] = new Vector2(point.transform.position.x, point.transform.position.z);
+            vertices[i] = new Vector2(point.transform.position.x, point.transform.position.z);
             i++;
         }
         CreateMesh();
     }
-
-    private void CreateMesh(bool isFixed = false)
-    {
-        MeshHandler meshHandler = this.gameObject.AddComponent<MeshHandler>();
-        this.GetComponent<MeshFilter>().mesh = meshHandler.Init(this.vertices);
-        Mesh mesh = this.GetComponent<MeshFilter>().mesh;
-        this.gameObject.AddComponent<MeshCollider>();
-        this.GetComponent<MeshCollider>().sharedMesh = mesh;
-        this.GetComponent<MeshCollider>().enabled = true;
-    }
-
-    private void Setup()
-    {
-        this.GetComponent<MeshRenderer>().material = this.material;
-        this.GetComponent<MeshRenderer>().enabled = true;
-        Destroy(this.GetComponent<MeshHandler>());
-        this.gameObject.layer = 10;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
-        PlayerController.instance.currentSelection = this.gameObject.GetComponent<ISelectable>();
-        ConstructionController.instance.flowerBeds.Add(this);
-        this.flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
-        Camera.main.GetComponentInChildren<UIController>().ResetButton();
-    }
-
-    public void AddElement(FlowerBedElement element) { this.flowerBedElements.Add(element); }
 
     private void OnEnable()
     {
@@ -102,17 +76,34 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(flowerBedElements[i]);
     }
 
-
-    public void SetTutorial()
+    private void Setup()
     {
-        if (TutoBoxScript.isOn)
-        {
-            UIController controller = Camera.main.GetComponent<UIController>();
-            controller.tutoView.GetComponentInChildren<TutoBoxScript>().SetTutorial("");
-        }
+        GetComponent<MeshRenderer>().material = material;
+        GetComponent<MeshRenderer>().enabled = true;
+        Destroy(GetComponent<MeshHandler>());
+        gameObject.layer = 10;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Off;//TODO UI with UI button
+        PlayerController.instance.currentSelection = gameObject.GetComponent<ISelectable>();
+        ConstructionController.instance.flowerBeds.Add(this);
+        flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
+        Camera.main.GetComponentInChildren<UIController>().ResetButton();
     }
+
+    private void CreateMesh(bool isFixed = false)
+    {
+        MeshHandler meshHandler = gameObject.AddComponent<MeshHandler>();
+        GetComponent<MeshFilter>().mesh = meshHandler.Init(vertices);
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        gameObject.AddComponent<MeshCollider>();
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().enabled = true;
+    }
+
+    public void AddElement(FlowerBedElement element) { flowerBedElements.Add(element); }
+
     //ISelectable
-    public GameObject GetGameObject() { return this.gameObject; }
+    public GameObject GetGameObject() { return gameObject; }
     public void Select(ConstructionController.ConstructionState state)
     {
         if (state == ConstructionController.ConstructionState.Off)// || state == ConstructionController.ConstructionState.Editing)
@@ -129,7 +120,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         return tmp;
     }
 
-    public Vector2[] GetVertices() { return this.vertices; }
+    public Vector2[] GetVertices() { return vertices; }
 
     public void DeSelect()
     {
@@ -147,11 +138,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     //Serialization
     [Serializable]
     public struct SerializedFlowerBed
-    {
+    {   
         public string name;
         public string soilType;
         public Vector2[] points;
-        public FlowerBedElement.SerializedFBE[] elements;
+        public PlantElement.SerializedPlantElement[] elements;
     }
 
     public SerializationData Serialize()
@@ -160,10 +151,10 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         SerializedFlowerBed data;
         int i = 0;
         
-        data.name = this.flowerBedName;
-        data.soilType = this.soilType;
+        data.name = flowerBedName;
+        data.soilType = soilType;
         data.points = vertices;
-        data.elements = new FlowerBedElement.SerializedFBE[flowerBedElements.Count];
+        data.elements = new PlantElement.SerializedPlantElement[flowerBedElements.Count];
 
         foreach (FlowerBedElement elem in flowerBedElements)
         {
@@ -181,11 +172,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void DeSerialize(string json)
     {
         SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
-        this.flowerBedName = tmp.name;
-        this.soilType = tmp.soilType;
-        this.vertices = tmp.points;
-        foreach (FlowerBedElement.SerializedFBE elem in tmp.elements)
-            this.flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
+        flowerBedName = tmp.name;
+        soilType = tmp.soilType;
+        vertices = tmp.points;
+        foreach (PlantElement.SerializedPlantElement elem in tmp.elements)
+            flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
         CreateMesh();
         Setup();
     }

@@ -8,10 +8,10 @@ public class GridController : MonoBehaviour
     public static GridController instance = null;
     public UnityEvent eventPostRender = new UnityEvent();
 
-    public float gridSizeX = 10f;
-    public float gridSizeZ = 10f;
-    public float largeStep = 1f;
-    public float smallStep = 0.2f;
+    public const float gridSizeX = 10f;
+    public const float gridSizeZ = 10f;
+    public const float largeStep = 1f;
+    public const float smallStep = 0.2f;
     public Color mainColor = new Color(0f, 1f, 0f, 1f);
     public Color subColor = new Color(1f, 1f, 1f, 1f);
     public Color lineColor = new Color(1f, 0f, 0f, 1f);
@@ -21,7 +21,7 @@ public class GridController : MonoBehaviour
     private Material lineMaterial;
     private float startX;
     private float sizeX;
-    private float startY = 0.05f;
+    private const float startY = 0.05f;
     private float startZ;
     private float sizeZ;
 

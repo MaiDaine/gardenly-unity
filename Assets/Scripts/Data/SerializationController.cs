@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, DefaultStaticElement, WallHandler, FlowerBed, FlowerBedElement, TreeHandler };
+    public enum ItemType { None, GardenData, DefaultStaticElement, WallHandler, FlowerBed, FlowerBedElement, PlantElement };
 
     public static SerializationController instance = null;
 
@@ -78,21 +75,22 @@ public class SerializationController : MonoBehaviour
         return (serializedData.data);
     }
 
-
     private ItemType GetTypeFromString(string jsonType)
     {
         switch (jsonType)
         {
+            case "GardenData":
+                return ItemType.GardenData;
             case "DefaultStaticElement":
                 return ItemType.DefaultStaticElement;
             case "WallHandler":
                 return ItemType.WallHandler;
-            case "TreeHandler":
-                return ItemType.TreeHandler;
             case "FlowerBed":
                 return ItemType.FlowerBed;
             case "FlowerBedElement":
                 return ItemType.FlowerBedElement;
+            case "PlantElement":
+                return ItemType.PlantElement;
             default:
                 return ItemType.None;
         }

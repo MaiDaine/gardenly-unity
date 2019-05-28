@@ -8,32 +8,33 @@ public class Move : GhostAction
     public override void Initialize(GameObject gameObject)
     {
         this.gameObject = gameObject;
-        this.oldPosition = gameObject.transform.position;
+        oldPosition = gameObject.transform.position;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
         base.Complete();
-        this.newPosition = this.gameObject.transform.position;
+        newPosition = gameObject.transform.position;
+        return true;
     }
 
     public override bool Revert()
     {
-        GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
+        GhostHandler ghost = gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
-            ghost.Move(this.oldPosition);
+            ghost.Move(oldPosition);
         else
-            this.gameObject.transform.position = this.oldPosition;
+            gameObject.transform.position = oldPosition;
         return true;
     }
 
     public override bool ReDo()
     {
-        GhostHandler ghost = this.gameObject.GetComponent<GhostHandler>();
+        GhostHandler ghost = gameObject.GetComponent<GhostHandler>();
         if (ghost != null)
-            ghost.Move(this.newPosition);
+            ghost.Move(newPosition);
         else
-            this.gameObject.transform.position = this.newPosition;
+            gameObject.transform.position = newPosition;
         return true;
     }
 }
