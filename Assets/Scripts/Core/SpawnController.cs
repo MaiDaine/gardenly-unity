@@ -1,23 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
     public static SpawnController instance = null;
 
-    public int staticElementsCount;
-    public int flowerBedElementsCount;
-
-    //need one of each for serialization
-    public WallHandler WallHandlerRef;
+    //Need one of each for serialization
+    public ShapeCreator shapeCreatorRef;
     public FlowerBed flowerBedRef;
-    //public FlowerBedHandler FlowerBedHandlerRef;
-    public ShapeCreator ShapeCreator;
+    public LineTextHandler lineTextRef;
+    public WallHandler wallHandlerRef;
+
+    //Models
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
     public PlantElement[] plantElements = new PlantElement[2];
     public FlowerBedElement[] flowerBedElements = new FlowerBedElement[2];
-    public LineTextHandler lineText;
     public ModelList plantModels;
 
     private ShapeCreator shapeCreator;
@@ -32,7 +28,7 @@ public class SpawnController : MonoBehaviour
 
     private void Start()
     {
-        shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
+        shapeCreator = Instantiate(SpawnController.instance.shapeCreatorRef);
         shapeCreator.gameObject.SetActive(false);
     }
 
@@ -85,7 +81,7 @@ public class SpawnController : MonoBehaviour
             switch (data[i].type)
             {
                 case SerializationController.ItemType.WallHandler:
-                    wallHandler = Instantiate(WallHandlerRef, Vector3.zero, Quaternion.identity);
+                    wallHandler = Instantiate(wallHandlerRef, Vector3.zero, Quaternion.identity);
                     wallHandler.DeSerialize(data[i].data);
                     break;
 

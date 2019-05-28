@@ -28,7 +28,7 @@ public class ShapeCreator : GhostHandler
         points.Add(firstPoint);
         currentPoint = firstPoint;
 
-        lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineText);
+        lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineTextRef);
         lineInfoText.gameObject.SetActive(false);
         raycaster = Camera.main.GetComponent<Raycaster>();
     }
