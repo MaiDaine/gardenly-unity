@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Material))]
 public class WallHandler : GhostHandler, ISerializable
 {
-    public LineTextHandler TextRef;
+    public LineTextHandler textRef;
 
     protected UIController uIController;
 
@@ -23,7 +22,7 @@ public class WallHandler : GhostHandler, ISerializable
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
-    
+
     private void Start()
     {
         if (initFromSerialization)
@@ -51,7 +50,7 @@ public class WallHandler : GhostHandler, ISerializable
     public override bool FromPositioningToBuilding(Vector3 position)
     {
         if (this.text == null)
-            this.text = Instantiate(this.TextRef, this.transform.position, Quaternion.identity) as LineTextHandler;
+            this.text = Instantiate(this.textRef, this.transform.position, Quaternion.identity) as LineTextHandler;
         else
             this.text.transform.position = position;
         this.text.gameObject.SetActive(true);

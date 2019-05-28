@@ -8,24 +8,25 @@ public class Rotate : GhostAction
     public override void Initialize(GameObject gameObject)
     {
         this.gameObject = gameObject;
-        this.oldRotation = gameObject.transform.rotation;
+        oldRotation = gameObject.transform.rotation;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
         base.Complete();
-        this.newRotation = this.gameObject.transform.rotation;
+        newRotation = gameObject.transform.rotation;
+        return true;
     }
 
     public override bool Revert()
     {
-        this.gameObject.transform.rotation = this.oldRotation;
+        gameObject.transform.rotation = oldRotation;
         return true;
     }
 
     public override bool ReDo()
     {
-        this.gameObject.transform.rotation = this.newRotation;
+        gameObject.transform.rotation = newRotation;
         return true;
     }
 }

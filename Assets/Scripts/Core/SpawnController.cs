@@ -14,36 +14,39 @@ public class SpawnController : MonoBehaviour
     public FlowerBed flowerBedRef;
     //public FlowerBedHandler FlowerBedHandlerRef;
     public ShapeCreator ShapeCreator;
-    public DefaultStaticElement[] DSElements = new DefaultStaticElement[4];
-    public FlowerBedElement[] FBElements = new FlowerBedElement[2];
+    public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
+    public PlantElement[] plantElements = new PlantElement[2];
+    public FlowerBedElement[] flowerBedElements = new FlowerBedElement[2];
     public LineTextHandler lineText;
     public ModelList plantModels;
 
     private ShapeCreator shapeCreator;
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
         else if (instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
     }
 
     private void Start()
     {
-        this.shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
-        this.shapeCreator.gameObject.SetActive(false);
+        shapeCreator = Instantiate(SpawnController.instance.ShapeCreator);
+        shapeCreator.gameObject.SetActive(false);
     }
 
     public GhostHandler GetPlantGhost(string type, string name)
     {
+        //TODO #74
+        // Instantiate(ghostRef, Vector3.zero, Quaternion.identity);
         PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
         if (tmp == null)
             return null;
         if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
         {
-            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(FBElements[0], tmp.plantColor);
-            elem.subID = tmp.plantID;
+            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[1], tmp.plantColor);
+            elem.plantID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
             return elem;
         }
@@ -51,19 +54,19 @@ public class SpawnController : MonoBehaviour
         switch (type)
         {
             case "Arbre":
-                ghost = DSElements[2];
-                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                ghost = plantElements[0];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Arbuste":
-                ghost = DSElements[3];
-                ((DefaultStaticElement)ghost).OnPlantDataLoad(tmp);
+                ghost = plantElements[1];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Legume":
-                ghost = FBElements[1];
+                ghost = flowerBedElements[0];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             case "Fleur":
-                ghost = FBElements[1];
+                ghost = flowerBedElements[0];
                 ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
                 break;
             default:
@@ -103,17 +106,17 @@ public class SpawnController : MonoBehaviour
                         case DefaultStaticElement.StaticElementType.Table:
                             staticElement = Instantiate(DSElements[1], Vector3.zero, Quaternion.identity);
                             break;
-                        case DefaultStaticElement.StaticElementType.Tree:
-                            staticElement = Instantiate(DSElements[2], Vector3.zero, Quaternion.identity);
-                            break;
-                        case DefaultStaticElement.StaticElementType.Tree2:
-                            staticElement = Instantiate(DSElements[3], Vector3.zero, Quaternion.identity);
-                            break;
                         default:
                             MessageHandler.instance.ErrorMessage("loading_error");
                             return;
                     }
                     staticElement.DeSerialize(data[i].data);
+                    break;
+
+                case SerializationController.ItemType.PlantElement:
+                    PlantElement plantElement;
+                    plantElement = Instantiate(plantElements[1], Vector3.zero, Quaternion.identity);
+                    plantElement.DeSerialize(data[i].data);//TODO LOAD MODEL
                     break;
 
                 default:
@@ -122,22 +125,23 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public FlowerBed SpawnFlowerBed()
+    public FlowerBed StartNewShape(/*final object*/)
     {
         FlowerBed tmp;
 
-        this.shapeCreator.gameObject.SetActive(true);
-        this.shapeCreator.Init();
-        tmp = Instantiate(this.flowerBedRef);
-        tmp.Init(this.shapeCreator);
-        ConstructionController.instance.SetGhost(this.shapeCreator);
+        shapeCreator.gameObject.SetActive(true);
+        shapeCreator.Init();
+        tmp = Instantiate(flowerBedRef);
+        tmp.Init(shapeCreator);
+        ConstructionController.instance.SetGhost(shapeCreator);
+        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Positioning;
         return tmp;
     }
 
-    public FlowerBedElement SpawnFlowerBedElement(FlowerBedElement.SerializedFBE elem)
+    public FlowerBedElement SpawnFlowerBedElement(PlantElement.SerializedPlantElement elem)
     {
         //TODO MODEL
-        FlowerBedElement tmp = Instantiate(FBElements[1], Vector3.zero, Quaternion.identity);
+        FlowerBedElement tmp = Instantiate(flowerBedElements[1], Vector3.zero, Quaternion.identity);
         tmp.InnerDeSerialize(elem);
         return tmp;
     }

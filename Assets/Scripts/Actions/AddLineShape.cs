@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AddLineShape : GhostAction
 {
@@ -12,28 +10,29 @@ public class AddLineShape : GhostAction
         tmpAction = true;
     }
 
-    public override void Complete()
+    public override bool Complete()
     {
-        this.point = this.gameObject.GetComponent<ShapeCreator>().currentPoint;
+        point = gameObject.GetComponent<ShapeCreator>().currentPoint;
+        return false;
     }
 
     public override bool Revert()
     {
-        this.point.DeActivate();
-        this.gameObject.GetComponent<ShapeCreator>().RemovePoint(point);
+        point.DeActivate();
+        gameObject.GetComponent<ShapeCreator>().RemovePoint(point);
         return false;
     }
 
     public override bool ReDo()
     {
-        this.point.Activate();
-        this.gameObject.GetComponent<ShapeCreator>().AddPoint(point);
+        point.Activate();
+        gameObject.GetComponent<ShapeCreator>().AddPoint(point);
         return false;
     }
 
     private void OnDestroy()
     {
         if (point != null && !point.isActiveAndEnabled)
-            Destroy(this.point);
+            Destroy(point);
     }
 }

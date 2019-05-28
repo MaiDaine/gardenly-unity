@@ -4,7 +4,7 @@ using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
-    public enum StaticElementType { Chair, Table, Tree, Tree2 };
+    public enum StaticElementType { Chair, Table};
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
@@ -15,6 +15,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     protected UIController uIController;
 
     private SerializableItem serializableItem;
+    private bool initFromSerialization = false;
 
     private void Awake()
     {
@@ -23,7 +24,10 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private void Start()
     {
-        this.transform.eulerAngles += this.correctedRotation;
+        if (!initFromSerialization)
+            this.transform.eulerAngles += this.correctedRotation;
+        else
+            initFromSerialization = false;
     }
 
     void OnDestroy()
@@ -100,6 +104,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
         this.transform.position = this.serializableItem.position;
         this.transform.rotation = this.serializableItem.rotation;
+        initFromSerialization = true;
     }
 
     public void OnPlantDataLoad(PlantData plantData)
