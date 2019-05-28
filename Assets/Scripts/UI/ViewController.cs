@@ -78,7 +78,7 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    // Add dynamic buttons
+    // Add dynamic plants button
     public void AddPlants()
     {
         ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 

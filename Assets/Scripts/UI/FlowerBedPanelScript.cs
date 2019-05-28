@@ -13,17 +13,6 @@ public class FlowerBedPanelScript : MonoBehaviour
             Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
     }
 
-    private void LateUpdate() // TODO
-    {
-        if (this.typeDropDown != null && this.typeDropDown.IsActive())
-        {
-            if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null
-                && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text)
-                ValidateTypeChange();
-        }
-    }
-
-
     public void EnableCameraMovement(bool state)
     {
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = state;

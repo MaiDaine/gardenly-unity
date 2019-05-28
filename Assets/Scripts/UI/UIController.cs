@@ -8,7 +8,6 @@ public class UIController : MonoBehaviour
     public UIView extendMenu;
     public UIView dynamicObjectMenu;
     public UIView flowerBedDataPanel;
-  //  public UIView tutoView;
     public UIView[] plantsViews;
     public UIButton gridButton;
     public UIButton cameraModeButton;
@@ -21,7 +20,6 @@ public class UIController : MonoBehaviour
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
 
-    //protected Transform previewUI = null;
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
     protected GhostHandler ghost = null;
@@ -64,14 +62,11 @@ public class UIController : MonoBehaviour
         this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
-    public void Cancel(bool spawn = false)
+    public void Cancel()
     {
         if (this.menu != null)
-            this.menu.DestroyMenu(spawn);
-        else
+            this.menu.DestroyMenu();
             this.DestroyMenu();
-        if (this.flowerBedMenuScript != null)
-            this.flowerBedMenuScript.DestroyMenu();
         this.ResetButton();
     }
 
@@ -103,6 +98,10 @@ public class UIController : MonoBehaviour
         this.HideViews();
         if (this.dataPanel != null && this.dataPanel.GetView() != null)
             this.dataPanel.GetView().Hide();
+        if (this.flowerBedDataPanel != null && this.flowerBedDataPanel.IsVisible)
+            this.flowerBedDataPanel.Hide();
+        menuOpen = false;
+        flowerBedMenuOpen = false;
     }
 
     //TODO UI
@@ -128,6 +127,7 @@ public class UIController : MonoBehaviour
         }
     }
 
+    // Hide and Show views after spawn plant
     public void SaveViews()
     {
         this.currentHideViews.Clear();

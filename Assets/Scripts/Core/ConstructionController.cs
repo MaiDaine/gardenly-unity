@@ -82,7 +82,7 @@ public class ConstructionController : MonoBehaviour
     public void Cancel()
     {
         this.Camera.GetComponent<UIController>().SaveViews();
-        this.Camera.GetComponent<UIController>().Cancel(true);
+        this.Camera.GetComponent<UIController>().Cancel();
         if (this.currentState == ConstructionState.Off || this.currentState == ConstructionState.Editing)
         {
             PlayerController.instance.DeSelect(true);

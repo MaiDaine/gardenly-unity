@@ -43,7 +43,7 @@ public class PlantPanelScript : MonoBehaviour
         }
     }
 
-    // Set data of the panel and show it, "Default" if Graphql request return null.
+    // Set data of the panel and show it, plantDataRef if Graphql request return null.
     public void SetData()
     {
         RawImage icon = this.GetComponentInChildren<RawImage>();

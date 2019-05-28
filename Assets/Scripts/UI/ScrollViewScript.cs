@@ -6,16 +6,20 @@ public class ScrollViewScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 {
     private void OnDisable()
     {
-        Debug.Log("DISABLE");
+        FlowerBedPanelScript panel = this.GetComponentInParent<FlowerBedPanelScript>();
+
+        Camera.main.GetComponent<CameraController>().zoomEnabled = true;
+        if (this.gameObject.name == "Dropdown List" && panel != null && Camera.main.GetComponent<UIController>().GetFlowerBed() != null)
+            panel.ValidateTypeChange();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Camera.main.GetComponentInChildren<CameraController>().zoomEnabled = false;
+        Camera.main.GetComponent<CameraController>().zoomEnabled = false;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Camera.main.GetComponentInChildren<CameraController>().zoomEnabled = true;
+        Camera.main.GetComponent<CameraController>().zoomEnabled = true;
     }
 }

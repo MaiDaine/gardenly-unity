@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             this.constructionController.Cancel();
-            Camera.main.GetComponentInChildren<UIController>().Cancel(true);
+            Camera.main.GetComponentInChildren<UIController>().Cancel();
             Camera.main.GetComponentInChildren<UIController>().ResetButton(true);
         }
 

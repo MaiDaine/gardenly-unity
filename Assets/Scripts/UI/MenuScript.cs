@@ -19,31 +19,10 @@ public class MenuScript : MonoBehaviour, IMenu
     }
 
 
-    public void DestroyMenu(bool spawn = false) // TODO
+    public void DestroyMenu()
     {
-        if (Camera.main != null)
-        {
-            UIController controller = Camera.main.GetComponent<UIController>();
-       
-            if (controller.dynamicObjectMenu.IsVisible)
-                controller.dynamicObjectMenu.Hide();
-            controller.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
-            if (spawn)
-            {
-                foreach (UIView view in controller.plantsViews)
-                {
-                    if (view.IsVisible)
-                        view.Hide();
-                }
-            }
-            if (controller.dataPanel.GetView().IsVisible)
-            {
-                controller.dataPanel.GetView().Hide();
-            }
-            this.rotateState = false;
-            this.isMoving = false;
-            UIController.menuOpen = false;
-        }
+        this.rotateState = false;
+        this.isMoving = false;
     }
 
     public void MoveGhost()

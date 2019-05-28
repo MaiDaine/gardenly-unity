@@ -14,13 +14,9 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
     }
 
 
-    public void DestroyMenu(bool spawn = false)
+    public void DestroyMenu()
     {
-        UIController uIController = Camera.main.GetComponent<UIController>();
-
-        if (uIController.flowerBedDataPanel.IsVisible)
-            uIController.flowerBedDataPanel.Hide();
-            UIController.flowerBedMenuOpen = false;
+      
     }
 
     public void DestroyObject()
