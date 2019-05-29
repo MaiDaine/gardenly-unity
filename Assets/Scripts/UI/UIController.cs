@@ -30,44 +30,44 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        if (this.cameraModeButton != null)
+        if (cameraModeButton != null)
         {
-            this.cameraModeButton.SelectButton();
-            this.cameraModeButton.DisableButton();
+            cameraModeButton.SelectButton();
+            cameraModeButton.DisableButton();
         }
     }
 
     private void Start()
     {
         reactProxy = ReactProxy.instance;
-        this.gardenName.text = reactProxy.GetComponent<GardenData>().gardenName;
+        gardenName.text = reactProxy.GetComponent<GardenData>().gardenName;
     }
 
 
     // Manage show / hide views
     public void SpawnDynMenu(GhostHandler ghost)
     {
-        if (this.menu != null && this.menu.rotateState)
+        if (menu != null && menu.rotateState)
             return;
-        this.dynamicObjectMenu.Show();
-        this.menu = this.dynamicObjectMenu.GetComponent<MenuScript>();
+        dynamicObjectMenu.Show();
+        menu = dynamicObjectMenu.GetComponent<MenuScript>();
         menuOpen = true;
-        this.menu.SetGhostRef(ghost);
+        menu.SetGhostRef(ghost);
     }
 
     public void SpawnFlowerBedMenu(FlowerBed flowerBed)
     {
-        this.flowerBedMenuScript = this.flowerBedDataPanel.GetComponent<MenuFlowerBedScript>();
+        flowerBedMenuScript = flowerBedDataPanel.GetComponent<MenuFlowerBedScript>();
         flowerBedMenuOpen = true;
-        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
+        flowerBedMenuScript.SetFlowerBedHandler(flowerBed);
     }
 
     public void Cancel()
     {
-        if (this.menu != null)
-            this.menu.DestroyMenu();
-            this.DestroyMenu();
-        this.ResetButton();
+        if (menu != null)
+            menu.DestroyMenu();
+            DestroyMenu();
+        ResetButton();
     }
 
     public bool PlantsViewsDisplay()
@@ -91,15 +91,15 @@ public class UIController : MonoBehaviour
 
     public void DestroyMenu()
     {
-        if (this.dynamicObjectMenu != null && this.dynamicObjectMenu.IsVisible)
-            this.dynamicObjectMenu.Hide();
-        if (this.uIButtonListener != null)
-            this.uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
-        this.HideViews();
-        if (this.dataPanel != null && this.dataPanel.GetView() != null)
-            this.dataPanel.GetView().Hide();
-        if (this.flowerBedDataPanel != null && this.flowerBedDataPanel.IsVisible)
-            this.flowerBedDataPanel.Hide();
+        if (dynamicObjectMenu != null && dynamicObjectMenu.IsVisible)
+            dynamicObjectMenu.Hide();
+        if (uIButtonListener != null)
+            uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+        HideViews();
+        if (dataPanel != null && dataPanel.GetView() != null)
+            dataPanel.GetView().Hide();
+        if (flowerBedDataPanel != null && flowerBedDataPanel.IsVisible)
+            flowerBedDataPanel.Hide();
         menuOpen = false;
         flowerBedMenuOpen = false;
     }
@@ -114,9 +114,9 @@ public class UIController : MonoBehaviour
 
     public void ResetButton(bool forced = false)
     {
-        foreach (UIButton btn in this.tmpBtn)
+        foreach (UIButton btn in tmpBtn)
         {
-            if (!btn.IsSelected || forced)
+            if (btn != null && !btn.IsSelected || forced)
             {
                 LabelScript[] tmp = btn.GetComponentsInChildren<LabelScript>();
                 foreach (LabelScript script in tmp)
@@ -130,47 +130,49 @@ public class UIController : MonoBehaviour
     // Hide and Show views after spawn plant
     public void SaveViews()
     {
-        this.currentHideViews.Clear();
-        foreach (UIView view in this.plantsViews)
+        currentHideViews.Clear();
+        foreach (UIView view in plantsViews)
         {
             if (view.IsVisible && view.name != "TutoBox")
-                this.currentHideViews.Add(view);
+                currentHideViews.Add(view);
         }
-        if (this.dataPanel.GetView().IsVisible)
-            this.currentHideViews.Add(this.dataPanel.GetView());
+        if (dataPanel.GetView().IsVisible)
+            currentHideViews.Add(dataPanel.GetView());
     }
 
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType)
     {
-        RectTransform menuTransform = this.extendMenu.RectTransform;
-        RectTransform viewTransform = this.plantsViews[0].RectTransform;
+        RectTransform menuTransform = extendMenu.RectTransform;
+        RectTransform viewTransform = plantsViews[0].RectTransform;
 
-        if (this.PlantsViewsDisplay())
-            this.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(- menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        if (PlantsViewsDisplay())
+            dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        else
+            dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
 
-        if (this.dataPanel.plantName == plantName && this.dataPanel.GetView().IsVisible)
+        if (dataPanel.plantName == plantName && dataPanel.GetView().IsVisible)
         {
-            this.dataPanel.GetView().Hide();
+            dataPanel.GetView().Hide();
             return;
         }
 
-        this.dataPanel.plantName = plantName;
-        this.dataPanel.plantType = plantType;
+        dataPanel.plantName = plantName;
+        dataPanel.plantType = plantType;
 
-        this.dataPanel.SetData();
+        dataPanel.SetData();
     }
 
     // FB panel management
     public void SetFlowerBedDataPanel(FlowerBed flowerBedRef)
     {
-        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-        TMP_Dropdown type = this.flowerBedDataPanel.GetComponentInChildren<TMP_Dropdown>();
+        TextMeshProUGUI[] texts = flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        TMP_Dropdown type = flowerBedDataPanel.GetComponentInChildren<TMP_Dropdown>();
 
         SpawnFlowerBedMenu(flowerBedRef);
-        this.flowerBedMenuScript.SetFlowerBedHandler(flowerBedRef);
-        if (!this.flowerBedDataPanel.IsVisible)
-             this.flowerBedDataPanel.Show();
+        flowerBedMenuScript.SetFlowerBedHandler(flowerBedRef);
+        if (!flowerBedDataPanel.IsVisible)
+             flowerBedDataPanel.Show();
         foreach (TextMeshProUGUI txt in texts)
         {
             if (txt.name == "Name")
@@ -184,44 +186,44 @@ public class UIController : MonoBehaviour
                     type.value = type.options.IndexOf(data);
             }
         }
-        this.flowerBed = flowerBedRef;
+        flowerBed = flowerBedRef;
     }
 
     public void UpdateNameFlowerBed(string updateName)
     {
-        TextMeshProUGUI[] texts = this.flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] texts = flowerBedDataPanel.GetComponentsInChildren<TextMeshProUGUI>();
         foreach (TextMeshProUGUI txt in texts)
         {
             if (txt.name == "Name")
                 txt.text = updateName;
         }
         
-        this.flowerBed.flowerBedName = updateName;
+        flowerBed.flowerBedName = updateName;
     }
 
     public void UpdateTypeFlowerBed(string updateType)
     {        
-        this.flowerBed.soilType = updateType;
+        flowerBed.soilType = updateType;
     }
 
     // utils
     public bool GridButtonIsTrigger()
     {
-        LabelScript tmp = this.gridButton.GetComponentInChildren<LabelScript>();
+        LabelScript tmp = gridButton.GetComponentInChildren<LabelScript>();
         if (tmp != null)
             return tmp.pressed;
         return false;
     }
 
-    public MenuScript GetMenuScript() { return this.menu; }
+    public MenuScript GetMenuScript() { return menu; }
 
-    public MenuFlowerBedScript GetFlowerBedMenuScript() { return this.flowerBedMenuScript; }
+    public MenuFlowerBedScript GetFlowerBedMenuScript() { return flowerBedMenuScript; }
 
-    public void SetCurrentHideViews(UIView view)    { this.currentHideViews.Add(view); }
+    public void SetCurrentHideViews(UIView view)    { currentHideViews.Add(view); }
 
-    public List<UIView> GetCurrentHideView() { return this.currentHideViews; }
+    public List<UIView> GetCurrentHideView() { return currentHideViews; }
 
-    public FlowerBed GetFlowerBed()     { return this.flowerBed; }
+    public FlowerBed GetFlowerBed()     { return flowerBed; }
 
-    public GhostHandler GetGhost() { return this.ghost; }
+    public GhostHandler GetGhost() { return ghost; }
 }

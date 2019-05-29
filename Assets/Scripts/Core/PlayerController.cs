@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < selectionList.Count; i++)
                 actionHandler.NewStateAction("Destroy", selectionList[i].GetGameObject());
             selectionList.Clear();
-            Camera.main.GetComponent<UITMP>().OnSelectionDestroy();
+            Camera.main.GetComponent<UIController>().Cancel();
         }
     }
 
@@ -203,6 +203,16 @@ public class PlayerController : MonoBehaviour
     {
         actionHandler.NewStateAction("Create", currentSelection.GetGameObject());
         actionHandler.revertActionSet.ClearTmpAction();
+    }
+
+    public void StartNewFB()
+    {
+        if (TutoBoxScript.isOn)
+        {
+            UIController controller = Camera.main.GetComponent<UIController>();
+            controller.plantsViews[5].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
+        }
+        SpawnController.instance.StartNewShape();
     }
 
     public bool PlaneClick()

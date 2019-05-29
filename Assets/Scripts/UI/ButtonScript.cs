@@ -8,30 +8,30 @@ public class ButtonScript : MonoBehaviour
 
     protected string ghostType;
 
-    public void SetGhostType(string ghostType)
+    public void SetGhostType(string type)
     {
-        this.ghostType = ghostType;
+        ghostType = type;
     }
 
     public void OnImageDownload(Texture texture)
     {
-        string plantName = this.GetComponent<UIButton>().TextMeshProLabel.text;
-        Camera.main.GetComponent<UIController>().dataPanel.SetPlantImg(plantName, this.ghostType, texture);
+        string plantName = GetComponent<UIButton>().TextMeshProLabel.text;
+        Camera.main.GetComponent<UIController>().dataPanel.SetPlantImg(plantName, ghostType, texture);
     }
 
     //Function call onDynamicButtonClick
 
     public void BuildFunction()
     {
-        PlantData tmp = ReactProxy.instance.GetPlantsData(this.ghostType, this.plantName.text);
+        PlantData tmp = ReactProxy.instance.GetPlantsData(ghostType, plantName.text);
         if (tmp == null)
             return;
-        ConstructionController.instance.SpawnGhost(SpawnController.instance.GetPlantGhost(this.ghostType, tmp.name));
+        ConstructionController.instance.SpawnGhost(SpawnController.instance.GetPlantGhost(ghostType, tmp.name));
     }
 
     public void SetPanelFunction()
     {
-        ReactProxy.instance.externalData.callbackFinishDownloadImage[this.plantName.text] = OnImageDownload;
-        Camera.main.GetComponent<UIController>().SetDataPanel(this.plantName.text, this.ghostType);
+        ReactProxy.instance.externalData.callbackFinishDownloadImage[plantName.text] = OnImageDownload;
+        Camera.main.GetComponent<UIController>().SetDataPanel(plantName.text, ghostType);
     }
 }

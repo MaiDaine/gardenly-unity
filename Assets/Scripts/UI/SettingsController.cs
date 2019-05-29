@@ -11,21 +11,21 @@ public class SettingsController : MonoBehaviour
 
     private void OnEnable()
     {
-        this.gameSettings = new GameSettings();
+        gameSettings = new GameSettings();
         
-        this.qualityDropDown.onValueChanged.AddListener(delegate { OnQualityChange(); });
-        this.antialiasingDropDown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
+        qualityDropDown.onValueChanged.AddListener(delegate { OnQualityChange(); });
+        antialiasingDropDown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
     }
 
 
     public void OnAntialiasingChange()
     {
-        QualitySettings.antiAliasing = this.gameSettings.antialiasing = (int)Mathf.Pow(2f, this.antialiasingDropDown.value);
+        QualitySettings.antiAliasing = gameSettings.antialiasing = (int)Mathf.Pow(2f, antialiasingDropDown.value);
     }
 
     public void OnQualityChange()
     {
-        QualitySettings.masterTextureLimit = this.gameSettings.quality = this.qualityDropDown.value;
+        QualitySettings.masterTextureLimit = gameSettings.quality = qualityDropDown.value;
     }
 
     public void ApplySettings()

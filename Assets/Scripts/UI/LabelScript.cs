@@ -16,38 +16,38 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Start()
     {
-        this.image = transform.GetComponent<Image>();
-        if (this.image != null)
-            this.image.color = this.color;
+        image = transform.GetComponent<Image>();
+        if (image != null)
+            image.color = color;
     }
 
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!this.pressed)
+        if (!pressed)
         {
-            if (this.text != null)
-                this.text.color = this.actionColor;
-            if (this.image != null)
-                this.image.color = this.actionColor;
+            if (text != null)
+                text.color = actionColor;
+            if (image != null)
+                image.color = actionColor;
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!this.pressed)
+        if (!pressed)
         {
-            if (this.text != null)
-                this.text.color = this.color;
-            if (this.image != null)
-                this.image.color = this.color;
+            if (text != null)
+                text.color = color;
+            if (image != null)
+                image.color = color;
         }
     }
 
     public void IsPressed()
     {
-        this.pressed = !this.pressed;
+        pressed = !pressed;
     }
 
     public void ChangeColor()
@@ -55,23 +55,23 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         IsPressed();
         Color tmp;
 
-        if (this.pressed)
-            tmp = this.actionColor;
+        if (pressed)
+            tmp = actionColor;
         else
-            tmp = this.color;
+            tmp = color;
 
-        if (this.text != null)
-            this.text.color = tmp;
-        if (this.image != null)
-            this.image.color = tmp;
+        if (text != null)
+            text.color = tmp;
+        if (image != null)
+            image.color = tmp;
     }
 
     public void ResetColor()
     {
-        if (this.text != null)
-            this.text.color = this.color;
-        if (this.image != null)
-            this.image.color = this.color;
-        this.pressed = false;
+        if (text != null)
+            text.color = color;
+        if (image != null)
+            image.color = color;
+        pressed = false;
     }
 }

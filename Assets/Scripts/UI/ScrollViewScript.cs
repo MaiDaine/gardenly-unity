@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-// Disable camera scroll on pointer enter
+// Behaviour of scroll view
 public class ScrollViewScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    // Set the soil type when the dropdown is close
     private void OnDisable()
     {
-        FlowerBedPanelScript panel = this.GetComponentInParent<FlowerBedPanelScript>();
+        FlowerBedPanelScript panel = GetComponentInParent<FlowerBedPanelScript>();
         if (Camera.main != null)
         {
             Camera.main.GetComponent<CameraController>().zoomEnabled = true;
-            if (this.gameObject.name == "Dropdown List" && panel != null && Camera.main.GetComponent<UIController>().GetFlowerBed() != null)
+            if (gameObject.name == "Dropdown List" && panel != null && Camera.main.GetComponent<UIController>().GetFlowerBed() != null)
                 panel.ValidateTypeChange();
         }
     }

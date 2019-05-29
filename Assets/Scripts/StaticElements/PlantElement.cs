@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using TMPro;
 
 public class PlantElement : GhostHandler, ISelectable, ISerializable
 {
@@ -25,12 +26,27 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        Camera.main.GetComponent<UITMP>().OnPlantElementSelect();
+        UIController uIController = Camera.main.GetComponent<UIController>();
+        TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
+
+        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
+        {
+            RectTransform menuTransform = uIController.extendMenu.RectTransform;
+            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
+
+            uIController.SpawnDynMenu(this);
+            uIController.SetDataPanel(plantName, plantType);
+        }
     }
 
     public override void DeSelect()
     {
-        Camera.main.GetComponent<UITMP>().OnPlantElementDeselect(this, plantName, plantType);
+        if (Camera.main != null)
+        {
+            UIController uIController = Camera.main.GetComponent<UIController>();
+
+            uIController.Cancel();
+        }
     }
 
     //Serialization

@@ -10,7 +10,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
     
     private void Start()
     {
-        this.constructionController = ConstructionController.instance;
+        constructionController = ConstructionController.instance;
     }
 
 
@@ -24,15 +24,15 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
         {
             DestroyMenu();
-            Destroy(this.flowerBed.gameObject);
+            Destroy(flowerBed.gameObject);
         }
     }
 
-    public void SetFlowerBedHandler(FlowerBed handler) { this.flowerBed = handler; }
+    public void SetFlowerBedHandler(FlowerBed handler) { flowerBed = handler; }
 
-    public GameObject GetGameObject() { return this.gameObject; }
+    public GameObject GetGameObject() { return gameObject; }
 
-    public void SetHidden(bool state) { this.isHidden = state; }
+    public void SetHidden(bool state) { isHidden = state; }
 
-    public bool IsHidden() { return this.isHidden; }
+    public bool IsHidden() { return isHidden; }
 }

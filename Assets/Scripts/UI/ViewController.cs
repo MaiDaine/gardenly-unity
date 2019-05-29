@@ -21,16 +21,16 @@ public class ViewController : MonoBehaviour
     // size view
     public void ExtendMenuMode()
     {
-        RectTransform rect = this.GetComponent<RectTransform>();
-        this.isPressed = !this.isPressed;
+        RectTransform rect = GetComponent<RectTransform>();
+        isPressed = !isPressed;
 
         Camera.main.GetComponent<UIController>().HideViews();
         Camera.main.GetComponent<UIController>().uIButtonListener.GetComponent<ViewController>().ResetButtons();
-        foreach (TextMeshProUGUI text in this.labels)
+        foreach (TextMeshProUGUI text in labels)
         {
-            text.gameObject.SetActive(this.isPressed);
+            text.gameObject.SetActive(isPressed);
         }
-        if (this.isPressed)
+        if (isPressed)
             rect.sizeDelta = new Vector2(200f, rect.sizeDelta.y);
         else
             rect.sizeDelta = new Vector2(61.854f, rect.sizeDelta.y);
@@ -64,17 +64,17 @@ public class ViewController : MonoBehaviour
 
     public void ResetButtons()
     {
-        foreach(UIButton button in this.buttons)
+        foreach(UIButton button in buttons)
         {
-            this.ResetStateButtons(button);
+            ResetStateButtons(button);
         }
     }
 
     public void ResetDynButtons()
     {
-        foreach (UIButton button in this.dynButtons)
+        foreach (UIButton button in dynButtons)
         {
-            this.ResetStateButtons(button);
+            ResetStateButtons(button);
         }
     }
 
@@ -88,20 +88,20 @@ public class ViewController : MonoBehaviour
 
         if (viewController.dynButtons.Count == 0)
         {
-            string[] plantNames = ReactProxy.instance.GetPlantsType(this.plantType);
+            string[] plantNames = ReactProxy.instance.GetPlantsType(plantType);
             if (plantNames != null)
             {
-                img = this.view.GetComponentInChildren<RawImage>();
+                img = view.GetComponentInChildren<RawImage>();
                 if (img != null)
-                    this.view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
+                    view.GetComponentInChildren<RawImage>().gameObject.SetActive(false);
                 for (int i = 0; i < plantNames.Length; i++)
                 {
-                    GameObject obj = Instantiate(this.plantButton, view.transform);
+                    GameObject obj = Instantiate(plantButton, view.transform);
                     ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
                     UIButton btn = obj.GetComponent<UIButton>();
 
                     viewController.dynButtons.Add(btn);
-                    buttonScript.SetGhostType(this.plantType);
+                    buttonScript.SetGhostType(plantType);
                     btn.TextMeshProLabel.text = plantNames[i];
                 }
             }
@@ -110,6 +110,6 @@ public class ViewController : MonoBehaviour
 
     public void SwitchState()
     {
-        this.isPressed = !this.isPressed;
+        isPressed = !isPressed;
     }
 }

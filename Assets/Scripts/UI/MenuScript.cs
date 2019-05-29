@@ -14,43 +14,44 @@ public class MenuScript : MonoBehaviour, IMenu
 
     private void Start()
     {
-        this.constructionController = ConstructionController.instance;
-        this.playerController = PlayerController.instance;
+        constructionController = ConstructionController.instance;
+        playerController = PlayerController.instance;
     }
 
 
     public void DestroyMenu()
     {
-        this.rotateState = false;
-        this.isMoving = false;
+        GetComponentInChildren<LabelScript>().ResetColor();
+        rotateState = false;
+        isMoving = false;
     }
 
     public void MoveGhost()
     {
-        LabelScript tmpScript = this.GetComponentInChildren<LabelScript>();
+        LabelScript tmpScript = GetComponentInChildren<LabelScript>();
 
         tmpScript.ResetColor();
-        this.rotateState = false;
-        this.isMoving = true;
-        this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Position, this.playerController.currentSelection);
+        rotateState = false;
+        isMoving = true;
+        playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Position, playerController.currentSelection);
     }
 
     public void StartRotate()
     {
-        this.playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Rotation, this.playerController.currentSelection);
-        this.rotateState = !this.rotateState;
+        playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Rotation, playerController.currentSelection);
+        rotateState = !rotateState;
     }
 
     public void EditionEnd()
     {
-        LabelScript[] tmpScripts = this.GetComponentsInChildren<LabelScript>();
+        LabelScript[] tmpScripts = GetComponentsInChildren<LabelScript>();
 
         foreach (LabelScript labelScript in tmpScripts)
         {
             labelScript.ResetColor();
         }
-        this.rotateState = false;
-        this.isMoving = false;
+        rotateState = false;
+        isMoving = false;
         GridController.instance.activ = false;
     }
 
@@ -60,14 +61,14 @@ public class MenuScript : MonoBehaviour, IMenu
             PlayerController.instance.DestroySelection();
     }
 
-    public void SetGhostRef(GhostHandler ghostRef) { this.ghost = ghostRef; }
+    public void SetGhostRef(GhostHandler ghostRef) { ghost = ghostRef; }
 
-    public GhostHandler GetGhost() { return this.ghost; }
+    public GhostHandler GetGhost() { return ghost; }
 
-    public GameObject GetGameObject() { return this.gameObject; }
+    public GameObject GetGameObject() { return gameObject; }
 
-    public bool IsHidden() { return this.isHidden; }
+    public bool IsHidden() { return isHidden; }
 
-    public void SetHidden(bool state) { this.isHidden = state; }
+    public void SetHidden(bool state) { isHidden = state; }
 
 }

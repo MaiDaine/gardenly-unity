@@ -9,13 +9,13 @@ public class ConstructionMenu : MonoBehaviour
 
     private void Start()
     {
-        this.gameObject.SetActive(this.state);
-        this.uIController = Camera.main.GetComponentInChildren<UIController>();
+        gameObject.SetActive(state);
+        uIController = Camera.main.GetComponentInChildren<UIController>();
     }
 
     public void ChangeState()
     {
-        this.gameObject.SetActive(!this.state);
-        this.state = !this.state;
+        gameObject.SetActive(!state);
+        state = !state;
     }
 }

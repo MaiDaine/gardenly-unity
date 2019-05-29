@@ -20,12 +20,12 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     public void ValidateNameChange()
     {
-        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(this.nameInputField.text);
+        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(nameInputField.text);
     }
 
     public void ValidateTypeChange()
     {
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
-        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[this.typeDropDown.value].text);
+        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[typeDropDown.value].text);
     }
 }

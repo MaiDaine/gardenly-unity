@@ -10,7 +10,7 @@ public class HourScript : MonoBehaviour
 
     public void UpdateHour(bool add = true)
     {
-        UIButton btn = this.GetComponent<UIButton>();
+        UIButton btn = GetComponent<UIButton>();
         if (btn != null)
         {
             TextMeshProUGUI txt = btn.TextMeshProLabel;
@@ -30,7 +30,7 @@ public class HourScript : MonoBehaviour
                 txt.SetText("{0} : 00", hour);
             else
                 txt.SetText("0{0} : 00", hour);
-            this.dayNightController.SetTimeOfDay(vHour);
+            dayNightController.SetTimeOfDay(vHour);
         }
     }
 }

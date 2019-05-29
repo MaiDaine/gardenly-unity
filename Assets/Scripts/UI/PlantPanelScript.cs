@@ -18,20 +18,20 @@ public class PlantPanelScript : MonoBehaviour
 
     private void Start()
     {
-        this.plantDataRef = new PlantData("");
-        this.reactProxy = ReactProxy.instance;
+        plantDataRef = new PlantData("");
+        reactProxy = ReactProxy.instance;
     }
 
     private void OnDisable()
     {
-        if (this.imageCoroutine != null)
-            StopCoroutine(this.imageCoroutine);
+        if (imageCoroutine != null)
+            StopCoroutine(imageCoroutine);
     }
 
     // Co-routine to download plant img
     public void SetPlantImg(string plantName, string plantType, Texture img)
     {
-        RawImage icon = this.GetComponentInChildren<RawImage>();
+        RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
         if (icon != null && img != null)
@@ -46,46 +46,46 @@ public class PlantPanelScript : MonoBehaviour
     // Set data of the panel and show it, plantDataRef if Graphql request return null.
     public void SetData()
     {
-        RawImage icon = this.GetComponentInChildren<RawImage>();
+        RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
-        Slider[] sliders = this.GetComponentsInChildren<Slider>();
-        ButtonScript script = this.GetComponentInChildren<ButtonScript>();
-        TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = this.reactProxy.GetPlantsData(this.plantType, this.plantName);
+        Slider[] sliders = GetComponentsInChildren<Slider>();
+        ButtonScript script = GetComponentInChildren<ButtonScript>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
+        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
-        if (!this.GetView().IsVisible)
-            this.GetView().Show();
+        if (!GetView().IsVisible)
+            GetView().Show();
 
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
-                label.text = this.plantName;
+                label.text = plantName;
         }
 
         if (script != null)
-            script.SetGhostType(this.plantType);
+            script.SetGhostType(plantType);
 
         if (tmp != null && tmp.imgUrl != null)
-            this.imageCoroutine = StartCoroutine(this.reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+            imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
         else
         {
             animator.enabled = true;
-            icon.texture = this.textureRef;
+            icon.texture = textureRef;
         }
 
-        if (this.dataPanelInitBtn.isActiveAndEnabled)
-            this.dataPanelInitBtn.ExecuteClick();
+        if (dataPanelInitBtn.isActiveAndEnabled)
+            dataPanelInitBtn.ExecuteClick();
         else
-            this.SetDescriptionDataPanel();
+            SetDescriptionDataPanel();
     }
 
     public void SetDescriptionDataPanel()
     {
-        TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
         if (tmp == null)
-            tmp = this.plantDataRef;
+            tmp = plantDataRef;
         
             foreach (TextMeshProUGUI label in labels)
             {
@@ -99,31 +99,31 @@ public class PlantPanelScript : MonoBehaviour
 
     public void SetMaintainDataPanel()
     {
-        TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
 
         if (tmp == null)
-            tmp = this.plantDataRef;
+            tmp = plantDataRef;
 
             foreach (TextMeshProUGUI label in labels)
             {
                 if (label.name == "Flowering")
-                    label.text = this.GetMonth(tmp.floweringPeriodBegin) + "  A  " + this.GetMonth(tmp.floweringPeriodEnd);
+                    label.text = GetMonth(tmp.floweringPeriodBegin) + "  A  " + GetMonth(tmp.floweringPeriodEnd);
                 if (label.name == "Cutting")
-                    label.text = this.GetMonth(tmp.cuttingPeriodBegin) + "  A  " + this.GetMonth(tmp.cuttingPeriodEnd);
+                    label.text = GetMonth(tmp.cuttingPeriodBegin) + "  A  " + GetMonth(tmp.cuttingPeriodEnd);
                 if (label.name == "Planting")
-                    label.text = this.GetMonth(tmp.plantingPeriodBegin) + "  A  " + this.GetMonth(tmp.plantingPeriodEnd);
+                    label.text = GetMonth(tmp.plantingPeriodBegin) + "  A  " + GetMonth(tmp.plantingPeriodEnd);
             }
     }
 
     public void SetInformationsDataPanel()
     {
-        TextMeshProUGUI[] labels = this.GetComponentsInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
         PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-        Slider[] sliders = this.GetComponentsInChildren<Slider>();
+        Slider[] sliders = GetComponentsInChildren<Slider>();
 
         if (tmp == null)
-            tmp = this.plantDataRef;
+            tmp = plantDataRef;
             
             foreach (TextMeshProUGUI label in labels)
             {
@@ -165,7 +165,7 @@ public class PlantPanelScript : MonoBehaviour
 
     public UIView GetView()
     {
-        UIView view = this.GetComponentInChildren<UIView>();
+        UIView view = GetComponentInChildren<UIView>();
 
         if (view != null)
             return view;
