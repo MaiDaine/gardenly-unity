@@ -1,4 +1,5 @@
 ﻿{
+
   "errors": {
     "action": {
       "no_cancel": "Pas d'action à annuler",
@@ -17,10 +18,18 @@
   },
 
   "names": {
-    "flowerbed":  "Parterre"
+    "flowerbed": "Parterre"
   },
 
   "succes": {
     "save_sucessfull": "Sauvegarde réussite"
+  },
+
+  "plant_data": {
+    "advices": "Les conseils d'entretien sont absents",
+    "description": "La description est absente",
+    "from": "De :",
+    "missing": "Absent",
+    "to": " A "
   }
 }

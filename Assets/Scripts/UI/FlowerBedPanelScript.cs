@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
+// Manage name and type changes
 public class FlowerBedPanelScript : MonoBehaviour
 {
     public TMP_InputField nameInputField;
@@ -11,22 +9,9 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.nameInputField != null && this.typeDropDown != null && Camera.main != null)
+        if (Camera.main != null)
             Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
     }
-
-    private void LateUpdate()
-    {
-        if (this.typeDropDown != null && this.typeDropDown.IsActive())
-        {
-            if (!this.typeDropDown.IsExpanded && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed() != null 
-                && Camera.main.GetComponentInChildren<UIController>().GetFlowerBed().soilType != typeDropDown.options[this.typeDropDown.value].text)
-            {
-                ValidateTypeChange();
-            }
-        }
-    }
-
 
     public void EnableCameraMovement(bool state)
     {
@@ -35,13 +20,12 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     public void ValidateNameChange()
     {
-        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(this.nameInputField.text);
+        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(nameInputField.text);
     }
 
     public void ValidateTypeChange()
     {
-        
         Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
-        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[this.typeDropDown.value].text);
+        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[typeDropDown.value].text);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using TMPro;
 
 public class PlantElement : GhostHandler, ISelectable, ISerializable
 {
@@ -25,12 +26,14 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        Camera.main.GetComponent<UITMP>().OnPlantElementSelect();
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(plantName, plantType, this);
     }
 
     public override void DeSelect()
     {
-        Camera.main.GetComponent<UITMP>().OnPlantElementDeselect(this, plantName, plantType);
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnDeSelectPlantElement();
     }
 
     //Serialization

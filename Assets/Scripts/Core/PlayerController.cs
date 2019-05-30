@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             constructionController.Cancel();
-            Camera.main.GetComponentInChildren<UIController>().Cancel(true);
-            Camera.main.GetComponentInChildren<UIController>().ForceResetButton();
+            Camera.main.GetComponentInChildren<UIController>().Cancel();
+            Camera.main.GetComponentInChildren<UIController>().ResetButton(true);
         }
 
         //Selection
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < selectionList.Count; i++)
                 actionHandler.NewStateAction("Destroy", selectionList[i].GetGameObject());
             selectionList.Clear();
-            Camera.main.GetComponent<UITMP>().OnSelectionDestroy();
+            Camera.main.GetComponent<UIController>().Cancel();
         }
     }
 

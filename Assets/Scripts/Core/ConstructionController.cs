@@ -39,7 +39,7 @@ public class ConstructionController : MonoBehaviour
     public void Cancel()
     {
         uiController.SaveViews();
-        uiController.Cancel(true);
+        uiController.Cancel();
         if (currentState == ConstructionState.Off || currentState == ConstructionState.Editing)
         {
             PlayerController.instance.DeSelect(true);

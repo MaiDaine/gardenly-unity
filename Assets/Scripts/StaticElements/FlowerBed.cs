@@ -128,7 +128,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (uIController.GetFlowerBedMenuScript() != null)
         {
             uIController.flowerBedDataPanel.Hide();
-            uIController.tutoView.Hide();
+            uIController.plantsViews[5].Hide();
         }
     }
 

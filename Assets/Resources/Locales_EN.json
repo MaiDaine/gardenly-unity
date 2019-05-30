@@ -1,4 +1,5 @@
 ﻿{
+
   "errors": {
     "action": {
       "no_cancel": "No action to cancel",
@@ -22,5 +23,13 @@
 
   "succes": {
     "save_sucessfull": "Save sucessfull"
+  },
+
+  "plant_data": {
+    "advices": "maintenance tips are missing",
+    "description": "The description is missing",
+    "from": "From :",
+    "missing": "Missing",
+    "to": " To "
   }
 }

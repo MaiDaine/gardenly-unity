@@ -90,9 +90,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.4431373, g: 0.46274513, b: 0.4784314, a: 1}
   actionColor: {r: 0.1254902, g: 0.65882355, b: 0.84705883, a: 1}
-  pressed: 0
   view: {fileID: 0}
-  dayNightController: {fileID: 0}
+  pressed: 0
 --- !u!1 &3808619656764419619
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,11 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc74c22e3ab6dad4d9ba7a6541526c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defaultAnimation: 
-  updateAnimation: 
   state: 0
-  open: 0
 --- !u!1 &3808619657060519839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1359,17 +1354,6 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 3808619656764419645}
             m_MethodName: ChangeState
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 0}
-            m_MethodName: ChangeColor
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -1377,7 +1361,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
-              m_BoolArgument: 1
+              m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 3808619657732778571}
             m_MethodName: ChangeColor
@@ -2674,9 +2658,8 @@ MonoBehaviour:
   text: {fileID: 0}
   color: {r: 0.15686275, g: 0.17254902, b: 0.20000002, a: 1}
   actionColor: {r: 0.21960786, g: 0.24705884, b: 0.2784314, a: 1}
-  pressed: 0
   view: {fileID: 0}
-  dayNightController: {fileID: 0}
+  pressed: 0
 --- !u!114 &616938592364075105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,7 +2673,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantName: {fileID: 3808619657060519833}
-  ghosts:
-  - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
-  idxObject: 0
-  refTexture: {fileID: 2800000, guid: 7ec8dee98182cee43aaf1145a1d90d00, type: 3}

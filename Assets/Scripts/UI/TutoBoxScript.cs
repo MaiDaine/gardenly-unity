@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using Doozy.Engine.UI;
 using TMPro;
 
@@ -13,7 +10,7 @@ public class TutoBoxScript : MonoBehaviour
     public static bool isOn = true;
 
     public void SetTutorial(string msg)
-    {      
+    {
         tutoPanel.Show();
         tutorialText.text = msg;
     }
