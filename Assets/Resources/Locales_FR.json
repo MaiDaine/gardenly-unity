@@ -1,4 +1,12 @@
 ﻿{
+  "default data": {
+    "missing": "Absent",
+    "from": "De :",
+    "to": " A ",
+    "description": "La description est absente",
+    "advices": "Les conseils d'entretien sont absents"
+  },
+
   "errors": {
     "action": {
       "no_cancel": "Pas d'action à annuler",
@@ -17,7 +25,7 @@
   },
 
   "names": {
-    "flowerbed":  "Parterre"
+    "flowerbed": "Parterre"
   },
 
   "succes": {

@@ -205,16 +205,6 @@ public class PlayerController : MonoBehaviour
         actionHandler.revertActionSet.ClearTmpAction();
     }
 
-    public void StartNewFB()
-    {
-        if (TutoBoxScript.isOn)
-        {
-            UIController controller = Camera.main.GetComponent<UIController>();
-            controller.plantsViews[5].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
-        }
-        SpawnController.instance.StartNewShape();
-    }
-
     public bool PlaneClick()
     {
         if (Input.GetMouseButtonDown(0) && !IsPointerOnUi())

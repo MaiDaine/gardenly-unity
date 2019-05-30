@@ -10,7 +10,7 @@ public class TutoBoxScript : MonoBehaviour
     public static bool isOn = true;
 
     public void SetTutorial(string msg)
-    {      
+    {
         tutoPanel.Show();
         tutorialText.text = msg;
     }

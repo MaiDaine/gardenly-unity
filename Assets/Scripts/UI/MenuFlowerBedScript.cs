@@ -7,17 +7,14 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
 
     private ConstructionController constructionController;
     private FlowerBed flowerBed;
-    
+
     private void Start()
     {
         constructionController = ConstructionController.instance;
     }
 
 
-    public void DestroyMenu()
-    {
-      
-    }
+    public void DestroyMenu() { }
 
     public void DestroyObject()
     {

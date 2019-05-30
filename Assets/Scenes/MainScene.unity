@@ -3978,7 +3978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000036
+  m_Value: 0.50000024
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24207,7 +24207,6 @@ GameObject:
   - component: {fileID: 534669910}
   - component: {fileID: 534669912}
   - component: {fileID: 534669911}
-  - component: {fileID: 534669914}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -24452,18 +24451,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7041c3f583b0844db4dca9cadd55aa3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &534669914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41ab16626d040154bb35046523e5decf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &537686114
@@ -118640,8 +118627,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669907}
-            m_MethodName: StartNewFB
+          - m_Target: {fileID: 534669912}
+            m_MethodName: StartNewFb
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}

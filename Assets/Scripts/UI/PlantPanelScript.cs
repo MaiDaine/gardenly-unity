@@ -56,6 +56,7 @@ public class PlantPanelScript : MonoBehaviour
         if (!GetView().IsVisible)
             GetView().Show();
 
+        plantDataRef.SetDefaultData();
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
@@ -86,15 +87,15 @@ public class PlantPanelScript : MonoBehaviour
 
         if (tmp == null)
             tmp = plantDataRef;
-        
-            foreach (TextMeshProUGUI label in labels)
-            {
-                if (label.name == "Description" && tmp.description != null)
-                    label.text = tmp.description;
-                if (label.name == "Advices" && tmp.maintainAdvice != null)
-                    label.text = tmp.maintainAdvice;
-            }
-        
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Description" && tmp.description != null)
+                label.text = tmp.description;
+            if (label.name == "Advices" && tmp.maintainAdvice != null)
+                label.text = tmp.maintainAdvice;
+        }
+
     }
 
     public void SetMaintainDataPanel()
@@ -105,15 +106,15 @@ public class PlantPanelScript : MonoBehaviour
         if (tmp == null)
             tmp = plantDataRef;
 
-            foreach (TextMeshProUGUI label in labels)
-            {
-                if (label.name == "Flowering")
-                    label.text = GetMonth(tmp.floweringPeriodBegin) + "  A  " + GetMonth(tmp.floweringPeriodEnd);
-                if (label.name == "Cutting")
-                    label.text = GetMonth(tmp.cuttingPeriodBegin) + "  A  " + GetMonth(tmp.cuttingPeriodEnd);
-                if (label.name == "Planting")
-                    label.text = GetMonth(tmp.plantingPeriodBegin) + "  A  " + GetMonth(tmp.plantingPeriodEnd);
-            }
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "Flowering")
+                label.text = GetMonth(tmp.floweringPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.floweringPeriodEnd);
+            if (label.name == "Cutting")
+                label.text = GetMonth(tmp.cuttingPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.cuttingPeriodEnd);
+            if (label.name == "Planting")
+                label.text = GetMonth(tmp.plantingPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.plantingPeriodEnd);
+        }
     }
 
     public void SetInformationsDataPanel()
@@ -124,42 +125,42 @@ public class PlantPanelScript : MonoBehaviour
 
         if (tmp == null)
             tmp = plantDataRef;
-            
-            foreach (TextMeshProUGUI label in labels)
+
+        foreach (TextMeshProUGUI label in labels)
+        {
+            if (label.name == "HeightMin")
+                label.text = tmp.heightMin + "cm";
+            if (label.name == "HeightMax")
+                label.text = tmp.heightMax + "cm";
+            if (label.name == "Shape" && tmp.shape != null)
+                label.text = tmp.shape;
+            if (label.name == "Colors")
             {
-                if (label.name == "HeightMin")
-                    label.text = tmp.heightMin + "cm";
-                if (label.name == "HeightMax")
-                    label.text = tmp.heightMax + "cm";
-                if (label.name == "Shape" && tmp.shape != null)
-                    label.text = tmp.shape;
-                if (label.name == "Colors")
+                if (tmp.plantColor != null)
                 {
-                    if (tmp.plantColor != null)
+                    label.text = "";
+                    foreach (string color in tmp.plantColor)
                     {
-                        label.text = "";
-                        foreach (string color in tmp.plantColor)
-                        {
-                            label.text = label.text + color + " ";
-                        }
+                        label.text = label.text + color + " ";
                     }
-                    else
-                        label.text = "Absent";
                 }
-                if (label.name == "SoilType" && tmp.soilType != null)
-                    label.text = tmp.soilType;
-                if (label.name == "SoilPh")
-                    label.text = "De : " + tmp.phRangeLow + " A " + tmp.phRangeHigh;
+                else
+                    label.text = LocalisationController.instance.GetText("default data", "missing");
             }
-            sliders[0].value = tmp.waterNeed;
-            sliders[1].value = tmp.rusticity;
-            sliders[2].value = tmp.sunNeed;
+            if (label.name == "SoilType" && tmp.soilType != null)
+                label.text = tmp.soilType;
+            if (label.name == "SoilPh")
+                label.text = LocalisationController.instance.GetText("default data", "from") + tmp.phRangeLow + LocalisationController.instance.GetText("default data", "to") + tmp.phRangeHigh;
+        }
+        sliders[0].value = tmp.waterNeed;
+        sliders[1].value = tmp.rusticity;
+        sliders[2].value = tmp.sunNeed;
     }
 
     public string GetMonth(int month)
     {
         if (month < 1 || month > 12)
-            return "Absent";
+            return LocalisationController.instance.GetText("default data", "missing");
         return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
     }
 
@@ -167,9 +168,6 @@ public class PlantPanelScript : MonoBehaviour
     {
         UIView view = GetComponentInChildren<UIView>();
 
-        if (view != null)
-            return view;
-
-        return null;
+        return view;
     }
 }

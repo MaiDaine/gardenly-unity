@@ -17,7 +17,8 @@ public class ViewController : MonoBehaviour
     public string plantType;
     public bool isPressed = false;
 
-
+    private const float extendSize = 200f;
+    private const float minimizeSize = 61.854f;
     // size view
     public void ExtendMenuMode()
     {
@@ -31,9 +32,9 @@ public class ViewController : MonoBehaviour
             text.gameObject.SetActive(isPressed);
         }
         if (isPressed)
-            rect.sizeDelta = new Vector2(200f, rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(extendSize, rect.sizeDelta.y);
         else
-            rect.sizeDelta = new Vector2(61.854f, rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(minimizeSize, rect.sizeDelta.y);
     }
 
     public void SetViewAnchor(UIView viewRef)
@@ -64,7 +65,7 @@ public class ViewController : MonoBehaviour
 
     public void ResetButtons()
     {
-        foreach(UIButton button in buttons)
+        foreach (UIButton button in buttons)
         {
             ResetStateButtons(button);
         }
@@ -81,7 +82,7 @@ public class ViewController : MonoBehaviour
     // Add dynamic plants button
     public void AddPlants()
     {
-        ViewController viewController = dynamicButtonListener.GetComponent<ViewController>(); 
+        ViewController viewController = dynamicButtonListener.GetComponent<ViewController>();
         UIController controller = Camera.main.GetComponent<UIController>();
         UIView parentView = view.GetComponentInParent<UIView>();
         RawImage img;

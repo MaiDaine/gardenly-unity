@@ -45,14 +45,14 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void IsPressed()
+    public void TooglePressed()
     {
         pressed = !pressed;
     }
 
     public void ChangeColor()
     {
-        IsPressed();
+        TooglePressed();
         Color tmp;
 
         if (pressed)

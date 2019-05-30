@@ -4,7 +4,7 @@ using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
-    public enum StaticElementType { Chair, Table};
+    public enum StaticElementType { Chair, Table };
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
@@ -49,32 +49,14 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        uIController = Camera.main.GetComponent<UIController>();
-        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
-        {
-            uIController.SpawnDynMenu(this);
-            if (this.GetData() != null)
-            {
-                if (!uIController.PlantsViewsDisplay())
-                    uIController.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(122.37f, -33.46f, 0);
-                else
-                    uIController.dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(244.67f, -33.46f, 0);
-                if (uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text != plantName || uIController.dataPanel.GetView().IsHidden)
-                    uIController.SetDataPanel(plantName, plantType);
-            }
-        }
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement(plantName, plantType, this);
     }
 
     public override void DeSelect()
     {
-        MenuScript menuScript = uIController.GetMenuScript();
-        if (menuScript != null)
-        {
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
-            menuScript.DestroyMenu();
-        }
-        else
-            uIController.DestroyMenu();
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnDeselectDefaultStaticElement();
     }
 
 

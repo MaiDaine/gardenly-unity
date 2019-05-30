@@ -5,12 +5,9 @@ public class ConstructionMenu : MonoBehaviour
 {
     public bool state = false;
 
-    private UIController uIController = null;
-
     private void Start()
     {
         gameObject.SetActive(state);
-        uIController = Camera.main.GetComponentInChildren<UIController>();
     }
 
     public void ChangeState()

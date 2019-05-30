@@ -26,27 +26,14 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        UIController uIController = Camera.main.GetComponent<UIController>();
-        TextMeshProUGUI[] labels = uIController.dataPanel.GetComponentsInChildren<TextMeshProUGUI>();
-
-        if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
-        {
-            RectTransform menuTransform = uIController.extendMenu.RectTransform;
-            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
-
-            uIController.SpawnDynMenu(this);
-            uIController.SetDataPanel(plantName, plantType);
-        }
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(plantName, plantType, this);
     }
 
     public override void DeSelect()
     {
         if (Camera.main != null)
-        {
-            UIController uIController = Camera.main.GetComponent<UIController>();
-
-            uIController.Cancel();
-        }
+            Camera.main.GetComponent<UIController>().uIInteractions.OnDeSelectPlantElement();
     }
 
     //Serialization

@@ -9,13 +9,13 @@ public class PlantData
     public string plantID;
     public string type;
     public string name;
-    public string description = "La description est absente";
-    public string maintainAdvice = "Les conseils d'entretien sont absents"; //
-    public string periodicity = "";
-    public string soilType = "Absent";
-    public string shape = "Absent";
+    public string description;
+    public string maintainAdvice;
+    public string periodicity;
+    public string soilType;
+    public string shape;
     public string imgUrl = null;
-    public string[] plantColor = { "Absent" };
+    public string[] plantColor;
     public int heightMin = 0;
     public int heightMax = 0;
     public int plantingPeriodBegin = 0;
@@ -34,5 +34,13 @@ public class PlantData
     public DataStatus status = DataStatus.None;
 
     public PlantData(string name) { this.name = name; }
+
+    public void SetDefaultData()
+    {
+        description = LocalisationController.instance.GetText("default data", "description");
+        maintainAdvice = LocalisationController.instance.GetText("default data", "advices");
+        soilType = LocalisationController.instance.GetText("default data", "missing");
+        shape = LocalisationController.instance.GetText("default data", "missing");
+    }
 }
 

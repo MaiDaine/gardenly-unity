@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     public ActionRuntimeSet redoActionSet;
     public TextMeshProUGUI gardenName;
     public PlantPanelScript dataPanel;
+    public UIInteractions uIInteractions = null;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
 
@@ -27,6 +28,8 @@ public class UIController : MonoBehaviour
     protected List<UIView> currentHideViews = new List<UIView>();
 
     private ReactProxy reactProxy;
+    private Vector3 anchorOpenView = new Vector3();
+    private Vector3 anchorCloseView = new Vector3();
 
     private void Awake()
     {
@@ -41,6 +44,9 @@ public class UIController : MonoBehaviour
     {
         reactProxy = ReactProxy.instance;
         gardenName.text = reactProxy.GetComponent<GardenData>().gardenName;
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        uIInteractions = new UIInteractions();
     }
 
 
@@ -66,7 +72,7 @@ public class UIController : MonoBehaviour
     {
         if (menu != null)
             menu.DestroyMenu();
-            DestroyMenu();
+        DestroyMenu();
         ResetButton();
     }
 
@@ -143,13 +149,11 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType)
     {
-        RectTransform menuTransform = extendMenu.RectTransform;
-        RectTransform viewTransform = plantsViews[0].RectTransform;
 
         if (PlantsViewsDisplay())
-            dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x - viewTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
         else
-            dataPanel.GetView().CustomStartAnchoredPosition = new Vector3(-menuTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+            dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
 
         if (dataPanel.plantName == plantName && dataPanel.GetView().IsVisible)
         {
@@ -172,7 +176,7 @@ public class UIController : MonoBehaviour
         SpawnFlowerBedMenu(flowerBedRef);
         flowerBedMenuScript.SetFlowerBedHandler(flowerBedRef);
         if (!flowerBedDataPanel.IsVisible)
-             flowerBedDataPanel.Show();
+            flowerBedDataPanel.Show();
         foreach (TextMeshProUGUI txt in texts)
         {
             if (txt.name == "Name")
@@ -197,12 +201,12 @@ public class UIController : MonoBehaviour
             if (txt.name == "Name")
                 txt.text = updateName;
         }
-        
+
         flowerBed.flowerBedName = updateName;
     }
 
     public void UpdateTypeFlowerBed(string updateType)
-    {        
+    {
         flowerBed.soilType = updateType;
     }
 
@@ -215,15 +219,20 @@ public class UIController : MonoBehaviour
         return false;
     }
 
+    public void StartNewFb()
+    {
+        uIInteractions.StartNewFB();
+    }
+
     public MenuScript GetMenuScript() { return menu; }
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return flowerBedMenuScript; }
 
-    public void SetCurrentHideViews(UIView view)    { currentHideViews.Add(view); }
+    public void SetCurrentHideViews(UIView view) { currentHideViews.Add(view); }
 
     public List<UIView> GetCurrentHideView() { return currentHideViews; }
 
-    public FlowerBed GetFlowerBed()     { return flowerBed; }
+    public FlowerBed GetFlowerBed() { return flowerBed; }
 
     public GhostHandler GetGhost() { return ghost; }
 }

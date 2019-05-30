@@ -1,4 +1,12 @@
 ﻿{
+  "default data": {
+    "missing": "Missing",
+    "from": "From :",
+    "to": " To ",
+    "description": "The description is missing",
+    "advices": "maintenance tips are missing"
+  },
+
   "errors": {
     "action": {
       "no_cancel": "No action to cancel",

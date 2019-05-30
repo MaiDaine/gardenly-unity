@@ -102,10 +102,8 @@ public class WallHandler : GhostHandler, ISerializable
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
-        if (state == ConstructionController.ConstructionState.Off)
-            this.uIController.SpawnDynMenu(this);
-
-        this.text.gameObject.SetActive(true);
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectWall(this, state);
     }
 
     public override List<ISelectable> SelectWithNeighbor()
@@ -119,13 +117,8 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSelect()
     {
-        MenuScript menuScript = this.uIController.GetMenuScript();
-
-        if (this.text != null && this.text.gameObject != null)
-            this.text.gameObject.SetActive(false);
-
-        if (menuScript != null)
-            menuScript.DestroyMenu();
+        if (Camera.main != null)
+            Camera.main.GetComponent<UIController>().uIInteractions.OnDeselectWall(text);
     }
 
     protected override void OnEnable()
@@ -158,6 +151,13 @@ public class WallHandler : GhostHandler, ISerializable
             return true;
         }
         return false;
+    }
+
+    //Tools
+
+    public LineTextHandler GetText()
+    {
+        return text;
     }
 
 
