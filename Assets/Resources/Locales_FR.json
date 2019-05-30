@@ -1,11 +1,4 @@
 ﻿{
-  "default data": {
-    "missing": "Absent",
-    "from": "De :",
-    "to": " A ",
-    "description": "La description est absente",
-    "advices": "Les conseils d'entretien sont absents"
-  },
 
   "errors": {
     "action": {
@@ -30,5 +23,13 @@
 
   "succes": {
     "save_sucessfull": "Sauvegarde réussite"
+  },
+
+  "plant_data": {
+    "advices": "Les conseils d'entretien sont absents",
+    "description": "La description est absente",
+    "from": "De :",
+    "missing": "Absent",
+    "to": " A "
   }
 }

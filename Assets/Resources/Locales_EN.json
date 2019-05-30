@@ -1,11 +1,4 @@
 ﻿{
-  "default data": {
-    "missing": "Missing",
-    "from": "From :",
-    "to": " To ",
-    "description": "The description is missing",
-    "advices": "maintenance tips are missing"
-  },
 
   "errors": {
     "action": {
@@ -30,5 +23,13 @@
 
   "succes": {
     "save_sucessfull": "Save sucessfull"
+  },
+
+  "plant_data": {
+    "advices": "maintenance tips are missing",
+    "description": "The description is missing",
+    "from": "From :",
+    "missing": "Missing",
+    "to": " To "
   }
 }

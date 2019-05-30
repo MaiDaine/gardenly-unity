@@ -109,11 +109,11 @@ public class PlantPanelScript : MonoBehaviour
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Flowering")
-                label.text = GetMonth(tmp.floweringPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.floweringPeriodEnd);
+                label.text = GetMonth(tmp.floweringPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.floweringPeriodEnd);
             if (label.name == "Cutting")
-                label.text = GetMonth(tmp.cuttingPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.cuttingPeriodEnd);
+                label.text = GetMonth(tmp.cuttingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.cuttingPeriodEnd);
             if (label.name == "Planting")
-                label.text = GetMonth(tmp.plantingPeriodBegin) + LocalisationController.instance.GetText("default data", "to") + GetMonth(tmp.plantingPeriodEnd);
+                label.text = GetMonth(tmp.plantingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.plantingPeriodEnd);
         }
     }
 
@@ -145,12 +145,12 @@ public class PlantPanelScript : MonoBehaviour
                     }
                 }
                 else
-                    label.text = LocalisationController.instance.GetText("default data", "missing");
+                    label.text = LocalisationController.instance.GetText("plant_data", "missing");
             }
             if (label.name == "SoilType" && tmp.soilType != null)
                 label.text = tmp.soilType;
             if (label.name == "SoilPh")
-                label.text = LocalisationController.instance.GetText("default data", "from") + tmp.phRangeLow + LocalisationController.instance.GetText("default data", "to") + tmp.phRangeHigh;
+                label.text = LocalisationController.instance.GetText("plant_data", "from") + tmp.phRangeLow + LocalisationController.instance.GetText("plant_data", "to") + tmp.phRangeHigh;
         }
         sliders[0].value = tmp.waterNeed;
         sliders[1].value = tmp.rusticity;
@@ -160,7 +160,7 @@ public class PlantPanelScript : MonoBehaviour
     public string GetMonth(int month)
     {
         if (month < 1 || month > 12)
-            return LocalisationController.instance.GetText("default data", "missing");
+            return LocalisationController.instance.GetText("plant_data", "missing");
         return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
     }
 

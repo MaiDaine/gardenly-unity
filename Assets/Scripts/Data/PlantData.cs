@@ -37,10 +37,10 @@ public class PlantData
 
     public void SetDefaultData()
     {
-        description = LocalisationController.instance.GetText("default data", "description");
-        maintainAdvice = LocalisationController.instance.GetText("default data", "advices");
-        soilType = LocalisationController.instance.GetText("default data", "missing");
-        shape = LocalisationController.instance.GetText("default data", "missing");
+        description = LocalisationController.instance.GetText("plant_data", "description");
+        maintainAdvice = LocalisationController.instance.GetText("plant_data", "advices");
+        soilType = LocalisationController.instance.GetText("plant_data", "missing");
+        shape = LocalisationController.instance.GetText("plant_data", "missing");
     }
 }
 
