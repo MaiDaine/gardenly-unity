@@ -40,6 +40,10 @@ public class ModelImporter : MonoBehaviour
             }
             plantModels.datas.Add(tmp);
         }
+
+#if UNITY_EDITOR
         EditorUtility.SetDirty(plantModels);
+#endif
+
     }
 }
