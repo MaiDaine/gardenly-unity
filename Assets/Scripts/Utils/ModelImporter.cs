@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class ModelImporter : MonoBehaviour
@@ -41,5 +40,6 @@ public class ModelImporter : MonoBehaviour
             }
             plantModels.datas.Add(tmp);
         }
+        EditorUtility.SetDirty(plantModels);
     }
 }
