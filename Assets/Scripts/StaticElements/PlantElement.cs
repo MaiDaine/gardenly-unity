@@ -83,5 +83,6 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     {
         plantName = plantData.name;
         plantType = plantData.type;
+        GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
     }
 }

@@ -4,6 +4,8 @@ public class SpawnController : MonoBehaviour
 {
     public static SpawnController instance = null;
 
+    public bool loadingData = false;
+
     //Need one of each for serialization
     public ShapeCreator shapeCreatorRef;
     public FlowerBed flowerBedRef;
@@ -71,8 +73,16 @@ public class SpawnController : MonoBehaviour
         return ghost;
     }
 
+    public Material GetModelMaterial(PlantData plant)
+    {
+        if (plant.model != -1 && plant.model < plantModels.datas.Count)
+            return plantModels.datas[plant.model].GetModelMaterial(plant.plantColor);
+        return null;
+    }
+
     public void SpawnScene(SerializationData[] data)
     {
+        loadingData = true;
         WallHandler wallHandler;
         FlowerBed flowerBed;
 
@@ -119,6 +129,7 @@ public class SpawnController : MonoBehaviour
                     break;
             }
         }
+        loadingData = false;
     }
 
     public FlowerBed StartNewShape(/*final object*/)

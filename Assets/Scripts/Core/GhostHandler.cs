@@ -122,7 +122,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     //Call after Actions
     protected virtual void OnEnable()
     {
-        PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+        if (!SpawnController.instance.loadingData)
+            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
     }
 
     protected virtual void OnDisable()

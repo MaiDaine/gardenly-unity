@@ -7,9 +7,21 @@ public class PlantModel
     public Material[] materials;
     public string[] materialsColors;
 
+    public Material GetModelMaterial(string[] colors)
+    {
+        int index = 0;
+        for (int i = 0; i < materialsColors.Length; i++)
+            for (int j = 0; j < colors.Length; j++)
+                if (materialsColors[i] == colors[j])
+                {
+                    index = i;
+                    break;
+                }
+        return materials[index];
+    }
+
     public FlowerBedElement CreateElement(FlowerBedElement model, string[] colors)
     {
-        RandomizeArray(ref colors);
         int index = 0;
         for (int i = 0; i < materialsColors.Length; i++)
             for (int j = 0; j < colors.Length; j++)
