@@ -1,8 +1,10 @@
-﻿using SimpleJSON;
-using System;
+﻿using System;
+// FIXME: Used only for AsyncFaker()
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using SimpleJSON;
 using UnityEngine;
 
 public class ReactProxy : MonoBehaviour
@@ -42,7 +44,7 @@ public class ReactProxy : MonoBehaviour
         if (Application.isEditor)
         {
             SerializationController.instance.GetComponent<GardenData>().SetGardenName("Offline Garden");
-            LocalisationController.instance.Init("FR");//TODO USERPREF
+            LocalisationController.instance.Init("FR"); //TODO USERPREF
         }
     }
 
@@ -65,10 +67,7 @@ public class ReactProxy : MonoBehaviour
 
     public void SendQuery(string payload)
     {
-        if (Application.isEditor)
-            DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
-        else
-            query(payload);
+        query(payload);
     }
 
     private void Update()
@@ -82,8 +81,8 @@ public class ReactProxy : MonoBehaviour
     {
         if (json != "")
         {
-            SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json)["name"]);
-            LocalisationController.instance.Init("FR");//TODO USERPREF
+            SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json) ["name"]);
+            LocalisationController.instance.Init("FR"); //TODO USERPREF
             SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
         }
     }
@@ -127,7 +126,10 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
+            {
+                AsyncFaker();
+                DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.gardenly.app/dev/b433371477fd4275e5951100a3a2cf75efbdd0c0/thumbnail_8007b7e4-1d7a-4cd0-8fdc-d3815de8edda.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
+            }
             else
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
@@ -139,5 +141,12 @@ public class ReactProxy : MonoBehaviour
     public void LoadPlantDataFromId(string plantID, Action<PlantData> callback)
     {
         SendQuery(graphQL.GetPlantData(plantID));
+    }
+
+    // FIXME For debug purpose on editor
+
+    private IEnumerator AsyncFaker()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 }

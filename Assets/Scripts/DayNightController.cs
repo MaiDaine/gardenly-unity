@@ -3,9 +3,14 @@
 public class DayNightController : MonoBehaviour
 {
     public Light sun;
+    // FIXME: Inutilisé
     public float secondsInFullDay = 120f;
+
+    // ENHANCEMENT: Je trouve bizarre d'utiliser une valeur en float un peu en mode MAGIC_NUMBER
+    // Peut être avec un private float calculer dans le awake à partir de cette valeur en int (Range(0,24))
     [Range(0, 1)]
     public float targetTime = 0.6246667f;
+    // FIXME: Inutilisé
     [HideInInspector]
     public float timeMultiplier = 1f;
 

@@ -42,5 +42,17 @@ public class PlantData
         soilType = LocalisationController.instance.GetText("plant_data", "missing");
         shape = LocalisationController.instance.GetText("plant_data", "missing");
     }
+
+    public void PrintState() {
+        Debug.Log("--- " + name + " ---");
+        Debug.Log("ID : " + plantID);
+        Debug.Log("Type : " + type);
+        Debug.Log("Description : " + description);
+        Debug.Log("Image URL : " + imgUrl);
+        Debug.Log("Plant Color :");
+        foreach(string color in plantColor)
+            Debug.Log(" - " + color);
+        Debug.Log("---------------");
+    }
 }
 

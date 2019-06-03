@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using Doozy.Engine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using Doozy.Engine.UI;
+using UnityEngine.UI;
 
 // Manage color change of the ref OnPointerEnter / Exit and when click
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -21,28 +21,24 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             image.color = color;
     }
 
-
+    private void SetTextAndImageColor(Color color)
+    {
+        if (text != null)
+            text.color = color;
+        if (image != null)
+            image.color = color;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!pressed)
-        {
-            if (text != null)
-                text.color = actionColor;
-            if (image != null)
-                image.color = actionColor;
-        }
+            SetTextAndImageColor(actionColor);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!pressed)
-        {
-            if (text != null)
-                text.color = color;
-            if (image != null)
-                image.color = color;
-        }
+            SetTextAndImageColor(color);
     }
 
     public void TooglePressed()
@@ -53,25 +49,12 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void ChangeColor()
     {
         TooglePressed();
-        Color tmp;
-
-        if (pressed)
-            tmp = actionColor;
-        else
-            tmp = color;
-
-        if (text != null)
-            text.color = tmp;
-        if (image != null)
-            image.color = tmp;
+        SetTextAndImageColor(pressed ? actionColor : color);
     }
 
     public void ResetColor()
     {
-        if (text != null)
-            text.color = color;
-        if (image != null)
-            image.color = color;
+        SetTextAndImageColor(color);
         pressed = false;
     }
 }

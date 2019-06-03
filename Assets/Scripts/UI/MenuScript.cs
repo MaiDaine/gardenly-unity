@@ -52,11 +52,15 @@ public class MenuScript : MonoBehaviour, IMenu
         }
         rotateState = false;
         isMoving = false;
+
+        // FIXME: Typo -> active
+        // ENHANCEMENT: GridController selon moi devrait exposer des méthodes publique pour ce genre d'opération
         GridController.instance.activ = false;
     }
 
     public void DestroyObject()
     {
+        // ENHANCEMENT: constructionController selon moi devrait exposer une méthodes publique pour ce genre d'opération
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
             PlayerController.instance.DestroySelection();
     }

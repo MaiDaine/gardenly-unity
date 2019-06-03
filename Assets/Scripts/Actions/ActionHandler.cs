@@ -23,6 +23,7 @@ public class ActionHandler : ScriptableObject
         ActionComplete(updateState);
     }
 
+    // FIXME -> typo: NewEdit[i]onAction
     public void NewEditonAction(ConstructionController.EditionType type, ISelectable currentSelection)
     {
         constructionController.currentState = ConstructionController.ConstructionState.Editing;

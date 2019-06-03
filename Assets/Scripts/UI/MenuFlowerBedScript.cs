@@ -13,7 +13,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         constructionController = ConstructionController.instance;
     }
 
-
+    // Gné ?
     public void DestroyMenu() { }
 
     public void DestroyObject()

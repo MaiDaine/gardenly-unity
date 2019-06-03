@@ -2,6 +2,38 @@
 using TMPro;
 using UnityEngine;
 
+/*
+    C'est logiquement incorrect selon moi.
+    L'UI ne devrait pas avoir à faire des calculs dans du display
+
+    Pour moi:
+
+        DayNightController implements :
+            - getTime() -> return heure de 0 - 24
+            - incHour(int cnt = 1) -> return nouvelle heure si succès de 0 - 24 sinon ancienne heure
+            - decHour(int cnt = 1) -> return nouvelle heure si succès de 0 - 24 sinon ancienne heure
+
+        HourScript (Que je renomme UI_DayNight_XXX) implements :
+            - UpdateHour(bool add = true, int qty = 1) {
+                UIButton btn = GetComponent<UIButton>();
+
+                if (btn) {
+                    TextMeshProUGUI txt = btn.TextMeshProLabel;
+                    int newTime = 0;
+
+                    if (add)
+                        newTime = dayNightController.incHour(qty);
+                    else
+                        newTime = dayNightController.decHour(qty);
+                    
+                    if (newTime >= 10)
+                        txt.SetText("{0} : 00", newTime);
+                    else
+                        txt.SetText("0{0} : 00", newTime);
+                }
+            }
+ */
+
 public class HourScript : MonoBehaviour
 {
     public DayNightController dayNightController;

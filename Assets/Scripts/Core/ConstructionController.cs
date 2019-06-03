@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ConstructionController : MonoBehaviour
 {
+    // ENHANCEMENT: Exposer des méthodes pour les références les plus utilisées pour eviter d'avoir 23 comparaison straight dans le code
+    // isActive()
     public enum ConstructionState { Off, Positioning, Building, Editing };
     public enum EditionType { Off, Position, Rotation };
     public static ConstructionController instance = null;

@@ -161,10 +161,7 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        dataPanel.plantName = plantName;
-        dataPanel.plantType = plantType;
-
-        dataPanel.SetData();
+        dataPanel.PrepareView(plantName, plantType);
     }
 
     // FB panel management
