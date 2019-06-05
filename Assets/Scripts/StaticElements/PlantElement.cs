@@ -10,6 +10,14 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
 
     protected SerializedPlantElement serializableItem;
 
+    private void Start()
+    {
+        if (ConstructionController.instance.flowerBeds.Count < 1)
+        {
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
+            ConstructionController.instance.Cancel();
+        }
+    }
 
     protected override void OnEnable()
     {
@@ -83,6 +91,6 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     {
         plantName = plantData.name;
         plantType = plantData.type;
-        GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
+       // GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
     }
 }

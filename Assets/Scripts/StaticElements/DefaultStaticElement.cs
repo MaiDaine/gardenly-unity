@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using TMPro;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
@@ -9,8 +8,6 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
-    public string plantName;
-    public string plantType;
 
     protected UIController uIController;
 
@@ -30,10 +27,6 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             initFromSerialization = false;
     }
 
-    void OnDestroy()
-    {
-    }
-
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -50,7 +43,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (Camera.main != null)
-            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement(plantName, plantType, this);
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement("", "", this);//TODO UI
     }
 
     public override void DeSelect()
@@ -58,7 +51,6 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         if (Camera.main != null)
             Camera.main.GetComponent<UIController>().uIInteractions.OnDeselectDefaultStaticElement();
     }
-
 
     //Serialization
     [Serializable]
@@ -87,11 +79,5 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         this.transform.position = this.serializableItem.position;
         this.transform.rotation = this.serializableItem.rotation;
         initFromSerialization = true;
-    }
-
-    public void OnPlantDataLoad(PlantData plantData)
-    {
-        plantName = plantData.name;
-        plantType = plantData.type;
     }
 }

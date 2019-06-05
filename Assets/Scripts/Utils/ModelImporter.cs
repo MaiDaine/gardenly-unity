@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class ModelImporter : MonoBehaviour
-{
+{/*
     public ModelList plantModels;
     public string folderName;
     public bool active = false;
@@ -45,5 +45,5 @@ public class ModelImporter : MonoBehaviour
         EditorUtility.SetDirty(plantModels);
 #endif
 
-    }
+    }*/
 }

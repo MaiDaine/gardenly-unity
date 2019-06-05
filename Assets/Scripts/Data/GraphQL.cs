@@ -2,6 +2,11 @@
 {
     public GraphQL() { }
 
+    public string GetGroundTypes()
+    {
+        return "{\"query\": \"query GetGroundTypes(){name, id}}\"";
+    }
+
     public string GetPlantsTypes()
     {
         return "{\"query\": \"query GetTypes{getTypes{name, id}}\", \"variables\": {}}";

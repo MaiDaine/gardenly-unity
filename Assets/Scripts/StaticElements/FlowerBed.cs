@@ -8,11 +8,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
-    public string soilType = "";
+    public string groundType = "";
     public Vector2[] vertices;
 
     private ShapeCreator shapeCreator;
-    private List<FlowerBedElement> flowerBedElements = new List<FlowerBedElement>();
+    private List<PlantElement> flowerBedElements = new List<PlantElement>();
 
     public void Init(ShapeCreator shapeCreator)
     {
@@ -57,7 +57,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     private void OnEnable()
     {
         SerializationController.instance.AddToList(this);
-        foreach (FlowerBedElement elem in flowerBedElements)
+        foreach (PlantElement elem in flowerBedElements)
             elem.gameObject.SetActive(true);
     }
 
@@ -65,7 +65,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         ConstructionController.instance.flowerBeds.Remove(this);
         SerializationController.instance.RemoveFromList(this);
-        foreach (FlowerBedElement elem in flowerBedElements)
+        foreach (PlantElement elem in flowerBedElements)
             if (elem != null)
                 elem.gameObject.SetActive(false);
     }
@@ -100,7 +100,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         GetComponent<MeshCollider>().enabled = true;
     }
 
-    public void AddElement(FlowerBedElement element) { flowerBedElements.Add(element); }
+    public void AddElement(PlantElement element) { flowerBedElements.Add(element); }
 
     //ISelectable
     public GameObject GetGameObject() { return gameObject; }
@@ -138,9 +138,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     //Serialization
     [Serializable]
     public struct SerializedFlowerBed
-    {   
+    {
         public string name;
-        public string soilType;
+        public string groundType;
         public Vector2[] points;
         public PlantElement.SerializedPlantElement[] elements;
     }
@@ -150,20 +150,20 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         SerializationData tmp;
         SerializedFlowerBed data;
         int i = 0;
-        
+
         data.name = flowerBedName;
-        data.soilType = soilType;
+        data.groundType = GetGroundTypeFromName(groundType);
         data.points = vertices;
         data.elements = new PlantElement.SerializedPlantElement[flowerBedElements.Count];
 
-        foreach (FlowerBedElement elem in flowerBedElements)
+        foreach (PlantElement elem in flowerBedElements)
         {
             if (elem == null)
                 Debug.Log(i);
             data.elements[i] = elem.InnerSerialize();
             i++;
         }
-        
+
         tmp.type = SerializationController.ItemType.FlowerBed;
         tmp.data = JsonUtility.ToJson(data);
         return tmp;
@@ -173,11 +173,35 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
         flowerBedName = tmp.name;
-        soilType = tmp.soilType;
+        groundType = GetGroundNameFromType(tmp.groundType);
+        if (groundType == null)
+        {
+            ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);
+            groundType = tmp.name;
+        }
         vertices = tmp.points;
-        foreach (PlantElement.SerializedPlantElement elem in tmp.elements)
-            flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
         CreateMesh();
         Setup();
+    }
+
+    private void UpdateGroundTypeName()
+    {
+        groundType = GetGroundNameFromType(groundType);
+    }
+
+    private string GetGroundTypeFromName(string name)
+    {
+        foreach (KeyValuePair<string, string> elem in ReactProxy.instance.externalData.groundTypes)
+            if (elem.Key == name)
+                return elem.Value;
+        return null;
+    }
+
+    private string GetGroundNameFromType(string type)
+    {
+        foreach (KeyValuePair<string, string> elem in ReactProxy.instance.externalData.groundTypes)
+            if (elem.Value == name)
+                return elem.Key;
+        return null;
     }
 }

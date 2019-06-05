@@ -31,6 +31,10 @@ public class ReactProxy : MonoBehaviour
                 DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"f025e92f-e115-4cbf-902b-f9551118d2a8\"},{\"name\":\"Arbuste\",\"id\":\"3741e754-c514-4715-a219-732bee92e9e7\"},{\"name\":\"Fleur\",\"id\":\"ca9c6046-38bc-4a2a-a698-0030174d8cbc\"},{\"name\":\"Legume\",\"id\":\"18d21ebd-e124-48b9-83ec-38c888257a02\"}]}}");
             else
                 SendQuery(graphQL.GetPlantsTypes());
+            if (Application.isEditor)
+                DispatchQueryResult("{\"data\":{\"getGroundTypes\":[{\"name\":\"Calcaire\",\"id\":\"4cd8dbde-2a69-4117-9ab5-a6536a436b56\"},{\"name\":\"Sableux\",\"id\":\"ba35baed-dea6-4bfb-a46b-85eaffb9d018\"},{\"name\":\"Caillouteux\",\"id\":\"a0f11e91-bbbd-4487-a77c-8f9cc2f04866\"},{\"name\":\"Argileux\",\"id\":\"51905da7-cd16-4db3-8dcc-da70a8ef77d7\"},{\"name\":\"Humus\",\"id\":\"c284f849-85e8-4b20-8bb9-dc28888d62d9\"},{\"name\":\"Bruyère\",\"id\":\"58270831-9039-43ba-82ec-393244bea76a\"},{\"name\":\"Calliouteux\",\"id\":\"91569814-4ab6-49ad-b8b5-9a594f05b73d\"},{\"name\":\"Terreau\",\"id\":\"dcce412d-13e5-413e-b3b9-90ce95538c81\"},{\"name\":\"Calaire\",\"id\":\"edbfd600-e1cd-4104-9790-e378a47d66eb\"},{\"name\":\"Hulus\",\"id\":\"e2ff6365-58c6-4d03-b15a-b6b55cf028db\"}]}}");
+            else
+                SendQuery(graphQL.GetGroundTypes());
         }
         else
             Destroy(this);

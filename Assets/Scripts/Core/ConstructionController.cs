@@ -129,7 +129,7 @@ public class ConstructionController : MonoBehaviour
                     MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
                 else
                 {
-                    hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
+                    hit.collider.GetComponent<FlowerBed>().AddElement((PlantElement)ghost);
                     currentState = ConstructionState.Off;
                     if (gridState && !uiController.GridButtonIsTrigger())//TODO #73
                         grid.activ = false;

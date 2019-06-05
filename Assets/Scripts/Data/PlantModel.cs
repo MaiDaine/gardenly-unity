@@ -4,9 +4,9 @@ using UnityEngine;
 [Serializable]
 public class PlantModel
 {
+    /*
     public Material[] materials;
     public string[] materialsColors;
-
     public Material GetModelMaterial(string[] colors)
     {
         int index = 0;
@@ -43,5 +43,5 @@ public class PlantModel
             arr[i] = arr[r];
             arr[r] = tmp;
         }
-    }
+    }*/
 }

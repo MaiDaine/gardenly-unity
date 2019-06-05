@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 
 public class ExternalData
 {
+    public KeyValuePair<string, string>[] groundTypes;
+    public List<Action> callbackGround = new List<Action>();
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
     public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
@@ -14,9 +16,27 @@ public class ExternalData
 
     public ExternalData(Dictionary<string, Action<string>> callbacks)
     {
+        callbacks["getGroundTypes"] = SetGroundTypes;
         callbacks["getTypes"] = SetPlantsTypesNames;
         callbacks["getAllPlants"] = SetPlantOfType;
         callbacks["getPlant"] = SetPlantData;
+    }
+
+    private void SetGroundTypes(string json)
+    {
+        var jsonObject = JSONObject.Parse(json);
+
+        int count = jsonObject["data"]["getGroundTypes"].Count;
+        groundTypes = new KeyValuePair<string, string>[count];
+        for (int i = 0; i < count; i++)
+        {
+            var tmp = jsonObject["data"]["getGroundTypes"][i];
+            groundTypes[i] = new KeyValuePair<string, string>(tmp["name"], tmp["id"]);
+        }
+        foreach (Action action in callbackGround)
+            action.Invoke();
+        callbackGround.Clear();
+        callbackGround = null;
     }
 
     private void SetPlantsTypesNames(string json)
