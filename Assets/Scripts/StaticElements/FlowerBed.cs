@@ -10,9 +10,12 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
     public string groundType = "";
     public Vector2[] vertices;
+    public SerializableItem serializableItem;
 
     private ShapeCreator shapeCreator;
     private List<PlantElement> flowerBedElements = new List<PlantElement>();
+    private bool initFromSerialization = false;
+
 
     public void Init(ShapeCreator shapeCreator)
     {
@@ -137,41 +140,41 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializedFlowerBed
+    public struct SerializableItem
     {
+        public int key;
         public string name;
         public string groundType;
         public Vector2[] points;
-        public PlantElement.SerializedPlantElement[] elements;
+        public PlantElement.SerializableItem[] elements;
     }
 
     public SerializationData Serialize()
     {
         SerializationData tmp;
-        SerializedFlowerBed data;
         int i = 0;
 
-        data.name = flowerBedName;
-        data.groundType = GetGroundTypeFromName(groundType);
-        data.points = vertices;
-        data.elements = new PlantElement.SerializedPlantElement[flowerBedElements.Count];
+        serializableItem.name = flowerBedName;
+        serializableItem.groundType = GetGroundTypeFromName(groundType);
+        serializableItem.points = vertices;
+        serializableItem.elements = new PlantElement.SerializableItem[flowerBedElements.Count];
 
         foreach (PlantElement elem in flowerBedElements)
         {
             if (elem == null)
                 Debug.Log(i);
-            data.elements[i] = elem.InnerSerialize();
+           // data.elements[i] = elem.InnerSerialize();
             i++;
         }
 
         tmp.type = SerializationController.ItemType.FlowerBed;
-        tmp.data = JsonUtility.ToJson(data);
+        tmp.data = JsonUtility.ToJson(serializableItem);
         return tmp;
     }
 
     public void DeSerialize(string json)
     {
-        SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
+        SerializableItem tmp = JsonUtility.FromJson<SerializableItem>(json);
         flowerBedName = tmp.name;
         groundType = GetGroundNameFromType(tmp.groundType);
         if (groundType == null)

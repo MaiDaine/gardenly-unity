@@ -129,6 +129,7 @@ public class ConstructionController : MonoBehaviour
                     MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
                 else
                 {
+                    //TODO Add fbkey
                     hit.collider.GetComponent<FlowerBed>().AddElement((PlantElement)ghost);
                     currentState = ConstructionState.Off;
                     if (gridState && !uiController.GridButtonIsTrigger())//TODO #73
@@ -190,7 +191,7 @@ public class ConstructionController : MonoBehaviour
         {
             Vector3 currentPos;
             RaycastHit hit;
-
+            //TODO Edit fb key
             raycaster.MouseRayCast(out currentPos, out hit);
             if (hit.collider.gameObject.tag != "FlowerBed")
             {

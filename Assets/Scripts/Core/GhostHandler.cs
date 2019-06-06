@@ -5,7 +5,8 @@ using Doozy.Engine.UI;
 public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
 {
     public bool needFlowerBed = false;
-    protected PlantData data = null;
+    public PlantData data = null;
+
     protected List<ISelectable> neighbors = new List<ISelectable>();
 
     private void Start()

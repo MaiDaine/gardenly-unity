@@ -43,4 +43,3 @@ public class PlantData
         shape = LocalisationController.instance.GetText("plant_data", "missing");
     }
 }
-

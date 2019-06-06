@@ -109,11 +109,4 @@ public class SpawnController : MonoBehaviour
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Positioning;
         return tmp;
     }
-
-    public PlantElement SpawnFlowerBedElement(PlantElement.SerializedPlantElement elem)
-    {
-        PlantElement tmp = Instantiate(plantElement, Vector3.zero, Quaternion.identity);
-        tmp.InnerDeSerialize(elem);
-        return tmp;
-    }
 }

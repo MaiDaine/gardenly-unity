@@ -1,14 +1,11 @@
 ﻿using System;
 using UnityEngine;
-using TMPro;
 
 public class PlantElement : GhostHandler, ISelectable, ISerializable
 {
-    public string plantID;
-    public string plantName;
-    public string plantType;
+    protected SerializableItem serializableItem;
 
-    protected SerializedPlantElement serializableItem;
+    private bool initFromSerialization = false;
 
     private void Start()
     {
@@ -17,7 +14,13 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
             ConstructionController.instance.Cancel();
         }
+        if (initFromSerialization)
+            initFromSerialization = false;
+        else
+            serializableItem.key = SerializationController.GetCurrentDate();
     }
+
+    public void SetTileKey(int key) { serializableItem.tile_key = key; }
 
     protected override void OnEnable()
     {
@@ -35,7 +38,7 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (Camera.main != null)
-            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(plantName, plantType, this);
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(data.name, data.type, this);
     }
 
     public override void DeSelect()
@@ -46,51 +49,43 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializedPlantElement
+    public struct SerializableItem
     {
-        public string plantID;
+        public int key;
+        public string plant_id;
+        public int tile_key;
         public Vector3 position;
-        public Quaternion rotation;
+        public int age;
+        public float sun_exposition;
     }
 
     public virtual SerializationData Serialize()
     {
-        SerializationData tmp = new SerializationData();
+        SerializationData tmp;
+
+        serializableItem.plant_id = data.plantID;
+        serializableItem.position = transform.position;
+        serializableItem.age = 0;
+        serializableItem.sun_exposition = 0f;
 
         tmp.type = SerializationController.ItemType.PlantElement;
-        tmp.data = JsonUtility.ToJson(InnerSerialize());
+        tmp.data = JsonUtility.ToJson(serializableItem);
         return tmp;
-    }
-
-    public SerializedPlantElement InnerSerialize()
-    {
-        SerializedPlantElement tmp;
-
-        tmp.position = transform.position;
-        tmp.rotation = transform.rotation;
-        tmp.plantID = plantID;
-        return (tmp);
-    }
-
-    public void InnerDeSerialize(SerializedPlantElement elem)
-    {
-        plantID = elem.plantID;
-        ReactProxy.instance.LoadPlantDataFromId(plantID, OnPlantDataLoad);
-        transform.position = elem.position;
-        transform.rotation = elem.rotation;
     }
 
     public void DeSerialize(string json)
     {
-        serializableItem = JsonUtility.FromJson<SerializedPlantElement>(json);
+        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        data.plantID = serializableItem.plant_id;
         transform.position = serializableItem.position;
-        transform.rotation = serializableItem.rotation;
+        //age
+        //sun
+        ReactProxy.instance.LoadPlantDataFromId(data.plantID, OnPlantDataLoad);
     }
 
     public void OnPlantDataLoad(PlantData plantData)
     {
-        plantName = plantData.name;
-        plantType = plantData.type;
-       // GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
+        data = plantData;
+        // GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
     }
 }
