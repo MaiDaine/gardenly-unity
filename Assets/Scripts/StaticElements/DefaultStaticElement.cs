@@ -22,7 +22,11 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     private void Start()
     {
         if (!initFromSerialization)
-            this.transform.eulerAngles += this.correctedRotation;
+        {
+            transform.eulerAngles += correctedRotation;
+            serializableItem.type = subType;
+            serializableItem.key = SerializationController.GetCurrentDate();
+        }
         else
             initFromSerialization = false;
     }
@@ -56,7 +60,8 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     [Serializable]
     public struct SerializableItem
     {
-        public StaticElementType subType;
+        public int key;
+        public StaticElementType type;
         public Vector3 position;
         public Quaternion rotation;
     }
@@ -65,19 +70,19 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     {
         SerializationData tmp;
 
-        this.serializableItem.position = this.transform.position;
-        this.serializableItem.rotation = this.transform.rotation;
-        this.serializableItem.subType = this.subType;
-        tmp.type = SerializationController.ItemType.DefaultStaticElement;
+        serializableItem.position = transform.position;
+        serializableItem.rotation = transform.rotation;
+
+        tmp.type = SerializationController.ItemType.StaticElement;
         tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
 
     public void DeSerialize(string json)
     {
-        this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        this.transform.position = this.serializableItem.position;
-        this.transform.rotation = this.serializableItem.rotation;
+        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        transform.position = serializableItem.position;
+        transform.rotation = serializableItem.rotation;
         initFromSerialization = true;
     }
 }

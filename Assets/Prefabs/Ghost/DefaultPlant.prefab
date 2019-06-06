@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2378880246387431656}
   - component: {fileID: 500313992507823282}
   - component: {fileID: 5848085319270114232}
-  - component: {fileID: 5007713659454275582}
   - component: {fileID: 7597030928426193009}
+  - component: {fileID: 5116172969074364356}
   m_Layer: 0
-  m_Name: F_foliageplant_10_LOD0_01 1
+  m_Name: DefaultPlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,22 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5007713659454275582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3344667881147691538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a54cc4aa8553dd4796c5d60250dba66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  needFlowerBed: 1
-  type: 4
-  subType: 0
-  correctedRotation: {x: 0, y: 0, z: 0}
 --- !u!64 &7597030928426193009
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -109,3 +93,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 271c8dffd0b3d2a40a6da8c5b06f0394, type: 3}
+--- !u!114 &5116172969074364356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344667881147691538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc1726df3decaf40a12b34407d3c524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needFlowerBed: 1
+  plantID: 
+  plantName: 
+  plantType: 

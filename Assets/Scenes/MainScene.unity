@@ -9205,7 +9205,7 @@ Light:
   m_BounceIntensity: 0.58
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: -8.796361e+12, y: 1048576.4, z: -1.7014118e+38, w: 2.5243547e-29}
+  m_BoundingSphereOverride: {x: 0, y: 9.1835e-41, z: 8.16969e-37, w: 4.070149e-37}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -24357,6 +24357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5bcf3b58082244a825f18bc21812c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingData: 0
   shapeCreatorRef: {fileID: 5652948683190201590, guid: 6017d217edfad6841a21c04446112d65,
     type: 3}
   flowerBedRef: {fileID: 3012356388731580561, guid: bbd69c87d81f41b46b53eb4d4ea6e9e4,
@@ -24366,14 +24367,10 @@ MonoBehaviour:
   wallHandlerRef: {fileID: 1445059942037418693, guid: b2d296e0940c6c6429e06a6df1ddb2ea,
     type: 3}
   DSElements:
-  - {fileID: 6934096047445395356, guid: 146f9595fc488e148928cedd06bfc0b3, type: 3}
-  - {fileID: 8309292744526427777, guid: e059a36ed8d62bd4ebf5f873bf4e54ec, type: 3}
-  plantElements:
-  - {fileID: -8360590082059929716, guid: 959dc2a70b6782a478b89b9ecb7cbecd, type: 3}
-  - {fileID: -9032361966629747618, guid: 6a70ef9be1a358c4e9c44ce9dfc4ee63, type: 3}
-  flowerBedElements:
-  - {fileID: 5007713659454275582, guid: c66472eaacfa8c24fbc46ec1db04bda1, type: 3}
-  - {fileID: -5999733098042373684, guid: 9172a1fe4a4fdc84ab1e29f23de6157d, type: 3}
+  - {fileID: 6934096047445395356, guid: 1aae1503486a54049a760debd9abac09, type: 3}
+  - {fileID: 8309292744526427777, guid: fccec5f7813c20f4a9d210541808a296, type: 3}
+  plantElement: {fileID: 5116172969074364356, guid: c66472eaacfa8c24fbc46ec1db04bda1,
+    type: 3}
   plantModels: {fileID: 11400000, guid: 12cd79851b623324ca39cb0ddae72129, type: 2}
 --- !u!114 &534669911
 MonoBehaviour:
@@ -31392,7 +31389,7 @@ MonoBehaviour:
             m_MethodName: SpawnGhost
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 8309292744526427777, guid: e059a36ed8d62bd4ebf5f873bf4e54ec,
+              m_ObjectArgument: {fileID: 8309292744526427777, guid: fccec5f7813c20f4a9d210541808a296,
                 type: 3}
               m_ObjectArgumentAssemblyTypeName: GhostHandler, Assembly-CSharp
               m_IntArgument: 0
@@ -64591,7 +64588,7 @@ MonoBehaviour:
             m_MethodName: SpawnGhost
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 6934096047445395356, guid: 146f9595fc488e148928cedd06bfc0b3,
+              m_ObjectArgument: {fileID: 6934096047445395356, guid: 1aae1503486a54049a760debd9abac09,
                 type: 3}
               m_ObjectArgumentAssemblyTypeName: GhostHandler, Assembly-CSharp
               m_IntArgument: 0
@@ -104302,15 +104299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d228f19e1de52e4c849d01d865c8d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantModels: {fileID: 11400000, guid: 12cd79851b623324ca39cb0ddae72129, type: 2}
-  folderName: Mat
-  active: 0
-  colors:
-  - Bleu
-  - Rose
-  - Rouge
-  - Blanche
-  - Jaune
 --- !u!23 &2124372630
 MeshRenderer:
   m_ObjectHideFlags: 0

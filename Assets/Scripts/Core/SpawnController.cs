@@ -65,11 +65,11 @@ public class SpawnController : MonoBehaviour
                     flowerBed.DeSerialize(data[i].data);
                     break;
 
-                case SerializationController.ItemType.DefaultStaticElement:
+                case SerializationController.ItemType.StaticElement:
                     DefaultStaticElement staticElement;
                     DefaultStaticElement.SerializableItem DSESubType;
                     DSESubType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].data);
-                    switch (DSESubType.subType)
+                    switch (DSESubType.type)
                     {
                         case DefaultStaticElement.StaticElementType.Chair:
                             staticElement = Instantiate(DSElements[0], Vector3.zero, Quaternion.identity);

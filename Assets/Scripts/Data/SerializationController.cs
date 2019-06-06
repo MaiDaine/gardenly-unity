@@ -4,7 +4,7 @@ using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, DefaultStaticElement, WallHandler, FlowerBed, PlantElement };
+    public enum ItemType { None, GardenData, StaticElement, WallHandler, FlowerBed, PlantElement };
 
     public static SerializationController instance = null;
 
@@ -75,14 +75,20 @@ public class SerializationController : MonoBehaviour
         return (serializedData.data);
     }
 
+    public static int GetCurrentDate()
+    {
+        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        return ((int)(System.DateTime.UtcNow - epochStart).TotalSeconds);
+    }
+
     private ItemType GetTypeFromString(string jsonType)
     {
         switch (jsonType)
         {
             case "GardenData":
                 return ItemType.GardenData;
-            case "DefaultStaticElement":
-                return ItemType.DefaultStaticElement;
+            case "StaticElement":
+                return ItemType.StaticElement;
             case "WallHandler":
                 return ItemType.WallHandler;
             case "FlowerBed":
