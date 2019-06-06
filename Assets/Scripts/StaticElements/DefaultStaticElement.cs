@@ -21,14 +21,14 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     private void Start()
     {
-        if (!initFromSerialization)
+        if (initFromSerialization)
+            initFromSerialization = false;
+        else
         {
             transform.eulerAngles += correctedRotation;
             serializableItem.type = subType;
             serializableItem.key = SerializationController.GetCurrentDate();
         }
-        else
-            initFromSerialization = false;
     }
 
     protected override void OnEnable()

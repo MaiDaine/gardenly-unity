@@ -27,15 +27,16 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (initFromSerialization)
         {
-            Positioning(this.serializableItem.start);
-            FromPositioningToBuilding(this.serializableItem.start);
-            Building(this.serializableItem.end);
-            EndConstruction(this.serializableItem.end);
+            Positioning(serializableItem.start);
+            FromPositioningToBuilding(serializableItem.start);
+            Building(serializableItem.end);
+            EndConstruction(serializableItem.end);
         }
         else
         {
-            this.gameObject.layer = 0;
-            this.transform.localScale = new Vector3(0.1f, 3f, 0.1f);
+            gameObject.layer = 0;
+            transform.localScale = new Vector3(0.1f, 3f, 0.1f);
+            serializableItem.key = SerializationController.GetCurrentDate();
         }
     }
 
@@ -49,13 +50,13 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override bool FromPositioningToBuilding(Vector3 position)
     {
-        if (this.text == null)
-            this.text = Instantiate(this.textRef, this.transform.position, Quaternion.identity) as LineTextHandler;
+        if (text == null)
+            text = Instantiate(textRef, transform.position, Quaternion.identity) as LineTextHandler;
         else
-            this.text.transform.position = position;
-        this.text.gameObject.SetActive(true);
-        if (!(this.uIController.GetMenuScript() != null && this.uIController.GetMenuScript().isMoving))
-            this.start = position;
+            text.transform.position = position;
+        text.gameObject.SetActive(true);
+        if (!(uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving))
+            start = position;
         return true;
     }
 
@@ -63,9 +64,9 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
         {
-            start += (this.transform.position - position);
-            end += (this.transform.position - position);
-            this.transform.position = position;
+            start += (transform.position - position);
+            end += (transform.position - position);
+            transform.position = position;
             text.transform.position = position;
             return false;
         }
@@ -75,9 +76,9 @@ public class WallHandler : GhostHandler, ISerializable
             Vector3 tmp = (start + end) / 2f;
             float lenght = (start - end).magnitude;
 
-            this.transform.position = tmp;
-            this.transform.rotation = (Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0, 90, 0));
-            this.transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
+            transform.position = tmp;
+            transform.rotation = (Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0, 90, 0));
+            transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
 
             text.transform.position = tmp;
             text.SetText(string.Format("{0:F1}m", lenght));
@@ -94,9 +95,9 @@ public class WallHandler : GhostHandler, ISerializable
     public override void Move(Vector3 position)
     {
         base.Move(position);
-        this.start += (this.transform.position - position);
-        this.end += (this.transform.position - position);
-        this.text.transform.position = position;
+        start += (transform.position - position);
+        end += (transform.position - position);
+        text.transform.position = position;
     }
 
     //ISelectable
@@ -109,7 +110,7 @@ public class WallHandler : GhostHandler, ISerializable
     public override List<ISelectable> SelectWithNeighbor()
     {
         Select(ConstructionController.ConstructionState.Off);
-        List<ISelectable> tmp = new List<ISelectable>(this.neighbors);
+        List<ISelectable> tmp = new List<ISelectable>(neighbors);
         foreach (ISelectable item in tmp)
             item.Select(ConstructionController.ConstructionState.Off);
         return tmp;
@@ -124,7 +125,7 @@ public class WallHandler : GhostHandler, ISerializable
     protected override void OnEnable()
     {
         if (text != null)
-            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+            PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
         SerializationController.instance.AddToList(this);
     }
 
@@ -139,13 +140,13 @@ public class WallHandler : GhostHandler, ISerializable
     //ISnapable
     public override bool FindSnapPoint(ref Vector3 currentPos, float snapDistance)
     {
-        if (((this.start - currentPos).sqrMagnitude < (this.end - currentPos).sqrMagnitude)
-            && ((this.start - currentPos).magnitude < snapDistance))
+        if (((start - currentPos).sqrMagnitude < (end - currentPos).sqrMagnitude)
+            && ((start - currentPos).magnitude < snapDistance))
         {
             currentPos = start;
             return true;
         }
-        else if ((this.end - currentPos).magnitude < snapDistance)
+        else if ((end - currentPos).magnitude < snapDistance)
         {
             currentPos = end;
             return true;
@@ -154,17 +155,13 @@ public class WallHandler : GhostHandler, ISerializable
     }
 
     //Tools
-
-    public LineTextHandler GetText()
-    {
-        return text;
-    }
-
+    public LineTextHandler GetText() { return text; }
 
     //Serialization
     [Serializable]
     public struct SerializableItem
     {
+        public int key;
         public Vector3 start;
         public Vector3 end;
     }
@@ -173,16 +170,16 @@ public class WallHandler : GhostHandler, ISerializable
     {
         SerializationData tmp;
 
-        this.serializableItem.start = this.start;
-        this.serializableItem.end = this.end;
-        tmp.type = SerializationController.ItemType.WallHandler;
+        serializableItem.start = start;
+        serializableItem.end = end;
+        tmp.type = SerializationController.ItemType.Wall;
         tmp.data = JsonUtility.ToJson(serializableItem);
         return (tmp);
     }
 
     public void DeSerialize(string json)
     {
-        this.initFromSerialization = true;
-        this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        initFromSerialization = true;
+        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
     }
 }

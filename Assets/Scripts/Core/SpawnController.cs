@@ -55,7 +55,7 @@ public class SpawnController : MonoBehaviour
         {
             switch (data[i].type)
             {
-                case SerializationController.ItemType.WallHandler:
+                case SerializationController.ItemType.Wall:
                     wallHandler = Instantiate(wallHandlerRef, Vector3.zero, Quaternion.identity);
                     wallHandler.DeSerialize(data[i].data);
                     break;

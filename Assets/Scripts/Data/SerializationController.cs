@@ -4,7 +4,7 @@ using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, StaticElement, WallHandler, FlowerBed, PlantElement };
+    public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, PlantElement };
 
     public static SerializationController instance = null;
 
@@ -89,8 +89,8 @@ public class SerializationController : MonoBehaviour
                 return ItemType.GardenData;
             case "StaticElement":
                 return ItemType.StaticElement;
-            case "WallHandler":
-                return ItemType.WallHandler;
+            case "Wall":
+                return ItemType.Wall;
             case "FlowerBed":
                 return ItemType.FlowerBed;
             case "PlantElement":
