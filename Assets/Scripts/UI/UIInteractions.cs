@@ -20,7 +20,7 @@ public class UIInteractions
         MenuScript menuScript = uIController.GetMenuScript();
         if (menuScript != null)
         {
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+            menuScript.GetComponentInChildren<LabelScript>().ResetColor();
             menuScript.DestroyMenu();
         }
         else
@@ -45,7 +45,10 @@ public class UIInteractions
     public void OnDeSelectPlantElement()
     {
         if (Camera.main != null)
+        {
+            uIController = Camera.main.GetComponent<UIController>();
             uIController.Cancel();
+        }
     }
 
     public void OnSelectWall(WallHandler ghost, ConstructionController.ConstructionState state)
@@ -61,6 +64,7 @@ public class UIInteractions
     public void OnDeselectWall(LineTextHandler text)
     {
         MenuScript menuScript = uIController.GetMenuScript();
+        uIController = Camera.main.GetComponent<UIController>();
 
         if (text != null && text.gameObject != null)
             text.gameObject.SetActive(false);

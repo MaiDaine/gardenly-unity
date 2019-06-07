@@ -44,39 +44,44 @@ public class PlantPanelScript : MonoBehaviour
 
     private void OnPictureLoaded(Texture2D texture)
     {
+        Debug.Log("ON PICTURE LOAD");
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
-        textureRef = texture;
+       // textureRef = texture;
         animator.enabled = false;
         icon.transform.eulerAngles = new Vector3(0, 0, 0);
-        icon.texture = textureRef;
+        icon.texture = texture;
     }
 
     private void OnDataLoaded(PlantData plantData)
     {
-        plantDataRef = plantData;
-        if (plantDataRef.image == null)
-            imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantData, plantDataRef.imgUrl));
-
-        SetDescriptionDataPanel();
-        SetMaintainDataPanel();
-        SetInformationsDataPanel();
+        Debug.Log("ON DATA LOAD");
+        if (plantData != null)
+        {
+            plantDataRef = plantData;
+            if (plantDataRef.image == null)
+            {
+                Debug.Log("If of Coroutine");
+                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+            }
+            Debug.Log("After Coroutine");
+            SetDescriptionDataPanel();
+            SetMaintainDataPanel();
+            SetInformationsDataPanel();
+        }
     }
 
-    private void FinalizeView(TextMeshProUGUI[] labels, ButtonScript dynButtonscript)
+    private void InitializeView(TextMeshProUGUI[] labels, ButtonScript dynButtonscript, string plantName, string plantType)
     {
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
-                label.text = plantDataRef.name;
+                label.text = plantName;
         }
 
         if (dynButtonscript != null)
-            dynButtonscript.SetGhostType(plantDataRef.type);
-
-        if (dataPanelInitBtn.isActiveAndEnabled)
-            dataPanelInitBtn.ExecuteClick();
+            dynButtonscript.SetGhostType(plantType);
     }
 
     // Set data of the panel and show it, plantDataRef if Graphql request return null.
@@ -84,9 +89,13 @@ public class PlantPanelScript : MonoBehaviour
     {
         ButtonScript script = GetComponentInChildren<ButtonScript>();
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
+        RawImage icon = GetComponentInChildren<RawImage>();
+        Animator animator = icon.GetComponentInChildren<Animator>();
 
         if (!GetView().IsVisible)
             GetView().Show();
+
+        InitializeView(labels, script, plantName, plantType);
 
         reactProxy.externalData.callbackLoadData[plantName] = OnDataLoaded;
         reactProxy.externalData.callbackFinishDownloadImage[plantName] = OnPictureLoaded;
@@ -95,16 +104,24 @@ public class PlantPanelScript : MonoBehaviour
 
         if (fetchData == null && (plantDataRef == null || plantDataRef.name != plantName))
         {
+            Debug.Log("NULL " + fetchData + plantDataRef);
             plantDataRef = new PlantData("");
 
             plantDataRef.name = plantName;
             plantDataRef.type = plantType;
             plantDataRef.SetDefaultData();
+
+            Debug.Log(plantDataRef + " name : " + plantDataRef.name + " type : " + plantDataRef.type + " maintain : " + plantDataRef.maintainAdvice);
         }
 
         if (fetchData != null)
         {
-            Debug.Log("DATA NOT NULL " + fetchData.name + " " + fetchData.waterNeed);
+            Debug.Log("DATA NOT NULL " + fetchData + plantDataRef);
+            if (fetchData.imgUrl != null)
+            {
+                animator.enabled = true;
+                icon.texture = textureRef;
+            }
             plantDataRef = fetchData;
         }
 
@@ -112,13 +129,15 @@ public class PlantPanelScript : MonoBehaviour
         SetMaintainDataPanel();
         SetInformationsDataPanel();
 
-        FinalizeView(labels, script);
+        if (dataPanelInitBtn.isActiveAndEnabled)
+            dataPanelInitBtn.ExecuteClick();
+
     }
 
     public void SetDescriptionDataPanel()
     {
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-
+        Debug.Log("DESC " + plantDataRef);
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Description" && plantDataRef.description != null)
