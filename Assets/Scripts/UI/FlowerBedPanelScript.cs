@@ -9,23 +9,23 @@ public class FlowerBedPanelScript : MonoBehaviour
 
     private void OnDisable()
     {
-        if (Camera.main != null)
-            Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
+        EnableCameraMovement(true);
     }
 
     public void EnableCameraMovement(bool state)
     {
-        Camera.main.GetComponentInChildren<CameraController>().inputEnabled = state;
+        if (Camera.main != null)
+            Camera.main.GetComponent<CameraController>().inputEnabled = state;
     }
 
     public void ValidateNameChange()
     {
-        Camera.main.GetComponentInChildren<UIController>().UpdateNameFlowerBed(nameInputField.text);
+        Camera.main.GetComponent<UIController>().UpdateNameFlowerBed(nameInputField.text);
     }
 
     public void ValidateTypeChange()
     {
-        Camera.main.GetComponentInChildren<CameraController>().inputEnabled = true;
-        Camera.main.GetComponentInChildren<UIController>().UpdateTypeFlowerBed(typeDropDown.options[typeDropDown.value].text);
+        EnableCameraMovement(true);
+        Camera.main.GetComponent<UIController>().UpdateTypeFlowerBed(typeDropDown.options[typeDropDown.value].text);
     }
 }

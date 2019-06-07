@@ -3978,7 +3978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000024
+  m_Value: 0.50000036
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24357,6 +24357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5bcf3b58082244a825f18bc21812c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingData: 0
   shapeCreatorRef: {fileID: 5652948683190201590, guid: 6017d217edfad6841a21c04446112d65,
     type: 3}
   flowerBedRef: {fileID: 3012356388731580561, guid: bbd69c87d81f41b46b53eb4d4ea6e9e4,

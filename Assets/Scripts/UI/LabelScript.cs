@@ -22,27 +22,18 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
 
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!pressed)
         {
-            if (text != null)
-                text.color = actionColor;
-            if (image != null)
-                image.color = actionColor;
+            SetColor(actionColor);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!pressed)
-        {
-            if (text != null)
-                text.color = color;
-            if (image != null)
-                image.color = color;
-        }
+            SetColor(color);
     }
 
     public void TooglePressed()
@@ -52,26 +43,28 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void ChangeColor()
     {
-        TooglePressed();
         Color tmp;
 
+        TooglePressed();
         if (pressed)
             tmp = actionColor;
         else
             tmp = color;
 
-        if (text != null)
-            text.color = tmp;
-        if (image != null)
-            image.color = tmp;
+        SetColor(tmp);
     }
 
     public void ResetColor()
+    {
+        SetColor(color);
+        pressed = false;
+    }
+
+    private void SetColor(Color color)
     {
         if (text != null)
             text.color = color;
         if (image != null)
             image.color = color;
-        pressed = false;
     }
 }

@@ -10,7 +10,7 @@ public class ExternalData
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
     public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
-    public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
+    public Dictionary<string, Action<Texture2D>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture2D>>();
 
     public ExternalData(Dictionary<string, Action<string>> callbacks)
     {
