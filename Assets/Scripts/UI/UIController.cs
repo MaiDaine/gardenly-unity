@@ -80,7 +80,7 @@ public class UIController : MonoBehaviour
     {
         foreach (UIView view in plantsViews)
         {
-            if (view.IsVisible)
+            if (view.IsVisible && view.name.Contains("View"))
                 return true;
         }
         return false;
@@ -149,11 +149,16 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType)
     {
-
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         if (PlantsViewsDisplay())
+        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
+        }
         else
+        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
+        }
 
         if (dataPanel.plantName == plantName && dataPanel.GetView().IsVisible)
         {

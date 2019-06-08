@@ -56,11 +56,11 @@ public class PlantPanelScript : MonoBehaviour
 
     private void OnDataLoaded(PlantData plantData)
     {
-        Debug.Log("ON DATA LOAD");
+        Debug.Log("ON DATA LOAD " + plantDataRef.imgUrl + " " + plantDataRef.image);
         if (plantData != null)
         {
             plantDataRef = plantData;
-            if (plantDataRef.image == null)
+            if (plantDataRef.imgUrl != null)
             {
                 Debug.Log("If of Coroutine");
                 imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
@@ -96,33 +96,32 @@ public class PlantPanelScript : MonoBehaviour
             GetView().Show();
 
         InitializeView(labels, script, plantName, plantType);
+        Debug.Log("BEFORE SET CALL BACK ON " + plantName);
 
         reactProxy.externalData.callbackLoadData[plantName] = OnDataLoaded;
         reactProxy.externalData.callbackFinishDownloadImage[plantName] = OnPictureLoaded;
 
+        Debug.Log("AFTER SET CALL BACK");
         PlantData fetchData = reactProxy.GetPlantsData(plantType, plantName);
 
         if (fetchData == null && (plantDataRef == null || plantDataRef.name != plantName))
         {
-            Debug.Log("NULL " + fetchData + plantDataRef);
             plantDataRef = new PlantData("");
 
             plantDataRef.name = plantName;
             plantDataRef.type = plantType;
             plantDataRef.SetDefaultData();
-
-            Debug.Log(plantDataRef + " name : " + plantDataRef.name + " type : " + plantDataRef.type + " maintain : " + plantDataRef.maintainAdvice);
         }
 
         if (fetchData != null)
         {
-            Debug.Log("DATA NOT NULL " + fetchData + plantDataRef);
-            if (fetchData.imgUrl != null)
-            {
-                animator.enabled = true;
-                icon.texture = textureRef;
-            }
+            Debug.Log("DATA NOT NULL ");
             plantDataRef = fetchData;
+        }
+        else
+        {
+            animator.enabled = true;
+            icon.texture = textureRef;
         }
 
         SetDescriptionDataPanel();
@@ -137,7 +136,7 @@ public class PlantPanelScript : MonoBehaviour
     public void SetDescriptionDataPanel()
     {
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-        Debug.Log("DESC " + plantDataRef);
+
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Description" && plantDataRef.description != null)
