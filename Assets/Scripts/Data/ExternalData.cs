@@ -69,6 +69,7 @@ public class ExternalData
             var tmpPlant = jsonObject["data"]["getAllPlants"][plantType][i]["node"];
             string name = tmpPlant["name"];
             plants[plantType][name] = new PlantData(name);
+            plants[plantType][name].typeName = plantType;
             plants[plantType][name].plantID = tmpPlant["id"];
         }
     }
@@ -78,7 +79,7 @@ public class ExternalData
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
-        plantData.type = tmp["type"];
+        plantData.typeName = tmp["type"]["name"];
         plantData.plantID = tmp["id"];
         plantData.plantColor = new string[tmp["colors"].AsArray.Count];
         for (int i = 0; i < tmp["colors"].AsArray.Count; i++)
@@ -87,7 +88,7 @@ public class ExternalData
         plantData.phRangeHigh = tmp["phRangeHigh"];
         plantData.rusticity = tmp["rusticity"];
         plantData.sunNeed = tmp["sunNeed"];
-        plantData.waterNeed = tmp["sunNeed"];
+        plantData.waterNeed = tmp["waterNeed"];
         plantData.description = tmp["description"];
         plantData.model = tmp["model"];
         plantData.imgUrl = tmp["thumbnail"];

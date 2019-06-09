@@ -12,11 +12,13 @@ public class WallHandler : GhostHandler, ISerializable
 
     protected UIController uIController;
 
-    private SerializableItem serializableItem;
     private LineTextHandler text = null;
     private Vector3 start;
     private Vector3 end;
+    
     private bool initFromSerialization = false;
+    private SerializedElement serializedElement;
+    private SerializableItemData serializableItemData;
 
     private void Awake()
     {
@@ -27,16 +29,16 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (initFromSerialization)
         {
-            Positioning(serializableItem.start);
-            FromPositioningToBuilding(serializableItem.start);
-            Building(serializableItem.end);
-            EndConstruction(serializableItem.end);
+            Positioning(serializableItemData.start);
+            FromPositioningToBuilding(serializableItemData.start);
+            Building(serializableItemData.end);
+            EndConstruction(serializableItemData.end);
         }
         else
         {
             gameObject.layer = 0;
             transform.localScale = new Vector3(0.1f, 3f, 0.1f);
-            serializableItem.key = SerializationController.GetCurrentDate();
+            serializedElement.key = SerializationController.GetCurrentDate();
         }
     }
 
@@ -159,27 +161,29 @@ public class WallHandler : GhostHandler, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializableItem
+    public struct SerializableItemData
     {
-        public int key;
+        public string type;
         public Vector3 start;
         public Vector3 end;
     }
 
-    public SerializationData Serialize()
+    public string Serialize()
     {
-        SerializationData tmp;
+        SerializableItemData serializableItemData;
 
-        serializableItem.start = start;
-        serializableItem.end = end;
-        tmp.type = SerializationController.ItemType.Wall;
-        tmp.data = JsonUtility.ToJson(serializableItem);
-        return (tmp);
+        serializableItemData.type = "Wall";
+        serializableItemData.start = start;
+        serializableItemData.end = end;
+
+        serializedElement.type = SerializationController.ItemType.StaticElement;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+        return (SerializedElement.ToJson(serializedElement));
     }
 
     public void DeSerialize(string json)
     {
-        initFromSerialization = true;
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
+        //initFromSerialization = true;
+        //serializableItemData = JsonUtility.FromJson<SerializableItem>(json);
     }
 }

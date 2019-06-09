@@ -45,7 +45,7 @@ public class SpawnController : MonoBehaviour
         return ghost;
     }
 
-    public void SpawnScene(SerializationData[] data)
+    public void SpawnScene(SerializedElement[] data)
     {
         loadingData = true;
         WallHandler wallHandler;
@@ -66,25 +66,26 @@ public class SpawnController : MonoBehaviour
                     break;
 
                 case SerializationController.ItemType.StaticElement:
-                    DefaultStaticElement staticElement;
-                    DefaultStaticElement.SerializableItem DSESubType;
-                    DSESubType = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].data);
-                    switch (DSESubType.type)
-                    {
-                        case DefaultStaticElement.StaticElementType.Chair:
-                            staticElement = Instantiate(DSElements[0], Vector3.zero, Quaternion.identity);
-                            break;
-                        case DefaultStaticElement.StaticElementType.Table:
-                            staticElement = Instantiate(DSElements[1], Vector3.zero, Quaternion.identity);
-                            break;
-                        default:
-                            MessageHandler.instance.ErrorMessage("loading_error");
-                            return;
-                    }
-                    staticElement.DeSerialize(data[i].data);
+                    //DefaultStaticElement staticElement;
+                    //DefaultStaticElement.SerializableItem DSEData;
+                    //DSEData = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].data);
+                    //
+                    //switch (DSEData.type)
+                    //{
+                    //    case DefaultStaticElement.StaticElementType.Chair:
+                    //        staticElement = Instantiate(DSElements[0], Vector3.zero, Quaternion.identity);
+                    //        break;
+                    //    case DefaultStaticElement.StaticElementType.Table:
+                    //        staticElement = Instantiate(DSElements[1], Vector3.zero, Quaternion.identity);
+                    //        break;
+                    //    default:
+                    //        MessageHandler.instance.ErrorMessage("loading_error");
+                    //        return;
+                    //}
+                    //staticElement.DeSerialize(data[i].data);
                     break;
 
-                case SerializationController.ItemType.PlantElement:
+                case SerializationController.ItemType.Plant:
                     PlantElement element;
                     element = Instantiate(plantElement, Vector3.zero, Quaternion.identity);
                     element.DeSerialize(data[i].data);//TODO LOAD MODEL

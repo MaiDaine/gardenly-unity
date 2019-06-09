@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DefaultStaticElement : GhostHandler, ISerializable
 {
-    public enum StaticElementType { Chair, Table };
+    public enum StaticElementType { Wall, Chair, Table };
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
@@ -11,7 +11,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     protected UIController uIController;
 
-    private SerializableItem serializableItem;
+    private SerializedElement serializedElement;
     private bool initFromSerialization = false;
 
     private void Awake()
@@ -26,8 +26,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         else
         {
             transform.eulerAngles += correctedRotation;
-            serializableItem.type = subType;
-            serializableItem.key = SerializationController.GetCurrentDate();
+            serializedElement.key = SerializationController.GetCurrentDate();
         }
     }
 
@@ -58,31 +57,31 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializableItem
+    public struct SerializableItemData
     {
-        public int key;
-        public StaticElementType type;
+        public string type;
         public Vector3 position;
         public Quaternion rotation;
     }
 
-    public SerializationData Serialize()
+    public string Serialize()
     {
-        SerializationData tmp;
+        SerializableItemData serializableItemData;
+        
+        serializableItemData.position = transform.position;
+        serializableItemData.rotation = transform.rotation;
+        serializableItemData.type = subType.ToString();
 
-        serializableItem.position = transform.position;
-        serializableItem.rotation = transform.rotation;
-
-        tmp.type = SerializationController.ItemType.StaticElement;
-        tmp.data = JsonUtility.ToJson(serializableItem);
-        return (tmp);
+        serializedElement.type = SerializationController.ItemType.StaticElement;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+        return (SerializedElement.ToJson(serializedElement));
     }
 
     public void DeSerialize(string json)
     {
-        serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        transform.position = serializableItem.position;
-        transform.rotation = serializableItem.rotation;
-        initFromSerialization = true;
+        ///serializableItemData = JsonUtility.FromJson<SerializableItem>(json);
+        ///transform.position = serializableItemData.position;
+        ///transform.rotation = serializableItemData.rotation;
+        ///initFromSerialization = true;
     }
 }

@@ -77,6 +77,16 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    //TODO #74
+    public void LoadPlantGhost(GhostHandler ghost)
+    {
+        Cancel();
+        currentState = ConstructionState.Positioning;
+        this.ghost = ghost;
+        if (gridState)//TODO #73
+            grid.activ = true;
+    }
+
     public void SetGhost(GhostHandler ghost)
     {
         this.ghost = ghost;
@@ -129,8 +139,9 @@ public class ConstructionController : MonoBehaviour
                     MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
                 else
                 {
-                    //TODO Add fbkey
-                    hit.collider.GetComponent<FlowerBed>().AddElement((PlantElement)ghost);
+                    FlowerBed flowerBed = hit.collider.GetComponent<FlowerBed>();
+                    flowerBed.AddElement((PlantElement)ghost);
+                    ((PlantElement)ghost).SetTileKey(flowerBed.GetKey());
                     currentState = ConstructionState.Off;
                     if (gridState && !uiController.GridButtonIsTrigger())//TODO #73
                         grid.activ = false;

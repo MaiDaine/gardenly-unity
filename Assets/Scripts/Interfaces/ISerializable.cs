@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface ISerializable
+﻿public interface ISerializable
 {
-    SerializationData Serialize();
+    string Serialize();
     void DeSerialize(string json);
 }

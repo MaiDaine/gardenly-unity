@@ -38,13 +38,15 @@ public class GardenData : MonoBehaviour, ISerializable
         return gardenData;
     }
 
-    public SerializationData Serialize()
+    public string Serialize()
     {
-        SerializationData tmp;
-
-        tmp.type = SerializationController.ItemType.GardenData;
-        tmp.data = JsonUtility.ToJson(StoreData());
-        return tmp;
+        return null;
+        //SerializedElement tmp;
+        //
+        //tmp.type = SerializationController.ItemType.GardenData;
+        //tmp.data = JsonUtility.ToJson(StoreData());
+        //tmp.key = 0;//TODO SERIALIZATION
+        //return tmp;
     }
 
     public void DeSerialize(string json)

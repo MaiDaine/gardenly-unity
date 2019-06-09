@@ -7,7 +7,8 @@ public class PlantData
     //TODO custom user value + serialization
 
     public string plantID;
-    public string type;
+    public string typeName;
+    public string typeId;
     public string name;
     public string description;
     public string maintainAdvice;

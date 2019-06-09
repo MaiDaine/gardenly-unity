@@ -94,7 +94,7 @@ MonoBehaviour:
   needFlowerBed: 0
   correctedRotation: {x: -90, y: 0, z: 0}
   type: 1
-  subType: 1
+  subType: 2
 --- !u!64 &8561593755235773353
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class ReactProxy : MonoBehaviour
             graphQL = new GraphQL();
             externalData = new ExternalData(callbacks);
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"f025e92f-e115-4cbf-902b-f9551118d2a8\"},{\"name\":\"Arbuste\",\"id\":\"3741e754-c514-4715-a219-732bee92e9e7\"},{\"name\":\"Fleur\",\"id\":\"ca9c6046-38bc-4a2a-a698-0030174d8cbc\"},{\"name\":\"Legume\",\"id\":\"18d21ebd-e124-48b9-83ec-38c888257a02\"}]}}");
+                DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"40219c47-0e6a-494f-82b5-a67fc984af23\"},{\"name\":\"Arbuste\",\"id\":\"b2486c82-9452-4407-8a6b-fea79e94f9f5\"},{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},{\"name\":\"Legume\",\"id\":\"98267617-3720-46f3-9c6f-8970061ad7e8\"}]}}");
             else
                 SendQuery(graphQL.GetPlantsTypes());
             if (Application.isEditor)
@@ -69,10 +69,7 @@ public class ReactProxy : MonoBehaviour
 
     public void SendQuery(string payload)
     {
-        if (Application.isEditor)
-            DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
-        else
-            query(payload);
+        query(payload);
     }
 
     private void Update()
@@ -113,7 +110,7 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType].Keys.Count == 0)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Abricotier\"}},{\"node\":{\"name\":\"Campanule\"}},{\"node\":{\"name\":\"Capucine\"}},{\"node\":{\"name\":\"Coquelicot\"}},{\"node\":{\"name\":\"Crocus\"}},{\"node\":{\"name\":\"Edelweiss\"}},{\"node\":{\"name\":\"Gardénia\"}},{\"node\":{\"name\":\"Jacinthe\"}},{\"node\":{\"name\":\"Lys\"}},{\"node\":{\"name\":\"Narcisse\"}},{\"node\":{\"name\":\"Œillet\"}},{\"node\":{\"name\":\"Oeillet d'Inde\"}},{\"node\":{\"name\":\"Orchidées\"}},{\"node\":{\"name\":\"Pensée\"}},{\"node\":{\"name\":\"Pétunia\"}},{\"node\":{\"name\":\"Phalaenopsis\"}},{\"node\":{\"name\":\"Pivoine\"}}]}}}");
+                DispatchQueryResult("{\"data\":{\"getAllPlants\":{\"Fleur\":[{\"node\":{\"name\":\"Anémone\",\"id\":\"3abb8289-3847-4c2b-a1bc-b696ee581c87\"}},{\"node\":{\"name\":\"Campanule\",\"id\":\"c00730f7-908d-4509-a3a8-230d39522248\"}},{\"node\":{\"name\":\"Capucine\",\"id\":\"850f9e79-ee8b-4f02-b605-a20bcdf7a58d\"}},{\"node\":{\"name\":\"Coquelicot\",\"id\":\"eefd68a1-97d4-4965-867e-755d1b609de6\"}},{\"node\":{\"name\":\"Crocus\",\"id\":\"0a7eb1e3-2f2e-4287-8411-80ab463d202c\"}},{\"node\":{\"name\":\"Edelweiss\",\"id\":\"909c93d6-532e-4818-907a-129c328d21cc\"}},{\"node\":{\"name\":\"Gardénia\",\"id\":\"6a1b69e1-bdb9-47c6-9cbd-fd62b04bd59c\"}},{\"node\":{\"name\":\"Jacinthe\",\"id\":\"67864e0e-46e1-4fd1-a8ea-62f98d8fd5ba\"}},{\"node\":{\"name\":\"Lys\",\"id\":\"be705d09-ff94-40b2-9bb4-299505ad9e94\"}},{\"node\":{\"name\":\"Narcisse\",\"id\":\"1ae7f5fd-d5fa-42f0-b137-05cc7267bdee\"}},{\"node\":{\"name\":\"Œillet\",\"id\":\"1d56de6c-0147-4a31-91e8-4ed6a97e1d75\"}},{\"node\":{\"name\":\"Oeillet d'Inde\",\"id\":\"b32e9595-80ef-4162-8510-a2c7b49eb569\"}},{\"node\":{\"name\":\"Orchidées\",\"id\":\"3b97b479-2316-40a3-a92f-342d18d08ffe\"}},{\"node\":{\"name\":\"Pensée\",\"id\":\"05dd5581-c641-4464-800a-3c4ec993e9f1\"}},{\"node\":{\"name\":\"Pétunia\",\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\"}},{\"node\":{\"name\":\"Phalaenopsis\",\"id\":\"25b08798-b9e4-4078-a1b9-0abe48f5b74d\"}},{\"node\":{\"name\":\"Pivoine\",\"id\":\"ff2e5c63-56d3-431f-b8c9-033f2909c1f0\"}},{\"node\":{\"name\":\"Primevère\",\"id\":\"5dd7a14a-a151-4585-9996-0c8491160ddf\"}},{\"node\":{\"name\":\"Renoncule\",\"id\":\"7ace3c1f-4f94-4e37-b44c-cfd0fd3ed350\"}},{\"node\":{\"name\":\"Souci\",\"id\":\"517140c6-f734-43f7-9bf1-b3044b52c109\"}},{\"node\":{\"name\":\"Tulipe\",\"id\":\"d234c857-1353-4e19-99eb-841f5f3df363\"}},{\"node\":{\"name\":\"Violette\",\"id\":\"f9a52114-b03a-492a-9fc7-0bcfc26ca867\"}},{\"node\":{\"name\":\"Zinnia\",\"id\":\"fd3df876-29e1-48ee-8c5d-a1dcf3638cc7\"}}]}}}");
             else if (externalData.plants[plantType].Keys.Count == 0)
                 SendQuery(graphQL.GetPlantsOfType(plantType, externalData.plantsTypes[plantType]));
             return null;
@@ -131,7 +128,7 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"type\":{\"name\":\"Fleur\"},\"name\":\"Pétunia\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"thumbnail\":\"https://s3.greefine.ovh/dev/90c2a47695df1ba2e9063e690639cb2d5cc57e40/thumbnail_3abb3ce3-03ec-4206-b146-7861663ce989.jpg\",\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9}}}");
+                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\"}}}");
             else
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;

@@ -8,14 +8,22 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
-    public string groundType = "";
+    public string groundType = "";//TODO FBDATA(waiting db schema update)
     public Vector2[] vertices;
-    public SerializableItem serializableItem;
+    public SerializableItemData serializableItem;
 
     private ShapeCreator shapeCreator;
     private List<PlantElement> flowerBedElements = new List<PlantElement>();
+    private SerializedElement serializedElement;
     private bool initFromSerialization = false;
 
+    private void Start()
+    {
+        if (initFromSerialization)
+            initFromSerialization = false;
+        else
+            serializedElement.key = SerializationController.GetCurrentDate();
+    }
 
     public void Init(ShapeCreator shapeCreator)
     {
@@ -24,6 +32,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         GetComponent<MeshRenderer>().enabled = false;
         shapeCreator.eventShapeConstructionFinished.AddListener(FinalActivation);
     }
+
+    public int GetKey() { return serializedElement.key; }
 
     //Activation
     public void ActivationCancel()
@@ -140,51 +150,55 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializableItem
+    public struct SerializedElement
     {
+        public SerializationController.ItemType type;
         public int key;
         public string name;
-        public string groundType;
-        public Vector2[] points;
-        public PlantElement.SerializableItem[] elements;
+        public string ground_type_id;
+        public string data;
     }
 
-    public SerializationData Serialize()
+    [Serializable]
+    public struct SerializableItemData
     {
-        SerializationData tmp;
-        int i = 0;
+        public Vector2[] points;
+    }
 
-        serializableItem.name = flowerBedName;
-        serializableItem.groundType = GetGroundTypeFromName(groundType);
-        serializableItem.points = vertices;
-        serializableItem.elements = new PlantElement.SerializableItem[flowerBedElements.Count];
+    public string Serialize()
+    {
 
-        foreach (PlantElement elem in flowerBedElements)
-        {
-            if (elem == null)
-                Debug.Log(i);
-           // data.elements[i] = elem.InnerSerialize();
-            i++;
-        }
+        SerializableItemData serializableItemData;
 
-        tmp.type = SerializationController.ItemType.FlowerBed;
-        tmp.data = JsonUtility.ToJson(serializableItem);
-        return tmp;
+        serializableItemData.points = vertices;
+
+        serializedElement.type = SerializationController.ItemType.FlowerBed;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+
+        SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
+
+        json["type"] = serializedElement.type.ToString();
+        json["key"] = serializedElement.key;
+        json["name"] = flowerBedName;
+        json["ground_type_id"] = GetGroundTypeFromName(groundType);
+        json["data"] = serializedElement.data;
+
+        return (json.ToString());
     }
 
     public void DeSerialize(string json)
     {
-        SerializableItem tmp = JsonUtility.FromJson<SerializableItem>(json);
-        flowerBedName = tmp.name;
-        groundType = GetGroundNameFromType(tmp.groundType);
-        if (groundType == null)
-        {
-            ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);
-            groundType = tmp.name;
-        }
-        vertices = tmp.points;
-        CreateMesh();
-        Setup();
+        //SerializableItemData tmp = JsonUtility.FromJson<SerializableItemData>(json);
+        //flowerBedName = tmp.name;
+        //groundType = GetGroundNameFromType(tmp.groundType);
+        //if (groundType == null)
+        //{
+        //    ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);
+        //    groundType = tmp.name;
+        //}
+        //vertices = tmp.points;
+        //CreateMesh();
+        //Setup();
     }
 
     private void UpdateGroundTypeName()

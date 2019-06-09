@@ -4,8 +4,7 @@ using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, PlantElement };
-
+    public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, Plant };
     public static SerializationController instance = null;
 
     private GardenData.SerializedGardenData gardenData;
@@ -43,7 +42,7 @@ public class SerializationController : MonoBehaviour
             this.serializationElemNb = 0;
             this.closed = false;
             foreach (ISerializable item in items)
-                AddItem(CreateItem(item.Serialize()));
+                AddItem(item.Serialize());
         }
         MessageHandler.instance.SuccesMessage("save_sucessfull");
         ReactProxy.instance.UpdateSaveState(false);
@@ -59,20 +58,21 @@ public class SerializationController : MonoBehaviour
         return this.json;
     }
 
-    public SerializationData[] DeSerialize(string json)
+    public SerializedElement[] DeSerialize(string json)
     {
-        var tmp = JSON.Parse(json);
-        SerializedData serializedData = new SerializedData();
-        int lenght = tmp["garden"].AsArray.Count;
-        serializedData.data = new SerializationData[lenght];
-        for (int i = 0; i < lenght; i++)
-        {
-            SerializationData elem = new SerializationData();
-            elem.type = GetTypeFromString(tmp["garden"][i]["type"]);
-            elem.data = tmp["garden"][i]["data"].ToString();
-            serializedData.data[i] = elem;
-        }
-        return (serializedData.data);
+        return null;
+        //var tmp = JSON.Parse(json);
+        //SerializedData serializedData = new SerializedData();
+        //int lenght = tmp["garden"].AsArray.Count;
+        //serializedData.data = new SerializationData[lenght];
+        //for (int i = 0; i < lenght; i++)
+        //{
+        //    SerializationData elem = new SerializationData();
+        //    elem.type = GetTypeFromString(tmp["garden"][i]["type"]);
+        //    elem.data = tmp["garden"][i]["data"].ToString();
+        //    serializedData.data[i] = elem;
+        //}
+        //return (serializedData.data);
     }
 
     public static int GetCurrentDate()
@@ -94,7 +94,7 @@ public class SerializationController : MonoBehaviour
             case "FlowerBed":
                 return ItemType.FlowerBed;
             case "PlantElement":
-                return ItemType.PlantElement;
+                return ItemType.Plant;
             default:
                 return ItemType.None;
         }
@@ -107,11 +107,5 @@ public class SerializationController : MonoBehaviour
         else
             this.json += "," + item;
         this.serializationElemNb++;
-    }
-
-    private string CreateItem(SerializationData item)
-    {
-        string tmp = "{\"type\":\"" + item.type.ToString() + "\"," + "\"data\":" + item.data + "}";
-        return tmp;
     }
 }
