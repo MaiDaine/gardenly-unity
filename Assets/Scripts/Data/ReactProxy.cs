@@ -146,6 +146,16 @@ public class ReactProxy : MonoBehaviour
         SendQuery(graphQL.GetPlantData(plantID));
     }
 
+    public PlantData.DataStatus GetPlantStatus(string plantName, string plantType)
+    {
+        return externalData.plants[plantType][plantName].status;
+    }
+
+    public void SetPlantStatus(string plantName, string plantType, PlantData.DataStatus status)
+    {
+        externalData.plants[plantType][plantName].status = status;
+    }
+
     private IEnumerator AsyncFaker()
     {
         yield return new WaitForSeconds(2.0f);

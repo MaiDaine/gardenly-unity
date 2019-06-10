@@ -90,7 +90,11 @@ public class PlantPanelScript : MonoBehaviour
         }
 
         if (fetchData != null)
+        {
             plantDataRef = fetchData;
+            if (plantDataRef.imgUrl != null && reactProxy.GetPlantStatus(plantDataRef.name, plantDataRef.type) == PlantData.DataStatus.Received)
+                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+        }
         else
         {
             animator.enabled = true;
