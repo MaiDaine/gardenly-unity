@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: -5999733098042373684}
+  - component: {fileID: -2549556619187448013}
   m_Layer: 0
   m_Name: DefaultFlower
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5795843d056ce8648acd5421a8581f82, type: 2}
+  - {fileID: 2100000, guid: bbcc5f75b0f47e8478a56174f374717b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,6 +92,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needFlowerBed: 1
-  type: 5
-  subID: 
-  correctedRotation: {x: 0, y: 0, z: 0}
+  plantID: 
+  plantName: "P\xE9tunia"
+  plantType: 
+--- !u!64 &-2549556619187448013
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: c7109edfb1c154340b6a48583baaf05d, type: 3}

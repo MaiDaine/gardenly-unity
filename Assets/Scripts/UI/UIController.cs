@@ -147,7 +147,7 @@ public class UIController : MonoBehaviour
     }
 
     // Plant data panel management
-    public void SetDataPanel(string plantName, string plantType)
+    public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
         anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
@@ -160,8 +160,7 @@ public class UIController : MonoBehaviour
             dataPanel.GetView().Hide();
             return;
         }
-
-        dataPanel.SetData(plantType, plantName);
+            dataPanel.SetData(plantType, plantName, onSelect);
     }
 
     // FB panel management

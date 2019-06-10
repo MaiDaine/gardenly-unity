@@ -38,8 +38,8 @@ public class UIInteractions
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
 
             uIController.SpawnDynMenu(ghost);
-            ReactProxy.instance.SetPlantStatus(plantName, plantType, PlantData.DataStatus.Received);
-            uIController.SetDataPanel(plantName, plantType);
+            uIController.SetDataPanel(plantName, plantType, true);
+            uIController.dataPanel.OnDataLoaded(ghost.GetData());
         }
     }
 

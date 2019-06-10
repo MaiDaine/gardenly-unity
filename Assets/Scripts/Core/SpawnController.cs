@@ -46,6 +46,7 @@ public class SpawnController : MonoBehaviour
             FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[1], tmp.plantColor);
             elem.plantID = tmp.plantID;
             elem.OnPlantDataLoad(tmp);
+            elem.SetData(tmp);
             return elem;
         }
         GhostHandler ghost;
@@ -70,6 +71,7 @@ public class SpawnController : MonoBehaviour
             default:
                 return null;
         }
+        ghost.SetData(tmp);
         return ghost;
     }
 

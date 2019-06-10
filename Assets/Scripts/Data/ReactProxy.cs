@@ -127,7 +127,6 @@ public class ReactProxy : MonoBehaviour
             return null;
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
-            Debug.Log(plantName + " Status None");
             if (Application.isEditor)
             {
                 AsyncFaker();
@@ -144,16 +143,6 @@ public class ReactProxy : MonoBehaviour
     public void LoadPlantDataFromId(string plantID, Action<PlantData> callback)
     {
         SendQuery(graphQL.GetPlantData(plantID));
-    }
-
-    public PlantData.DataStatus GetPlantStatus(string plantName, string plantType)
-    {
-        return externalData.plants[plantType][plantName].status;
-    }
-
-    public void SetPlantStatus(string plantName, string plantType, PlantData.DataStatus status)
-    {
-        externalData.plants[plantType][plantName].status = status;
     }
 
     private IEnumerator AsyncFaker()
