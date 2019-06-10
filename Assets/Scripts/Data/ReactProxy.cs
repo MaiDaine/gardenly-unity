@@ -127,6 +127,7 @@ public class ReactProxy : MonoBehaviour
             return null;
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
+            Debug.Log(plantName + " Status None");
             if (Application.isEditor)
             {
                 AsyncFaker();

@@ -7,8 +7,6 @@ using TMPro;
 // Manage the plants panel
 public class PlantPanelScript : MonoBehaviour
 {
-    public string plantName;
-    public string plantType;
     public Texture2D textureRef;
     public UIButton dataPanelInitBtn;
 
@@ -27,28 +25,11 @@ public class PlantPanelScript : MonoBehaviour
             StopCoroutine(imageCoroutine);
     }
 
-    // Co-routine to download plant img
-    /*  public void SetPlantImg(string plantName, string plantType, Texture img)
-      {
-                  RawImage icon = GetComponentInChildren<RawImage>();
-          Animator animator = icon.GetComponentInChildren<Animator>();
-
-          if (icon != null && img != null)
-          {
-              if (animator != null)
-                  animator.enabled = false;
-              icon.texture = img;
-              icon.transform.localEulerAngles = new Vector3(0, 0, 0);
-          }
-      } */
-
     private void OnPictureLoaded(Texture2D texture)
     {
-        Debug.Log("ON PICTURE LOAD");
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
-       // textureRef = texture;
         animator.enabled = false;
         icon.transform.eulerAngles = new Vector3(0, 0, 0);
         icon.texture = texture;
@@ -56,16 +37,11 @@ public class PlantPanelScript : MonoBehaviour
 
     private void OnDataLoaded(PlantData plantData)
     {
-        Debug.Log("ON DATA LOAD " + plantDataRef.imgUrl + " " + plantDataRef.image);
         if (plantData != null)
         {
             plantDataRef = plantData;
             if (plantDataRef.imgUrl != null)
-            {
-                Debug.Log("If of Coroutine");
                 imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
-            }
-            Debug.Log("After Coroutine");
             SetDescriptionDataPanel();
             SetMaintainDataPanel();
             SetInformationsDataPanel();
@@ -92,16 +68,16 @@ public class PlantPanelScript : MonoBehaviour
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
+        reactProxy = ReactProxy.instance;
+
         if (!GetView().IsVisible)
             GetView().Show();
 
         InitializeView(labels, script, plantName, plantType);
-        Debug.Log("BEFORE SET CALL BACK ON " + plantName);
 
         reactProxy.externalData.callbackLoadData[plantName] = OnDataLoaded;
         reactProxy.externalData.callbackFinishDownloadImage[plantName] = OnPictureLoaded;
 
-        Debug.Log("AFTER SET CALL BACK");
         PlantData fetchData = reactProxy.GetPlantsData(plantType, plantName);
 
         if (fetchData == null && (plantDataRef == null || plantDataRef.name != plantName))
@@ -114,10 +90,7 @@ public class PlantPanelScript : MonoBehaviour
         }
 
         if (fetchData != null)
-        {
-            Debug.Log("DATA NOT NULL ");
             plantDataRef = fetchData;
-        }
         else
         {
             animator.enabled = true;
@@ -214,5 +187,10 @@ public class PlantPanelScript : MonoBehaviour
         UIView view = GetComponentInChildren<UIView>();
 
         return view;
+    }
+
+    public PlantData GetPlantDataRef()
+    {
+        return plantDataRef;
     }
 }

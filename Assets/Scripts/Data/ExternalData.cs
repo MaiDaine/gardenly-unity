@@ -50,7 +50,6 @@ public class ExternalData
             string name = tmpPlant["name"];
             plants[plantType][name] = new PlantData(name);
             plants[plantType][name].plantID = tmpPlant["id"];
-            Debug.Log("ID" + tmpPlant["id"]);
         }
     }
 
@@ -74,10 +73,8 @@ public class ExternalData
         plantData.imgUrl = tmp["thumbnail"];
 
         plantData.status = PlantData.DataStatus.Received;
-        Debug.Log("SET DATA PLANT ID" + plantData.plantID + " name " + plantData.name);
         if (/*plantData.plantID != null*/ callbackLoadData.ContainsKey(plantData.name))
         {
-            Debug.Log("LOAD DATA INVOKE " + plantData.name);
             callbackLoadData[plantData.name].Invoke(plantData);
         }
     }

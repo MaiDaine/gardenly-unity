@@ -152,15 +152,10 @@ public class UIController : MonoBehaviour
         anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         if (PlantsViewsDisplay())
-        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
-        }
         else
-        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
-        }
-
-        if (dataPanel.plantName == plantName && dataPanel.GetView().IsVisible)
+        if (dataPanel.GetPlantDataRef() != null && dataPanel.GetPlantDataRef().name == plantName && dataPanel.GetView().IsVisible)
         {
             dataPanel.GetView().Hide();
             return;

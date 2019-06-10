@@ -77156,8 +77156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bef2b8a8c728444aa0d617953875c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantName: 
-  plantType: 
   textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
   dataPanelInitBtn: {fileID: 1755187845}
 --- !u!1 &1670469738
