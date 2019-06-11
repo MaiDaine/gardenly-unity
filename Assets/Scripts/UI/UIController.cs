@@ -47,6 +47,7 @@ public class UIController : MonoBehaviour
         anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         uIInteractions = new UIInteractions();
+        uIInteractions.Init();//TODO UI
     }
 
 
