@@ -78,9 +78,9 @@ public class UIController : MonoBehaviour
 
     public bool PlantsViewsDisplay()
     {
-        foreach (UIView view in plantsViews)
+        for (int i = 0; i < 5; i++)
         {
-            if (view.IsVisible && view.name.Contains("View"))
+            if (plantsViews[i].IsVisible)
                 return true;
         }
         return false;
@@ -137,10 +137,10 @@ public class UIController : MonoBehaviour
     public void SaveViews()
     {
         currentHideViews.Clear();
-        foreach (UIView view in plantsViews)
+        for (int i = 0; i < 5; i++)
         {
-            if (view.IsVisible && view.name != "TutoBox")
-                currentHideViews.Add(view);
+            if (plantsViews[i].IsVisible)
+                currentHideViews.Add(plantsViews[i]);
         }
         if (dataPanel.GetView().IsVisible)
             currentHideViews.Add(dataPanel.GetView());

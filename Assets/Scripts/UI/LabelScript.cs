@@ -25,9 +25,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!pressed)
-        {
             SetColor(actionColor);
-        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
