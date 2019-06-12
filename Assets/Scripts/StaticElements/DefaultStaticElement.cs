@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class DefaultStaticElement : GhostHandler, ISerializable
+public class DefaultStaticElement : GhostHandler
 {
     public enum StaticElementType { Wall, Chair, Table };
 
@@ -11,23 +11,15 @@ public class DefaultStaticElement : GhostHandler, ISerializable
 
     protected UIController uIController;
 
-    private SerializedElement serializedElement;
-    private bool initFromSerialization = false;
-
     private void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
 
-    private void Start()
+    protected new void Start()
     {
-        if (initFromSerialization)
-            initFromSerialization = false;
-        else
-        {
-            transform.eulerAngles += correctedRotation;
-            serializedElement.key = SerializationController.GetCurrentDate();
-        }
+        gameObject.layer = 0;
+        transform.eulerAngles += correctedRotation;
     }
 
     protected override void OnEnable()
@@ -64,20 +56,22 @@ public class DefaultStaticElement : GhostHandler, ISerializable
         public Quaternion rotation;
     }
 
-    public string Serialize()
+    public override string Serialize()
     {
         SerializableItemData serializableItemData;
-        
+        SerializedElement serializedElement;
+
         serializableItemData.position = transform.position;
         serializableItemData.rotation = transform.rotation;
         serializableItemData.type = subType.ToString();
 
         serializedElement.type = SerializationController.ItemType.StaticElement;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
+        serializedElement.key = serializationKey;
         return (SerializedElement.ToJson(serializedElement));
     }
 
-    public void DeSerialize(string json)
+    public override void DeSerialize(string json)
     {
         ///serializableItemData = JsonUtility.FromJson<SerializableItem>(json);
         ///transform.position = serializableItemData.position;

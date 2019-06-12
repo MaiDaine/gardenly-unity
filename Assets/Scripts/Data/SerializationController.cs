@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
     public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, Plant };
     public static SerializationController instance = null;
+
+    public List<ISerializable> add;
+    public List<ISerializable> modify;
+    public List<ISerializable> delete;
 
     private GardenData.SerializedGardenData gardenData;
     private int serializationElemNb = 0;
@@ -16,7 +19,12 @@ public class SerializationController : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            add = new List<ISerializable>();
+            modify = new List<ISerializable>();
+            delete = new List<ISerializable>();
+        }
         else if (instance != this)
             Destroy(this.gameObject);
     }

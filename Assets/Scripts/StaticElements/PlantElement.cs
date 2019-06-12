@@ -1,23 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlantElement : GhostHandler, ISelectable, ISerializable
+public class PlantElement : GhostHandler
 {
     private SerializedElement serializedElement;
-    private bool initFromSerialization = false;
-
-    private void Awake()
-    {
-        if (ConstructionController.instance.flowerBeds.Count < 1)
-        {
-            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
-            ConstructionController.instance.Cancel();
-        }
-        if (initFromSerialization)
-            initFromSerialization = false;
-        else
-            serializedElement.key = SerializationController.GetCurrentDate();
-    }
 
     public void SetTileKey(int key) { serializedElement.tile_key = key; }
 
@@ -70,7 +56,7 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
         public Vector3 position;
     }
 
-    public virtual string Serialize()
+    public override string Serialize()
     {
         SerializableItemData serializableItemData;
 
@@ -92,7 +78,7 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
         return (json.ToString());
     }
 
-    public void DeSerialize(string json)
+    public override void DeSerialize(string json)
     {
         //serializableItem = JsonUtility.FromJson<SerializableItemData>(json);
         //data.plantID = serializableItem.plant_id;

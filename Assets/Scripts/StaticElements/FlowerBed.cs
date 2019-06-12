@@ -151,6 +151,29 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void RemoveFromNeighbor(ISelectable item) { }
 
     //Serialization
+    public virtual void AddToSerializationNewElements()
+    {
+        if (!initFromSerialization && !SerializationController.instance.add.Contains(GetComponent<ISerializable>()))
+        {
+            serializedElement.key = SerializationController.GetCurrentDate();
+            SerializationController.instance.add.Add(GetComponent<ISerializable>());
+        }
+    }
+    public virtual void AddToSerializationModifyElements()
+    {
+        if (initFromSerialization && !SerializationController.instance.modify.Contains(GetComponent<ISerializable>()))
+            SerializationController.instance.modify.Add(GetComponent<ISerializable>());
+    }
+
+    public virtual void AddToSerializationDeletedElements()
+    {
+        if (initFromSerialization && !SerializationController.instance.delete.Contains(GetComponent<ISerializable>()))
+        {
+            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
+            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
+        }
+    }
+
     [Serializable]
     public struct SerializedElement
     {

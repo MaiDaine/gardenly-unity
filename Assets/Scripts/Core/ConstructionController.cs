@@ -66,6 +66,12 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
+        if (ghostRef.needFlowerBed && flowerBeds.Count < 1)
+        {
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
+            return;
+        }
+
         if (currentState == ConstructionState.Off)
         {
             Cancel();
@@ -89,6 +95,11 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
+        if (ghost.needFlowerBed && flowerBeds.Count < 1)
+        {
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
+            return;
+        }
         this.ghost = ghost;
         if (gridState)//TODO #73
             grid.activ = true;

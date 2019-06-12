@@ -15,31 +15,16 @@ public class WallHandler : GhostHandler, ISerializable
     private LineTextHandler text = null;
     private Vector3 start;
     private Vector3 end;
-    
-    private bool initFromSerialization = false;
-    private SerializedElement serializedElement;
-    private SerializableItemData serializableItemData;
 
     private void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
 
-    private void Start()
+    private new void Start()
     {
-        if (initFromSerialization)
-        {
-            Positioning(serializableItemData.start);
-            FromPositioningToBuilding(serializableItemData.start);
-            Building(serializableItemData.end);
-            EndConstruction(serializableItemData.end);
-        }
-        else
-        {
-            gameObject.layer = 0;
-            transform.localScale = new Vector3(0.1f, 3f, 0.1f);
-            serializedElement.key = SerializationController.GetCurrentDate();
-        }
+        gameObject.layer = 0;
+        transform.localScale = new Vector3(0.1f, 3f, 0.1f);
     }
 
     private void OnDestroy()
@@ -168,9 +153,10 @@ public class WallHandler : GhostHandler, ISerializable
         public Vector3 end;
     }
 
-    public string Serialize()
+    public override string Serialize()
     {
         SerializableItemData serializableItemData;
+        SerializedElement serializedElement;
 
         serializableItemData.type = "Wall";
         serializableItemData.start = start;
@@ -178,12 +164,19 @@ public class WallHandler : GhostHandler, ISerializable
 
         serializedElement.type = SerializationController.ItemType.StaticElement;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
+        serializedElement.key = serializationKey;
         return (SerializedElement.ToJson(serializedElement));
     }
 
-    public void DeSerialize(string json)
+    public override void DeSerialize(string json)
     {
         initFromSerialization = true;
-        serializableItemData = JsonUtility.FromJson<SerializableItemData>(json);
+        //TODO
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(json);
+
+        Positioning(serializableItemData.start);
+        FromPositioningToBuilding(serializableItemData.start);
+        Building(serializableItemData.end);
+        EndConstruction(serializableItemData.end);
     }
 }

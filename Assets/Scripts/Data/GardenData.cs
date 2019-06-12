@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GardenData : MonoBehaviour, ISerializable
+public class GardenData : MonoBehaviour
 {
     public UIController uiController;
     public string gardenName = "PlaceHolder";

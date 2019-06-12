@@ -2,14 +2,16 @@
 using UnityEngine;
 using Doozy.Engine.UI;
 
-public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
+public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISerializable
 {
     public bool needFlowerBed = false;
     public PlantData data = null;
 
     protected List<ISelectable> neighbors = new List<ISelectable>();
+    protected bool initFromSerialization = false;
+    protected int serializationKey;
 
-    private void Start()
+    protected void Start()
     {
         this.gameObject.layer = 0;
     }
@@ -130,5 +132,40 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     protected virtual void OnDisable()
     {
         DeSelect();
+        if (initFromSerialization)
+        {
+            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
+            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
+        }
+        else
+            SerializationController.instance.add.Remove(GetComponent<ISerializable>());
     }
+
+    //Serialization
+    public virtual void AddToSerializationNewElements()
+    {
+        if (!initFromSerialization && !SerializationController.instance.add.Contains(GetComponent<ISerializable>()))
+        {
+            serializationKey = SerializationController.GetCurrentDate();
+            SerializationController.instance.add.Add(GetComponent<ISerializable>());
+        }
+    }
+    public virtual void AddToSerializationModifyElements()
+    {
+        if (initFromSerialization && !SerializationController.instance.modify.Contains(GetComponent<ISerializable>()))
+            SerializationController.instance.modify.Add(GetComponent<ISerializable>());
+    }
+
+    public virtual void AddToSerializationDeletedElements()
+    {
+        if (initFromSerialization && !SerializationController.instance.delete.Contains(GetComponent<ISerializable>()))
+        {
+            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
+            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
+        }
+    }
+
+    public virtual string Serialize() { return null; }
+
+    public virtual void DeSerialize(string json) { }
 }
