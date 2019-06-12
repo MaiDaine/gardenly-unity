@@ -8,7 +8,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
-    public string groundType = "";//TODO FBDATA(waiting db schema update)
+    public string groundType;//TODO FBDATA(waiting db schema update)
     public Vector2[] vertices;
     public SerializableItemData serializableItem;
 
@@ -52,6 +52,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         shapeCreator.gameObject.SetActive(false);
         shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
         Setup();
+        groundType = ReactProxy.instance.externalData.groundTypes[0].Key;
+        flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
     }
 
     public void OnShapeFinished()

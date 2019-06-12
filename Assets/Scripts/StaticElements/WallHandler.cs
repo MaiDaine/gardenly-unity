@@ -183,7 +183,7 @@ public class WallHandler : GhostHandler, ISerializable
 
     public void DeSerialize(string json)
     {
-        //initFromSerialization = true;
-        //serializableItemData = JsonUtility.FromJson<SerializableItem>(json);
+        initFromSerialization = true;
+        serializableItemData = JsonUtility.FromJson<SerializableItemData>(json);
     }
 }
