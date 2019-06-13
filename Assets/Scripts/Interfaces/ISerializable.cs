@@ -5,4 +5,5 @@
     void AddToSerializationNewElements();
     void AddToSerializationModifyElements();
     void AddToSerializationDeletedElements();
+    SerializationController.SerializationState GetSerializationState();
 }

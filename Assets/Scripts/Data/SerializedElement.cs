@@ -4,7 +4,7 @@
 public struct SerializedElement
 {
     public SerializationController.ItemType type;
-    public int key;
+    public uint key;
     public string data;
 
     public static string ToJson(SerializedElement element)

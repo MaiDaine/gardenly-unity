@@ -4,66 +4,78 @@ using UnityEngine;
 public class SerializationController : MonoBehaviour
 {
     public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, Plant };
+    public enum SerializationState { None, Add, Update, Delete };
+
     public static SerializationController instance = null;
 
-    public List<ISerializable> add;
-    public List<ISerializable> modify;
-    public List<ISerializable> delete;
-
     private GardenData.SerializedGardenData gardenData;
-    private int serializationElemNb = 0;
-    private List<ISerializable> items = new List<ISerializable>();
+    private List<ISerializable> items;
     private string json = "";
-    private bool closed = false;
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            add = new List<ISerializable>();
-            modify = new List<ISerializable>();
-            delete = new List<ISerializable>();
+            items = new List<ISerializable>();
         }
         else if (instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+    }
+
+    public static uint GetElementKey()
+    {
+        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        return ((uint)(System.DateTime.UtcNow - epochStart).TotalSeconds);
     }
 
     public void SetGardenData(GardenData.SerializedGardenData gardenData) { this.gardenData = gardenData; }
 
-    public void AddToList(ISerializable item) { this.items.Add(item); }
+    public void AddToList(ISerializable item) { items.Add(item); }
 
-    public void RemoveFromList(ISerializable item) { this.items.Remove(item); }
+    public void RemoveFromList(ISerializable item) { items.Remove(item); }
 
-    public void Serialize()
+    public string Serialize()
     {
-        if (this.items.Count == 0)
-        {
-            this.json = "{}";
-            this.closed = true;
-        }
+        string[] modifications = new string[3] { "additions: [", "updates: [", "deletion: [" };
+        bool[] firstEntries = new bool[3] { true, true, true };
+
+        if (items.Count == 0)
+            json = "{}";
         else
         {
-            this.json = "{\"name\":\"" + gardenData.name + "\",";
-            this.json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
-            this.json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "],";
-            this.serializationElemNb = 0;
-            this.closed = false;
+            json = "{\"name\":\"" + gardenData.name + "\",";
+            json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
+            json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
+
             foreach (ISerializable item in items)
-                AddItem(item.Serialize());
+                switch (item.GetSerializationState())
+                {
+                    case SerializationState.None:
+                        break;
+                    case SerializationState.Add:
+                        AddItem(ref modifications[0], ref firstEntries[0], item);
+                        break;
+                    case SerializationState.Update:
+                        AddItem(ref modifications[1], ref firstEntries[1], item);
+                        break;
+                    case SerializationState.Delete:
+                        AddItem(ref modifications[2], ref firstEntries[2], item);
+                        break;
+                }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (!firstEntries[i])
+                    json += modifications[i] + "]";
+                if (i + 1 < 3 && !firstEntries[i + 1])
+                    json += ",";
+            }
+            json += '}';
         }
         MessageHandler.instance.SuccesMessage("save_sucessfull");
         ReactProxy.instance.UpdateSaveState(false);
-    }
-
-    public string GetSerializedData()
-    {
-        if (!this.closed && json != "")
-        {
-            this.json += "]}";
-            this.closed = true;
-        }
-        return this.json;
+        return json;
     }
 
     public SerializedElement[] DeSerialize(string json)
@@ -83,10 +95,13 @@ public class SerializationController : MonoBehaviour
         //return (serializedData.data);
     }
 
-    public static int GetCurrentDate()
+    private void AddItem(ref string modification, ref bool firstEntry, ISerializable item)
     {
-        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-        return ((int)(System.DateTime.UtcNow - epochStart).TotalSeconds);
+        if (!firstEntry)
+            modification += ", ";
+        else
+            firstEntry = false;
+        modification += item.Serialize();
     }
 
     private ItemType GetTypeFromString(string jsonType)
@@ -106,14 +121,5 @@ public class SerializationController : MonoBehaviour
             default:
                 return ItemType.None;
         }
-    }
-
-    private void AddItem(string item)
-    {
-        if (this.serializationElemNb == 0)
-            this.json += "\"garden\":[" + item;
-        else
-            this.json += "," + item;
-        this.serializationElemNb++;
     }
 }

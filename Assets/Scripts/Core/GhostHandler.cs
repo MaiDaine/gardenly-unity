@@ -6,10 +6,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
 {
     public bool needFlowerBed = false;
     public PlantData data = null;
+    public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
     protected List<ISelectable> neighbors = new List<ISelectable>();
     protected bool initFromSerialization = false;
-    protected int serializationKey;
+    protected uint serializationKey = 0;
 
     protected void Start()
     {
@@ -126,43 +127,45 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     protected virtual void OnEnable()
     {
         if (!SpawnController.instance.loadingData)
-            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+            PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
+        SerializationController.instance.AddToList(GetComponent<ISerializable>());
     }
 
     protected virtual void OnDisable()
     {
         DeSelect();
         if (initFromSerialization)
-        {
-            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
-            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
-        }
+            serializationState = SerializationController.SerializationState.Delete;
         else
-            SerializationController.instance.add.Remove(GetComponent<ISerializable>());
+        {
+            serializationState = SerializationController.SerializationState.None;
+            SerializationController.instance.RemoveFromList(GetComponent<ISerializable>());
+        }
     }
 
     //Serialization
+    public SerializationController.SerializationState GetSerializationState() { return serializationState; }
+
     public virtual void AddToSerializationNewElements()
     {
-        if (!initFromSerialization && !SerializationController.instance.add.Contains(GetComponent<ISerializable>()))
+        if (!initFromSerialization)
         {
-            serializationKey = SerializationController.GetCurrentDate();
-            SerializationController.instance.add.Add(GetComponent<ISerializable>());
+            serializationKey = SerializationController.GetElementKey();
+            serializationState = SerializationController.SerializationState.Add;
         }
     }
     public virtual void AddToSerializationModifyElements()
     {
-        if (initFromSerialization && !SerializationController.instance.modify.Contains(GetComponent<ISerializable>()))
-            SerializationController.instance.modify.Add(GetComponent<ISerializable>());
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Update;
     }
 
     public virtual void AddToSerializationDeletedElements()
     {
-        if (initFromSerialization && !SerializationController.instance.delete.Contains(GetComponent<ISerializable>()))
-        {
-            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
-            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
-        }
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Delete;
+        else
+            serializationState = SerializationController.SerializationState.None;
     }
 
     public virtual string Serialize() { return null; }

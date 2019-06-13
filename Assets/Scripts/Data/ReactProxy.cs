@@ -53,11 +53,10 @@ public class ReactProxy : MonoBehaviour
     //Link To REACT
     public void ExportScene()
     {
-        SerializationController.instance.Serialize();
         if (Application.isEditor)
-            Debug.Log(SerializationController.instance.GetSerializedData());
+            Debug.Log(SerializationController.instance.Serialize());
         else
-            save(SerializationController.instance.GetSerializedData());
+            save(SerializationController.instance.Serialize());
     }
 
     public void UpdateSaveState(bool state)

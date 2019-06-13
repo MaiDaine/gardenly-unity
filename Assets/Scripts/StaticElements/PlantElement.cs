@@ -5,7 +5,7 @@ public class PlantElement : GhostHandler
 {
     private SerializedElement serializedElement;
 
-    public void SetTileKey(int key) { serializedElement.tile_key = key; }
+    public void SetTileKey(uint key) { serializedElement.tile_key = key; }
 
     protected override void OnEnable()
     {
@@ -44,7 +44,7 @@ public class PlantElement : GhostHandler
         public SerializationController.ItemType type;
         public int key;
         public string plant_id;
-        public int tile_key;
+        public uint tile_key;
         public int age;
         public float sun_exposition;
         public string data;

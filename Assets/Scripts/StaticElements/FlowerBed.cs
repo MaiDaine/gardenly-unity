@@ -10,7 +10,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
     public string groundType;//TODO FBDATA(waiting db schema update)
     public Vector2[] vertices;
-    public SerializableItemData serializableItem;
+    public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
     private ShapeCreator shapeCreator;
     private List<PlantElement> flowerBedElements = new List<PlantElement>();
@@ -22,7 +22,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (initFromSerialization)
             initFromSerialization = false;
         else
-            serializedElement.key = SerializationController.GetCurrentDate();
+            serializedElement.key = SerializationController.GetElementKey();
     }
 
     public void Init(ShapeCreator shapeCreator)
@@ -33,7 +33,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         shapeCreator.eventShapeConstructionFinished.AddListener(FinalActivation);
     }
 
-    public int GetKey() { return serializedElement.key; }
+    public uint GetKey() { return serializedElement.key; }
 
     //Activation
     public void ActivationCancel()
@@ -151,34 +151,35 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void RemoveFromNeighbor(ISelectable item) { }
 
     //Serialization
-    public virtual void AddToSerializationNewElements()
+    public SerializationController.SerializationState GetSerializationState() { return serializationState; }
+
+    public void AddToSerializationNewElements()
     {
-        if (!initFromSerialization && !SerializationController.instance.add.Contains(GetComponent<ISerializable>()))
+        if (!initFromSerialization)
         {
-            serializedElement.key = SerializationController.GetCurrentDate();
-            SerializationController.instance.add.Add(GetComponent<ISerializable>());
+            serializedElement.key = SerializationController.GetElementKey();
+            serializationState = SerializationController.SerializationState.Add;
         }
     }
-    public virtual void AddToSerializationModifyElements()
+    public void AddToSerializationModifyElements()
     {
-        if (initFromSerialization && !SerializationController.instance.modify.Contains(GetComponent<ISerializable>()))
-            SerializationController.instance.modify.Add(GetComponent<ISerializable>());
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Update;
     }
 
-    public virtual void AddToSerializationDeletedElements()
+    public void AddToSerializationDeletedElements()
     {
-        if (initFromSerialization && !SerializationController.instance.delete.Contains(GetComponent<ISerializable>()))
-        {
-            SerializationController.instance.modify.Remove(GetComponent<ISerializable>());
-            SerializationController.instance.delete.Add(GetComponent<ISerializable>());
-        }
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Delete;
+        else
+            serializationState = SerializationController.SerializationState.None;
     }
 
     [Serializable]
     public struct SerializedElement
     {
         public SerializationController.ItemType type;
-        public int key;
+        public uint key;
         public string name;
         public string ground_type_id;
         public string data;
