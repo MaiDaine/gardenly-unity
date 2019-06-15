@@ -15,6 +15,7 @@ public class Rotate : GhostAction
     {
         base.Complete();
         newRotation = gameObject.transform.rotation;
+        gameObject.GetComponent<ISerializable>().AddToSerializationModifyElements();
         return true;
     }
 

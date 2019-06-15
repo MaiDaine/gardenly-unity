@@ -5,6 +5,11 @@ public class UIInteractions
 {
     private UIController uIController = null;
 
+    public void Init()//TODO UI
+    {
+        uIController = Camera.main.GetComponent<UIController>();
+    }
+
     public void OnSelectDefaultStaticElement(string plantName, string plantType, DefaultStaticElement ghost)
     {
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)

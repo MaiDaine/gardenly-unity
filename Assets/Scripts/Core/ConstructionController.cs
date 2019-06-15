@@ -66,6 +66,12 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
+        if (ghostRef.needFlowerBed && flowerBeds.Count < 1)
+        {
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
+            return;
+        }
+
         if (currentState == ConstructionState.Off)
         {
             Cancel();
@@ -77,8 +83,23 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    //TODO #74
+    public void LoadPlantGhost(GhostHandler ghost)
+    {
+        Cancel();
+        currentState = ConstructionState.Positioning;
+        this.ghost = ghost;
+        if (gridState)//TODO #73
+            grid.activ = true;
+    }
+
     public void SetGhost(GhostHandler ghost)
     {
+        if (ghost.needFlowerBed && flowerBeds.Count < 1)
+        {
+            MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
+            return;
+        }
         this.ghost = ghost;
         if (gridState)//TODO #73
             grid.activ = true;
@@ -129,7 +150,9 @@ public class ConstructionController : MonoBehaviour
                     MessageHandler.instance.ErrorMessage("flower_bed", "invalid_pos");
                 else
                 {
-                    hit.collider.GetComponent<FlowerBed>().AddElement((FlowerBedElement)ghost);
+                    FlowerBed flowerBed = hit.collider.GetComponent<FlowerBed>();
+                    flowerBed.AddElement((PlantElement)ghost);
+                    ((PlantElement)ghost).SetTileKey(flowerBed.GetKey());
                     currentState = ConstructionState.Off;
                     if (gridState && !uiController.GridButtonIsTrigger())//TODO #73
                         grid.activ = false;
@@ -190,7 +213,7 @@ public class ConstructionController : MonoBehaviour
         {
             Vector3 currentPos;
             RaycastHit hit;
-
+            //TODO Edit fb key
             raycaster.MouseRayCast(out currentPos, out hit);
             if (hit.collider.gameObject.tag != "FlowerBed")
             {

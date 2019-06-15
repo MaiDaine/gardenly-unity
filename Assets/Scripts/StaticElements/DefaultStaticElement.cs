@@ -1,37 +1,25 @@
 ﻿using System;
 using UnityEngine;
-using TMPro;
 
-public class DefaultStaticElement : GhostHandler, ISerializable
+public class DefaultStaticElement : GhostHandler
 {
-    public enum StaticElementType { Chair, Table };
+    public enum StaticElementType { None, Wall, Chair, Table };
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
     public StaticElementType subType;
-    public string plantName;
-    public string plantType;
 
     protected UIController uIController;
-
-    private SerializableItem serializableItem;
-    private bool initFromSerialization = false;
 
     private void Awake()
     {
         uIController = Camera.main.GetComponent<UIController>();
     }
 
-    private void Start()
+    protected new void Start()
     {
-        if (!initFromSerialization)
-            this.transform.eulerAngles += this.correctedRotation;
-        else
-            initFromSerialization = false;
-    }
-
-    void OnDestroy()
-    {
+        gameObject.layer = 0;
+        transform.eulerAngles += correctedRotation;
     }
 
     protected override void OnEnable()
@@ -50,7 +38,7 @@ public class DefaultStaticElement : GhostHandler, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (Camera.main != null)
-            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement(plantName, plantType, this);
+            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement("", "", this);//TODO UI
     }
 
     public override void DeSelect()
@@ -59,39 +47,56 @@ public class DefaultStaticElement : GhostHandler, ISerializable
             Camera.main.GetComponent<UIController>().uIInteractions.OnDeselectDefaultStaticElement();
     }
 
-
     //Serialization
     [Serializable]
-    public struct SerializableItem
+    public struct SerializableItemData
     {
-        public StaticElementType subType;
+        public string type;
         public Vector3 position;
         public Quaternion rotation;
     }
 
-    public SerializationData Serialize()
+    public override string Serialize()
     {
-        SerializationData tmp;
+        SerializableItemData serializableItemData;
+        SerializedElement serializedElement;
 
-        this.serializableItem.position = this.transform.position;
-        this.serializableItem.rotation = this.transform.rotation;
-        this.serializableItem.subType = this.subType;
-        tmp.type = SerializationController.ItemType.DefaultStaticElement;
-        tmp.data = JsonUtility.ToJson(serializableItem);
-        return (tmp);
+        serializableItemData.position = transform.position;
+        serializableItemData.rotation = transform.rotation;
+        serializableItemData.type = subType.ToString();
+
+        serializedElement.type = SerializationController.ItemType.StaticElement;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+        serializedElement.key = serializationKey;
+        return (SerializedElement.ToJson(serializedElement));
     }
 
-    public void DeSerialize(string json)
+    public override void DeSerialize(string json)
     {
-        this.serializableItem = JsonUtility.FromJson<SerializableItem>(json);
-        this.transform.position = this.serializableItem.position;
-        this.transform.rotation = this.serializableItem.rotation;
+        SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        subType = GetTypeFromString(serializableItemData.type);
+        transform.position = serializableItemData.position;
+        transform.rotation = serializableItemData.rotation;
+
+        serializationKey = serializedElement.key;
         initFromSerialization = true;
     }
 
-    public void OnPlantDataLoad(PlantData plantData)
+    //Tools
+    public static StaticElementType GetTypeFromString(string type)
     {
-        plantName = plantData.name;
-        plantType = plantData.type;
+        switch (type)
+        {
+            case "Wall":
+                return StaticElementType.Wall;
+            case "Chair":
+                return StaticElementType.Chair;
+            case "Table":
+                return StaticElementType.Table;
+            default:
+                return StaticElementType.None;
+        }
     }
 }

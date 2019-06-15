@@ -1,15 +1,12 @@
-﻿using System;
+﻿using SimpleJSON;
+using System;
 using UnityEngine;
-using TMPro;
 
-public class PlantElement : GhostHandler, ISelectable, ISerializable
+public class PlantElement : GhostHandler
 {
-    public string plantID;
-    public string plantName;
-    public string plantType;
+    private SerializedElement serializedElement;
 
-    protected SerializedPlantElement serializableItem;
-
+    public void SetTileKey(uint key) { serializedElement.tile_key = key; }
 
     protected override void OnEnable()
     {
@@ -27,7 +24,12 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (Camera.main != null)
-            Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(plantName, plantType, this);
+        {
+            if (data == null)
+                Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement("", "", this);
+            else
+                Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement(data.name, data.typeName, this);
+        }
     }
 
     public override void DeSelect()
@@ -38,51 +40,65 @@ public class PlantElement : GhostHandler, ISelectable, ISerializable
 
     //Serialization
     [Serializable]
-    public struct SerializedPlantElement
+    public struct SerializedElement
     {
-        public string plantID;
+        public SerializationController.ItemType type;
+        public int key;
+        public string plant_id;
+        public uint tile_key;
+        public int age;
+        public float sun_exposition;
+        public string data;
+    }
+
+    [Serializable]
+    public struct SerializableItemData
+    {
         public Vector3 position;
-        public Quaternion rotation;
     }
 
-    public virtual SerializationData Serialize()
+    public override string Serialize()
     {
-        SerializationData tmp = new SerializationData();
+        SerializableItemData serializableItemData;
 
-        tmp.type = SerializationController.ItemType.PlantElement;
-        tmp.data = JsonUtility.ToJson(InnerSerialize());
-        return tmp;
+        serializableItemData.position = transform.position;
+        
+        serializedElement.type = SerializationController.ItemType.Plant;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+
+        SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
+
+        json["type"] = serializedElement.type.ToString();
+        json["key"] = serializedElement.key;
+        json["plant_id"] = serializedElement.plant_id;
+        json["tile_key"] = serializedElement.tile_key;
+        json["age"] = "0";
+        json["sun_exposition"] = "0.0";
+        json["data"] = serializedElement.data;
+
+        return (json.ToString());
     }
 
-    public SerializedPlantElement InnerSerialize()
+    public override void DeSerialize(string json)
     {
-        SerializedPlantElement tmp;
+        SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
 
-        tmp.position = transform.position;
-        tmp.rotation = transform.rotation;
-        tmp.plantID = plantID;
-        return (tmp);
-    }
+        var tmp = JSON.Parse(json);
+        data = new PlantData(tmp["plant"]["name"]);
+        data.plantID = tmp["plant"]["id"];
 
-    public void InnerDeSerialize(SerializedPlantElement elem)
-    {
-        plantID = elem.plantID;
-        ReactProxy.instance.LoadPlantDataFromId(plantID, OnPlantDataLoad);
-        transform.position = elem.position;
-        transform.rotation = elem.rotation;
-    }
-
-    public void DeSerialize(string json)
-    {
-        serializableItem = JsonUtility.FromJson<SerializedPlantElement>(json);
-        transform.position = serializableItem.position;
-        transform.rotation = serializableItem.rotation;
+        transform.position = serializableItemData.position;
+        //age
+        //sun
+        if (!Application.isEditor)
+            ReactProxy.instance.LoadPlantDataFromId(data.plantID, OnPlantDataLoad);
     }
 
     public void OnPlantDataLoad(PlantData plantData)
     {
-        plantName = plantData.name;
-        plantType = plantData.type;
-        GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
+        data = plantData;//TODO
+        serializedElement.plant_id = plantData.plantID;
+        // GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
     }
 }

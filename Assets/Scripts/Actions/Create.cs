@@ -1,6 +1,12 @@
 ﻿public class Create : GhostAction
 {
-    public override bool Complete() { return true; }
+    public override bool Complete()
+    {
+        ISerializable serializable = gameObject.GetComponent<ISerializable>();
+        if (serializable != null) 
+            serializable.AddToSerializationNewElements();
+        return true;
+    }
 
     public override bool Revert()
     {
