@@ -45077,7 +45077,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -106097,7 +106097,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -108563,7 +108563,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -111478,7 +111478,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -115004,7 +115004,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -117701,7 +117701,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -121376,7 +121376,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
