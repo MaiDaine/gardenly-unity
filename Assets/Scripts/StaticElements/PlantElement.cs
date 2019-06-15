@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleJSON;
+using System;
 using UnityEngine;
 
 public class PlantElement : GhostHandler
@@ -80,12 +81,18 @@ public class PlantElement : GhostHandler
 
     public override void DeSerialize(string json)
     {
-        //serializableItem = JsonUtility.FromJson<SerializableItemData>(json);
-        //data.plantID = serializableItem.plant_id;
-        //transform.position = serializableItem.position;
-        ////age
-        ////sun
-        //ReactProxy.instance.LoadPlantDataFromId(data.plantID, OnPlantDataLoad);
+        SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        var tmp = JSON.Parse(json);
+        data = new PlantData(tmp["plant"]["name"]);
+        data.plantID = tmp["plant"]["id"];
+
+        transform.position = serializableItemData.position;
+        //age
+        //sun
+        if (!Application.isEditor)
+            ReactProxy.instance.LoadPlantDataFromId(data.plantID, OnPlantDataLoad);
     }
 
     public void OnPlantDataLoad(PlantData plantData)

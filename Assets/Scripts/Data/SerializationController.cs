@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using SimpleJSON;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, StaticElement, Wall, FlowerBed, Plant };
+    public enum ItemType { None, StaticElement, FlowerBed, Plant };
     public enum SerializationState { None, Add, Update, Delete };
 
     public static SerializationController instance = null;
@@ -37,7 +38,7 @@ public class SerializationController : MonoBehaviour
 
     public string Serialize()
     {
-        string[] modifications = new string[3] { "additions: [", "updates: [", "deletion: [" };
+        string[] updates = new string[3] { "additions: [", "modifications: [", "deletion: [" };
         bool[] firstEntries = new bool[3] { true, true, true };
 
         if (items.Count == 0)
@@ -54,20 +55,20 @@ public class SerializationController : MonoBehaviour
                     case SerializationState.None:
                         break;
                     case SerializationState.Add:
-                        AddItem(ref modifications[0], ref firstEntries[0], item);
+                        AddItem(ref updates[0], ref firstEntries[0], item);
                         break;
                     case SerializationState.Update:
-                        AddItem(ref modifications[1], ref firstEntries[1], item);
+                        AddItem(ref updates[1], ref firstEntries[1], item);
                         break;
                     case SerializationState.Delete:
-                        AddItem(ref modifications[2], ref firstEntries[2], item);
+                        AddItem(ref updates[2], ref firstEntries[2], item);
                         break;
                 }
 
             for (int i = 0; i < 3; i++)
             {
                 if (!firstEntries[i])
-                    json += modifications[i] + "]";
+                    json += updates[i] + "]";
                 if (i + 1 < 3 && !firstEntries[i + 1])
                     json += ",";
             }
@@ -78,21 +79,26 @@ public class SerializationController : MonoBehaviour
         return json;
     }
 
-    public SerializedElement[] DeSerialize(string json)
+    public void DeSerialize(string json)
     {
-        return null;
-        //var tmp = JSON.Parse(json);
-        //SerializedData serializedData = new SerializedData();
-        //int lenght = tmp["garden"].AsArray.Count;
-        //serializedData.data = new SerializationData[lenght];
-        //for (int i = 0; i < lenght; i++)
-        //{
-        //    SerializationData elem = new SerializationData();
-        //    elem.type = GetTypeFromString(tmp["garden"][i]["type"]);
-        //    elem.data = tmp["garden"][i]["data"].ToString();
-        //    serializedData.data[i] = elem;
-        //}
-        //return (serializedData.data);
+        SpawnController.instance.loadingData = true;
+
+        var garden = JSON.Parse(json)["data"]["getGarden"];
+        GetComponent<GardenData>().SetGardenName(garden["name"]);
+
+        foreach (var tile in garden["tiles"])
+            SpawnController.instance.SpawnFlowerBed(tile.Value.ToString());
+
+        foreach (var plant in garden["plants"])
+            SpawnController.instance.SpawnPlantElement(plant.Value.ToString());
+
+        foreach (var staticElement in garden["staticElement"])
+        {
+            DefaultStaticElement.StaticElementType type = DefaultStaticElement.GetTypeFromString(staticElement.Value["data"]["type"].ToString());
+            SpawnController.instance.SpawnStaticElement(staticElement.Value.ToString(), type);
+        }
+
+        SpawnController.instance.loadingData = false;
     }
 
     private void AddItem(ref string modification, ref bool firstEntry, ISerializable item)
@@ -108,12 +114,8 @@ public class SerializationController : MonoBehaviour
     {
         switch (jsonType)
         {
-            case "GardenData":
-                return ItemType.GardenData;
             case "StaticElement":
                 return ItemType.StaticElement;
-            case "Wall":
-                return ItemType.Wall;
             case "FlowerBed":
                 return ItemType.FlowerBed;
             case "PlantElement":

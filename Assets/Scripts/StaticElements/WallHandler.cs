@@ -170,9 +170,11 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void DeSerialize(string json)
     {
+        SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        serializationKey = serializedElement.key;
         initFromSerialization = true;
-        //TODO
-        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(json);
 
         Positioning(serializableItemData.start);
         FromPositioningToBuilding(serializableItemData.start);

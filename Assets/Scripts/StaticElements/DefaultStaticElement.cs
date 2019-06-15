@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DefaultStaticElement : GhostHandler
 {
-    public enum StaticElementType { Wall, Chair, Table };
+    public enum StaticElementType { None, Wall, Chair, Table };
 
     public Vector3 correctedRotation;
     public SerializationController.ItemType type;
@@ -73,9 +73,30 @@ public class DefaultStaticElement : GhostHandler
 
     public override void DeSerialize(string json)
     {
-        ///serializableItemData = JsonUtility.FromJson<SerializableItem>(json);
-        ///transform.position = serializableItemData.position;
-        ///transform.rotation = serializableItemData.rotation;
-        ///initFromSerialization = true;
+        SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        subType = GetTypeFromString(serializableItemData.type);
+        transform.position = serializableItemData.position;
+        transform.rotation = serializableItemData.rotation;
+
+        serializationKey = serializedElement.key;
+        initFromSerialization = true;
+    }
+
+    //Tools
+    public static StaticElementType GetTypeFromString(string type)
+    {
+        switch (type)
+        {
+            case "Wall":
+                return StaticElementType.Wall;
+            case "Chair":
+                return StaticElementType.Chair;
+            case "Table":
+                return StaticElementType.Table;
+            default:
+                return StaticElementType.None;
+        }
     }
 }

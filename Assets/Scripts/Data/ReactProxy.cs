@@ -73,8 +73,8 @@ public class ReactProxy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Keypad5))
-            InitScene("{\"name\":\"Offline Garden\",\"boundaries\":[{\"x\":0,\"y\":0},{\"x\":100,\"y\":100}],\"garden\":[{\"type\":\"FlowerBed\",\"data\":{\"name\":\"Parterre 1\",\"soilType\":\"Argileux\",\"points\":[{\"x\":65.96473693847656,\"y\":-56.58185577392578},{\"x\":57.210060119628906,\"y\":-62.110374450683594},{\"x\":60,\"y\":-64},{\"x\":62.411865234375,\"y\":-63.446311950683594}],\"elements\":[{\"subID\":\"\",\"position\":{\"x\":59.495323181152344,\"y\":0,\"z\":-62.03126525878906},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":61,\"y\":0,\"z\":-63},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":61.25973892211914,\"y\":0,\"z\":-60.508094787597656},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":62.30310821533203,\"y\":0,\"z\":-61.42021560668945},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}},{\"subID\":\"\",\"position\":{\"x\":63.37784957885742,\"y\":0,\"z\":-59.27602767944336},\"rotation\":{\"x\":0,\"y\":0,\"z\":0,\"w\":1}}]}}]}");
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+            InitScene("{\"data\":{\"getGarden\":{\"id\":\"66194246-caa6-4206-b1d6-77d0ec43338d\",\"name\":\"Offline Garden\",\"tiles\":[{\"id\":\"96725a7c-bf0e-4f80-85a6-124b507bbe49\",\"key\":1560110894,\"name\":\"MySuperFB\",\"data\":\"{\\\"points\\\":[{\\\"x\\\":52.67884063720703,\\\"y\\\":-58.37452697753906},{\\\"x\\\":51.18089294433594,\\\"y\\\":-62.53420639038086},{\\\"x\\\":60.291996002197269,\\\"y\\\":-62.2928466796875}]}\",\"groundType\":{\"id\":\"2a477542-0de2-4062-9190-3e6cc8953d4f\",\"name\":\"Caillouteux\"}}],\"staticElements\":[{\"id\":\"365d70e1-d095-4852-a21c-df8d44c8aafb\",\"key\":1560110918,\"data\":\"{\\\"type\\\":\\\"Chair\\\",\\\"position\\\":{\\\"x\\\":65.65589904785156,\\\"y\\\":-9.5367431640625e-7,\\\"z\\\":-55.45375442504883},\\\"rotation\\\":{\\\"x\\\":-0.7071068286895752,\\\"y\\\":0.0,\\\"z\\\":0.0,\\\"w\\\":0.7071068286895752}}\"},{\"id\":\"cb314470-2128-4276-81b3-fc870b8cf54c\",\"key\":1560110919,\"data\":\"{\\\"type\\\":\\\"Table\\\",\\\"position\\\":{\\\"x\\\":65.0,\\\"y\\\":0.0,\\\"z\\\":-59.0},\\\"rotation\\\":{\\\"x\\\":-0.7071068286895752,\\\"y\\\":0.0,\\\"z\\\":0.0,\\\"w\\\":0.7071068286895752}}\"},{\"id\":\"345ce8e6-508b-4612-af19-3b6e73d4a995\",\"key\":1560110920,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":56.90937423706055,\\\"y\\\":0.0,\\\"z\\\":-54.859127044677737},\\\"end\\\":{\\\"x\\\":66.47474670410156,\\\"y\\\":0.0,\\\"z\\\":-50.44633865356445}}\"}],\"plants\":[{\"id\":\"8785eb29-f810-43a2-bf79-2f230bbc98d4\",\"data\":\"{\\\"position\\\":{\\\"x\\\":53.93775939941406,\\\"y\\\":0.0,\\\"z\\\":-61.24137878417969}}\",\"key\":1560110929,\"plant\":{\"id\":\"0377e02c-758f-457b-9916-8c8f428c4434\",\"name\":\"Magnolia\"},\"sunExposition\":0,\"age\":null}],\"data\":\"\\\"data\\\"\"}}}");
     }
 
     //Called from REACT
@@ -82,9 +82,9 @@ public class ReactProxy : MonoBehaviour
     {
         if (json != "")
         {
-            SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json)["name"]);
+            //SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json)["name"]);
             LocalisationController.instance.Init("FR");//TODO USERPREF
-            SpawnController.instance.SpawnScene(SerializationController.instance.DeSerialize(json));
+            SerializationController.instance.DeSerialize(json);
         }
     }
 

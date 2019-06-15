@@ -45,57 +45,36 @@ public class SpawnController : MonoBehaviour
         return ghost;
     }
 
-    public void SpawnScene(SerializedElement[] data)
+    public void SpawnFlowerBed(string json)
     {
-        loadingData = true;
-        WallHandler wallHandler;
         FlowerBed flowerBed;
+        flowerBed = Instantiate(flowerBedRef, Vector3.zero, Quaternion.identity);
+        flowerBed.DeSerialize(json);
+    }
 
-        for (int i = 0; i < data.Length; i++)
+    public void SpawnPlantElement(string json)
+    {
+        Instantiate(plantElement).DeSerialize(json);
+    }
+
+    public void SpawnStaticElement(string json, DefaultStaticElement.StaticElementType type)
+    {
+        Debug.Log(json);
+
+        switch (type)
         {
-            switch (data[i].type)
-            {
-                case SerializationController.ItemType.Wall:
-                    wallHandler = Instantiate(wallHandlerRef, Vector3.zero, Quaternion.identity);
-                    wallHandler.DeSerialize(data[i].data);
-                    break;
-
-                case SerializationController.ItemType.FlowerBed:
-                    flowerBed = Instantiate(flowerBedRef, Vector3.zero, Quaternion.identity);
-                    flowerBed.DeSerialize(data[i].data);
-                    break;
-
-                case SerializationController.ItemType.StaticElement:
-                    //DefaultStaticElement staticElement;
-                    //DefaultStaticElement.SerializableItem DSEData;
-                    //DSEData = JsonUtility.FromJson<DefaultStaticElement.SerializableItem>(data[i].data);
-                    //
-                    //switch (DSEData.type)
-                    //{
-                    //    case DefaultStaticElement.StaticElementType.Chair:
-                    //        staticElement = Instantiate(DSElements[0], Vector3.zero, Quaternion.identity);
-                    //        break;
-                    //    case DefaultStaticElement.StaticElementType.Table:
-                    //        staticElement = Instantiate(DSElements[1], Vector3.zero, Quaternion.identity);
-                    //        break;
-                    //    default:
-                    //        MessageHandler.instance.ErrorMessage("loading_error");
-                    //        return;
-                    //}
-                    //staticElement.DeSerialize(data[i].data);
-                    break;
-
-                case SerializationController.ItemType.Plant:
-                    PlantElement element;
-                    element = Instantiate(plantElement, Vector3.zero, Quaternion.identity);
-                    element.DeSerialize(data[i].data);//TODO LOAD MODEL
-                    break;
-
-                default:
-                    break;
-            }
+            case DefaultStaticElement.StaticElementType.Chair:
+                Instantiate(DSElements[0]).DeSerialize(json);
+                break;
+            case DefaultStaticElement.StaticElementType.Table:
+                Instantiate(DSElements[1]).DeSerialize(json);
+                break;
+            case DefaultStaticElement.StaticElementType.Wall:
+                Instantiate(wallHandlerRef).DeSerialize(json);
+                break;
+            default:
+                return;
         }
-        loadingData = false;
     }
 
     public FlowerBed StartNewShape(/*final object*/)

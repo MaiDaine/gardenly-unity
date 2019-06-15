@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleJSON;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -214,17 +215,19 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     public void DeSerialize(string json)
     {
-        //SerializableItemData tmp = JsonUtility.FromJson<SerializableItemData>(json);
-        //flowerBedName = tmp.name;
-        //groundType = GetGroundNameFromType(tmp.groundType);
+        serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        flowerBedName = serializedElement.name;
+
+        groundType = JSON.Parse(json)["groundType"]["name"];
+        //groundType = GetGroundNameFromType(serializedElement.ground_type_id);
         //if (groundType == null)
-        //{
         //    ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);
-        //    groundType = tmp.name;
-        //}
-        //vertices = tmp.points;
-        //CreateMesh();
-        //Setup();
+
+        vertices = serializableItemData.points;
+        CreateMesh();
+        Setup();
     }
 
     private void UpdateGroundTypeName()
