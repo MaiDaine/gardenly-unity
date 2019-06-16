@@ -4,7 +4,7 @@
 
     public string GetGroundTypes()
     {
-        return "{\"query\": \"query GetGroundTypes(){name, id}}\"";
+        return "{\"query\": \"query GetGroundTypes(){name, id}\"}";
     }
 
     public string GetPlantsTypes()

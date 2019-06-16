@@ -83,7 +83,7 @@ public class SerializationController : MonoBehaviour
     {
         SpawnController.instance.loadingData = true;
 
-        var garden = JSON.Parse(json)["data"]["getGarden"];
+        var garden = JSON.Parse(json);
         GetComponent<GardenData>().SetGardenName(garden["name"]);
 
         foreach (var tile in garden["tiles"])
