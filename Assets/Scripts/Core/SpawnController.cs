@@ -137,13 +137,20 @@ public class SpawnController : MonoBehaviour
     public FlowerBed StartNewShape(/*final object*/)
     {
         FlowerBed tmp;
+        ConstructionController constructionController = ConstructionController.instance;
 
+        if (constructionController.GetGhost() == shapeCreator 
+            && constructionController.currentState == ConstructionController.ConstructionState.Positioning)
+        {
+            constructionController.Cancel();
+            return null;
+        }
         shapeCreator.gameObject.SetActive(true);
         shapeCreator.Init();
         tmp = Instantiate(flowerBedRef);
         tmp.Init(shapeCreator);
-        ConstructionController.instance.SetGhost(shapeCreator);
-        ConstructionController.instance.currentState = ConstructionController.ConstructionState.Positioning;
+        constructionController.SetGhost(shapeCreator);
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
         return tmp;
     }
 

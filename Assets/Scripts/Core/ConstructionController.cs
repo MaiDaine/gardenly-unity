@@ -66,8 +66,13 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
-        if (currentState == ConstructionState.Off)
+        if (currentState == ConstructionState.Off ||currentState == ConstructionState.Positioning)
         {
+            if (currentState == ConstructionState.Positioning && ghost != null && ghost.name == ghostRef.name + "(Clone)")
+            {
+                Cancel();
+                return;
+            }
             Cancel();
             currentState = ConstructionState.Positioning;
             ghost = Instantiate(ghostRef, Vector3.zero, Quaternion.identity);

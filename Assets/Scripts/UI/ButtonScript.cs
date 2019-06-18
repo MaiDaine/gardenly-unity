@@ -19,6 +19,7 @@ public class ButtonScript : MonoBehaviour
         PlantData tmp = ReactProxy.instance.GetPlantsData(ghostType, plantName.text);
         if (tmp == null)
             return;
+        ConstructionController.instance.SetGhost(null);
         ConstructionController.instance.SpawnGhost(SpawnController.instance.GetPlantGhost(ghostType, tmp.name));
     }
 

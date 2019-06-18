@@ -64,8 +64,8 @@ public class UIInteractions
 
     public void OnDeselectWall(LineTextHandler text)
     {
-        MenuScript menuScript = uIController.GetMenuScript();
         uIController = Camera.main.GetComponent<UIController>();
+        MenuScript menuScript = uIController.GetMenuScript();
 
         if (text != null && text.gameObject != null)
             text.gameObject.SetActive(false);
