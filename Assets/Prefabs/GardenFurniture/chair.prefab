@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8974919763506558408}
-  m_Mesh: {fileID: 4300006, guid: a864d850437155144a0af71fc3d9e83f, type: 3}
+  m_Mesh: {fileID: -1238218227891777710, guid: a224cea50a9bb32458669010a1136e5b, type: 3}
 --- !u!23 &8974919763504556810
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   needFlowerBed: 0
   correctedRotation: {x: -90, y: 0, z: 0}
   type: 1
-  subType: 0
+  subType: 1
 --- !u!64 &2064298405484624061
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -88,7 +88,7 @@ public class PlantPanelScript : MonoBehaviour
             plantDataRef = new PlantData("");
 
             plantDataRef.name = plantName;
-            plantDataRef.type = plantType;
+            plantDataRef.typeName = plantType;
             plantDataRef.SetDefaultData();
         }
 

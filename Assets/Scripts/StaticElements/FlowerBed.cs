@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleJSON;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +9,22 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 {
     public Material material;
     public string flowerBedName = "";//TODO FBDATA(waiting db schema update)
-    public string soilType = "";
+    public string groundType;//TODO FBDATA(waiting db schema update)
     public Vector2[] vertices;
+    public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
     private ShapeCreator shapeCreator;
-    private List<FlowerBedElement> flowerBedElements = new List<FlowerBedElement>();
+    private List<PlantElement> flowerBedElements = new List<PlantElement>();
+    private SerializedElement serializedElement;
+    private bool initFromSerialization = false;
+
+    private void Start()
+    {
+        if (initFromSerialization)
+            initFromSerialization = false;
+        else
+            serializedElement.key = SerializationController.GetElementKey();
+    }
 
     public void Init(ShapeCreator shapeCreator)
     {
@@ -21,6 +33,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         GetComponent<MeshRenderer>().enabled = false;
         shapeCreator.eventShapeConstructionFinished.AddListener(FinalActivation);
     }
+
+    public uint GetKey() { return serializedElement.key; }
 
     //Activation
     public void ActivationCancel()
@@ -39,6 +53,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         shapeCreator.gameObject.SetActive(false);
         shapeCreator.eventShapeConstructionFinished.RemoveListener(FinalActivation);
         Setup();
+        groundType = ReactProxy.instance.externalData.groundTypes[0].Key;
+        flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
     }
 
     public void OnShapeFinished()
@@ -57,7 +73,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     private void OnEnable()
     {
         SerializationController.instance.AddToList(this);
-        foreach (FlowerBedElement elem in flowerBedElements)
+        foreach (PlantElement elem in flowerBedElements)
             elem.gameObject.SetActive(true);
     }
 
@@ -65,7 +81,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     {
         ConstructionController.instance.flowerBeds.Remove(this);
         SerializationController.instance.RemoveFromList(this);
-        foreach (FlowerBedElement elem in flowerBedElements)
+        foreach (PlantElement elem in flowerBedElements)
             if (elem != null)
                 elem.gameObject.SetActive(false);
     }
@@ -100,7 +116,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         GetComponent<MeshCollider>().enabled = true;
     }
 
-    public void AddElement(FlowerBedElement element) { flowerBedElements.Add(element); }
+    public void AddElement(PlantElement element) { flowerBedElements.Add(element); }
 
     //ISelectable
     public GameObject GetGameObject() { return gameObject; }
@@ -136,48 +152,102 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void RemoveFromNeighbor(ISelectable item) { }
 
     //Serialization
-    [Serializable]
-    public struct SerializedFlowerBed
-    {   
-        public string name;
-        public string soilType;
-        public Vector2[] points;
-        public PlantElement.SerializedPlantElement[] elements;
+    public SerializationController.SerializationState GetSerializationState() { return serializationState; }
+
+    public void AddToSerializationNewElements()
+    {
+        if (!initFromSerialization)
+        {
+            serializedElement.key = SerializationController.GetElementKey();
+            serializationState = SerializationController.SerializationState.Add;
+        }
+    }
+    public void AddToSerializationModifyElements()
+    {
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Update;
     }
 
-    public SerializationData Serialize()
+    public void AddToSerializationDeletedElements()
     {
-        SerializationData tmp;
-        SerializedFlowerBed data;
-        int i = 0;
-        
-        data.name = flowerBedName;
-        data.soilType = soilType;
-        data.points = vertices;
-        data.elements = new PlantElement.SerializedPlantElement[flowerBedElements.Count];
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Delete;
+        else
+            serializationState = SerializationController.SerializationState.None;
+    }
 
-        foreach (FlowerBedElement elem in flowerBedElements)
-        {
-            if (elem == null)
-                Debug.Log(i);
-            data.elements[i] = elem.InnerSerialize();
-            i++;
-        }
-        
-        tmp.type = SerializationController.ItemType.FlowerBed;
-        tmp.data = JsonUtility.ToJson(data);
-        return tmp;
+    [Serializable]
+    public struct SerializedElement
+    {
+        public SerializationController.ItemType type;
+        public uint key;
+        public string name;
+        public string ground_type_id;
+        public string data;
+    }
+
+    [Serializable]
+    public struct SerializableItemData
+    {
+        public Vector2[] points;
+    }
+
+    public string Serialize()
+    {
+
+        SerializableItemData serializableItemData;
+
+        serializableItemData.points = vertices;
+
+        serializedElement.type = SerializationController.ItemType.FlowerBed;
+        serializedElement.data = JsonUtility.ToJson(serializableItemData);
+
+        SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
+
+        json["type"] = serializedElement.type.ToString();
+        json["key"] = serializedElement.key;
+        json["name"] = flowerBedName;
+        json["ground_type_id"] = GetGroundTypeFromName(groundType);
+        json["data"] = serializedElement.data;
+
+        return (json.ToString());
     }
 
     public void DeSerialize(string json)
     {
-        SerializedFlowerBed tmp = JsonUtility.FromJson<SerializedFlowerBed>(json);
-        flowerBedName = tmp.name;
-        soilType = tmp.soilType;
-        vertices = tmp.points;
-        foreach (PlantElement.SerializedPlantElement elem in tmp.elements)
-            flowerBedElements.Add(SpawnController.instance.SpawnFlowerBedElement(elem));
+        serializedElement = JsonUtility.FromJson<SerializedElement>(json);
+        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+
+        flowerBedName = serializedElement.name;
+
+        groundType = JSON.Parse(json)["groundType"]["name"];
+        //groundType = GetGroundNameFromType(serializedElement.ground_type_id);
+        //if (groundType == null)
+        //    ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);
+
+        vertices = serializableItemData.points;
         CreateMesh();
         Setup();
+    }
+
+    private void UpdateGroundTypeName()
+    {
+        groundType = GetGroundNameFromType(groundType);
+    }
+
+    private string GetGroundTypeFromName(string name)
+    {
+        foreach (KeyValuePair<string, string> elem in ReactProxy.instance.externalData.groundTypes)
+            if (elem.Key == name)
+                return elem.Value;
+        return null;
+    }
+
+    private string GetGroundNameFromType(string type)
+    {
+        foreach (KeyValuePair<string, string> elem in ReactProxy.instance.externalData.groundTypes)
+            if (elem.Value == name)
+                return elem.Key;
+        return null;
     }
 }

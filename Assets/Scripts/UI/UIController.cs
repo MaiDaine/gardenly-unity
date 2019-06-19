@@ -47,6 +47,7 @@ public class UIController : MonoBehaviour
         anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         uIInteractions = new UIInteractions();
+        uIInteractions.Init();//TODO UI
     }
 
 
@@ -178,11 +179,11 @@ public class UIController : MonoBehaviour
             if (txt.name == "Name")
                 txt.text = flowerBedRef.flowerBedName;
         }
-        if (flowerBedRef.soilType != "PLACEHOLDER")
+        if (flowerBedRef.groundType != "PLACEHOLDER")
         {
             foreach (TMP_Dropdown.OptionData data in type.options)
             {
-                if (data.text == flowerBedRef.soilType)
+                if (data.text == flowerBedRef.groundType)
                     type.value = type.options.IndexOf(data);
             }
         }
@@ -203,7 +204,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateTypeFlowerBed(string updateType)
     {
-        flowerBed.soilType = updateType;
+        flowerBed.groundType = updateType;
     }
 
     // utils

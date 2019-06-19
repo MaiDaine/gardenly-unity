@@ -1,113 +1,127 @@
-﻿using System.Collections.Generic;
+﻿using SimpleJSON;
+using System.Collections.Generic;
 using UnityEngine;
-using SimpleJSON;
 
 public class SerializationController : MonoBehaviour
 {
-    public enum ItemType { None, GardenData, DefaultStaticElement, WallHandler, FlowerBed, FlowerBedElement, PlantElement };
+    public enum ItemType { None, StaticElement, FlowerBed, Plant };
+    public enum SerializationState { None, Add, Update, Delete };
 
     public static SerializationController instance = null;
 
     private GardenData.SerializedGardenData gardenData;
-    private int serializationElemNb = 0;
-    private List<ISerializable> items = new List<ISerializable>();
+    private List<ISerializable> items;
     private string json = "";
-    private bool closed = false;
 
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            items = new List<ISerializable>();
+        }
         else if (instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+    }
+
+    public static uint GetElementKey()
+    {
+        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        return ((uint)(System.DateTime.UtcNow - epochStart).TotalSeconds);
     }
 
     public void SetGardenData(GardenData.SerializedGardenData gardenData) { this.gardenData = gardenData; }
 
-    public void AddToList(ISerializable item) { this.items.Add(item); }
+    public void AddToList(ISerializable item) { items.Add(item); }
 
-    public void RemoveFromList(ISerializable item) { this.items.Remove(item); }
+    public void RemoveFromList(ISerializable item) { items.Remove(item); }
 
-    public void Serialize()
+    public string Serialize()
     {
-        if (this.items.Count == 0)
-        {
-            this.json = "{}";
-            this.closed = true;
-        }
+        string[] updates = new string[3] { "additions: [", "modifications: [", "deletion: [" };
+        bool[] firstEntries = new bool[3] { true, true, true };
+
+        if (items.Count == 0)
+            json = "{}";
         else
         {
-            this.json = "{\"name\":\"" + gardenData.name + "\",";
-            this.json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
-            this.json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "],";
-            this.serializationElemNb = 0;
-            this.closed = false;
+            json = "{\"name\":\"" + gardenData.name + "\",";
+            json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
+            json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
+
             foreach (ISerializable item in items)
-                AddItem(CreateItem(item.Serialize()));
+                switch (item.GetSerializationState())
+                {
+                    case SerializationState.None:
+                        break;
+                    case SerializationState.Add:
+                        AddItem(ref updates[0], ref firstEntries[0], item);
+                        break;
+                    case SerializationState.Update:
+                        AddItem(ref updates[1], ref firstEntries[1], item);
+                        break;
+                    case SerializationState.Delete:
+                        AddItem(ref updates[2], ref firstEntries[2], item);
+                        break;
+                }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (!firstEntries[i])
+                    json += updates[i] + "]";
+                if (i + 1 < 3 && !firstEntries[i + 1])
+                    json += ",";
+            }
+            json += '}';
         }
         MessageHandler.instance.SuccesMessage("save_sucessfull");
         ReactProxy.instance.UpdateSaveState(false);
+        return json;
     }
 
-    public string GetSerializedData()
+    public void DeSerialize(string json)
     {
-        if (!this.closed && json != "")
+        SpawnController.instance.loadingData = true;
+
+        var garden = JSON.Parse(json);
+        GetComponent<GardenData>().SetGardenName(garden["name"]);
+
+        foreach (var tile in garden["tiles"])
+            SpawnController.instance.SpawnFlowerBed(tile.Value.ToString());
+
+        foreach (var plant in garden["plants"])
+            SpawnController.instance.SpawnPlantElement(plant.Value.ToString());
+
+        foreach (var staticElement in garden["staticElement"])
         {
-            this.json += "]}";
-            this.closed = true;
+            DefaultStaticElement.StaticElementType type = DefaultStaticElement.GetTypeFromString(staticElement.Value["data"]["type"].ToString());
+            SpawnController.instance.SpawnStaticElement(staticElement.Value.ToString(), type);
         }
-        return this.json;
+
+        SpawnController.instance.loadingData = false;
     }
 
-    public SerializationData[] DeSerialize(string json)
+    private void AddItem(ref string modification, ref bool firstEntry, ISerializable item)
     {
-        var tmp = JSON.Parse(json);
-        SerializedData serializedData = new SerializedData();
-        int lenght = tmp["garden"].AsArray.Count;
-        serializedData.data = new SerializationData[lenght];
-        for (int i = 0; i < lenght; i++)
-        {
-            SerializationData elem = new SerializationData();
-            elem.type = GetTypeFromString(tmp["garden"][i]["type"]);
-            elem.data = tmp["garden"][i]["data"].ToString();
-            serializedData.data[i] = elem;
-        }
-        return (serializedData.data);
+        if (!firstEntry)
+            modification += ", ";
+        else
+            firstEntry = false;
+        modification += item.Serialize();
     }
 
     private ItemType GetTypeFromString(string jsonType)
     {
         switch (jsonType)
         {
-            case "GardenData":
-                return ItemType.GardenData;
-            case "DefaultStaticElement":
-                return ItemType.DefaultStaticElement;
-            case "WallHandler":
-                return ItemType.WallHandler;
+            case "StaticElement":
+                return ItemType.StaticElement;
             case "FlowerBed":
                 return ItemType.FlowerBed;
-            case "FlowerBedElement":
-                return ItemType.FlowerBedElement;
             case "PlantElement":
-                return ItemType.PlantElement;
+                return ItemType.Plant;
             default:
                 return ItemType.None;
         }
-    }
-
-    private void AddItem(string item)
-    {
-        if (this.serializationElemNb == 0)
-            this.json += "\"garden\":[" + item;
-        else
-            this.json += "," + item;
-        this.serializationElemNb++;
-    }
-
-    private string CreateItem(SerializationData item)
-    {
-        string tmp = "{\"type\":\"" + item.type.ToString() + "\"," + "\"data\":" + item.data + "}";
-        return tmp;
     }
 }

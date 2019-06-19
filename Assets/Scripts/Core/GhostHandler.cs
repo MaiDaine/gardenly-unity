@@ -2,13 +2,17 @@
 using UnityEngine;
 using Doozy.Engine.UI;
 
-public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
+public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISerializable
 {
     public bool needFlowerBed = false;
-    protected PlantData data = null;
-    protected List<ISelectable> neighbors = new List<ISelectable>();
+    public PlantData data = null;
+    public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
-    private void Start()
+    protected List<ISelectable> neighbors = new List<ISelectable>();
+    protected bool initFromSerialization = false;
+    protected uint serializationKey = 0;
+
+    protected void Start()
     {
         this.gameObject.layer = 0;
     }
@@ -123,11 +127,48 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable
     protected virtual void OnEnable()
     {
         if (!SpawnController.instance.loadingData)
-            PlayerController.instance.SelectFromAction(this.GetComponent<ISelectable>());
+            PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
+        SerializationController.instance.AddToList(GetComponent<ISerializable>());
     }
 
     protected virtual void OnDisable()
     {
         DeSelect();
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Delete;
+        else
+        {
+            serializationState = SerializationController.SerializationState.None;
+            SerializationController.instance.RemoveFromList(GetComponent<ISerializable>());
+        }
     }
+
+    //Serialization
+    public SerializationController.SerializationState GetSerializationState() { return serializationState; }
+
+    public virtual void AddToSerializationNewElements()
+    {
+        if (!initFromSerialization)
+        {
+            serializationKey = SerializationController.GetElementKey();
+            serializationState = SerializationController.SerializationState.Add;
+        }
+    }
+    public virtual void AddToSerializationModifyElements()
+    {
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Update;
+    }
+
+    public virtual void AddToSerializationDeletedElements()
+    {
+        if (initFromSerialization)
+            serializationState = SerializationController.SerializationState.Delete;
+        else
+            serializationState = SerializationController.SerializationState.None;
+    }
+
+    public virtual string Serialize() { return null; }
+
+    public virtual void DeSerialize(string json) { }
 }

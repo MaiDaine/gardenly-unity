@@ -15,6 +15,7 @@ public class Move : GhostAction
     {
         base.Complete();
         newPosition = gameObject.transform.position;
+        gameObject.GetComponent<ISerializable>().AddToSerializationModifyElements();
         return true;
     }
 
