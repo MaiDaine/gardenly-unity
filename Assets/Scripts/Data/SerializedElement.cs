@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public struct SerializedElement
@@ -10,11 +11,9 @@ public struct SerializedElement
     public static string ToJson(SerializedElement element)
     {
         SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
-
         json["type"] = element.type.ToString();
-        json["key"] = element.key;
+        json["key"] = element.key.ToString();
         json["data"] = element.data;
-
         return (json.ToString());
     }
 }

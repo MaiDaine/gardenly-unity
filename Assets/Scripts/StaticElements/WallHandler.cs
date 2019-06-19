@@ -23,8 +23,11 @@ public class WallHandler : GhostHandler, ISerializable
 
     private new void Start()
     {
-        gameObject.layer = 0;
-        transform.localScale = new Vector3(0.1f, 3f, 0.1f);
+        if (!initFromSerialization)
+        {
+            gameObject.layer = 0;
+            transform.localScale = new Vector3(0.1f, 3f, 0.1f);
+        }
     }
 
     private void OnDestroy()
@@ -51,6 +54,7 @@ public class WallHandler : GhostHandler, ISerializable
     {
         if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
         {
+            Debug.Log("Pouet");
             start += (transform.position - position);
             end += (transform.position - position);
             transform.position = position;
@@ -118,10 +122,9 @@ public class WallHandler : GhostHandler, ISerializable
 
     protected override void OnDisable()
     {
-        SerializationController.instance.RemoveFromList(this);
         if (text != null)
             GameObject.Destroy(text);
-        DeSelect();
+        base.OnDisable();
     }
 
     //ISnapable
@@ -180,5 +183,6 @@ public class WallHandler : GhostHandler, ISerializable
         FromPositioningToBuilding(serializableItemData.start);
         Building(serializableItemData.end);
         EndConstruction(serializableItemData.end);
+        initFromSerialization = true;
     }
 }

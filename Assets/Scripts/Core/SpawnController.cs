@@ -59,8 +59,6 @@ public class SpawnController : MonoBehaviour
 
     public void SpawnStaticElement(string json, DefaultStaticElement.StaticElementType type)
     {
-        Debug.Log(json);
-
         switch (type)
         {
             case DefaultStaticElement.StaticElementType.Chair:
