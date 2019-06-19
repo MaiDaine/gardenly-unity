@@ -6,11 +6,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
 {
     public bool needFlowerBed = false;
     public PlantData data = null;
-    public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
     protected List<ISelectable> neighbors = new List<ISelectable>();
     protected bool initFromSerialization = false;
     protected uint serializationKey = 0;
+
+    private SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
 
     protected void Start()
     {
@@ -153,11 +154,16 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
             serializationKey = SerializationController.GetElementKey();
             serializationState = SerializationController.SerializationState.Add;
         }
+        else
+            serializationState = SerializationController.SerializationState.Update;
     }
+
     public virtual void AddToSerializationModifyElements()
     {
         if (initFromSerialization)
             serializationState = SerializationController.SerializationState.Update;
+        else
+            serializationState = SerializationController.SerializationState.Add;
     }
 
     public virtual void AddToSerializationDeletedElements()

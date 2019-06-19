@@ -82,6 +82,8 @@ public class DefaultStaticElement : GhostHandler
 
         serializationKey = serializedElement.key;
         initFromSerialization = true;
+        this.gameObject.layer = 10;
+        transform.eulerAngles -= correctedRotation;
     }
 
     //Tools

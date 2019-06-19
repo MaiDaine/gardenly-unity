@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8974919763504556810}
   - component: {fileID: 6934096047445395356}
   - component: {fileID: 2064298405484624061}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: chair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   serializationState: 0
   correctedRotation: {x: -90, y: 0, z: 0}
   type: 1
-  subType: 1
+  subType: 2
 --- !u!64 &2064298405484624061
 MeshCollider:
   m_ObjectHideFlags: 0

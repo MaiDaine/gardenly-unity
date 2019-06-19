@@ -39,6 +39,7 @@ public class PlantElement : GhostHandler
     }
 
     //Serialization
+    
     [Serializable]
     public struct SerializedElement
     {
@@ -69,9 +70,9 @@ public class PlantElement : GhostHandler
         SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
 
         json["type"] = serializedElement.type.ToString();
-        json["key"] = serializedElement.key;
+        json["key"] = serializationKey.ToString();
         json["plant_id"] = serializedElement.plant_id;
-        json["tile_key"] = serializedElement.tile_key;
+        json["tile_key"] = serializedElement.tile_key.ToString();
         json["age"] = "0";
         json["sun_exposition"] = "0.0";
         json["data"] = serializedElement.data;
