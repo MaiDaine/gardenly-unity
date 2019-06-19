@@ -1,0 +1,133 @@
+﻿using UnityEngine;
+
+public class SpawnController : MonoBehaviour
+{
+    public static SpawnController instance = null;
+
+    public bool loadingData = false;
+
+    //Need one of each for serialization
+    public ShapeCreator shapeCreatorRef;
+    public FlowerBed flowerBedRef;
+    public LineTextHandler lineTextRef;
+    public WallHandler wallHandlerRef;
+
+    //Models
+    public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
+    public PlantElement plantElement;
+    public ModelList plantModels;
+
+    private ShapeCreator shapeCreator;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        shapeCreator = Instantiate(SpawnController.instance.shapeCreatorRef);
+        shapeCreator.gameObject.SetActive(false);
+    }
+
+    public GhostHandler GetPlantGhost(string type, string name)
+    {
+        //TODO #74
+        PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
+        if (tmp == null)
+            return null;
+<<<<<<< HEAD
+        if (tmp.model != -1 && tmp.model < plantModels.datas.Count)
+        {
+            FlowerBedElement elem = plantModels.datas[tmp.model].CreateElement(flowerBedElements[1], tmp.plantColor);
+            elem.plantID = tmp.plantID;
+            elem.OnPlantDataLoad(tmp);
+            elem.SetData(tmp);
+            return elem;
+        }
+        GhostHandler ghost;
+        switch (type)
+        {
+            case "Arbre":
+                ghost = plantElements[0];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
+                break;
+            case "Arbuste":
+                ghost = plantElements[1];
+                ((PlantElement)ghost).OnPlantDataLoad(tmp);
+                break;
+            case "Legume":
+                ghost = flowerBedElements[0];
+                ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
+                break;
+            case "Fleur":
+                ghost = flowerBedElements[0];
+                ((FlowerBedElement)ghost).OnPlantDataLoad(tmp);
+                break;
+            default:
+                return null;
+        }
+        ghost.SetData(tmp);
+=======
+
+        PlantElement ghost = Instantiate(plantElement);
+        ghost.OnPlantDataLoad(tmp);
+>>>>>>> cbe34316ea640212d43c664ebcffc2a514b87cef
+        return ghost;
+    }
+
+    public void SpawnFlowerBed(string json)
+    {
+        FlowerBed flowerBed;
+        flowerBed = Instantiate(flowerBedRef, Vector3.zero, Quaternion.identity);
+        flowerBed.DeSerialize(json);
+    }
+
+    public void SpawnPlantElement(string json)
+    {
+        Instantiate(plantElement).DeSerialize(json);
+    }
+
+    public void SpawnStaticElement(string json, DefaultStaticElement.StaticElementType type)
+    {
+        Debug.Log(json);
+
+        switch (type)
+        {
+            case DefaultStaticElement.StaticElementType.Chair:
+                Instantiate(DSElements[0]).DeSerialize(json);
+                break;
+            case DefaultStaticElement.StaticElementType.Table:
+                Instantiate(DSElements[1]).DeSerialize(json);
+                break;
+            case DefaultStaticElement.StaticElementType.Wall:
+                Instantiate(wallHandlerRef).DeSerialize(json);
+                break;
+            default:
+                return;
+        }
+    }
+
+    public FlowerBed StartNewShape(/*final object*/)
+    {
+        FlowerBed tmp;
+        ConstructionController constructionController = ConstructionController.instance;
+
+        if (constructionController.GetGhost() == shapeCreator 
+            && constructionController.currentState == ConstructionController.ConstructionState.Positioning)
+        {
+            constructionController.Cancel();
+            return null;
+        }
+        shapeCreator.gameObject.SetActive(true);
+        shapeCreator.Init();
+        tmp = Instantiate(flowerBedRef);
+        tmp.Init(shapeCreator);
+        constructionController.SetGhost(shapeCreator);
+        constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        return tmp;
+    }
+}
