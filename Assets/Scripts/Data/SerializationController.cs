@@ -46,7 +46,7 @@ public class SerializationController : MonoBehaviour
 
     public string Serialize()
     {
-        string[] updates = new string[3] { "\"additions\": [", "\"modifications\": [", "\"deletion\": [" };
+        string[] updates = new string[3] { "\"additions\": [", "\"modifications\": [", "\"deletions\": [" };
         bool[] firstEntries = new bool[3] { true, true, true };
         int itemCount = 0;
 
@@ -87,8 +87,8 @@ public class SerializationController : MonoBehaviour
                 if (!firstEntries[i])
                 {
                     json += updates[i] + "]";
-                    if (i + 1 < 3 && !firstEntries[i + 1])
-                        json += ",";
+                    if ((i + 1 < 3 && !firstEntries[i + 1]) || (i + 2 < 3 && !firstEntries[i + 2]))
+                        json += ", ";
                 }
             }
             json += '}';

@@ -52,15 +52,14 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override bool Building(Vector3 position)
     {
-        if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
-        {
-            Debug.Log("Pouet");
-            start += (transform.position - position);
-            end += (transform.position - position);
-            transform.position = position;
-            text.transform.position = position;
-            return false;
-        }
+        //if (uIController.GetMenuScript() != null && uIController.GetMenuScript().isMoving)
+        //{
+        //    start += (transform.position - position);
+        //    end += (transform.position - position);
+        //    transform.position = position;
+        //    text.transform.position = position;
+        //    return false;
+        //}
         if (start != position && end != position)
         {
             end = position;
@@ -85,9 +84,9 @@ public class WallHandler : GhostHandler, ISerializable
 
     public override void Move(Vector3 position)
     {
+        start += (position - transform.position);
+        end += (position - transform.position);
         base.Move(position);
-        start += (transform.position - position);
-        end += (transform.position - position);
         text.transform.position = position;
     }
 
@@ -154,6 +153,7 @@ public class WallHandler : GhostHandler, ISerializable
         public string type;
         public Vector3 start;
         public Vector3 end;
+        public Quaternion rotation;
     }
 
     public override string Serialize()
@@ -164,6 +164,7 @@ public class WallHandler : GhostHandler, ISerializable
         serializableItemData.type = "Wall";
         serializableItemData.start = start;
         serializableItemData.end = end;
+        serializableItemData.rotation = transform.rotation;
 
         serializedElement.type = SerializationController.ItemType.StaticElement;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
@@ -184,5 +185,6 @@ public class WallHandler : GhostHandler, ISerializable
         Building(serializableItemData.end);
         EndConstruction(serializableItemData.end);
         initFromSerialization = true;
+        transform.rotation = serializableItemData.rotation;
     }
 }
