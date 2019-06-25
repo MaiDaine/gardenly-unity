@@ -3978,7 +3978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000024
+  m_Value: 0.50000036
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -31375,17 +31375,6 @@ MonoBehaviour:
               m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
             m_MethodName: SpawnGhost
             m_Mode: 2
             m_Arguments:
@@ -45073,7 +45062,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -64574,17 +64563,6 @@ MonoBehaviour:
               m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
             m_MethodName: SpawnGhost
             m_Mode: 2
             m_Arguments:
@@ -77152,8 +77130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bef2b8a8c728444aa0d617953875c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantName: 
-  plantType: 
   textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
   dataPanelInitBtn: {fileID: 1755187845}
 --- !u!1 &1670469738
@@ -106086,7 +106062,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -108552,7 +108528,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -111467,7 +111443,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -114993,7 +114969,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -117690,7 +117666,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: MainButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -118593,17 +118569,6 @@ MonoBehaviour:
             m_CallState: 2
           - m_Target: {fileID: 424425214353298868}
             m_MethodName: ChangeColor
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -121365,7 +121330,7 @@ MonoBehaviour:
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
   ButtonName: PlantsSubButton
-  ClickMode: 1
+  ClickMode: 0
   DeselectButtonAfterClick: 1
   DisableButtonBetweenClicksInterval: 0.3
   DoubleClickRegisterInterval: 0.2
@@ -127458,17 +127423,6 @@ MonoBehaviour:
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 1
-            m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 534669908}
             m_MethodName: SpawnGhost

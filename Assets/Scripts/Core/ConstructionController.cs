@@ -56,7 +56,7 @@ public class ConstructionController : MonoBehaviour
                     ghost.gameObject.SetActive(false);
             }
             ghost = null;
-            grid.activ = false; 
+            grid.activ = false;
             currentState = ConstructionState.Off;
         }
     }
@@ -66,14 +66,19 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
+
         if (ghostRef.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
             return;
         }
-
-        if (currentState == ConstructionState.Off)
+        if (currentState == ConstructionState.Off || currentState == ConstructionState.Positioning)
         {
+            if (currentState == ConstructionState.Positioning && ghost != null && ghost.name == ghostRef.name + "(Clone)")
+            {
+                Cancel();
+                return;
+            }
             Cancel();
             currentState = ConstructionState.Positioning;
             ghost = Instantiate(ghostRef, Vector3.zero, Quaternion.identity);
@@ -95,7 +100,7 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
-        if (ghost.needFlowerBed && flowerBeds.Count < 1)
+        if (ghost != null && ghost.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
             return;

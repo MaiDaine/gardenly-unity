@@ -79,9 +79,9 @@ public class UIController : MonoBehaviour
 
     public bool PlantsViewsDisplay()
     {
-        foreach (UIView view in plantsViews)
+        for (int i = 0; i < 5; i++)
         {
-            if (view.IsVisible)
+            if (plantsViews[i].IsVisible)
                 return true;
         }
         return false;
@@ -138,34 +138,30 @@ public class UIController : MonoBehaviour
     public void SaveViews()
     {
         currentHideViews.Clear();
-        foreach (UIView view in plantsViews)
+        for (int i = 0; i < 5; i++)
         {
-            if (view.IsVisible && view.name != "TutoBox")
-                currentHideViews.Add(view);
+            if (plantsViews[i].IsVisible)
+                currentHideViews.Add(plantsViews[i]);
         }
         if (dataPanel.GetView().IsVisible)
             currentHideViews.Add(dataPanel.GetView());
     }
 
     // Plant data panel management
-    public void SetDataPanel(string plantName, string plantType)
+    public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
-
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         if (PlantsViewsDisplay())
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
         else
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
-
-        if (dataPanel.plantName == plantName && dataPanel.GetView().IsVisible)
+        if (dataPanel.GetPlantDataRef() != null && dataPanel.GetPlantDataRef().name == plantName && dataPanel.GetView().IsVisible)
         {
             dataPanel.GetView().Hide();
             return;
         }
-
-        dataPanel.plantName = plantName;
-        dataPanel.plantType = plantType;
-
-        dataPanel.SetData();
+            dataPanel.SetData(plantType, plantName, onSelect);
     }
 
     // FB panel management

@@ -25,7 +25,7 @@ public class UIInteractions
         MenuScript menuScript = uIController.GetMenuScript();
         if (menuScript != null)
         {
-            uIController.GetMenuScript().GetComponentInChildren<LabelScript>().ResetColor();
+            menuScript.GetComponentInChildren<LabelScript>().ResetColor();
             menuScript.DestroyMenu();
         }
         else
@@ -43,14 +43,18 @@ public class UIInteractions
             RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
 
             uIController.SpawnDynMenu(ghost);
-            uIController.SetDataPanel(plantName, plantType);
+            uIController.SetDataPanel(plantName, plantType, true);
+            uIController.dataPanel.OnDataLoaded(ghost.GetData());
         }
     }
 
     public void OnDeSelectPlantElement()
     {
         if (Camera.main != null)
+        {
+            uIController = Camera.main.GetComponent<UIController>();
             uIController.Cancel();
+        }
     }
 
     public void OnSelectWall(WallHandler ghost, ConstructionController.ConstructionState state)
@@ -65,6 +69,7 @@ public class UIInteractions
 
     public void OnDeselectWall(LineTextHandler text)
     {
+        uIController = Camera.main.GetComponent<UIController>();
         MenuScript menuScript = uIController.GetMenuScript();
 
         if (text != null && text.gameObject != null)

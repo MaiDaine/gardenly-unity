@@ -7,8 +7,6 @@ using TMPro;
 // Manage the plants panel
 public class PlantPanelScript : MonoBehaviour
 {
-    public string plantName;
-    public string plantType;
     public Texture2D textureRef;
     public UIButton dataPanelInitBtn;
 
@@ -18,7 +16,6 @@ public class PlantPanelScript : MonoBehaviour
 
     private void Start()
     {
-        plantDataRef = new PlantData("");
         reactProxy = ReactProxy.instance;
     }
 
@@ -28,72 +25,101 @@ public class PlantPanelScript : MonoBehaviour
             StopCoroutine(imageCoroutine);
     }
 
-    // Co-routine to download plant img
-    public void SetPlantImg(string plantName, string plantType, Texture img)
+    private void InitializeView(TextMeshProUGUI[] labels, ButtonScript dynButtonscript, string plantName, string plantType)
     {
-        RawImage icon = GetComponentInChildren<RawImage>();
-        Animator animator = icon.GetComponentInChildren<Animator>();
-
-        if (icon != null && img != null)
-        {
-            if (animator != null)
-                animator.enabled = false;
-            icon.texture = img;
-            icon.transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
-    }
-
-    // Set data of the panel and show it, plantDataRef if Graphql request return null.
-    public void SetData()
-    {
-        RawImage icon = GetComponentInChildren<RawImage>();
-        Animator animator = icon.GetComponentInChildren<Animator>();
-        Slider[] sliders = GetComponentsInChildren<Slider>();
-        ButtonScript script = GetComponentInChildren<ButtonScript>();
-        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-
-        if (!GetView().IsVisible)
-            GetView().Show();
-
-        plantDataRef.SetDefaultData();
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Name")
                 label.text = plantName;
         }
 
-        if (script != null)
-            script.SetGhostType(plantType);
+        if (dynButtonscript != null)
+            dynButtonscript.SetGhostType(plantType);
+    }
 
-        if (tmp != null && tmp.imgUrl != null)
-            imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(tmp, tmp.imgUrl));
+    private void OnPictureLoaded(Texture2D texture)
+    {
+        RawImage icon = GetComponentInChildren<RawImage>();
+        Animator animator = icon.GetComponentInChildren<Animator>();
+
+        animator.enabled = false;
+        icon.transform.eulerAngles = new Vector3(0, 0, 0);
+        icon.texture = texture;
+    }
+
+
+    public void OnDataLoaded(PlantData plantData)
+    {
+        if (plantData != null)
+        {
+            plantDataRef = plantData;
+            if (plantDataRef.imgUrl != null)
+                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+            SetDescriptionDataPanel();
+            SetMaintainDataPanel();
+            SetInformationsDataPanel();
+        }
+    }
+
+    // Set data of the panel and show it, plantDataRef if Graphql request return null.
+    public void SetData(string plantType, string plantName, bool onSelect = false)
+    {
+        ButtonScript script = GetComponentInChildren<ButtonScript>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
+        RawImage icon = GetComponentInChildren<RawImage>();
+        Animator animator = icon.GetComponentInChildren<Animator>();
+
+        reactProxy = ReactProxy.instance;
+        if (!GetView().IsVisible)
+            GetView().Show();
+
+        InitializeView(labels, script, plantName, plantType);
+
+        if (onSelect)
+            return;
+
+        reactProxy.externalData.callbackLoadData[plantName] = OnDataLoaded;
+        reactProxy.externalData.callbackFinishDownloadImage[plantName] = OnPictureLoaded;
+
+        PlantData fetchData = reactProxy.GetPlantsData(plantType, plantName);
+
+        if (fetchData == null && (plantDataRef == null || plantDataRef.name != plantName))
+        {
+            plantDataRef = new PlantData("");
+
+            plantDataRef.name = plantName;
+            plantDataRef.typeName = plantType;
+            plantDataRef.SetDefaultData();
+        }
+
+        if (fetchData != null)
+        {
+            plantDataRef = fetchData;
+            if (plantDataRef.imgUrl != null && plantDataRef.status == PlantData.DataStatus.Received)
+                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+        }
         else
         {
             animator.enabled = true;
             icon.texture = textureRef;
         }
 
+        SetDescriptionDataPanel();
         if (dataPanelInitBtn.isActiveAndEnabled)
             dataPanelInitBtn.ExecuteClick();
-        else
-            SetDescriptionDataPanel();
+
     }
 
     public void SetDescriptionDataPanel()
     {
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-
-        if (tmp == null)
-            tmp = plantDataRef;
 
         foreach (TextMeshProUGUI label in labels)
         {
-            if (label.name == "Description" && tmp.description != null)
-                label.text = tmp.description;
-            if (label.name == "Advices" && tmp.maintainAdvice != null)
-                label.text = tmp.maintainAdvice;
+            if (label.name == "Description" && plantDataRef.description != null)
+                label.text = plantDataRef.description;
+            if (label.name == "Advices" && plantDataRef.maintainAdvice != null)
+                label.text = plantDataRef.maintainAdvice;
         }
 
     }
@@ -101,45 +127,37 @@ public class PlantPanelScript : MonoBehaviour
     public void SetMaintainDataPanel()
     {
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
-
-        if (tmp == null)
-            tmp = plantDataRef;
 
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "Flowering")
-                label.text = GetMonth(tmp.floweringPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.floweringPeriodEnd);
+                label.text = GetMonth(plantDataRef.floweringPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(plantDataRef.floweringPeriodEnd);
             if (label.name == "Cutting")
-                label.text = GetMonth(tmp.cuttingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.cuttingPeriodEnd);
+                label.text = GetMonth(plantDataRef.cuttingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(plantDataRef.cuttingPeriodEnd);
             if (label.name == "Planting")
-                label.text = GetMonth(tmp.plantingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(tmp.plantingPeriodEnd);
+                label.text = GetMonth(plantDataRef.plantingPeriodBegin) + LocalisationController.instance.GetText("plant_data", "to") + GetMonth(plantDataRef.plantingPeriodEnd);
         }
     }
 
     public void SetInformationsDataPanel()
     {
         TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
-        PlantData tmp = reactProxy.GetPlantsData(plantType, plantName);
         Slider[] sliders = GetComponentsInChildren<Slider>();
-
-        if (tmp == null)
-            tmp = plantDataRef;
 
         foreach (TextMeshProUGUI label in labels)
         {
             if (label.name == "HeightMin")
-                label.text = tmp.heightMin + "cm";
-            if (label.name == "HeightMax")
-                label.text = tmp.heightMax + "cm";
-            if (label.name == "Shape" && tmp.shape != null)
-                label.text = tmp.shape;
-            if (label.name == "Colors")
+                label.text = plantDataRef.heightMin + "cm";
+            else if (label.name == "HeightMax")
+                label.text = plantDataRef.heightMax + "cm";
+            else if (label.name == "Shape" && plantDataRef.shape != null)
+                label.text = plantDataRef.shape;
+            else if (label.name == "Colors")
             {
-                if (tmp.plantColor != null)
+                if (plantDataRef.plantColor != null)
                 {
                     label.text = "";
-                    foreach (string color in tmp.plantColor)
+                    foreach (string color in plantDataRef.plantColor)
                     {
                         label.text = label.text + color + " ";
                     }
@@ -147,15 +165,19 @@ public class PlantPanelScript : MonoBehaviour
                 else
                     label.text = LocalisationController.instance.GetText("plant_data", "missing");
             }
-            if (label.name == "SoilType" && tmp.soilType != null)
-                label.text = tmp.soilType;
-            if (label.name == "SoilPh")
-                label.text = LocalisationController.instance.GetText("plant_data", "from") + tmp.phRangeLow + LocalisationController.instance.GetText("plant_data", "to") + tmp.phRangeHigh;
+            else if (label.name == "SoilType" && plantDataRef.soilType != null)
+                label.text = plantDataRef.soilType;
+            else if (label.name == "SoilPh")
+                label.text = LocalisationController.instance.GetText("plant_data", "from") + plantDataRef.phRangeLow + LocalisationController.instance.GetText("plant_data", "to") + plantDataRef.phRangeHigh;
         }
-        sliders[0].value = tmp.waterNeed;
-        sliders[1].value = tmp.rusticity;
-        sliders[2].value = tmp.sunNeed;
+        if (sliders.Length == 3)
+        {
+            sliders[0].value = plantDataRef.waterNeed;
+            sliders[1].value = plantDataRef.rusticity;
+            sliders[2].value = plantDataRef.sunNeed;
+        }
     }
+
 
     public string GetMonth(int month)
     {
@@ -169,5 +191,10 @@ public class PlantPanelScript : MonoBehaviour
         UIView view = GetComponentInChildren<UIView>();
 
         return view;
+    }
+
+    public PlantData GetPlantDataRef()
+    {
+        return plantDataRef;
     }
 }

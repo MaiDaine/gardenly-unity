@@ -12,7 +12,7 @@ public class ExternalData
     public Dictionary<string, string> plantsTypes = new Dictionary<string, string>();
     public Dictionary<string, Dictionary<string, PlantData>> plants = new Dictionary<string, Dictionary<string, PlantData>>();
     public Dictionary<string, Action<PlantData>> callbackLoadData = new Dictionary<string, Action<PlantData>>();
-    public Dictionary<string, Action<Texture>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture>>();
+    public Dictionary<string, Action<Texture2D>> callbackFinishDownloadImage = new Dictionary<string, Action<Texture2D>>();
 
     public ExternalData(Dictionary<string, Action<string>> callbacks)
     {
@@ -94,8 +94,10 @@ public class ExternalData
         plantData.imgUrl = tmp["thumbnail"];
 
         plantData.status = PlantData.DataStatus.Received;
-        if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.plantID))
-            callbackLoadData[plantData.plantID].Invoke(plantData);
+        if (/*plantData.plantID != null*/ callbackLoadData.ContainsKey(plantData.name))
+        {
+            callbackLoadData[plantData.name].Invoke(plantData);
+        }
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)

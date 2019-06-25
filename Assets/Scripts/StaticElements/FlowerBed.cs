@@ -154,26 +154,21 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     //Serialization
     public SerializationController.SerializationState GetSerializationState() { return serializationState; }
 
-    public virtual void AddToSerializationNewElements()
+    public void AddToSerializationNewElements()
     {
         if (!initFromSerialization)
         {
-            serializationKey = SerializationController.GetElementKey();
+            serializedElement.key = SerializationController.GetElementKey();
             serializationState = SerializationController.SerializationState.Add;
         }
-        else
-            serializationState = SerializationController.SerializationState.Update;
     }
-
-    public virtual void AddToSerializationModifyElements()
+    public void AddToSerializationModifyElements()
     {
         if (initFromSerialization)
             serializationState = SerializationController.SerializationState.Update;
-        else
-            serializationState = SerializationController.SerializationState.Add;
     }
 
-    public virtual void AddToSerializationDeletedElements()
+    public void AddToSerializationDeletedElements()
     {
         if (initFromSerialization)
             serializationState = SerializationController.SerializationState.Delete;
@@ -210,7 +205,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
 
         json["type"] = serializedElement.type.ToString();
-        json["key"] = serializedElement.key.ToString();
+        json["key"] = serializedElement.key;
         json["name"] = flowerBedName;
         json["ground_type_id"] = GetGroundTypeFromName(groundType);
         json["data"] = serializedElement.data;
