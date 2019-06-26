@@ -51,6 +51,8 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
                 view.Show();
             uIController.GetCurrentHideView().Clear();
         }
+        if (!SpawnController.instance.loadingData)
+            PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
     }
 
     //Actions
@@ -127,8 +129,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     //Call after Actions
     protected virtual void OnEnable()
     {
-        if (!SpawnController.instance.loadingData)
-            PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
         SerializationController.instance.AddToList(GetComponent<ISerializable>());
     }
 
