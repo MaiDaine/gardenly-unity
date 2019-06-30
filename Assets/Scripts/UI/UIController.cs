@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     public UIInteractions uIInteractions = null;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
+    public static bool afterBuilding = false;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
@@ -44,8 +45,6 @@ public class UIController : MonoBehaviour
     {
         reactProxy = ReactProxy.instance;
         gardenName.text = reactProxy.GetComponent<GardenData>().gardenName;
-        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
-        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         uIInteractions = new UIInteractions();
         uIInteractions.Init();//TODO UI
     }
@@ -152,10 +151,15 @@ public class UIController : MonoBehaviour
     {
         anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
-        if (PlantsViewsDisplay())
+        if (PlantsViewsDisplay() || afterBuilding)
+        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
+            afterBuilding = false;
+        }
         else
+        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
+        }
         if (dataPanel.GetPlantDataRef() != null && dataPanel.GetPlantDataRef().name == plantName && dataPanel.GetView().IsVisible)
         {
             dataPanel.GetView().Hide();
