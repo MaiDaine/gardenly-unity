@@ -39,9 +39,6 @@ public class UIInteractions
         uIController = Camera.main.GetComponent<UIController>();
         if (ConstructionController.instance.currentState == ConstructionController.ConstructionState.Off)
         {
-            RectTransform menuTransform = uIController.extendMenu.RectTransform;
-            RectTransform viewTransform = uIController.plantsViews[0].RectTransform;
-
             uIController.SpawnDynMenu(ghost);
             uIController.SetDataPanel(plantName, plantType, true);
             uIController.dataPanel.OnDataLoaded(ghost.GetData());

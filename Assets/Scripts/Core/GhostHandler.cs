@@ -52,7 +52,10 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
             uIController.GetCurrentHideView().Clear();
         }
         if (!SpawnController.instance.loadingData)
+        {
+            UIController.afterBuilding = true;
             PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
+        }
     }
 
     //Actions
