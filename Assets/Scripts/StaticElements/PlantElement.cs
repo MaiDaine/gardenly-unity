@@ -20,11 +20,17 @@ public class PlantElement : GhostHandler
         SerializationController.instance.RemoveFromList(this);
     }
 
+    private void UpdateSunExposure()
+    {
+        serializedElement.sun_exposition = ShadowMap.instance.GetSunExposure(transform.position.x, transform.position.z);
+    }
+
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
         if (Camera.main != null)
         {
+            UpdateSunExposure();
             if (data == null)
                 Camera.main.GetComponent<UIController>().uIInteractions.OnSelectPlantElement("", "", this);
             else
@@ -74,7 +80,7 @@ public class PlantElement : GhostHandler
         json["plant_id"] = serializedElement.plant_id;
         json["tile_key"] = serializedElement.tile_key.ToString();
         json["age"] = "0";
-        json["sun_exposition"] = "0.0";
+        json["sun_exposition"] = serializedElement.sun_exposition;
         json["data"] = serializedElement.data;
 
         return (json.ToString());
