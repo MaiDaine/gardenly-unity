@@ -35,6 +35,12 @@ public class ConstructionController : MonoBehaviour
         raycaster = Camera.main.GetComponent<Raycaster>();
     }
 
+    public void UpdatePlantsSunExposure()
+    {
+        foreach (FlowerBed elem in flowerBeds)
+            elem.UpdatePlantSunExposure();
+    }
+
     //Ghost Handling functions
     public void Cancel()
     {

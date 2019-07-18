@@ -20,9 +20,10 @@ public class PlantElement : GhostHandler
         SerializationController.instance.RemoveFromList(this);
     }
 
-    private void UpdateSunExposure()
+    public void UpdateSunExposure()
     {
         serializedElement.sun_exposition = ShadowMap.instance.GetSunExposure(transform.position.x, transform.position.z);
+        Debug.Log(serializedElement.sun_exposition);
     }
 
     //ISelectable
