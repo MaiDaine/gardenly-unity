@@ -6,7 +6,10 @@ public class HourScript : MonoBehaviour
 {
     public DayNightController dayNightController;
 
-    private const float hourModif = 1f / 24f;
+    private void Start()
+    {
+        dayNightController.SetTimeOfDay(14);
+    }
 
     public void UpdateHour(bool add = true)
     {
@@ -14,23 +17,22 @@ public class HourScript : MonoBehaviour
         if (btn != null)
         {
             TextMeshProUGUI txt = btn.TextMeshProLabel;
-            float vHour = dayNightController.targetTime;
-
+            int hour = (int)(dayNightController.targetTime * 24f);
+            
             if (add)
-                vHour = (vHour + hourModif) % 1f;
+                hour = (hour + 1) % 24;
             else
             {
-                vHour -= hourModif;
-                if (vHour < 0)
-                    vHour = 1 + vHour;
+                hour -= 1;
+                if (hour < 0)
+                    hour = 23;
             }
 
-            int hour = (int)(vHour * 24f);
             if (hour >= 10)
                 txt.SetText("{0} : 00", hour);
             else
                 txt.SetText("0{0} : 00", hour);
-            dayNightController.SetTimeOfDay(vHour);
+            dayNightController.SetTimeOfDay(hour);
         }
     }
 }

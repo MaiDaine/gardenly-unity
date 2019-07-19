@@ -12,6 +12,8 @@ public class DayNightController : MonoBehaviour
     private float currentTimeOfDay;
     private float sunInitialIntensity;
 
+    private const float vHour = 1f / 24f;
+
     void Start()
     {
         sunInitialIntensity = sun.intensity;
@@ -20,25 +22,16 @@ public class DayNightController : MonoBehaviour
 
     public void SetTimeOfDay(float time)
     {
-        targetTime = time;
+        targetTime = time * vHour;
         timeAnimation = (targetTime > currentTimeOfDay) ? 1 : -1;
     }
 
     public void InstantSetTimeofDay(float time)
     {
+        time *= vHour;
         targetTime = time;
         currentTimeOfDay = time;
-        sun.transform.localRotation = Quaternion.Euler((time * 360f) - 90, 180, 0);
-
-        float intensityMultiplier = 1;
-        if (currentTimeOfDay <= 0.23f || currentTimeOfDay >= 0.75f)
-            intensityMultiplier = 0;
-        else if (currentTimeOfDay <= 0.25f)
-            intensityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
-        else if (currentTimeOfDay >= 0.73f)
-            intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
-
-        sun.intensity = sunInitialIntensity * intensityMultiplier;
+        UpdateSun();
     }
 
     private void Update()
@@ -58,16 +51,13 @@ public class DayNightController : MonoBehaviour
 
     void UpdateSun()
     {
-        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 360f) - 90, 180, 0);
+        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
 
         float intensityMultiplier = 1;
-        if (currentTimeOfDay <= 0.23f || currentTimeOfDay >= 0.75f)
+        if (currentTimeOfDay < 0.25f || currentTimeOfDay > 0.75f)
             intensityMultiplier = 0;
-        else if (currentTimeOfDay <= 0.25f)
-            intensityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
-        else if (currentTimeOfDay >= 0.73f)
-            intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
-
+        else
+            intensityMultiplier = 1f - Mathf.Abs(0.5f - currentTimeOfDay);
         sun.intensity = sunInitialIntensity * intensityMultiplier;
     }
 }

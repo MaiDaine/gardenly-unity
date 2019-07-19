@@ -18,8 +18,7 @@ public class ShadowMap : MonoBehaviour
     private float toTextureRatio;
     private CommandBuffer cb;
 
-    private const float vHour = 1f / 24f;
-    private const int planeSize = 1;
+    private const float planeSize = 100f;
 
     private void Awake()
     {
@@ -40,15 +39,17 @@ public class ShadowMap : MonoBehaviour
 
     public float GetSunExposure(float xPos, float yPos)
     {
+        Debug.Log("X= " + xPos + " Y= " + yPos);
         if (pixelArray == null)
             return 0;
         int x = (int)(startPoint.x + (xPos * toTextureRatio));
         int y = (int)(startPoint.y + (-yPos * toTextureRatio));
-        y = pixelArray.height - y;
+        Debug.Log("x= " + x + " y= " + y);
+        x = pixelArray.width -1 - x;
 
-        for (int yp = y - 1; yp < y + 1; yp++)
-            for (int xp = x - 1; xp < x + 1; xp++)
-                pixelArray.SetPixel(xp, yp, new Color(0f, 0f, 1f, 1f));
+        // y = pixelArray.height - y;
+        pixelArray.SetPixel(x, y, new Color(0f, 0f, 1f, 1f));
+
         pixelArray.Apply();
         shadowMapTexture.texture = pixelArray;
         return (pixelArray.GetPixel((int)(startPoint.x + (xPos * toTextureRatio)), (int)(startPoint.y + (yPos * toTextureRatio))).r);
@@ -76,8 +77,8 @@ public class ShadowMap : MonoBehaviour
                     startPoint.y = y;
                     while (x < tmp.width && tmp.GetPixel(x + offset, y).r != 0)
                         x++;
+
                     toTextureRatio = (x - startPoint.x) / planeSize;
-                    startPoint.x -= 5;
                     Debug.Log("Ratio: " + toTextureRatio);
                     Debug.Log("X= " + startPoint.x + " Y= " + startPoint.y);
                     goto EndCapture;
@@ -98,7 +99,7 @@ public class ShadowMap : MonoBehaviour
         sun.AddCommandBuffer(LightEvent.AfterShadowMap, cb);
     }
 
-    private void UpdateShadowMap(float max = 8)
+    private void UpdateShadowMap(float max = 10)
     {
         StartCapture();
 
@@ -119,7 +120,7 @@ public class ShadowMap : MonoBehaviour
             while (step < 1)
             {
                 tmp = CaptureShadowMap((float)i + step);
-                FilterDefaultValue(tmp, ref pixelArray, max);
+                FilterDefaultValue(tmp, ref pixelArray, max * 10f);
                 step += 0.1f;
             }
             Debug.Log("=> " + (i + 2) * 10 + "%");
@@ -127,7 +128,6 @@ public class ShadowMap : MonoBehaviour
         }
 
         pixelArray.Apply();
-        Debug.Log("=> 100%");
 
         EndCapture(currentTime);
         ConstructionController.instance.UpdatePlantsSunExposure();
@@ -140,12 +140,12 @@ public class ShadowMap : MonoBehaviour
         sun.RemoveCommandBuffer(LightEvent.AfterShadowMap, cb);
         shadowCamera.enabled = false;
         shadowFilter.SetActive(false);
-        dayNightController.InstantSetTimeofDay(currentTime);
+        dayNightController.InstantSetTimeofDay(currentTime * 24f);
     }
 
     private Texture2D CaptureShadowMap(float hourOffset)
     {
-        dayNightController.InstantSetTimeofDay(vHour * (8f + hourOffset));
+        dayNightController.InstantSetTimeofDay(8f + hourOffset);
         shadowCamera.Render();
         RenderTexture.active = shadowmapCopy;
         Texture2D tmp = new Texture2D(shadowmapCopy.width, shadowmapCopy.height);
@@ -166,8 +166,8 @@ public class ShadowMap : MonoBehaviour
                 pixelValue = tmp.GetPixel(x + pixelArray.width, y).r;
                 if (pixelValue != filterValue)
                 {
-                    float updatedValue = pixelArray.GetPixel(pixelArray.width - x, pixelArray.height - 1 - y).r - (pixelValue / stepsNumber);
-                    pixelArray.SetPixel(pixelArray.width - x, pixelArray.height - 1 - y, new Color(updatedValue, updatedValue, updatedValue, 1));
+                    float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
+                    pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
                 }
             }
         }
