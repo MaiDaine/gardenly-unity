@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using Doozy.Engine.UI;
+using System.Collections;
 
 public class UIController : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class UIController : MonoBehaviour
     private ReactProxy reactProxy;
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
+    private IEnumerator imageCoroutine = null;
+    private float sizeView = 183.48f;
+
 
     private void Awake()
     {
@@ -78,7 +82,7 @@ public class UIController : MonoBehaviour
 
     public bool PlantsViewsDisplay()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (plantsViews[i].IsVisible)
                 return true;
@@ -149,7 +153,7 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
-        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         if (PlantsViewsDisplay() || afterBuilding)
         {
@@ -157,15 +161,13 @@ public class UIController : MonoBehaviour
             afterBuilding = false;
         }
         else
-        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
-        }
         if (dataPanel.GetPlantDataRef() != null && dataPanel.GetPlantDataRef().name == plantName && dataPanel.GetView().IsVisible)
         {
             dataPanel.GetView().Hide();
             return;
         }
-            dataPanel.SetData(plantType, plantName, onSelect);
+        dataPanel.SetData(plantType, plantName, onSelect);
     }
 
     // FB panel management
@@ -222,7 +224,15 @@ public class UIController : MonoBehaviour
 
     public void StartNewFb()
     {
+        if (plantsViews[6].IsVisible)
+            plantsViews[6].Hide();
         uIInteractions.StartNewFB();
+    }
+
+    public void OnStartCoroutine(PlantData plantDataRef)
+    {
+        imageCoroutine = reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl);
+        StartCoroutine(imageCoroutine);
     }
 
     public MenuScript GetMenuScript() { return menu; }

@@ -98,12 +98,13 @@ public class ViewController : MonoBehaviour
                 for (int i = 0; i < plantNames.Length; i++)
                 {
                     GameObject obj = Instantiate(plantButton, view.transform);
-                    ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+                    ButtonScript.SetDynamicButton(obj, plantType, plantNames[i]);
+                    viewController.dynButtons.Add(obj.GetComponent<UIButton>());
+                   /* ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
                     UIButton btn = obj.GetComponent<UIButton>();
 
-                    viewController.dynButtons.Add(btn);
                     buttonScript.SetGhostType(plantType);
-                    btn.TextMeshProLabel.text = plantNames[i];
+                    btn.TextMeshProLabel.text = plantNames[i];*/
                 }
             }
         }

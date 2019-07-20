@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using Doozy.Engine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
@@ -26,5 +27,14 @@ public class ButtonScript : MonoBehaviour
     public void SetPanelFunction()
     {
         Camera.main.GetComponent<UIController>().SetDataPanel(plantName.text, ghostType);
+    }
+
+    public static void SetDynamicButton(GameObject obj, string plantType, string plantName)
+    {
+        ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+        UIButton btn = obj.GetComponent<UIButton>();
+
+        buttonScript.SetGhostType(plantType);
+        btn.TextMeshProLabel.text = plantName;
     }
 }
