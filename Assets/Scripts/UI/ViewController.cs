@@ -100,11 +100,6 @@ public class ViewController : MonoBehaviour
                     GameObject obj = Instantiate(plantButton, view.transform);
                     ButtonScript.SetDynamicButton(obj, plantType, plantNames[i]);
                     viewController.dynButtons.Add(obj.GetComponent<UIButton>());
-                   /* ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
-                    UIButton btn = obj.GetComponent<UIButton>();
-
-                    buttonScript.SetGhostType(plantType);
-                    btn.TextMeshProLabel.text = plantNames[i];*/
                 }
             }
         }

@@ -141,7 +141,7 @@ public class UIController : MonoBehaviour
     public void SaveViews()
     {
         currentHideViews.Clear();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (plantsViews[i].IsVisible)
                 currentHideViews.Add(plantsViews[i]);

@@ -79,7 +79,7 @@ public class UIInteractions
     {
         uIController = Camera.main.GetComponent<UIController>();
         if (TutoBoxScript.isOn)
-            uIController.plantsViews[5].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
+            uIController.plantsViews[6].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
 
         SpawnController.instance.StartNewShape();
     }

@@ -12,7 +12,7 @@ public class ConstructionMenu : MonoBehaviour
 
     public void ChangeState()
     {
-        gameObject.SetActive(!state);
         state = !state;
+        gameObject.SetActive(state);
     }
 }

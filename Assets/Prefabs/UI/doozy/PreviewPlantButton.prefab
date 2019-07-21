@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 1218200765687556589}
   - component: {fileID: 1218200765687556594}
   - component: {fileID: -1819409052346387041}
+  - component: {fileID: 7026982190964695238}
   m_Layer: 0
   m_Name: PreviewPlantButton
   m_TagString: Untagged
@@ -2409,6 +2410,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantName: {fileID: 1218200765660952701}
+--- !u!114 &7026982190964695238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218200765687556592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bef2b8a8c728444aa0d617953875c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureRef: {fileID: 2800000, guid: 20bf40f97d0e65a40acfa7a7a9c905a4, type: 3}
+  dataPanelInitBtn: {fileID: 0}
 --- !u!1 &8897273768158772647
 GameObject:
   m_ObjectHideFlags: 0

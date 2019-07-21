@@ -28,7 +28,9 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (text != null)
             text.color = color;
         if (image != null)
+        {
             image.color = color;
+        }
     }
 
 
@@ -71,8 +73,12 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void UpdateIcon()
     {
         if (pressed)
+        {
             image.sprite = updated;
+        }
         else
+        {
             image.sprite = initial;
+        }
     }
 }

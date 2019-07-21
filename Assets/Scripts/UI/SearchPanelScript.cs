@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using TMPro;
-using Doozy.Engine.UI;
 
 public class SearchPanelScript : MonoBehaviour
 {
@@ -21,7 +20,25 @@ public class SearchPanelScript : MonoBehaviour
         }
     }
 
-    public void UpdateSearch()
+    private void SetButtonPlantData(GameObject obj, string plantType, string plantName)
+    {
+        PlantPanelScript script = obj.GetComponent<PlantPanelScript>();
+        ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
+
+        script.GetData(plantType, plantName);
+    }
+
+    private void AddSeparator(GameObject obj)
+    {
+        obj = new GameObject();
+        obj.AddComponent<RectTransform>();
+        obj.AddComponent<ButtonScript>();
+        Instantiate(obj, searchContent.transform);
+        Instantiate(obj, searchContent.transform);
+    }
+
+
+    public void UpdateSearch() // space + better search of str in word see begin...
     {
         GameObject obj = null;
         int searchLimit = 6;
@@ -39,10 +56,12 @@ public class SearchPanelScript : MonoBehaviour
                     {
                         obj = Instantiate(prefabButton, searchContent.transform);
                         ButtonScript.SetDynamicButton(obj, type, plantName);
+                        SetButtonPlantData(obj, type, plantName);
                         --searchLimit;
                     }
                 }
             }
         }
+        AddSeparator(obj);
     }
 }
