@@ -40,11 +40,57 @@ public class SearchPanelScript : MonoBehaviour
         Instantiate(obj, searchContent.transform);
     }
 
-    private void ClassifyPlantName()
+    private int AlphabeticalClassification(string name, string nameToCompare, int index)
     {
-        string test = "";
+        if (name.CompareTo(nameToCompare) < 0)
+            return index;
+        else
+            return index + 1;
+    }
 
-        
+    private void ClassifyPlantsName(string type, string name)
+    {
+        int updateIndex = 0;
+        string textRef = searchText.text.ToUpper();
+
+        if (classifyNames[type].Count == 0)
+        {
+            Debug.Log("First Name : " + name);
+            classifyNames[type].Add(name);
+        }
+        else
+        {
+            for (int i = 0; i < classifyNames[type].Count; i++)
+            {
+                if (name.ToUpper().IndexOf(textRef) > classifyNames[type][i].ToUpper().IndexOf(textRef))
+                {
+                    Debug.Log("upper " + name + " " + classifyNames[type][i] + " " + (i + 1));
+                    updateIndex = i + 1;
+                }
+                else if (name.ToUpper().IndexOf(textRef) < classifyNames[type][i].ToUpper().IndexOf(textRef))
+                {
+                    Debug.Log("lower " + name + " " + classifyNames[type][i]);
+                    updateIndex = i;
+                    break;
+                }
+                else
+                {
+                    Debug.Log("equal " + name + " " + classifyNames[type][i]);
+                    updateIndex = AlphabeticalClassification(name.ToUpper(), classifyNames[type][i].ToUpper(), updateIndex);
+                }
+            }
+
+            if (updateIndex >= classifyNames[type].Count)
+            {
+                Debug.Log("Add : " + name);
+                classifyNames[type].Add(name);
+            }
+            else
+            {
+                Debug.Log("Insert : " + name + " at " + updateIndex);
+                classifyNames[type].Insert(updateIndex, name);
+            }
+        }
     }
 
 
@@ -55,6 +101,8 @@ public class SearchPanelScript : MonoBehaviour
         classifyNames = new Dictionary<string, List<string>>();
 
         ClearSearchContent();
+        if (searchText.text.Length == 0)
+            return;
         foreach (string type in plantTypes)
         {
             if (!classifyNames.ContainsKey(type))
@@ -66,11 +114,10 @@ public class SearchPanelScript : MonoBehaviour
                 foreach (string plantName in plantNames)
                 {
                     if (plantName.ToUpper().Contains(searchText.text.ToUpper()))
-                        classifyNames[type].Add(plantName);
+                        ClassifyPlantsName(type, plantName);
                 }
             }
         }
-        ClassifyPlantName();
         foreach (string type in classifyNames.Keys)
         {
             searchLimit = 4;
@@ -81,7 +128,7 @@ public class SearchPanelScript : MonoBehaviour
                     obj = Instantiate(prefabButton, searchContent.transform);
                     ButtonScript.SetDynamicButton(obj, type, plantName);
                     SetButtonPlantData(obj, type, plantName);
-                    --searchLimit;
+                    //--searchLimit;
                 }
             }
         }
