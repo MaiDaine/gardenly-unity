@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using Doozy.Engine.UI;
+using System.Collections;
 
 public class UIController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class UIController : MonoBehaviour
     private ReactProxy reactProxy;
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
+    private IEnumerator imageCoroutine = null;
 
     private void Awake()
     {
@@ -226,6 +228,12 @@ public class UIController : MonoBehaviour
     }
 
     public MenuScript GetMenuScript() { return menu; }
+
+    public void OnStartCoroutine(PlantData plantDataRef)
+    {
+        imageCoroutine = reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl);
+        StartCoroutine(imageCoroutine);
+    }
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return flowerBedMenuScript; }
 
