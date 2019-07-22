@@ -55,7 +55,6 @@ public class SearchPanelScript : MonoBehaviour
 
         if (classifyNames[type].Count == 0)
         {
-            Debug.Log("First Name : " + name);
             classifyNames[type].Add(name);
         }
         else
@@ -64,30 +63,25 @@ public class SearchPanelScript : MonoBehaviour
             {
                 if (name.ToUpper().IndexOf(textRef) > classifyNames[type][i].ToUpper().IndexOf(textRef))
                 {
-                    Debug.Log("upper " + name + " " + classifyNames[type][i] + " " + (i + 1));
                     updateIndex = i + 1;
                 }
                 else if (name.ToUpper().IndexOf(textRef) < classifyNames[type][i].ToUpper().IndexOf(textRef))
                 {
-                    Debug.Log("lower " + name + " " + classifyNames[type][i]);
                     updateIndex = i;
                     break;
                 }
                 else
                 {
-                    Debug.Log("equal " + name + " " + classifyNames[type][i]);
                     updateIndex = AlphabeticalClassification(name.ToUpper(), classifyNames[type][i].ToUpper(), updateIndex);
                 }
             }
 
             if (updateIndex >= classifyNames[type].Count)
             {
-                Debug.Log("Add : " + name);
                 classifyNames[type].Add(name);
             }
             else
             {
-                Debug.Log("Insert : " + name + " at " + updateIndex);
                 classifyNames[type].Insert(updateIndex, name);
             }
         }
@@ -100,6 +94,7 @@ public class SearchPanelScript : MonoBehaviour
         int searchLimit;
         classifyNames = new Dictionary<string, List<string>>();
 
+        StopAllCoroutines();
         ClearSearchContent();
         if (searchText.text.Length == 0)
             return;

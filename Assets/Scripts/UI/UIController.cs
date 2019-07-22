@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
+    public IEnumerator imageCoroutine = null;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
@@ -32,7 +33,6 @@ public class UIController : MonoBehaviour
     private ReactProxy reactProxy;
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
-    private IEnumerator imageCoroutine = null;
     private float sizeView = 183.48f;
 
 

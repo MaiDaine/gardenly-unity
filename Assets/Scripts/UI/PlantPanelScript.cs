@@ -32,6 +32,8 @@ public class PlantPanelScript : MonoBehaviour
 
     private void OnPictureLoaded(Texture2D texture)
     {
+        if (this == null)
+            return;
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
@@ -43,6 +45,8 @@ public class PlantPanelScript : MonoBehaviour
 
     public void OnDataLoaded(PlantData plantData)
     {
+        if (this == null)
+            return;
         if (plantData != null)
         {
             plantDataRef = plantData;
