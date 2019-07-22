@@ -88,13 +88,12 @@ public class SearchPanelScript : MonoBehaviour
     }
 
 
-    public void UpdateSearch() // space + better search of str in word see begin...
+    public void UpdateSearch()
     {
         GameObject obj = null;
         int searchLimit;
         classifyNames = new Dictionary<string, List<string>>();
 
-        StopAllCoroutines();
         ClearSearchContent();
         if (searchText.text.Length == 0)
             return;
