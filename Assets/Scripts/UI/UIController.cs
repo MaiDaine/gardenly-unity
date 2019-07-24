@@ -229,13 +229,13 @@ public class UIController : MonoBehaviour
         uIInteractions.StartNewFB();
     }
 
+    public MenuScript GetMenuScript() { return menu; }
+
     public void OnStartCoroutine(PlantData plantDataRef)
     {
         imageCoroutine = reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl);
         StartCoroutine(imageCoroutine);
     }
-
-    public MenuScript GetMenuScript() { return menu; }
 
     public MenuFlowerBedScript GetFlowerBedMenuScript() { return flowerBedMenuScript; }
 
