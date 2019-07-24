@@ -50,8 +50,8 @@ public class ShadowMap : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-            UpdateShadowMap();
+       // if (Input.GetKeyDown(KeyCode.B))
+         //   UpdateShadowMap();
     }
 
     private void Calibrate()
@@ -91,8 +91,10 @@ public class ShadowMap : MonoBehaviour
         sun.AddCommandBuffer(LightEvent.AfterShadowMap, cb);
     }
 
-    private void UpdateShadowMap(float max = 9)
+    public void UpdateShadowMap(float max = 9)
     {
+        if (Camera.main.GetComponent<UIController>().shadowMap.IsVisible)
+            return; 
         StartCapture();
 
         float currentTime = dayNightController.targetTime;
@@ -117,6 +119,7 @@ public class ShadowMap : MonoBehaviour
                 step += 0.1f;
             }
             Debug.Log("=> " + (i + 2) * 10 + "%");
+            Camera.main.enabled = true;
             Camera.main.Render(); //May be needed to update UI
         }
 

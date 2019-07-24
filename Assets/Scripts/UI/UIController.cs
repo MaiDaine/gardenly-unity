@@ -6,8 +6,9 @@ using System.Collections;
 
 public class UIController : MonoBehaviour
 {
-    public UIView extendMenu;
+    public UIView shadowMap;
     public UIView dynamicObjectMenu;
+    public UIView extendMenu;
     public UIView flowerBedDataPanel;
     public UIView[] plantsViews;
     public UIButton gridButton;
@@ -97,6 +98,8 @@ public class UIController : MonoBehaviour
             if (view.IsVisible)
                 view.Hide();
         }
+        if (shadowMap.IsVisible)
+            shadowMap.Hide();
     }
 
     public void DestroyMenu()
