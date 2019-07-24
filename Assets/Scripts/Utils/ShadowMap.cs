@@ -95,6 +95,7 @@ public class ShadowMap : MonoBehaviour
     {
         if (Camera.main.GetComponent<UIController>().shadowMap.IsVisible)
             return; 
+
         StartCapture();
 
         float currentTime = dayNightController.targetTime;
@@ -119,7 +120,6 @@ public class ShadowMap : MonoBehaviour
                 step += 0.1f;
             }
             Debug.Log("=> " + (i + 2) * 10 + "%");
-            Camera.main.enabled = true;
             Camera.main.Render(); //May be needed to update UI
         }
 

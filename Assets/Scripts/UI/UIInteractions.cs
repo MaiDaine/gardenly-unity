@@ -81,6 +81,10 @@ public class UIInteractions
         if (TutoBoxScript.isOn)
             uIController.plantsViews[6].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
 
-        SpawnController.instance.StartNewShape();
+        if (SpawnController.instance.StartNewShape() == null)
+        {
+            if (uIController.plantsViews[6].IsVisible)
+                uIController.plantsViews[6].Hide();
+        }
     }
 }

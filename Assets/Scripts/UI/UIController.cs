@@ -227,8 +227,6 @@ public class UIController : MonoBehaviour
 
     public void StartNewFb()
     {
-        if (plantsViews[6].IsVisible)
-            plantsViews[6].Hide();
         uIInteractions.StartNewFB();
     }
 
