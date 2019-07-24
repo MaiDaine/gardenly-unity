@@ -91,13 +91,13 @@ public class ShadowMap : MonoBehaviour
         sun.AddCommandBuffer(LightEvent.AfterShadowMap, cb);
     }
 
-    private void UpdateShadowMap(float max = 9)
+    private void UpdateShadowMap(float max = 12)
     {
         StartCapture();
+        float percent = 100 / max;
 
         float currentTime = dayNightController.targetTime;
 
-        Debug.Log("=> 10%");
         pixelArray = null;
         pixelArray = new Texture2D(shadowmapCopy.width / 2, shadowmapCopy.height);
 
@@ -113,10 +113,10 @@ public class ShadowMap : MonoBehaviour
             while (step < 1)
             {
                 tmp = CaptureShadowMap((float)i + step);
-                FilterDefaultValue(ref tmp, ref pixelArray, max * 10f);
+                FilterDefaultValue(ref tmp, ref pixelArray, max);
                 step += 0.1f;
             }
-            Debug.Log("=> " + (i + 2) * 10 + "%");
+            Debug.Log("=> " + (percent + (i * percent)).ToString() + "%");
             //Camera.main.Render(); //May be needed to update UI
         }
 
@@ -137,7 +137,7 @@ public class ShadowMap : MonoBehaviour
 
     private Texture2D CaptureShadowMap(float hourOffset)
     {
-        dayNightController.InstantSetTimeofDay(8f + hourOffset);
+        dayNightController.InstantSetTimeofDay(6f + hourOffset);
         shadowCamera.Render();
         RenderTexture.active = shadowmapCopy;
         Texture2D tmp = new Texture2D(shadowmapCopy.width, shadowmapCopy.height);
