@@ -12,17 +12,10 @@ public class PlantPanelScript : MonoBehaviour
 
     private PlantData plantDataRef;
     private ReactProxy reactProxy;
-    private Coroutine imageCoroutine;
 
     private void Start()
     {
         reactProxy = ReactProxy.instance;
-    }
-
-    private void OnDisable()
-    {
-        if (imageCoroutine != null)
-            StopCoroutine(imageCoroutine);
     }
 
     private void InitializeView(TextMeshProUGUI[] labels, ButtonScript dynButtonscript, string plantName, string plantType)
@@ -54,7 +47,7 @@ public class PlantPanelScript : MonoBehaviour
         {
             plantDataRef = plantData;
             if (plantDataRef.imgUrl != null)
-                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+                Camera.main.GetComponent<UIController>().OnStartCoroutine(plantDataRef);
             SetDescriptionDataPanel();
             SetMaintainDataPanel();
             SetInformationsDataPanel();
@@ -96,7 +89,7 @@ public class PlantPanelScript : MonoBehaviour
         {
             plantDataRef = fetchData;
             if (plantDataRef.imgUrl != null && plantDataRef.status == PlantData.DataStatus.Received)
-                imageCoroutine = StartCoroutine(reactProxy.externalData.GetTexture(plantDataRef, plantDataRef.imgUrl));
+                Camera.main.GetComponent<UIController>().OnStartCoroutine(plantDataRef);
         }
         else
         {
