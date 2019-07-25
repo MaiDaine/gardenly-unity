@@ -36,6 +36,12 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     public uint GetKey() { return serializedElement.key; }
 
+    public void UpdatePlantSunExposure()
+    {
+        foreach (PlantElement elem in flowerBedElements)
+            elem.UpdateSunExposure();
+    }
+
     //Activation
     public void ActivationCancel()
     {
