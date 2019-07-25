@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class ShadowMap : MonoBehaviour
 {
     public static ShadowMap instance = null;
+
     public DayNightController dayNightController;
     public GameObject shadowFilter;
     public RawImage shadowMapTexture;
+    public float capturedFramesNumber = 12f;
+    public int startShadowCalc = 0;
 
     private Light sun;
     private Camera shadowCamera;
@@ -17,6 +20,7 @@ public class ShadowMap : MonoBehaviour
     private Vector2 startPoint;
     private float toTextureRatio;
     private CommandBuffer cb;
+    private float frameUpdatePending = 0;
 
     private const float planeSize = 100f;
 
@@ -45,18 +49,25 @@ public class ShadowMap : MonoBehaviour
         int y = (int)(startPoint.y + (-yPos * toTextureRatio));
         x = pixelArray.width - 1 - x;
 
-        return (pixelArray.GetPixel(x,y).r);
+        return (pixelArray.GetPixel(x, y).r);
     }
 
     private void Update()
     {
-       // if (Input.GetKeyDown(KeyCode.B))
-         //   UpdateShadowMap();
+        if (startShadowCalc == 1 && frameUpdatePending <= 0)
+        {
+            ClearPixelArray();
+            frameUpdatePending = capturedFramesNumber;
+        }
+        if (frameUpdatePending > 0 && startShadowCalc == 1)
+            UpdateShadowMap();
     }
 
     private void Calibrate()
     {
         float currentTime = dayNightController.targetTime;
+        float currentShadowSetting = QualitySettings.shadowDistance;
+
         StartCapture();
         shadowFilter.SetActive(false);
 
@@ -77,11 +88,12 @@ public class ShadowMap : MonoBehaviour
                 }
 
         EndCapture:
-        EndCapture(currentTime);
+        EndCapture(currentTime, currentShadowSetting);
     }
 
     private void StartCapture()
     {
+        QualitySettings.shadowDistance = 100f;
         shadowCamera.enabled = true;
         shadowFilter.SetActive(true);
 
@@ -91,45 +103,32 @@ public class ShadowMap : MonoBehaviour
         sun.AddCommandBuffer(LightEvent.AfterShadowMap, cb);
     }
 
-    public void UpdateShadowMap(float max = 9)
+    private void UpdateShadowMap()
     {
-        if (Camera.main.GetComponent<UIController>().shadowMap.IsVisible)
-            return; 
+        float currentShadowSetting = QualitySettings.shadowDistance;
+        float currentTime = dayNightController.targetTime;
+        float frame = capturedFramesNumber - frameUpdatePending;
+        float percent = 100 / capturedFramesNumber;
+
+        if ((frame * percent) > 99)
+            startShadowCalc = 2;
 
         StartCapture();
-
-        float currentTime = dayNightController.targetTime;
-
-        Debug.Log("=> 10%");
-        pixelArray = null;
-        pixelArray = new Texture2D(shadowmapCopy.width / 2, shadowmapCopy.height);
-
-        for (int y = (int)startPoint.y; y < pixelArray.height - (int)startPoint.y; y++)
-            for (int x = (int)startPoint.x; x < pixelArray.width - (int)startPoint.x; x++)
-                pixelArray.SetPixel(x, y, new Color(1, 1, 1, 1));
-
-        float step;
-        Texture2D tmp = null;
-        for (int i = 0; i < max; i++)
-        {
-            step = 0;
-            while (step < 1)
-            {
-                tmp = CaptureShadowMap((float)i + step);
-                FilterDefaultValue(ref tmp, ref pixelArray, max * 10f);
-                step += 0.1f;
-            }
-            Debug.Log("=> " + (i + 2) * 10 + "%");
-            Camera.main.Render(); //May be needed to update UI
-        }
-
+        Texture2D tmp = CaptureShadowMap(frame);
+        FilterDefaultValue(ref tmp, ref pixelArray, capturedFramesNumber * 10f);
         pixelArray.Apply();
-        EndCapture(currentTime);
+
+        //TODO UI: LOADING BAR
+        Debug.Log("=> " + (frame * percent).ToString() + "%");
+
+        frameUpdatePending -= 0.1f;
+        EndCapture(currentTime, currentShadowSetting);
         ConstructionController.instance.UpdatePlantsSunExposure();
     }
 
-    private void EndCapture(float currentTime)
+    private void EndCapture(float currentTime, float shadowDistance)
     {
+        QualitySettings.shadowDistance = shadowDistance;
         if (pixelArray != null)
             shadowMapTexture.texture = pixelArray;
         sun.RemoveCommandBuffer(LightEvent.AfterShadowMap, cb);
@@ -140,7 +139,7 @@ public class ShadowMap : MonoBehaviour
 
     private Texture2D CaptureShadowMap(float hourOffset)
     {
-        dayNightController.InstantSetTimeofDay(8f + hourOffset);
+        dayNightController.InstantSetTimeofDay(6f + hourOffset);
         shadowCamera.Render();
         RenderTexture.active = shadowmapCopy;
         Texture2D tmp = new Texture2D(shadowmapCopy.width, shadowmapCopy.height);
@@ -167,5 +166,22 @@ public class ShadowMap : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ClearPixelArray()
+    {
+        pixelArray = null;
+        pixelArray = new Texture2D(shadowmapCopy.width / 2, shadowmapCopy.height);
+        for (int y = (int)startPoint.y; y < pixelArray.height - (int)startPoint.y; y++)
+            for (int x = (int)startPoint.x; x < pixelArray.width - (int)startPoint.x; x++)
+                pixelArray.SetPixel(x, y, new Color(1, 1, 1, 1));
+    }
+
+    public void SetShadowCalc(int state)
+    {
+        if (startShadowCalc == 0)
+            startShadowCalc = 1;
+        else if (startShadowCalc == 2)
+            startShadowCalc = 0;
     }
 }

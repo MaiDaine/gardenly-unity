@@ -55755,13 +55755,13 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 1410021583}
-            m_MethodName: UpdateShadowMap
-            m_Mode: 4
+          - m_Target: {fileID: 534669908}
+            m_MethodName: Cancel
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
+              m_IntArgument: 1
               m_FloatArgument: 9
               m_StringArgument: 
               m_BoolArgument: 0
@@ -55788,13 +55788,13 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
+          - m_Target: {fileID: 1410021583}
+            m_MethodName: SetShadowCalc
+            m_Mode: 3
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
+              m_IntArgument: 1
               m_FloatArgument: 9
               m_StringArgument: 
               m_BoolArgument: 0
@@ -77782,6 +77782,8 @@ MonoBehaviour:
   dayNightController: {fileID: 170076736}
   shadowFilter: {fileID: 226491558}
   shadowMapTexture: {fileID: 753288914}
+  capturedFramesNumber: 12
+  startShadowCalc: 0
 --- !u!20 &1410021585
 Camera:
   m_ObjectHideFlags: 0
@@ -130182,6 +130184,17 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1670110612}
+            m_MethodName: Hide
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 753288916}
             m_MethodName: Hide
             m_Mode: 6
             m_Arguments:

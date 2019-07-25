@@ -115,6 +115,7 @@ public class UIController : MonoBehaviour
             flowerBedDataPanel.Hide();
         menuOpen = false;
         flowerBedMenuOpen = false;
+        ShadowMap.instance.startShadowCalc = 0;
     }
 
     //TODO UI
@@ -227,6 +228,7 @@ public class UIController : MonoBehaviour
 
     public void StartNewFb()
     {
+        ShadowMap.instance.startShadowCalc = 0;
         uIInteractions.StartNewFB();
     }
 

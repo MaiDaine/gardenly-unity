@@ -24,3 +24,5 @@ MonoBehaviour:
   - ToolBar
   - ToolBar
   - ToolBarSubMenu
+  - SearchPanel
+  - ShadowMap
