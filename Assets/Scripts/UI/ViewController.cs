@@ -41,7 +41,19 @@ public class ViewController : MonoBehaviour
     {
         UIController controller = Camera.main.GetComponent<UIController>();
         if (controller != null)
-            viewRef.CustomStartAnchoredPosition = new Vector3(-controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
+        {
+            float yRef = 0;
+            float xRef = -controller.extendMenu.RectTransform.sizeDelta.x + 0.4f;
+            Debug.Log("lala : " + viewRef.RectTransform.rotation.z);
+            if (viewRef.RectTransform.rotation.z == 0)
+                yRef = -33.46f;
+            else
+            {
+                yRef = -358.5f;
+                xRef -= viewRef.RectTransform.sizeDelta.x;
+            }
+            viewRef.CustomStartAnchoredPosition = new Vector3(xRef, yRef, 0);
+        }
     }
 
 

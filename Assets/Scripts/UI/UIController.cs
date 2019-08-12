@@ -95,7 +95,7 @@ public class UIController : MonoBehaviour
     {
         foreach (UIView view in plantsViews)
         {
-            if (view.IsVisible)
+            if (view.gameObject != null && view.IsVisible)
                 view.Hide();
         }
         if (shadowMap.IsVisible)
