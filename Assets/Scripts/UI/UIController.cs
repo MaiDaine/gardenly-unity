@@ -115,7 +115,8 @@ public class UIController : MonoBehaviour
             flowerBedDataPanel.Hide();
         menuOpen = false;
         flowerBedMenuOpen = false;
-        ShadowMap.instance.startShadowCalc = 0;
+        if (ShadowMap.instance.startShadowCalc == 1)
+            ShadowMap.instance.startShadowCalc = 0;
     }
 
     //TODO UI

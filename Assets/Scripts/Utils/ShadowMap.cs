@@ -8,6 +8,7 @@ public class ShadowMap : MonoBehaviour
     public static ShadowMap instance = null;
 
     public DayNightController dayNightController;
+    public LoadingShadowScript loadingBar;
     public GameObject shadowFilter;
     public RawImage shadowMapTexture;
     public float capturedFramesNumber = 12f;
@@ -87,7 +88,7 @@ public class ShadowMap : MonoBehaviour
                     goto EndCapture;
                 }
 
-        EndCapture:
+            EndCapture:
         EndCapture(currentTime, currentShadowSetting);
     }
 
@@ -118,8 +119,7 @@ public class ShadowMap : MonoBehaviour
         FilterDefaultValue(ref tmp, ref pixelArray, capturedFramesNumber * 10f);
         pixelArray.Apply();
 
-        //TODO UI: LOADING BAR
-        Debug.Log("=> " + (frame * percent).ToString() + "%");
+        loadingBar.UpdateLoadingBar((frame * percent) / 100);
 
         frameUpdatePending -= 0.1f;
         EndCapture(currentTime, currentShadowSetting);
@@ -177,11 +177,13 @@ public class ShadowMap : MonoBehaviour
                 pixelArray.SetPixel(x, y, new Color(1, 1, 1, 1));
     }
 
-    public void SetShadowCalc(int state)
+    public void SetShadowCalc()
     {
         if (startShadowCalc == 0)
             startShadowCalc = 1;
         else if (startShadowCalc == 2)
+            startShadowCalc = 0;
+        if (Camera.main.GetComponent<UIController>().shadowMap.IsHiding)
             startShadowCalc = 0;
     }
 }
