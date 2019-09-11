@@ -4633,7 +4633,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 127626705}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25048,6 +25048,7 @@ MonoBehaviour:
   - {fileID: 666436822}
   - {fileID: 1313221065}
   uIButtonListener: {fileID: 538496935}
+  mainButtonListener: {fileID: 853711200}
   revertActionSet: {fileID: 11400000, guid: 49358fd9e48f0f54f871ce4f2784a391, type: 2}
   redoActionSet: {fileID: 11400000, guid: cfd862c21b1222a479a621dde8f3fb9a, type: 2}
   gardenName: {fileID: 1979017820}
@@ -25223,7 +25224,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 538496936}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25621,15 +25622,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 853711201}
-        m_MethodName: ResetButtons
-        m_Mode: 1
+        m_MethodName: ForceResetButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1174520097}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIButton, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: Doozy.Engine.UI.UIViewEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
@@ -46849,7 +46850,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 853711201}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -55841,17 +55842,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 534669908}
-            m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 1
-              m_FloatArgument: 9
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 0
           - m_Target: {fileID: 853711201}
             m_MethodName: SetViewAnchor
             m_Mode: 2
@@ -55907,17 +55897,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 1028096044}
-            m_MethodName: ChangeState
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 0
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
@@ -95944,6 +95923,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 853711201}
+        m_MethodName: ForceResetButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 983599003}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIButton, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: Doozy.Engine.UI.UIViewEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null

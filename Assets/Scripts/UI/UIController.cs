@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public UIButton cameraModeButton;
     public UIButton[] tmpBtn;
     public UIButtonListener uIButtonListener;
+    public UIButtonListener mainButtonListener;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public TextMeshProUGUI gardenName;
@@ -108,6 +109,8 @@ public class UIController : MonoBehaviour
             dynamicObjectMenu.Hide();
         if (uIButtonListener != null)
             uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+        if (mainButtonListener != null)
+            mainButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
         HideViews();
         if (dataPanel != null && dataPanel.GetView() != null)
             dataPanel.GetView().Hide();

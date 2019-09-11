@@ -111,8 +111,13 @@ public class ShadowMap : MonoBehaviour
         float frame = capturedFramesNumber - frameUpdatePending;
         float percent = 100 / capturedFramesNumber;
 
+        if (!loadingBar.gameObject.activeSelf)
+            loadingBar.gameObject.SetActive(true);
         if ((frame * percent) > 99)
+        {
             startShadowCalc = 2;
+            loadingBar.UpdateLoadingBar(1);
+        }
 
         StartCapture();
         Texture2D tmp = CaptureShadowMap(frame);
