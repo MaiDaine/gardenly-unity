@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.Text;
 
 public class SearchPanelScript : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class SearchPanelScript : MonoBehaviour
     public string[] plantTypes;
 
     private Dictionary<string, List<string>> classifyNames;
+
+    private string FormatString(string stringToFormat)
+    {
+        return stringToFormat.ToUpper().Normalize(NormalizationForm.FormD);
+    }
 
     private void ClearSearchContent()
     {
@@ -46,23 +52,23 @@ public class SearchPanelScript : MonoBehaviour
     private void ClassifyPlantsName(string type, string name)
     {
         int updateIndex = 0;
-        string textRef = searchText.text.ToUpper();
-
+        string textRef = FormatString(searchText.text);
+       
         if (classifyNames[type].Count == 0)
             classifyNames[type].Add(name);
         else
         {
             for (int i = 0; i < classifyNames[type].Count; i++)
             {
-                if (name.ToUpper().IndexOf(textRef) > classifyNames[type][i].ToUpper().IndexOf(textRef))
+                if (FormatString(name).IndexOf(textRef) > FormatString(classifyNames[type][i]).IndexOf(textRef))
                     updateIndex = i + 1;
-                else if (name.ToUpper().IndexOf(textRef) < classifyNames[type][i].ToUpper().IndexOf(textRef))
+                else if (FormatString(name).IndexOf(textRef) < FormatString(classifyNames[type][i]).IndexOf(textRef))
                 {
                     updateIndex = i;
                     break;
                 }
                 else
-                    updateIndex = AlphabeticalClassification(name.ToUpper(), classifyNames[type][i].ToUpper(), updateIndex);
+                    updateIndex = AlphabeticalClassification(FormatString(name), FormatString(classifyNames[type][i]).ToUpper(), updateIndex);
             }
 
             if (updateIndex >= classifyNames[type].Count)
@@ -116,7 +122,6 @@ public class SearchPanelScript : MonoBehaviour
                     obj = Instantiate(prefabButton, searchContent[typeIndex].transform);
                     ButtonScript.SetDynamicButton(obj, type, plantName);
                     SetButtonPlantData(obj, type, plantName);
-                    //--searchLimit;
                 }
             }
             ++typeIndex;
@@ -141,7 +146,7 @@ public class SearchPanelScript : MonoBehaviour
             {
                 foreach (string plantName in plantNames)
                 {
-                    if (plantName.ToUpper().Contains(searchText.text.ToUpper()))
+                    if (FormatString(plantName).Contains(FormatString(searchText.text)))
                         ClassifyPlantsName(type, plantName);
                 }
             }
