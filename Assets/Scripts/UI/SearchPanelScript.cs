@@ -2,6 +2,7 @@
 using TMPro;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 public class SearchPanelScript : MonoBehaviour
 {
@@ -16,7 +17,17 @@ public class SearchPanelScript : MonoBehaviour
 
     private string FormatString(string stringToFormat)
     {
-        return stringToFormat.ToUpper().Normalize(NormalizationForm.FormD);
+        string formatString = stringToFormat.ToUpper().Normalize(NormalizationForm.FormD);
+        StringBuilder builder = new StringBuilder();
+
+        foreach(char c in formatString)
+        {
+            UnicodeCategory code = CharUnicodeInfo.GetUnicodeCategory(c);
+            if (code != UnicodeCategory.NonSpacingMark)
+                builder.Append(c);
+        }
+
+        return builder.ToString().Normalize(NormalizationForm.FormC);
     }
 
     private void ClearSearchContent()
@@ -68,7 +79,7 @@ public class SearchPanelScript : MonoBehaviour
                     break;
                 }
                 else
-                    updateIndex = AlphabeticalClassification(FormatString(name), FormatString(classifyNames[type][i]).ToUpper(), updateIndex);
+                    updateIndex = AlphabeticalClassification(FormatString(name), FormatString(classifyNames[type][i]), updateIndex);
             }
 
             if (updateIndex >= classifyNames[type].Count)
@@ -146,6 +157,7 @@ public class SearchPanelScript : MonoBehaviour
             {
                 foreach (string plantName in plantNames)
                 {
+                    Debug.Log("FOR TEXT : " + FormatString(plantName) + " search " + FormatString(searchText.text));
                     if (FormatString(plantName).Contains(FormatString(searchText.text)))
                         ClassifyPlantsName(type, plantName);
                 }
