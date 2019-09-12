@@ -25687,6 +25687,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 534669912}
+        m_MethodName: HideViews
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Doozy.Engine.UI.UIViewEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   ListenForAllUIViews: 0
@@ -46880,7 +46891,6 @@ MonoBehaviour:
   - {fileID: 424425214353298864}
   - {fileID: 424425213982445022}
   - {fileID: 424425213468452085}
-  - {fileID: 1174520097}
   - {fileID: 983599003}
   plantView: {fileID: 0}
   dynButtons: []
@@ -49763,7 +49773,7 @@ RectTransform:
   - {fileID: 353108784}
   - {fileID: 273259792}
   m_Father: {fileID: 424425213898751462}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -54875,7 +54885,7 @@ RectTransform:
   - {fileID: 1831556786}
   - {fileID: 1719970063}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -66823,7 +66833,7 @@ RectTransform:
   - {fileID: 1952294371}
   - {fileID: 2092779245}
   - {fileID: 420679626}
-  m_Father: {fileID: 1781997226}
+  m_Father: {fileID: 424425213898751462}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -66889,7 +66899,7 @@ MonoBehaviour:
   StartAlpha: 1
   AllowMultipleClicks: 1
   ButtonCategory: Gardenly
-  ButtonName: MainButton
+  ButtonName: PlantsSubButton
   ClickMode: 0
   DeselectButtonAfterClick: 0
   DisableButtonBetweenClicksInterval: 0.3
@@ -67834,7 +67844,7 @@ MonoBehaviour:
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
-            m_CallState: 2
+            m_CallState: 0
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
@@ -72863,6 +72873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1242978472}
   - component: {fileID: 1242978473}
+  - component: {fileID: 1242978474}
   m_Layer: 0
   m_Name: ToolBarPlantsView Listener
   m_TagString: Untagged
@@ -72918,7 +72929,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1058875892}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72929,7 +72940,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 53625877}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72940,7 +72951,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1786989299}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72951,7 +72962,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2018309879}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72962,7 +72973,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1591151454}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72973,7 +72984,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 127626705}
         m_MethodName: ResetButtons
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -72997,6 +73008,39 @@ MonoBehaviour:
       PublicKeyToken=null
   ListenForAllUIViews: 0
   TriggerAction: 2
+  ViewCategory: Gardenly
+  ViewName: PlantsToolBarSubMenu
+--- !u!114 &1242978474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242978471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94ecf0c88173a64fa47992cebe1d4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1741647983374603727}
+        m_MethodName: Show
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Doozy.Engine.UI.UIViewEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  ListenForAllUIViews: 0
+  TriggerAction: 1
   ViewCategory: Gardenly
   ViewName: PlantsToolBarSubMenu
 --- !u!1 &1243419377
@@ -77239,6 +77283,7 @@ GameObject:
   - component: {fileID: 1400011784}
   - component: {fileID: 1400011785}
   - component: {fileID: 1400011786}
+  - component: {fileID: 1400011787}
   m_Layer: 0
   m_Name: PlantsHideViewListener
   m_TagString: Untagged
@@ -77374,6 +77419,39 @@ MonoBehaviour:
   dynamicButtonListener: {fileID: 0}
   plantType: 
   isPressed: 0
+--- !u!114 &1400011787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400011783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94ecf0c88173a64fa47992cebe1d4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1741647983374603727}
+        m_MethodName: Hide
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Doozy.Engine.UI.UIViewEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  ListenForAllUIViews: 0
+  TriggerAction: 1
+  ViewCategory: Gardenly
+  ViewName: PlantsSubView
 --- !u!1 &1402951115
 GameObject:
   m_ObjectHideFlags: 0
@@ -91860,7 +91938,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1174520094}
   - {fileID: 424425213468452087}
   - {fileID: 424425213898751462}
   - {fileID: 424425214353298866}
@@ -120283,7 +120360,7 @@ RectTransform:
   - {fileID: 424425214293920311}
   - {fileID: 424425214431546605}
   m_Father: {fileID: 424425213898751462}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -121453,6 +121530,28 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 853711201}
+            m_MethodName: SetViewAnchor
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 1741647983374603727}
+              m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1741647983374603727}
+            m_MethodName: Toggle
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 0
           - m_Target: {fileID: 534669908}
             m_MethodName: Cancel
             m_Mode: 1
@@ -122729,7 +122828,7 @@ RectTransform:
   - {fileID: 424425214743223783}
   - {fileID: 424425214602976061}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -125670,7 +125769,7 @@ RectTransform:
   - {fileID: 424425214944242522}
   - {fileID: 424425214804520320}
   m_Father: {fileID: 424425213898751462}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -126647,13 +126746,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1174520094}
   - {fileID: 929079143}
   - {fileID: 424425214723814100}
   - {fileID: 424425213414470439}
   - {fileID: 424425213804204618}
   - {fileID: 424425214944245260}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -126923,7 +127023,7 @@ RectTransform:
   - {fileID: 424425213121803468}
   - {fileID: 424425212982080022}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -131890,7 +131990,7 @@ RectTransform:
   - {fileID: 424425213355355298}
   - {fileID: 424425213218777720}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -132231,7 +132331,7 @@ RectTransform:
   - {fileID: 666436819}
   - {fileID: 1313221062}
   m_Father: {fileID: 1781997226}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -133329,7 +133429,7 @@ RectTransform:
   - {fileID: 424425213454207940}
   - {fileID: 424425213593406750}
   m_Father: {fileID: 424425213898751462}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -135979,7 +136079,7 @@ RectTransform:
   - {fileID: 424425213804203804}
   - {fileID: 424425213943925190}
   m_Father: {fileID: 424425213898751462}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

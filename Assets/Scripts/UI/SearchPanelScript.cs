@@ -157,7 +157,6 @@ public class SearchPanelScript : MonoBehaviour
             {
                 foreach (string plantName in plantNames)
                 {
-                    Debug.Log("FOR TEXT : " + FormatString(plantName) + " search " + FormatString(searchText.text));
                     if (FormatString(plantName).Contains(FormatString(searchText.text)))
                         ClassifyPlantsName(type, plantName);
                 }
