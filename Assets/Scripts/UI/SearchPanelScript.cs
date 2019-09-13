@@ -20,7 +20,7 @@ public class SearchPanelScript : MonoBehaviour
         string formatString = stringToFormat.ToUpper().Normalize(NormalizationForm.FormD);
         StringBuilder builder = new StringBuilder();
 
-        foreach(char c in formatString)
+        foreach (char c in formatString)
         {
             UnicodeCategory code = CharUnicodeInfo.GetUnicodeCategory(c);
             if (code != UnicodeCategory.NonSpacingMark)
@@ -35,13 +35,9 @@ public class SearchPanelScript : MonoBehaviour
         ButtonScript[] buttons = mainContent.GetComponentsInChildren<ButtonScript>();
 
         if (buttons.Length > 0)
-        {
             foreach (ButtonScript button in buttons)
-            {
                 Destroy(button.gameObject);
-            }
-        }
-        ClearContainers();
+        DisableContainers();
     }
 
     private void SetButtonPlantData(GameObject obj, string plantType, string plantName)
@@ -64,13 +60,12 @@ public class SearchPanelScript : MonoBehaviour
     {
         int updateIndex = 0;
         string textRef = FormatString(searchText.text);
-       
+
         if (classifyNames[type].Count == 0)
             classifyNames[type].Add(name);
         else
         {
             for (int i = 0; i < classifyNames[type].Count; i++)
-            {
                 if (FormatString(name).IndexOf(textRef) > FormatString(classifyNames[type][i]).IndexOf(textRef))
                     updateIndex = i + 1;
                 else if (FormatString(name).IndexOf(textRef) < FormatString(classifyNames[type][i]).IndexOf(textRef))
@@ -80,7 +75,6 @@ public class SearchPanelScript : MonoBehaviour
                 }
                 else
                     updateIndex = AlphabeticalClassification(FormatString(name), FormatString(classifyNames[type][i]), updateIndex);
-            }
 
             if (updateIndex >= classifyNames[type].Count)
                 classifyNames[type].Add(name);
@@ -103,7 +97,7 @@ public class SearchPanelScript : MonoBehaviour
         }
     }
 
-    private void ClearContainers()
+    private void DisableContainers()
     {
         int typeIndex = 0;
 
@@ -156,10 +150,8 @@ public class SearchPanelScript : MonoBehaviour
             if (plantNames != null)
             {
                 foreach (string plantName in plantNames)
-                {
                     if (FormatString(plantName).Contains(FormatString(searchText.text)))
                         ClassifyPlantsName(type, plantName);
-                }
             }
         }
         InstantiatePlantsButton();
