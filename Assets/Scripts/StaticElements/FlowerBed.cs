@@ -223,11 +223,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     public void DeSerialize(string json)
     {
+        initFromSerialization = true;
         serializedElement = JsonUtility.FromJson<SerializedElement>(json);
         SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
 
         flowerBedName = serializedElement.name;
-
         groundType = JSON.Parse(json)["groundType"]["name"];
         //groundType = GetGroundNameFromType(serializedElement.ground_type_id);
         //if (groundType == null)

@@ -94,7 +94,7 @@ public class ExternalData
         plantData.imgUrl = tmp["thumbnail"];
 
         plantData.status = PlantData.DataStatus.Received;
-        if (/*plantData.plantID != null*/ callbackLoadData.ContainsKey(plantData.name))
+        if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.name))
         {
             callbackLoadData[plantData.name].Invoke(plantData);
         }

@@ -23,7 +23,6 @@ public class PlantElement : GhostHandler
     public void UpdateSunExposure()
     {
         serializedElement.sun_exposition = ShadowMap.instance.GetSunExposure(transform.position.x, transform.position.z);
-        Debug.Log(serializedElement.sun_exposition);
     }
 
     //ISelectable
@@ -46,7 +45,7 @@ public class PlantElement : GhostHandler
     }
 
     //Serialization
-    
+
     [Serializable]
     public struct SerializedElement
     {
@@ -70,7 +69,7 @@ public class PlantElement : GhostHandler
         SerializableItemData serializableItemData;
 
         serializableItemData.position = transform.position;
-        
+
         serializedElement.type = SerializationController.ItemType.Plant;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
 
@@ -105,8 +104,7 @@ public class PlantElement : GhostHandler
 
     public void OnPlantDataLoad(PlantData plantData)
     {
-        data = plantData;//TODO
+        data = plantData;
         serializedElement.plant_id = plantData.plantID;
-        // GetComponent<MeshRenderer>().material = SpawnController.instance.GetModelMaterial(plantData);
     }
 }
