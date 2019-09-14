@@ -32,6 +32,8 @@ public class PlantPanelScript : MonoBehaviour
 
     private void OnPictureLoaded(Texture2D texture)
     {
+        if (this == null)
+            return;
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
@@ -43,6 +45,8 @@ public class PlantPanelScript : MonoBehaviour
 
     public void OnDataLoaded(PlantData plantData)
     {
+        if (this == null)
+            return;
         if (plantData != null)
         {
             plantDataRef = plantData;
@@ -54,28 +58,16 @@ public class PlantPanelScript : MonoBehaviour
         }
     }
 
-    // Set data of the panel and show it, plantDataRef if Graphql request return null.
-    public void SetData(string plantType, string plantName, bool onSelect = false)
+    public void GetData(string plantType, string plantName)
     {
-        ButtonScript script = GetComponentInChildren<ButtonScript>();
-        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
         RawImage icon = GetComponentInChildren<RawImage>();
         Animator animator = icon.GetComponentInChildren<Animator>();
 
         reactProxy = ReactProxy.instance;
-        if (!GetView().IsVisible)
-            GetView().Show();
-
-        InitializeView(labels, script, plantName, plantType);
-
-        if (onSelect)
-            return;
-
         reactProxy.externalData.callbackLoadData[plantName] = OnDataLoaded;
         reactProxy.externalData.callbackFinishDownloadImage[plantName] = OnPictureLoaded;
 
         PlantData fetchData = reactProxy.GetPlantsData(plantType, plantName);
-
         if (fetchData == null && (plantDataRef == null || plantDataRef.name != plantName))
         {
             plantDataRef = new PlantData("");
@@ -96,8 +88,25 @@ public class PlantPanelScript : MonoBehaviour
             animator.enabled = true;
             icon.texture = textureRef;
         }
+    }
 
+    // Set data of the panel and show it, plantDataRef if Graphql request return null.
+    public void SetData(string plantType, string plantName, bool onSelect = false)
+    {
+        ButtonScript script = GetComponentInChildren<ButtonScript>();
+        TextMeshProUGUI[] labels = GetComponentsInChildren<TextMeshProUGUI>();
+
+        if (!GetView().IsVisible)
+            GetView().Show();
+
+        InitializeView(labels, script, plantName, plantType);
+
+        if (onSelect)
+            return;
+
+        GetData(plantType, plantName);
         SetDescriptionDataPanel();
+
         if (dataPanelInitBtn.isActiveAndEnabled)
             dataPanelInitBtn.ExecuteClick();
 

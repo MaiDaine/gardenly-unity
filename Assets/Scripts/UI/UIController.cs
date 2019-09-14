@@ -6,14 +6,16 @@ using System.Collections;
 
 public class UIController : MonoBehaviour
 {
-    public UIView extendMenu;
+    public UIView shadowMap;
     public UIView dynamicObjectMenu;
+    public UIView extendMenu;
     public UIView flowerBedDataPanel;
     public UIView[] plantsViews;
     public UIButton gridButton;
     public UIButton cameraModeButton;
     public UIButton[] tmpBtn;
     public UIButtonListener uIButtonListener;
+    public UIButtonListener mainButtonListener;
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public TextMeshProUGUI gardenName;
@@ -22,6 +24,7 @@ public class UIController : MonoBehaviour
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
+    public IEnumerator imageCoroutine = null;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
@@ -32,7 +35,8 @@ public class UIController : MonoBehaviour
     private ReactProxy reactProxy;
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
-    private IEnumerator imageCoroutine = null;
+    private float sizeView = 183.48f;
+
 
     private void Awake()
     {
@@ -80,7 +84,7 @@ public class UIController : MonoBehaviour
 
     public bool PlantsViewsDisplay()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (plantsViews[i].IsVisible)
                 return true;
@@ -92,9 +96,11 @@ public class UIController : MonoBehaviour
     {
         foreach (UIView view in plantsViews)
         {
-            if (view.IsVisible)
+            if (view.gameObject != null && view.IsVisible)
                 view.Hide();
         }
+        if (shadowMap.IsVisible)
+            shadowMap.Hide();
     }
 
     public void DestroyMenu()
@@ -103,6 +109,8 @@ public class UIController : MonoBehaviour
             dynamicObjectMenu.Hide();
         if (uIButtonListener != null)
             uIButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
+        if (mainButtonListener != null)
+            mainButtonListener.GetComponentInChildren<ViewController>().ResetButtons();
         HideViews();
         if (dataPanel != null && dataPanel.GetView() != null)
             dataPanel.GetView().Hide();
@@ -110,6 +118,8 @@ public class UIController : MonoBehaviour
             flowerBedDataPanel.Hide();
         menuOpen = false;
         flowerBedMenuOpen = false;
+        if (ShadowMap.instance.startShadowCalc == 1)
+            ShadowMap.instance.startShadowCalc = 0;
     }
 
     //TODO UI
@@ -139,7 +149,7 @@ public class UIController : MonoBehaviour
     public void SaveViews()
     {
         currentHideViews.Clear();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (plantsViews[i].IsVisible)
                 currentHideViews.Add(plantsViews[i]);
@@ -151,7 +161,7 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
-        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - plantsViews[0].RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -33.46f, 0);
         anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
         if (PlantsViewsDisplay() || afterBuilding)
         {
@@ -159,15 +169,13 @@ public class UIController : MonoBehaviour
             afterBuilding = false;
         }
         else
-        {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorCloseView;
-        }
         if (dataPanel.GetPlantDataRef() != null && dataPanel.GetPlantDataRef().name == plantName && dataPanel.GetView().IsVisible)
         {
             dataPanel.GetView().Hide();
             return;
         }
-            dataPanel.SetData(plantType, plantName, onSelect);
+        dataPanel.SetData(plantType, plantName, onSelect);
     }
 
     // FB panel management
@@ -224,6 +232,7 @@ public class UIController : MonoBehaviour
 
     public void StartNewFb()
     {
+        ShadowMap.instance.startShadowCalc = 0;
         uIInteractions.StartNewFB();
     }
 

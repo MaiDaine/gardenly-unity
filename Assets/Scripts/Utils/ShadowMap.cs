@@ -8,9 +8,11 @@ public class ShadowMap : MonoBehaviour
     public static ShadowMap instance = null;
 
     public DayNightController dayNightController;
+    public LoadingShadowScript loadingBar;
     public GameObject shadowFilter;
     public RawImage shadowMapTexture;
     public float capturedFramesNumber = 12f;
+    public int startShadowCalc = 0;
 
     private Light sun;
     private Camera shadowCamera;
@@ -53,12 +55,12 @@ public class ShadowMap : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B) && frameUpdatePending <= 0)
+        if (startShadowCalc == 1 && frameUpdatePending <= 0)
         {
             ClearPixelArray();
             frameUpdatePending = capturedFramesNumber;
         }
-        if (frameUpdatePending > 0)
+        if (frameUpdatePending > 0 && startShadowCalc == 1)
             UpdateShadowMap();
     }
 
@@ -86,7 +88,7 @@ public class ShadowMap : MonoBehaviour
                     goto EndCapture;
                 }
 
-        EndCapture:
+            EndCapture:
         EndCapture(currentTime, currentShadowSetting);
     }
 
@@ -109,13 +111,21 @@ public class ShadowMap : MonoBehaviour
         float frame = capturedFramesNumber - frameUpdatePending;
         float percent = 100 / capturedFramesNumber;
 
+        if (!loadingBar.gameObject.activeSelf)
+            loadingBar.gameObject.SetActive(true);
+
         StartCapture();
         Texture2D tmp = CaptureShadowMap(frame);
         FilterDefaultValue(ref tmp, ref pixelArray, capturedFramesNumber * 10f);
         pixelArray.Apply();
 
-        //TODO UI: LOADING BAR
-        //Debug.Log("=> " + (frame * percent).ToString() + "%");
+        loadingBar.UpdateLoadingBar((frame * percent) / 100);
+
+        if ((frame * percent) > 99)
+        {
+            startShadowCalc = 2;
+            loadingBar.UpdateLoadingBar(1);
+        }
 
         frameUpdatePending -= 0.1f;
         EndCapture(currentTime, currentShadowSetting);
@@ -171,5 +181,15 @@ public class ShadowMap : MonoBehaviour
         for (int y = (int)startPoint.y; y < pixelArray.height - (int)startPoint.y; y++)
             for (int x = (int)startPoint.x; x < pixelArray.width - (int)startPoint.x; x++)
                 pixelArray.SetPixel(x, y, new Color(1, 1, 1, 1));
+    }
+
+    public void SetShadowCalc()
+    {
+        if (startShadowCalc == 0)
+            startShadowCalc = 1;
+        else if (startShadowCalc == 2)
+            startShadowCalc = 0;
+        if (Camera.main.GetComponent<UIController>().shadowMap.IsHiding)
+            startShadowCalc = 0;
     }
 }

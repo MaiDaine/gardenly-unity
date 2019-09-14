@@ -9,6 +9,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Text text;
     public Color color;
     public Color actionColor;
+    public Sprite initial;
+    public Sprite updated;
     public UIView view;
     public bool pressed = false;
 
@@ -17,6 +19,14 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void Start()
     {
         image = transform.GetComponent<Image>();
+        if (image != null)
+            image.color = color;
+    }
+
+    private void SetColor(Color color)
+    {
+        if (text != null)
+            text.color = color;
         if (image != null)
             image.color = color;
     }
@@ -58,11 +68,11 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         pressed = false;
     }
 
-    private void SetColor(Color color)
+    public void UpdateIcon()
     {
-        if (text != null)
-            text.color = color;
-        if (image != null)
-            image.color = color;
+        if (pressed)
+            image.sprite = updated;
+        else
+            image.sprite = initial;
     }
 }

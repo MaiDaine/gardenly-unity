@@ -30,7 +30,7 @@ public class PlantData
     public int waterNeed = 0;
     public int sunNeed = 0;
     public int rusticity = 0;
-    public Texture2D image;
+    public Texture2D image = null;
     public int model = -1;
     public DataStatus status = DataStatus.None;
 

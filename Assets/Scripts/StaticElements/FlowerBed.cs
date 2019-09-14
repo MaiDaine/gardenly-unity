@@ -1,4 +1,5 @@
-﻿using SimpleJSON;
+﻿using Doozy.Engine.UI;
+using SimpleJSON;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -131,6 +132,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         if (state == ConstructionController.ConstructionState.Off)// || state == ConstructionController.ConstructionState.Editing)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
+            controller.dynamicObjectMenu.GetComponent<UIView>().Hide();
             controller.SetFlowerBedDataPanel(this);
         }
     }

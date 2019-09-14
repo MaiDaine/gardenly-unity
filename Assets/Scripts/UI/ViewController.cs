@@ -41,14 +41,25 @@ public class ViewController : MonoBehaviour
     {
         UIController controller = Camera.main.GetComponent<UIController>();
         if (controller != null)
-            viewRef.CustomStartAnchoredPosition = new Vector3(-controller.extendMenu.RectTransform.sizeDelta.x + 0.4f, -33.46f, 0);
+        {
+            float yRef = 0;
+            float xRef = -controller.extendMenu.RectTransform.sizeDelta.x + 0.4f;
+            if (viewRef.RectTransform.rotation.z == 0)
+                yRef = -33.46f;
+            else
+            {
+                yRef = -358.5f;
+                xRef -= viewRef.RectTransform.sizeDelta.x;
+            }
+            viewRef.CustomStartAnchoredPosition = new Vector3(xRef, yRef, 0);
+        }
     }
 
 
     // reset buttons
-    public void ResetStateButtons(UIButton button)
+    public void ResetStateButtons(UIButton button, bool forced = false)
     {
-        if (!button.IsSelected && button.IsActive())
+        if (!button.IsSelected && button.IsActive() || forced)
         {
             LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
             ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();
@@ -63,11 +74,16 @@ public class ViewController : MonoBehaviour
         }
     }
 
-    public void ResetButtons()
+    public void ForceResetButton(UIButton button)
+    {
+        ResetStateButtons(button, true);
+    }
+
+    public void ResetButtons(bool forced = false)
     {
         foreach (UIButton button in buttons)
         {
-            ResetStateButtons(button);
+            ResetStateButtons(button, forced);
         }
     }
 
@@ -98,12 +114,8 @@ public class ViewController : MonoBehaviour
                 for (int i = 0; i < plantNames.Length; i++)
                 {
                     GameObject obj = Instantiate(plantButton, view.transform);
-                    ButtonScript buttonScript = obj.GetComponent<ButtonScript>();
-                    UIButton btn = obj.GetComponent<UIButton>();
-
-                    viewController.dynButtons.Add(btn);
-                    buttonScript.SetGhostType(plantType);
-                    btn.TextMeshProLabel.text = plantNames[i];
+                    ButtonScript.SetDynamicButton(obj, plantType, plantNames[i]);
+                    viewController.dynButtons.Add(obj.GetComponent<UIButton>());
                 }
             }
         }

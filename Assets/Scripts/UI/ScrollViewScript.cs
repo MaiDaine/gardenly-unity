@@ -18,11 +18,13 @@ public class ScrollViewScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Camera.main.GetComponent<CameraController>().zoomEnabled = false;
+        if (Camera.main != null)
+            Camera.main.GetComponent<CameraController>().zoomEnabled = false;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Camera.main.GetComponent<CameraController>().zoomEnabled = true;
+        if (Camera.main != null)
+            Camera.main.GetComponent<CameraController>().zoomEnabled = true;
     }
 }
