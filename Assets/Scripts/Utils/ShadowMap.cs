@@ -58,6 +58,7 @@ public class ShadowMap : MonoBehaviour
         if (startShadowCalc == 1 && frameUpdatePending <= 0)
         {
             ClearPixelArray();
+            MessageHandler.instance.Message("shadow_map", "loading");
             frameUpdatePending = capturedFramesNumber;
         }
         if (frameUpdatePending > 0 && startShadowCalc == 1)
@@ -124,7 +125,8 @@ public class ShadowMap : MonoBehaviour
         if ((frame * percent) > 99)
         {
             startShadowCalc = 2;
-            loadingBar.UpdateLoadingBar(1);
+            loadingBar.gameObject.SetActive(false);
+            MessageHandler.instance.SuccesMessage("shadow_successfull");
         }
 
         frameUpdatePending -= 0.1f;

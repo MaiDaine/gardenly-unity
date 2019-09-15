@@ -80,4 +80,18 @@ public class MessageHandler : MonoBehaviour
         }
         return true;
     }
+
+    public bool Message(string key, string msg)
+    {
+        msg = LocalisationController.instance.GetText(key, msg);
+        gameObject.SetActive(true);
+        errorMsg = GetComponentInChildren<TextMeshProUGUI>();
+        if (errorMsg != null)
+        {
+            errorMsg.text = msg;
+            errorMsg.color = Color.green;
+            startCount = true;
+        }
+        return true;
+    }
 }
