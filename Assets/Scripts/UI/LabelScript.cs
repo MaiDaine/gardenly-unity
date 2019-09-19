@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Doozy.Engine.UI;
@@ -7,6 +8,7 @@ using Doozy.Engine.UI;
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Text text;
+    public TextMeshProUGUI textMesh;
     public Color color;
     public Color actionColor;
     public Sprite initial;
@@ -29,6 +31,8 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             text.color = color;
         if (image != null)
             image.color = color;
+        if (textMesh != null)
+            textMesh.color = color;
     }
 
 
