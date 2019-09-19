@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI gardenName;
     public PlantPanelScript dataPanel;
     public UIInteractions uIInteractions = null;
+    public TutorialController tutorialController;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
