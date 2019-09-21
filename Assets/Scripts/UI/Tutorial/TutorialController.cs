@@ -2,6 +2,7 @@
 using Doozy.Engine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
 public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -36,6 +37,13 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
         title.text = tutoObject.GetComponent<UIButton>().TextMeshProLabel.text;
         body.text = tutoObject.instructions[tutoObject.progressIndex];
         navButtons[1].DisableButton();
+        if (!navButtons[2].Interactable)
+            navButtons[2].EnableButton();
+        if (tutoObject.instructions.Length == 1)
+        {
+            navButtons[2].DisableButton();
+            tutoObject.buttons[0].GetComponent<Image>().color = tutoObject.activeColor;
+        }
     }
 
     public void PlayTutorial()
@@ -60,10 +68,15 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void CloseTutorial()
     {
-        if (tutoObject != null && tutoObject.buttons.Length > 0)
+        if (tutoObject != null && tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
         {
-            tutoObject.buttons[0].ExecuteClick();
+            for (int cnt = tutoObject.progressIndex; cnt > 0; cnt--)
+            {
+                tutoObject.buttons[cnt].ExecuteClick();
+            }
         }
+        if (tutoObject.instructions.Length == 1)
+            tutoObject.buttons[0].GetComponent<Image>().color = tutoObject.buttons[0].GetComponent<LabelScript>().color;
     }
 
     //UI management

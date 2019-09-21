@@ -111,7 +111,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     spaceCount: 3
     wordCount: 4
     linkCount: 0
-    lineCount: 1
+    lineCount: 22
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 5834065579704348850}
   - component: {fileID: 5834065579704348849}
   - component: {fileID: 5834065579704348848}
+  - component: {fileID: 7526503430138565211}
   m_Layer: 5
   m_Name: HourTuto
   m_TagString: Untagged
@@ -2436,6 +2437,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7526503430138565211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834065579704348862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
+  views: []
+  instructions: []
+  progressIndex: 0
+  activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
 --- !u!1 &5834065579871575703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,7 +2565,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2576,7 +2594,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 12
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -2628,7 +2646,7 @@ GameObject:
   - component: {fileID: 5834065579944884588}
   - component: {fileID: 5834065579944884587}
   - component: {fileID: 5834065579944884586}
-  - component: {fileID: 9113951463731505895}
+  - component: {fileID: 4444890013772175132}
   m_Layer: 5
   m_Name: SaveTuto
   m_TagString: Untagged
@@ -4873,7 +4891,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &9113951463731505895
+--- !u!114 &4444890013772175132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4882,13 +4900,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5834065579944884584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2497f5de4125d2d4ab6d6895539e1343, type: 3}
+  m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutoSubMenu: []
-  navButtons: []
-  title: {fileID: 0}
-  body: {fileID: 0}
+  buttons: []
+  views: []
+  instructions: []
+  progressIndex: 0
+  activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
 --- !u!1 &5834065580388071265
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,6 +4922,7 @@ GameObject:
   - component: {fileID: 5834065580388071269}
   - component: {fileID: 5834065580388071268}
   - component: {fileID: 5834065580388071267}
+  - component: {fileID: 8731661525860117329}
   m_Layer: 5
   m_Name: OpenMenuTuto
   m_TagString: Untagged
@@ -7147,6 +7167,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8731661525860117329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834065580388071265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
+  views: []
+  instructions: []
+  progressIndex: 0
+  activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
 --- !u!1 &5834065580536349983
 GameObject:
   m_ObjectHideFlags: 0
@@ -7258,7 +7295,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -7287,7 +7324,7 @@ MonoBehaviour:
     spaceCount: 4
     wordCount: 5
     linkCount: 0
-    lineCount: 1
+    lineCount: 18
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -7339,6 +7376,7 @@ GameObject:
   - component: {fileID: 5834065580620138422}
   - component: {fileID: 5834065580620138421}
   - component: {fileID: 5834065580620138420}
+  - component: {fileID: 656214921523826910}
   m_Layer: 5
   m_Name: CameraModeTuto
   m_TagString: Untagged
@@ -9583,6 +9621,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &656214921523826910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834065580620138418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
+  views: []
+  instructions: []
+  progressIndex: 0
+  activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
 --- !u!1 &5834065580951940734
 GameObject:
   m_ObjectHideFlags: 0
@@ -9597,6 +9652,7 @@ GameObject:
   - component: {fileID: 5834065580951940722}
   - component: {fileID: 5834065580951940721}
   - component: {fileID: 5834065580951940720}
+  - component: {fileID: 5605799583335927031}
   m_Layer: 5
   m_Name: GridTuto
   m_TagString: Untagged
@@ -11841,6 +11897,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5605799583335927031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834065580951940734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
+  views: []
+  instructions: []
+  progressIndex: 0
+  activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
 --- !u!1 &5834065580958767486
 GameObject:
   m_ObjectHideFlags: 0
@@ -11952,7 +12025,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -11981,7 +12054,7 @@ MonoBehaviour:
     spaceCount: 4
     wordCount: 5
     linkCount: 0
-    lineCount: 1
+    lineCount: 31
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -12130,7 +12203,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -12159,7 +12232,7 @@ MonoBehaviour:
     spaceCount: 2
     wordCount: 3
     linkCount: 0
-    lineCount: 1
+    lineCount: 19
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -13252,25 +13325,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7084313651281449002, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+    - target: {fileID: 7084313650271714254, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
         type: 3}
-      propertyPath: OnClick.OnTrigger.Event.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+    - target: {fileID: 7084313650271714254, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
         type: 3}
-      propertyPath: buttons.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
-        type: 3}
-      propertyPath: buttons.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
-        type: 3}
-      propertyPath: views.Array.data[0]
-      value: 
+      propertyPath: m_textInfo.lineCount
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94, type: 3}
