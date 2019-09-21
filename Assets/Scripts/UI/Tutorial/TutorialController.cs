@@ -3,7 +3,7 @@ using Doozy.Engine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TutorialController : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
+public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public UIView[] tutoSubMenu;
     public UIButton[] navButtons;
@@ -33,6 +33,37 @@ public class TutorialController : MonoBehaviour,IPointerEnterHandler, IPointerEx
     {
         tutoObject = tutorial;
         tutoObject.progressIndex = 0;
+        title.text = tutoObject.GetComponent<UIButton>().TextMeshProLabel.text;
+        body.text = tutoObject.instructions[tutoObject.progressIndex];
+        navButtons[1].DisableButton();
+    }
+
+    public void PlayTutorial()
+    {
+        tutoObject.PlayTutorial();
+        body.text = tutoObject.instructions[tutoObject.progressIndex];
+        if (tutoObject.progressIndex + 1 >= tutoObject.instructions.Length)
+            navButtons[2].DisableButton();
+        if (!navButtons[1].Interactable && tutoObject.progressIndex > 0)
+            navButtons[1].EnableButton();
+    }
+
+    public void PreviousTutorial()
+    {
+        tutoObject.PreviousTutorial();
+        body.text = tutoObject.instructions[tutoObject.progressIndex];
+        if (tutoObject.progressIndex <= 0)
+            navButtons[1].DisableButton();
+        if (!navButtons[2].Interactable && tutoObject.progressIndex < tutoObject.instructions.Length)
+            navButtons[2].EnableButton();
+    }
+
+    public void CloseTutorial()
+    {
+        if (tutoObject != null && tutoObject.buttons.Length > 0)
+        {
+            tutoObject.buttons[0].ExecuteClick();
+        }
     }
 
     //UI management
@@ -51,6 +82,11 @@ public class TutorialController : MonoBehaviour,IPointerEnterHandler, IPointerEx
         {
             button.gameObject.SetActive(!button.IsActive());
         }
+    }
+
+    public void DisableNavButton(UIButton button)
+    {
+
     }
 
     public void ToogleTutoState()

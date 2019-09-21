@@ -6,30 +6,26 @@ public class TutoObject : MonoBehaviour
 {
     public UIButton[] buttons;
     public UIView[] views;
-    public TextMeshProUGUI title;
     public string[] instructions;
-    public int progressIndex = 0;
+    public int progressIndex;
 
 
-    public void start()
+    public void PlayTutorial()
     {
-        title.text = GetComponent<UIButton>().TextMeshProLabel.text;
+        if (progressIndex < instructions.Length)
+        {
+            Debug.Log("PROGRESS INDEX " + progressIndex);
+            buttons[progressIndex].ExecuteClick();
+            ++progressIndex;
+        }
     }
 
-    public void playTutorial()
+    public void PreviousTutorial()
     {
-        buttons[progressIndex].ExecuteClick();
-    }
-
-    public void previousTutorial()
-    {
+        Debug.Log("PROGRESS INDEX " + progressIndex);
+        if (progressIndex > 0)
+            buttons[progressIndex].ExecuteClick();
         if (progressIndex > 0)
             --progressIndex;
-    }
-
-    public void nextTutorial()
-    {
-        if (progressIndex < buttons.Length)
-            ++progressIndex;
     }
 }
