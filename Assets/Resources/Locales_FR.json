@@ -21,15 +21,20 @@
     "flowerbed": "Parterre"
   },
 
-  "succes": {
-    "save_sucessfull": "Sauvegarde réussie"
-  },
-
   "plant_data": {
     "advices": "Les conseils d'entretien sont absents",
     "description": "La description est absente",
-    "from": "De :",
+    "from": "De : ",
     "missing": "Absent",
     "to": " A "
+  },
+
+  "shadow_map": {
+    "loading": "Calcul de l'ombrage"
+  },
+
+  "succes": {
+    "save_sucessfull": "Sauvegarde réussie",
+    "shadow_successfull": "Calcul de l'ombrage réussi"
   }
 }

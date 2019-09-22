@@ -4185,7 +4185,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000024
+  m_Value: 0.50000036
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -62681,11 +62681,11 @@ RectTransform:
   m_Father: {fileID: 1492330677}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000012219, y: 32.2}
-  m_SizeDelta: {x: 358.6, y: 20.01}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -45}
+  m_SizeDelta: {x: 302.67, y: 20.01}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028096043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73026,6 +73026,17 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 853711201}
+        m_MethodName: SetViewAnchor
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1741647983374603727}
+          m_ObjectArgumentAssemblyTypeName: Doozy.Engine.UI.UIView, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1741647983374603727}
         m_MethodName: Show
         m_Mode: 6
@@ -80944,8 +80955,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 137}
-  m_SizeDelta: {x: 715, y: 97.5}
+  m_AnchoredPosition: {x: 0, y: 94.8}
+  m_SizeDelta: {x: 599.24, y: 97.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1499186864
 MonoBehaviour:
@@ -104243,8 +104254,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -95.72, y: 0}
-  m_SizeDelta: {x: 1138.88, y: 34}
+  m_AnchoredPosition: {x: -96.5, y: 0}
+  m_SizeDelta: {x: 795, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1979017820
 MonoBehaviour:
@@ -108929,17 +108940,6 @@ MonoBehaviour:
             m_CallState: 2
           - m_Target: {fileID: 534669908}
             m_MethodName: Cancel
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 788000914}
-            m_MethodName: ExtendMenuMode
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
