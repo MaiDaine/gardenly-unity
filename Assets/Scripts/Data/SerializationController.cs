@@ -44,6 +44,11 @@ public class SerializationController : MonoBehaviour
             items.Remove(item);
     }
 
+    public void OnSaveSucessfull()
+    {
+        items.Clear();
+    }
+
     public string Serialize()
     {
         string[] updates = new string[3] { "\"additions\": [", "\"modifications\": [", "\"deletions\": [" };

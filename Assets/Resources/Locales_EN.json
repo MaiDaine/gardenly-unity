@@ -21,15 +21,20 @@
     "flowerbed": "Flowerbed"
   },
 
-  "succes": {
-    "save_sucessfull": "Save sucessfull"
-  },
-
   "plant_data": {
     "advices": "maintenance tips are missing",
     "description": "The description is missing",
-    "from": "From :",
+    "from": "From : ",
     "missing": "Missing",
     "to": " To "
+  },
+
+  "shadow_map": {
+    "loading": "Shading calculation"
+  },
+
+  "succes": {
+    "save_sucessfull": "Save sucessfull",
+    "shadow_successfull":  "Shading calculation successfull"
   }
 }
