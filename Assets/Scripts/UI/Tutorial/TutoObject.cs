@@ -39,7 +39,7 @@ public class TutoObject : MonoBehaviour
 
     public void PreviousTutorial()
     {
-        if (progressIndex > 0 && progressIndex < buttons.Length && buttons[progressIndex] != null)
+        if (progressIndex >= 0 && progressIndex < buttons.Length && buttons[progressIndex] != null)
             buttons[progressIndex].ExecuteClick();
         if (progressIndex > 0)
         {

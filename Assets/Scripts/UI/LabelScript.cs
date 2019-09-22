@@ -14,7 +14,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Sprite initial;
     public Sprite updated;
     public UIView view;
-    public bool pressed = false;
+    public bool pressed;
 
     protected Image image;
 
@@ -38,18 +38,24 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+            return;
         if (!pressed)
             SetColor(actionColor);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+            return;
         if (!pressed)
             SetColor(color);
     }
 
     public void TooglePressed()
     {
+        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+            return;
         pressed = !pressed;
     }
 
