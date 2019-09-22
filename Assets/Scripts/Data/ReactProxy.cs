@@ -55,7 +55,10 @@ public class ReactProxy : MonoBehaviour
     public void ExportScene()
     {
         if (Application.isEditor)
+        {
             Debug.Log(SerializationController.instance.Serialize());
+            OnSaveResult(true);
+        }
         else
             save(SerializationController.instance.Serialize());
     }
@@ -94,6 +97,15 @@ public class ReactProxy : MonoBehaviour
         var keys = jsonObject["data"].Keys;
         keys.MoveNext();
         callbacks[keys.Current.Value].Invoke(json);
+    }
+
+    public void OnSaveResult(bool status)
+    {
+        if (status)
+        {
+            PlayerController.instance.actionHandler.OnSaveSucessfull();
+            SerializationController.instance.OnSaveSucessfull();
+        }
     }
 
     //Link to UI

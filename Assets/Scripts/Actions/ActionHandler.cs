@@ -16,6 +16,13 @@ public class ActionHandler : ScriptableObject
         constructionController = ConstructionController.instance;
     }
 
+    public void OnSaveSucessfull()
+    {
+        revertActionSet.items.Clear();
+        redoActionSet.items.Clear();
+        currentAction = null;
+    }
+
     public void NewStateAction(string action, GameObject gameObject, bool updateState = true)
     {
         redoActionSet.ClearSet();

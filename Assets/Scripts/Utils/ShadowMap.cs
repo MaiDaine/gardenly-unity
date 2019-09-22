@@ -89,7 +89,7 @@ public class ShadowMap : MonoBehaviour
                     goto EndCapture;
                 }
 
-            EndCapture:
+        EndCapture:
         EndCapture(currentTime, currentShadowSetting);
     }
 
@@ -110,7 +110,7 @@ public class ShadowMap : MonoBehaviour
         float currentShadowSetting = QualitySettings.shadowDistance;
         float currentTime = dayNightController.targetTime;
         float frame = capturedFramesNumber - frameUpdatePending;
-        float percent = 100 / capturedFramesNumber;
+        float percent = 100.0f / capturedFramesNumber;
 
         if (!loadingBar.gameObject.activeSelf)
             loadingBar.gameObject.SetActive(true);
@@ -120,9 +120,9 @@ public class ShadowMap : MonoBehaviour
         FilterDefaultValue(ref tmp, ref pixelArray, capturedFramesNumber * 10f);
         pixelArray.Apply();
 
-        loadingBar.UpdateLoadingBar((frame * percent) / 100);
+        loadingBar.UpdateLoadingBar((frame * percent) / 100.0f);
 
-        if ((frame * percent) > 99)
+        if ((frame * percent) > 99.0f)
         {
             startShadowCalc = 2;
             loadingBar.gameObject.SetActive(false);
@@ -160,11 +160,12 @@ public class ShadowMap : MonoBehaviour
     {
         float pixelValue;
         float filterValue;
+        Vector2 borders = new Vector2(pixelArray.width - startPoint.x, tmp.height - startPoint.y);
 
-        for (int y = 0; y < tmp.height; y++)
+        for (int y = (int)startPoint.y; y < borders.y; y++)
         {
             filterValue = tmp.GetPixel(tmp.width - 1, tmp.height - 1 - y).r;
-            for (int x = 0; x < pixelArray.width; x++)
+            for (int x = (int)startPoint.x; x < borders.x; x++)
             {
                 pixelValue = tmp.GetPixel(tmp.width - 1 - x, tmp.height - 1 - y).r;
                 if (pixelValue != filterValue)
