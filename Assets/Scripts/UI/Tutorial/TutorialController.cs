@@ -34,6 +34,7 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         tutoObject = tutorial;
         tutoObject.progressIndex = 0;
+        tutoObject.componentIndex = 0;
         title.text = tutoObject.GetComponent<UIButton>().TextMeshProLabel.text;
         body.text = tutoObject.instructions[tutoObject.progressIndex];
         navButtons[1].DisableButton();
@@ -70,9 +71,25 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (tutoObject != null && tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
         {
-            for (int cnt = tutoObject.progressIndex; cnt > 0; cnt--)
+            for (int cnt = tutoObject.progressIndex; cnt >= 0; cnt--)
             {
-                tutoObject.buttons[cnt].ExecuteClick();
+                Debug.Log("CLOSE BUT PROGRESS INDEX " + tutoObject.progressIndex + "COMPONENT INDEX " + tutoObject.componentIndex + " CNT " + cnt);
+
+                if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
+                {
+                    Debug.Log("CLICK " + cnt);
+                    tutoObject.buttons[cnt].ExecuteClick();
+                }
+            }
+            for (int cnt = tutoObject.componentIndex; cnt >= 0; cnt--)
+            {
+                Debug.Log("CLOSE COMP PROGRESS INDEX " + tutoObject.progressIndex + "COMPONENT INDEX " + tutoObject.componentIndex + " CNT " + cnt);
+
+                if (cnt < tutoObject.components.Length && tutoObject.components[cnt] != null)
+                {
+                    Debug.Log("CLICK " + cnt);
+                    tutoObject.components[cnt].GetComponent<Image>().color = tutoObject.componentRefColor[cnt];
+                }
             }
         }
         if (tutoObject.instructions.Length == 1)
