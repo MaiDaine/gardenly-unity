@@ -78,9 +78,8 @@ public class UIInteractions
     public void StartNewFB()
     {
         uIController = Camera.main.GetComponent<UIController>();
-        if (TutoBoxScript.isOn)
-            uIController.plantsViews[6].GetComponentInChildren<TutoBoxScript>().SetTutorial("");
 
+        TutoObject.waitForBuild = true;
         if (SpawnController.instance.StartNewShape() == null)
         {
             if (uIController.plantsViews[6].IsVisible)

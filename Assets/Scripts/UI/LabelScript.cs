@@ -14,7 +14,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Sprite initial;
     public Sprite updated;
     public UIView view;
-    public bool pressed = false;
+    public bool pressed;
 
     protected Image image;
 

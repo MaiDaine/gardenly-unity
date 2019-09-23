@@ -17,20 +17,7 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Update()
     {
-        /*if (tutoObject != null)
-        {
-            Debug.Log("INDEX " + tutoObject.progressIndex);
-        }
-        /*if (tutoActivate)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (EventSystem.current.IsPointerOverGameObject() && !hoverTuto)
-                {
-                    Debug.Log("CLICK ON UI");
-                }
-            }
-        }*/
+
     }
 
     //Play Tutorial management
@@ -53,6 +40,11 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void PlayTutorial()
     {
+        if (TutoObject.waitForBuild)
+        {
+            MessageHandler.instance.ErrorMessage("tutorial_error");
+            return;
+        }
         tutoObject.PlayTutorial();
         body.text = tutoObject.instructions[tutoObject.progressIndex];
         if (tutoObject.progressIndex + 1 >= tutoObject.instructions.Length)
@@ -63,6 +55,11 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void PreviousTutorial()
     {
+        if (TutoObject.waitForBuild)
+        {
+            MessageHandler.instance.ErrorMessage("tutorial_error");
+            return;
+        }
         tutoObject.PreviousTutorial();
         body.text = tutoObject.instructions[tutoObject.progressIndex];
         if (tutoObject.progressIndex <= 0)
@@ -73,25 +70,31 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void CloseTutorial()
     {
-        if (tutoObject != null && tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
+        if (tutoObject != null)
         {
-            for (int cnt = tutoObject.progressIndex; cnt >= 0; cnt--)
+            if (tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
             {
-                if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
+                for (int cnt = tutoObject.progressIndex; cnt >= 0; cnt--)
                 {
-                    tutoObject.buttons[cnt].ExecuteClick();
+                    if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
+                    {
+                        tutoObject.buttons[cnt].ExecuteClick();
+                        tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed = false;
+                    }
                 }
-            }
-            for (int cnt = tutoObject.componentIndex; cnt >= 0; cnt--)
-            {
-                if (cnt < tutoObject.components.Length && tutoObject.components[cnt] != null)
+                for (int cnt = tutoObject.componentIndex; cnt >= 0; cnt--)
                 {
-                    tutoObject.components[cnt].GetComponent<Image>().color = tutoObject.componentRefColor[cnt];
+                    if (cnt < tutoObject.components.Length && tutoObject.components[cnt] != null)
+                    {
+                        tutoObject.components[cnt].GetComponent<Image>().color = tutoObject.componentRefColor[cnt];
+                    }
                 }
+                if (tutoObject.inputField != null)
+                    tutoObject.inputField.text = "";
             }
+            if (tutoObject.instructions.Length == 1)
+                tutoObject.buttons[0].GetComponent<Image>().color = tutoObject.buttons[0].GetComponent<LabelScript>().color;
         }
-        if (tutoObject.instructions.Length == 1)
-            tutoObject.buttons[0].GetComponent<Image>().color = tutoObject.buttons[0].GetComponent<LabelScript>().color;
     }
 
     //UI management

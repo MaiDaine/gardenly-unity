@@ -201,6 +201,7 @@ public class PlayerController : MonoBehaviour
     {
         actionHandler.NewStateAction("Create", currentSelection.GetGameObject());
         actionHandler.revertActionSet.ClearTmpAction();
+        TutoObject.waitForBuild = false;
     }
 
     public bool PlaneClick()

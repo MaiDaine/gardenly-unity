@@ -72,7 +72,7 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
-
+        TutoObject.waitForBuild = true;
         if (ghostRef.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
@@ -106,6 +106,7 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
+        TutoObject.waitForBuild = true;
         if (ghost != null && ghost.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");

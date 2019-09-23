@@ -14,7 +14,8 @@
       "lessthan_3points": "Placez au moins 3 points",
       "line_cross": "Vous ne pouvez pas croiser les lignes"
     },
-    "loading_error": "Erreur lors du chargement, veuillez recharger la page"
+    "loading_error": "Erreur lors du chargement, veuillez recharger la page",
+    "tutorial_error": "Vous devez finir la pose pour continuer le tutoriel"
   },
 
   "names": {
