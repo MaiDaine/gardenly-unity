@@ -14,7 +14,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Sprite initial;
     public Sprite updated;
     public UIView view;
-    public bool pressed;
+    public bool pressed = false;
 
     protected Image image;
 
@@ -54,9 +54,10 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void TooglePressed()
     {
-        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
-            return;
+     //   if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+       //     return;
         pressed = !pressed;
+        Debug.Log("TOOGLE PRESS " + this.name + " " + pressed);
     }
 
     public void ChangeColor()

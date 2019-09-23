@@ -7,13 +7,23 @@ public class TutoObject : MonoBehaviour
 {
     public UIButton[] buttons;
     public UIView[] views;
-    public string[] instructions;
-    public int progressIndex;
-    public int componentIndex = 0;
+    public ViewController listener;
     public Color activeColor = new Color(65, 159, 59);
     public Color[] refColor;
     public Color[] componentRefColor;
     public Transform[] components;
+    public string[] instructions;
+    public int progressIndex;
+    public int componentIndex = 0;
+
+
+    private void SetTutorialButton(UIButton button)
+    {
+        if (!button.GetComponent<LabelScript>().pressed)
+            button.ExecuteClick();
+        refColor[progressIndex] = button.GetComponent<LabelScript>().color;
+        button.GetComponent<Image>().color = activeColor;
+    }
 
 
     public void PlayTutorial()
@@ -22,9 +32,12 @@ public class TutoObject : MonoBehaviour
         {
             if (buttons[progressIndex] != null)
             {
-                buttons[progressIndex].ExecuteClick();
-                refColor[progressIndex] = buttons[progressIndex].GetComponent<LabelScript>().color;
-                buttons[progressIndex].GetComponent<Image>().color = activeColor;
+                SetTutorialButton(buttons[progressIndex]);
+            }
+            else if (listener != null && buttons[progressIndex] == null)
+            {
+                SetTutorialButton(listener.dynButtons[0]);
+                buttons[progressIndex] = listener.dynButtons[0];
             }
             else
             {
@@ -33,14 +46,16 @@ public class TutoObject : MonoBehaviour
                 ++componentIndex;
             }
             ++progressIndex;
-            Debug.Log("NEXT PROGRESS INDEX " + progressIndex + "COMPONENT INDEX " + componentIndex);
         }
     }
 
     public void PreviousTutorial()
     {
-        if (progressIndex >= 0 && progressIndex < buttons.Length && buttons[progressIndex] != null)
-            buttons[progressIndex].ExecuteClick();
+        if (progressIndex > 0 && progressIndex < buttons.Length && buttons[progressIndex - 1] != null)
+        {
+           Debug.Log("CLICK " + buttons[progressIndex - 1].name);
+          buttons[progressIndex - 1].ExecuteClick();
+        }
         if (progressIndex > 0)
         {
             --progressIndex;
@@ -52,6 +67,5 @@ public class TutoObject : MonoBehaviour
                 components[componentIndex].GetComponent<Image>().color = componentRefColor[componentIndex];
             }
         }
-        Debug.Log("PREVIOUS PROGRESS INDEX " + progressIndex + "COMPONENT INDEX " + componentIndex);
     }
 }

@@ -17,6 +17,10 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Update()
     {
+        /*if (tutoObject != null)
+        {
+            Debug.Log("INDEX " + tutoObject.progressIndex);
+        }
         /*if (tutoActivate)
         {
             if (Input.GetMouseButtonDown(0))
@@ -73,21 +77,15 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             for (int cnt = tutoObject.progressIndex; cnt >= 0; cnt--)
             {
-                Debug.Log("CLOSE BUT PROGRESS INDEX " + tutoObject.progressIndex + "COMPONENT INDEX " + tutoObject.componentIndex + " CNT " + cnt);
-
                 if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
                 {
-                    Debug.Log("CLICK " + cnt);
                     tutoObject.buttons[cnt].ExecuteClick();
                 }
             }
             for (int cnt = tutoObject.componentIndex; cnt >= 0; cnt--)
             {
-                Debug.Log("CLOSE COMP PROGRESS INDEX " + tutoObject.progressIndex + "COMPONENT INDEX " + tutoObject.componentIndex + " CNT " + cnt);
-
                 if (cnt < tutoObject.components.Length && tutoObject.components[cnt] != null)
                 {
-                    Debug.Log("CLICK " + cnt);
                     tutoObject.components[cnt].GetComponent<Image>().color = tutoObject.componentRefColor[cnt];
                 }
             }
@@ -112,11 +110,6 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             button.gameObject.SetActive(!button.IsActive());
         }
-    }
-
-    public void DisableNavButton(UIButton button)
-    {
-
     }
 
     public void ToogleTutoState()
