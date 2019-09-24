@@ -62,7 +62,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     //Actions
     public virtual void StartAction() { this.gameObject.layer = 0; }
 
-    public virtual void EndAction() { this.gameObject.layer = 10; }
+    public virtual void EndAction()
+    {
+        this.gameObject.layer = 10;
+        Debug.Log("END ACTION");
+        TutoObject.waitForBuild = false;
+    }
 
     public virtual void Move(Vector3 position) { this.transform.position = position; }
 

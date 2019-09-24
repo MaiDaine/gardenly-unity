@@ -59,7 +59,10 @@ public class ViewController : MonoBehaviour
     // reset buttons
     public void ResetStateButtons(UIButton button, bool forced = false)
     {
-        if (!button.IsSelected && button.IsActive() || forced)
+        if (button == null)
+            return;
+
+        if (button.IsActive() && !button.IsSelected || forced)
         {
             LabelScript[] tmp = button.GetComponentsInChildren<LabelScript>();
             ConstructionMenu constructionMenu = button.GetComponentInChildren<ConstructionMenu>();

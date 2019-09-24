@@ -22,7 +22,7 @@ public class TutoObject : MonoBehaviour
 
     private void SetTutorialButton(UIButton button)
     {
-        if (!button.GetComponent<LabelScript>().pressed)
+        if (!button.GetComponent<LabelScript>().pressed && button.IsActive())
         {
             button.ExecuteClick();
             button.GetComponent<LabelScript>().pressed = true;
@@ -33,7 +33,8 @@ public class TutoObject : MonoBehaviour
 
     private void ResetTutorialButton(UIButton button)
     {
-        button.ExecuteClick();
+        if (button.IsActive())
+            button.ExecuteClick();
         button.GetComponent<LabelScript>().pressed = false;
     }
 
@@ -77,7 +78,7 @@ public class TutoObject : MonoBehaviour
                 buttons[progressIndex].GetComponent<Image>().color = refColor[progressIndex];
             else if (inputField != null && inputField.IsActive())
                 inputField.text = "";
-            else
+            else if (components.Length > 0 && componentIndex < components.Length)
             {
                 --componentIndex;
                 components[componentIndex].GetComponent<Image>().color = componentRefColor[componentIndex];

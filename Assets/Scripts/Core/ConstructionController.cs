@@ -233,7 +233,7 @@ public class ConstructionController : MonoBehaviour
                 return false;
             }
         }
-
+        TutoObject.waitForBuild = false;
         ghost.Move(position);
         return true;
     }

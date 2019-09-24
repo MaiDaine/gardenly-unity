@@ -54,10 +54,7 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void TooglePressed()
     {
-     //   if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
-       //     return;
         pressed = !pressed;
-        Debug.Log("TOOGLE PRESS " + this.name + " " + pressed);
     }
 
     public void ChangeColor()

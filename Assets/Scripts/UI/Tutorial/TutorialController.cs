@@ -70,13 +70,14 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void CloseTutorial()
     {
+        Debug.Log("CLOSE");
         if (tutoObject != null)
         {
             if (tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
             {
                 for (int cnt = tutoObject.progressIndex; cnt >= 0; cnt--)
                 {
-                    if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
+                    if (cnt < tutoObject.buttons.Length && tutoObject.buttons[cnt] != null && tutoObject.buttons[cnt].IsActive() && tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed)
                     {
                         tutoObject.buttons[cnt].ExecuteClick();
                         tutoObject.buttons[cnt].GetComponent<LabelScript>().pressed = false;
