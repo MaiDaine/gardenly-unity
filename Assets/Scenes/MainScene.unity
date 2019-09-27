@@ -4185,7 +4185,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1007106642}
   m_HandleRect: {fileID: 1007106641}
   m_Direction: 2
-  m_Value: 0.50000036
+  m_Value: 0.50000024
   m_Size: 0.6561526
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9414,7 +9414,7 @@ Light:
   m_BounceIntensity: 0.58
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 9.1835e-41, z: 8.16969e-37, w: 4.070149e-37}
+  m_BoundingSphereOverride: {x: 805.5847, y: 1.499385e+10, z: 952134.06, w: 1.3958713e+10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
