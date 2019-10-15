@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9199887558882462571}
   - component: {fileID: 3012356388731580561}
   m_Layer: 0
-  m_Name: FB
+  m_Name: FlowerBed
   m_TagString: FlowerBed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ea20238a4da324bb09b44df1b68fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
+  material: {fileID: 2100000, guid: 96b040cabc99d274398835badef160d8, type: 2}
   flowerBedName: PLACEHOLDER
-  soilType: PLACEHOLDER
+  groundType: 
   vertices: []
+  serializationState: 0

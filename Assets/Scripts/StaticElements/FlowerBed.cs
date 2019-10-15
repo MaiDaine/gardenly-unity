@@ -99,10 +99,51 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             Destroy(flowerBedElements[i]);
     }
 
+    private void SetTiling()
+    {
+        float minX, maxX, minY, maxY;
+
+        if (vertices[0].x < vertices[1].x)
+        {
+            minX = vertices[0].x;
+            maxX = vertices[1].x;
+        }
+        else
+        {
+            minX = vertices[1].x;
+            maxX = vertices[0].x;
+        }
+
+        if (vertices[0].y < vertices[1].y)
+        {
+            minY = vertices[0].y;
+            maxY = vertices[1].y;
+        }
+        else
+        {
+            minY = vertices[1].y;
+            maxY = vertices[0].y;
+        }
+
+        for (int i = 1; i < vertices.Length; i++)
+        {
+            if (vertices[i].x < minX)
+                minX = vertices[i].x;
+            if (vertices[i].y < minY)
+                minY = vertices[i].y;
+            if (vertices[i].x > maxX)
+                maxX = vertices[i].x;
+            if (vertices[i].y > maxY)
+                maxY = vertices[i].y;
+        }
+        GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(maxX - minX, maxY - minY);  
+    }
+
     private void Setup()
     {
         GetComponent<MeshRenderer>().material = material;
         GetComponent<MeshRenderer>().enabled = true;
+        //SetTiling();
         Destroy(GetComponent<MeshHandler>());
         gameObject.layer = 10;
         ConstructionController.instance.currentState = ConstructionController.ConstructionState.Editing;

@@ -27,6 +27,16 @@ public class ShadowMap : MonoBehaviour
 
     private void Awake()
     {
+        QualitySettings.shadows = ShadowQuality.HardOnly;
+        QualitySettings.shadowResolution = ShadowResolution.High;
+        QualitySettings.shadowProjection = ShadowProjection.StableFit;
+        QualitySettings.shadowNearPlaneOffset = 3f;
+        QualitySettings.shadowmaskMode = ShadowmaskMode.Shadowmask;
+        QualitySettings.shadowDistance = 100f;
+        QualitySettings.shadowCascades = 2;
+        QualitySettings.shadowCascade4Split = new Vector3(0.1f, 0.2f, 0.5f);
+        QualitySettings.shadowCascade2Split = 0.3333333f;
+
         if (instance == null)
             instance = this;
         else if (instance != this)

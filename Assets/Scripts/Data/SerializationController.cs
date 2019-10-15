@@ -8,11 +8,11 @@ public class SerializationController : MonoBehaviour
     public enum SerializationState { None, Add, Update, Delete };
 
     public static SerializationController instance = null;
+    private static System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 
     private GardenData.SerializedGardenData gardenData;
     private List<ISerializable> items;
     private string json = "";
-    private static System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 
     private void Awake()
     {
@@ -47,7 +47,10 @@ public class SerializationController : MonoBehaviour
     public void OnSaveSucessfull()
     {
         items.Clear();
+        Debug.Log("SAVE CLEARED");
     }
+
+    public bool CanSave() { return items.Count != 0; }
 
     public string Serialize()
     {
@@ -56,49 +59,46 @@ public class SerializationController : MonoBehaviour
         int itemCount = 0;
 
         if (items.Count == 0)
+            return null;
+
+        foreach (ISerializable item in items)
+            switch (item.GetSerializationState())
+            {
+                case SerializationState.None:
+                    break;
+                case SerializationState.Add:
+                    itemCount++;
+                    AddItem(ref updates[0], ref firstEntries[0], item);
+                    break;
+                case SerializationState.Update:
+                    itemCount++;
+                    AddItem(ref updates[1], ref firstEntries[1], item);
+                    break;
+                case SerializationState.Delete:
+                    itemCount++;
+                    AddItem(ref updates[2], ref firstEntries[2], item);
+                    break;
+            }
+
+        if (itemCount == 0)
             json = "{}";
         else
         {
-            foreach (ISerializable item in items)
-                switch (item.GetSerializationState())
-                {
-                    case SerializationState.None:
-                        break;
-                    case SerializationState.Add:
-                        itemCount++;
-                        AddItem(ref updates[0], ref firstEntries[0], item);
-                        break;
-                    case SerializationState.Update:
-                        itemCount++;
-                        AddItem(ref updates[1], ref firstEntries[1], item);
-                        break;
-                    case SerializationState.Delete:
-                        itemCount++;
-                        AddItem(ref updates[2], ref firstEntries[2], item);
-                        break;
-                }
-
-            if (itemCount == 0)
-                json = "{}";
-            else
-            {
-                json = "{\"name\":\"" + gardenData.name + "\",";
-                json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
-                json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                if (!firstEntries[i])
-                {
-                    json += updates[i] + "]";
-                    if ((i + 1 < 3 && !firstEntries[i + 1]) || (i + 2 < 3 && !firstEntries[i + 2]))
-                        json += ", ";
-                }
-            }
-            json += '}';
+            json = "{\"name\":\"" + gardenData.name + "\",";
+            json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
+            json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
         }
-        MessageHandler.instance.SuccesMessage("save_sucessfull");
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (!firstEntries[i])
+            {
+                json += updates[i] + "]";
+                if ((i + 1 < 3 && !firstEntries[i + 1]) || (i + 2 < 3 && !firstEntries[i + 2]))
+                    json += ", ";
+            }
+        }
+        json += '}';
         ReactProxy.instance.UpdateSaveState(false);
         return json;
     }
