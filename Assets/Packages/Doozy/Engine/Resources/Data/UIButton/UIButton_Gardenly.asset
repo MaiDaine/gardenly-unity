@@ -21,10 +21,12 @@ MonoBehaviour:
   - MainButton
   - OpenMenu
   - OpenSettings
+  - OpenTutorialButton
   - PlantsSubButton
   - SaveGarden
   - ShrubsButton
   - SubButton
   - TreesButton
+  - TutorialButton
   - TutorialSubButton
   - VegetableButton
