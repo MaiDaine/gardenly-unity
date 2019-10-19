@@ -4,21 +4,16 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
-public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class TutorialController : MonoBehaviour
 {
     public UIView[] tutoSubMenu;
     public UIButton[] navButtons;
     public TextMeshProUGUI title;
     public TextMeshProUGUI body;
 
-    private bool hoverTuto = false;
+    //private bool hoverTuto = false;
     private bool tutoActivate = false;
     private TutoObject tutoObject = null;
-
-    private void Update()
-    {
-
-    }
 
     //Play Tutorial management
     public void SetTutorial(TutoObject tutorial)
@@ -70,7 +65,6 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void CloseTutorial()
     {
-        Debug.Log("CLOSE");
         if (tutoObject != null)
         {
             if (tutoObject.buttons.Length > 0 && tutoObject.instructions.Length > 1)
@@ -86,9 +80,7 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
                 for (int cnt = tutoObject.componentIndex; cnt >= 0; cnt--)
                 {
                     if (cnt < tutoObject.components.Length && tutoObject.components[cnt] != null)
-                    {
                         tutoObject.components[cnt].GetComponent<Image>().color = tutoObject.componentRefColor[cnt];
-                    }
                 }
                 if (tutoObject.inputField != null)
                     tutoObject.inputField.text = "";
@@ -124,15 +116,5 @@ public class TutorialController : MonoBehaviour, IPointerEnterHandler, IPointerE
     public bool GetTutoState()
     {
         return tutoActivate;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        hoverTuto = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hoverTuto = false;
     }
 }

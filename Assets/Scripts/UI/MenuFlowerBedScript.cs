@@ -22,10 +22,7 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
         if (scripts.Length > 0)
         {
             foreach (LabelScript script in scripts)
-            {
-                Debug.Log(script.gameObject.name);
                 script.ResetColor();
-            }
         }
         GetComponent<UIView>().Hide();
     }

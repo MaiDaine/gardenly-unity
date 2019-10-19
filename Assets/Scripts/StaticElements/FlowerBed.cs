@@ -171,7 +171,6 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public GameObject GetGameObject() { return gameObject; }
     public void Select(ConstructionController.ConstructionState state)
     {
-        Debug.Log("SELECT");
         if (state == ConstructionController.ConstructionState.Off)// || state == ConstructionController.ConstructionState.Editing)
         {
             UIController controller = Camera.main.GetComponent<UIController>();
