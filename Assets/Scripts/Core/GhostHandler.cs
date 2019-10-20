@@ -65,7 +65,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     public virtual void EndAction()
     {
         this.gameObject.layer = 10;
-        Debug.Log("END ACTION");
         TutoObject.waitForBuild = false;
     }
 

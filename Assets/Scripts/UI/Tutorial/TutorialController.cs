@@ -11,7 +11,6 @@ public class TutorialController : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI body;
 
-    //private bool hoverTuto = false;
     private bool tutoActivate = false;
     private TutoObject tutoObject = null;
 

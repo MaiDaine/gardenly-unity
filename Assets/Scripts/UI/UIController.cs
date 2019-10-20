@@ -77,9 +77,6 @@ public class UIController : MonoBehaviour
 
     public void Cancel()
     {
-       // TutoObject.waitForBuild = false;
-      // if (tutorialController != null && tutorialController.GetComponent<UIView>().IsVisible)
-        //  tutorialController.CloseTutorial();
         if (menu != null)
             menu.DestroyMenu();
         DestroyMenu();
