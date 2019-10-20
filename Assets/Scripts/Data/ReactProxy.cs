@@ -21,7 +21,7 @@ public class ReactProxy : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void query(string payload);
 
-    //private bool saveLock = false;
+    private bool saveLock = false;
 
     private void Awake()
     {
@@ -64,6 +64,10 @@ public class ReactProxy : MonoBehaviour
     //Link To REACT
     public void ExportScene()
     {
+        if (saveLock)
+            return;
+        saveLock = true;
+
         if (Application.isEditor)
         {
             Debug.Log(SerializationController.instance.Serialize());
@@ -134,7 +138,10 @@ public class ReactProxy : MonoBehaviour
         //}
         PlayerController.instance.actionHandler.OnSaveSucessfull();
         if (SerializationController.instance.OnSaveSucessfull())
+        {
             MessageHandler.instance.SuccesMessage("save_sucessfull");
+            saveLock = false;
+        }
         else
             StartCoroutine(TmpFix());//ExportScene();
     }
