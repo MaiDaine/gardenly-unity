@@ -2,26 +2,55 @@
 
 public class DayNightController : MonoBehaviour
 {
-    public Light sun;
+
     [Range(0, 1)]
     public float targetTime = 0.6246667f;
     [HideInInspector]
     public float timeMultiplier = 1f;
+
+#pragma warning disable 0649
+    [SerializeField] private Light sun;
+    [SerializeField] private Transform LightOrientation;
+    [SerializeField] private GameObject VisualOrientation;
+#pragma warning restore 0649
 
     private int timeAnimation;
     private float currentTimeOfDay;
     private float sunInitialIntensity;
 
     private const float vHour = 1f / 24f;
+    private bool orientationEditionActive = false;
 
-    void Start()
+    private void Start()
     {
         sunInitialIntensity = sun.intensity;
         currentTimeOfDay = targetTime;
     }
 
+    private void LateUpdate()
+    {
+        //TODO UI
+        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+        {
+            orientationEditionActive = !orientationEditionActive;
+            VisualOrientation.SetActive(orientationEditionActive);
+        }
+        if (orientationEditionActive)
+        {
+            if (Input.GetKey(KeyCode.KeypadPlus))
+                LightOrientation.Rotate(new Vector3(0f, 1f, 0f));
+            else if (Input.GetKey(KeyCode.KeypadMinus))
+                LightOrientation.Rotate(new Vector3(0f, -1f, 0f));
+        }
+    }
+
     public void SetTimeOfDay(float time)
     {
+        if (time == 0 || time == 23)
+        {
+            InstantSetTimeofDay(time);
+            return;
+        }
         targetTime = time * vHour;
         timeAnimation = (targetTime > currentTimeOfDay) ? 1 : -1;
     }
