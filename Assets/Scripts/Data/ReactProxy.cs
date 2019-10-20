@@ -21,7 +21,7 @@ public class ReactProxy : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void query(string payload);
 
-    private bool saveLock = false;
+    //private bool saveLock = false;
 
     private void Awake()
     {
@@ -72,12 +72,9 @@ public class ReactProxy : MonoBehaviour
         else
         {
             string tmp = SerializationController.instance.Serialize();
-
+            Debug.Log("Save <" + tmp + ">");
             if (tmp != null)
-            {
                 save(tmp);
-
-            }
         }
     }
 
@@ -116,38 +113,30 @@ public class ReactProxy : MonoBehaviour
         keys.MoveNext();
         callbacks[keys.Current.Value].Invoke(json);
     }
+    private IEnumerator TmpFix()
+    {
+        yield return new WaitForSeconds(2);
+        ExportScene();
 
+    }
     public void OnSaveResult(string json)
     {
-        Debug.Log("OnSaveResult: ");
-        Debug.Log(json);
+        Debug.Log("OnSaveResult: <" + json + ">");
 
-        if (json != null && json != "")
-        {
-            var jsonObject = JSONObject.Parse(json);
-            if (jsonObject != null && jsonObject["success"] != null && jsonObject["success"].AsBool)
-            {
-                saveLock = false;
-                Debug.Log("UNLOCK");
-            }
-        }
-        if (!saveLock)
-        {
-            PlayerController.instance.actionHandler.OnSaveSucessfull();
-            SerializationController.instance.OnSaveSucessfull();
+        //if (json != null && json != "")
+        //{
+        //    var jsonObject = JSONObject.Parse(json);
+        //    if (jsonObject != null && jsonObject["success"] != null && jsonObject["success"].AsBool)
+        //    {
+        //        saveLock = false;
+        //        Debug.Log("UNLOCK");
+        //    }
+        //}
+        PlayerController.instance.actionHandler.OnSaveSucessfull();
+        if (SerializationController.instance.OnSaveSucessfull())
             MessageHandler.instance.SuccesMessage("save_sucessfull");
-        }
         else
-            MessageHandler.instance.ErrorMessage("failed_save");
-
-        if (saveLock)
-        {
-            Debug.Log("FAILED");
-            saveLock = false;
-            PlayerController.instance.actionHandler.OnSaveSucessfull();
-            SerializationController.instance.OnSaveSucessfull();
-            MessageHandler.instance.SuccesMessage("save_sucessfull");
-        }
+            StartCoroutine(TmpFix());//ExportScene();
     }
 
     //Link to UI

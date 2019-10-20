@@ -6,6 +6,7 @@ public class SerializationController : MonoBehaviour
 {
     public enum ItemType { None, StaticElement, FlowerBed, Plant };
     public enum SerializationState { None, Add, Update, Delete };
+    private enum SaveStatus { Off, FlowerBed, Others };
 
     public static SerializationController instance = null;
     private static System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
@@ -13,6 +14,8 @@ public class SerializationController : MonoBehaviour
     private GardenData.SerializedGardenData gardenData;
     private List<ISerializable> items;
     private string json = "";
+    private SaveStatus saveStatus = SaveStatus.Off;
+
 
     private void Awake()
     {
@@ -44,10 +47,20 @@ public class SerializationController : MonoBehaviour
             items.Remove(item);
     }
 
-    public void OnSaveSucessfull()
+    public bool OnSaveSucessfull()
     {
-        items.Clear();
-        Debug.Log("SAVE CLEARED");
+        if (saveStatus == SaveStatus.FlowerBed)
+        {
+            items.RemoveAll(e => e.GetItemType() == ItemType.FlowerBed);
+            saveStatus = SaveStatus.Others;
+            return false;
+        }
+        else if (saveStatus == SaveStatus.Others)
+        {
+            items.Clear();
+            saveStatus = SaveStatus.Off;
+        }
+        return true;
     }
 
     public bool CanSave() { return items.Count != 0; }
@@ -61,24 +74,29 @@ public class SerializationController : MonoBehaviour
         if (items.Count == 0)
             return null;
 
+        if (saveStatus == SaveStatus.Off)
+            saveStatus = SaveStatus.FlowerBed;
+
         foreach (ISerializable item in items)
-            switch (item.GetSerializationState())
-            {
-                case SerializationState.None:
-                    break;
-                case SerializationState.Add:
-                    itemCount++;
-                    AddItem(ref updates[0], ref firstEntries[0], item);
-                    break;
-                case SerializationState.Update:
-                    itemCount++;
-                    AddItem(ref updates[1], ref firstEntries[1], item);
-                    break;
-                case SerializationState.Delete:
-                    itemCount++;
-                    AddItem(ref updates[2], ref firstEntries[2], item);
-                    break;
-            }
+            if ((saveStatus == SaveStatus.FlowerBed && item.GetItemType() == ItemType.FlowerBed)
+                || saveStatus == SaveStatus.Others)
+                switch (item.GetSerializationState())
+                {
+                    case SerializationState.None:
+                        break;
+                    case SerializationState.Add:
+                        itemCount++;
+                        AddItem(ref updates[0], ref firstEntries[0], item);
+                        break;
+                    case SerializationState.Update:
+                        itemCount++;
+                        AddItem(ref updates[1], ref firstEntries[1], item);
+                        break;
+                    case SerializationState.Delete:
+                        itemCount++;
+                        AddItem(ref updates[2], ref firstEntries[2], item);
+                        break;
+                }
 
         if (itemCount == 0)
             json = "{}";

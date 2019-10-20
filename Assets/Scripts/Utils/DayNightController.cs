@@ -2,7 +2,6 @@
 
 public class DayNightController : MonoBehaviour
 {
-
     [Range(0, 1)]
     public float targetTime = 0.6246667f;
     [HideInInspector]

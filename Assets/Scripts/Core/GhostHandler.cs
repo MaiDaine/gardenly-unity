@@ -149,6 +149,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
 
     //Serialization
     public SerializationController.SerializationState GetSerializationState() { return serializationState; }
+    public virtual SerializationController.ItemType GetItemType() { return SerializationController.ItemType.Plant; }
 
     public virtual void AddToSerializationNewElements()
     {

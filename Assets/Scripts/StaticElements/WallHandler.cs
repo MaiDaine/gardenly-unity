@@ -145,6 +145,7 @@ public class WallHandler : GhostHandler, ISerializable
 
     //Tools
     public LineTextHandler GetText() { return text; }
+    public override SerializationController.ItemType GetItemType() { return SerializationController.ItemType.StaticElement; }
 
     //Serialization
     [Serializable]
