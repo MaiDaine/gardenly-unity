@@ -38,7 +38,11 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
         return true;
     }
 
-    public virtual bool Building(Vector3 position) { return true; }
+    public virtual bool Building(Vector3 position)
+    {
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
+        return true;
+    }
 
     public virtual void EndConstruction(Vector3 position)
     {
@@ -56,7 +60,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
             UIController.afterBuilding = true;
             PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
         }
-        TutoObject.waitForBuild = false;
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
     }
 
     //Actions
@@ -65,7 +69,7 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     public virtual void EndAction()
     {
         this.gameObject.layer = 10;
-        TutoObject.waitForBuild = false;
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
     }
 
     public virtual void Move(Vector3 position) { this.transform.position = position; }

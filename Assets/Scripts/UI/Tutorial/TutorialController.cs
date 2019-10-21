@@ -34,7 +34,7 @@ public class TutorialController : MonoBehaviour
 
     public void PlayTutorial()
     {
-        if (TutoObject.waitForBuild)
+        if (tutoObject.waitForBuild)
         {
             MessageHandler.instance.ErrorMessage("tutorial_error");
             return;
@@ -49,7 +49,7 @@ public class TutorialController : MonoBehaviour
 
     public void PreviousTutorial()
     {
-        if (TutoObject.waitForBuild)
+        if (tutoObject.waitForBuild)
         {
             MessageHandler.instance.ErrorMessage("tutorial_error");
             return;
@@ -115,5 +115,11 @@ public class TutorialController : MonoBehaviour
     public bool GetTutoState()
     {
         return tutoActivate;
+    }
+
+    public void OnTutoBlock()
+    {
+        if (tutoObject != null)
+            tutoObject.waitForBuild = !tutoObject.waitForBuild;
     }
 }

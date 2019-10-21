@@ -79,7 +79,7 @@ public class UIInteractions
     {
         uIController = Camera.main.GetComponent<UIController>();
 
-        TutoObject.waitForBuild = true;
+      //  uIController.tutoBlock.Raise();
         if (SpawnController.instance.StartNewShape() == null)
         {
             if (uIController.plantsViews[6].IsVisible)

@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
     public IEnumerator imageCoroutine = null;
+    public GameEvent tutoBlock;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;

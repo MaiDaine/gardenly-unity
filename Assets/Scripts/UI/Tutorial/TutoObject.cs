@@ -16,8 +16,7 @@ public class TutoObject : MonoBehaviour
     public string[] instructions;
     public int progressIndex;
     public int componentIndex = 0;
-
-    public static bool waitForBuild = false;
+    public bool waitForBuild = false;
 
 
     private void SetTutorialButton(UIButton button)
