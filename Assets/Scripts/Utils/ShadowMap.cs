@@ -8,6 +8,7 @@ public class ShadowMap : MonoBehaviour
     public static ShadowMap instance = null;
 
     public DayNightController dayNightController;
+    public GradientScript gradientScript;
     public LoadingShadowScript loadingBar;
     public GameObject shadowFilter;
     public RawImage shadowMapTexture;
@@ -181,7 +182,8 @@ public class ShadowMap : MonoBehaviour
                 if (pixelValue != filterValue)
                 {
                     float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
-                    pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
+                    //pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
+                    pixelArray.SetPixel(x, y, gradientScript.GetColor(GetSunExposure(x, y)));
                 }
             }
         }

@@ -96,13 +96,16 @@ public class UIController : MonoBehaviour
 
     public void HideViews()
     {
-        foreach (UIView view in plantsViews)
+        if (plantsViews != null)
         {
-            if (view.gameObject != null && view.IsVisible)
-                view.Hide();
+            foreach (UIView view in plantsViews)
+            {
+                if (view.gameObject != null && view.IsVisible)
+                    view.Hide();
+            }
+            if (shadowMap.IsVisible)
+                shadowMap.Hide();
         }
-        if (shadowMap.IsVisible)
-            shadowMap.Hide();
     }
 
     public void DestroyMenu()
