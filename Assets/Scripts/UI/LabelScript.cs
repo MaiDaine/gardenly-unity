@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Doozy.Engine.UI;
@@ -7,12 +8,13 @@ using Doozy.Engine.UI;
 public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Text text;
+    public TextMeshProUGUI textMesh;
     public Color color;
     public Color actionColor;
     public Sprite initial;
     public Sprite updated;
     public UIView view;
-    public bool pressed = false;
+    public bool pressed;
 
     protected Image image;
 
@@ -29,17 +31,23 @@ public class LabelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             text.color = color;
         if (image != null)
             image.color = color;
+        if (textMesh != null)
+            textMesh.color = color;
     }
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+            return;
         if (!pressed)
             SetColor(actionColor);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (GetComponent<Button>() != null && !GetComponent<Button>().interactable)
+            return;
         if (!pressed)
             SetColor(color);
     }

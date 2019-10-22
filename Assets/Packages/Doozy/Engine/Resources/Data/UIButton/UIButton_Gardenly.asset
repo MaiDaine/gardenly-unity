@@ -15,15 +15,18 @@ MonoBehaviour:
   CategoryName: Gardenly
   DatabaseType: 0
   Names:
-  - OpenMenu
-  - OpenSettings
-  - SaveGarden
-  - MainButton
-  - SubButton
-  - TreesButton
-  - ShrubsButton
-  - FlowersButton
-  - VegetableButton
   - AquaticButton
   - FlowerButton
+  - FlowersButton
+  - MainButton
+  - OpenMenu
+  - OpenSettings
+  - OpenTutorialButton
   - PlantsSubButton
+  - SaveGarden
+  - ShrubsButton
+  - SubButton
+  - TreesButton
+  - TutorialButton
+  - TutorialSubButton
+  - VegetableButton

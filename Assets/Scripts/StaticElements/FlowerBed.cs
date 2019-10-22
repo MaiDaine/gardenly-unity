@@ -62,6 +62,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         Setup();
         groundType = ReactProxy.instance.externalData.groundTypes[0].Key;
         flowerBedName = LocalisationController.instance.GetText("names", "flowerbed") + " " + ConstructionController.instance.flowerBeds.Count;
+        Select(ConstructionController.ConstructionState.Off);
     }
 
     public void OnShapeFinished()

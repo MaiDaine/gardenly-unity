@@ -194,4 +194,9 @@ public class CameraController : MonoBehaviour
             return currentRotation;
         return tmp;
     }
+
+    public void ToogleInput()
+    {
+        inputEnabled = !inputEnabled;
+    }
 }

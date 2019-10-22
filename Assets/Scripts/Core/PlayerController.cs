@@ -201,6 +201,7 @@ public class PlayerController : MonoBehaviour
     {
         actionHandler.NewStateAction("Create", currentSelection.GetGameObject());
         actionHandler.revertActionSet.ClearTmpAction();
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
     }
 
     public bool PlaneClick()

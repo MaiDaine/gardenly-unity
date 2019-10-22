@@ -16,7 +16,8 @@
       "lessthan_3points": "Place at least 3 points",
       "line_cross": "You can't cross the lines"
     },
-    "waiting_for_save": "Awaiting response from the server"
+    "waiting_for_save": "Awaiting response from the server",
+    "tutorial_error":  "You must finish the pose to continue the tutorial"
   },
 
   "names": {

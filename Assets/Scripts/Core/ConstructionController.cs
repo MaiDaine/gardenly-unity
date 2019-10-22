@@ -72,7 +72,7 @@ public class ConstructionController : MonoBehaviour
     //TODO #74
     public void SpawnGhost(GhostHandler ghostRef)
     {
-
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         if (ghostRef.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
@@ -106,6 +106,7 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         if (ghost != null && ghost.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
@@ -232,7 +233,7 @@ public class ConstructionController : MonoBehaviour
                 return false;
             }
         }
-
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         ghost.Move(position);
         return true;
     }

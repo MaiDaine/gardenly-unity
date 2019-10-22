@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Doozy.Engine.UI;
 
 // Manage destruction flowerBed panel / object
 public class MenuFlowerBedScript : MonoBehaviour, IMenu
@@ -14,7 +15,17 @@ public class MenuFlowerBedScript : MonoBehaviour, IMenu
     }
 
 
-    public void DestroyMenu() { }
+    public void DestroyMenu()
+    {
+        LabelScript[] scripts = GetComponentsInChildren<LabelScript>();
+
+        if (scripts.Length > 0)
+        {
+            foreach (LabelScript script in scripts)
+                script.ResetColor();
+        }
+        GetComponent<UIView>().Hide();
+    }
 
     public void DestroyObject()
     {

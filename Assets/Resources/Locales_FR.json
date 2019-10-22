@@ -16,7 +16,8 @@
       "lessthan_3points": "Placez au moins 3 points",
       "line_cross": "Vous ne pouvez pas croiser les lignes"
     },
-    "waiting_for_save": "En attente de réponse du serveur"
+    "waiting_for_save": "En attente de réponse du serveur",
+    "tutorial_error": "Vous devez finir la pose pour continuer"
   },
 
   "names": {
