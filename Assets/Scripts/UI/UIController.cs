@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public TextMeshProUGUI gardenName;
+    public TMP_InputField hour;
+    public TextMeshProUGUI displayHour;
     public PlantPanelScript dataPanel;
     public UIInteractions uIInteractions = null;
     public TutorialController tutorialController;
@@ -166,8 +168,8 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
-        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -33.46f, 0);
-        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -55f, 0);
+        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -55f, 0);
         if (PlantsViewsDisplay() || afterBuilding)
         {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
@@ -240,6 +242,24 @@ public class UIController : MonoBehaviour
         ShadowMap.instance.startShadowCalc = 0;
         uIInteractions.StartNewFB();
     }
+
+    public void SendHours(DayNightController controller)
+    {
+        float hourVal = 0;
+        if (float.TryParse(hour.text, out hourVal) && (hour.text.Length == 1 || hour.text.Length == 2)  && hourVal >= 0 && hourVal < 23)
+        {
+            controller.InstantSetTimeofDay(hourVal);
+            displayHour.text = hour.text + " : 00";
+            hour.text = "00";
+        }
+        else
+            MessageHandler.instance.ErrorMessage("hour_format");
+    }
+
+    /*public void SendMinutes(DayNightController controller)
+    {
+        controller.InstantSetTimeofDay(minutes.text);
+    }*/
 
     public MenuScript GetMenuScript() { return menu; }
 

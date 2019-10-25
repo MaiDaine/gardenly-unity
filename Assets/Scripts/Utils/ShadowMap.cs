@@ -100,7 +100,7 @@ public class ShadowMap : MonoBehaviour
                     goto EndCapture;
                 }
 
-        EndCapture:
+            EndCapture:
         EndCapture(currentTime, currentShadowSetting);
     }
 
@@ -182,9 +182,12 @@ public class ShadowMap : MonoBehaviour
                 if (pixelValue != filterValue)
                 {
                     float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
+
                     //pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
-                    pixelArray.SetPixel(x, y, gradientScript.GetColor(GetSunExposure(x, y)));
+                    pixelArray.SetPixel(x, y, gradientScript.GetColor(GetSunExposure(x, y)));                    
                 }
+                else
+                    pixelArray.SetPixel(x, y, gradientScript.gradient.Evaluate(0));
             }
         }
     }
