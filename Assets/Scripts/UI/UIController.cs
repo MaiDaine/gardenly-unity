@@ -102,7 +102,7 @@ public class UIController : MonoBehaviour
         {
             foreach (UIView view in plantsViews)
             {
-                if (view.gameObject != null && view.IsVisible)
+                if (view != null && view.gameObject != null && view.IsVisible)
                     view.Hide();
             }
             if (shadowMap.IsVisible)
@@ -246,7 +246,7 @@ public class UIController : MonoBehaviour
     public void SendHours(DayNightController controller)
     {
         float hourVal = 0;
-        if (float.TryParse(hour.text, out hourVal) && (hour.text.Length == 1 || hour.text.Length == 2)  && hourVal >= 0 && hourVal < 23)
+        if (float.TryParse(hour.text, out hourVal) && (hour.text.Length == 1 || hour.text.Length == 2)  && hourVal >= 0 && hourVal < 24)
         {
             controller.InstantSetTimeofDay(hourVal);
             displayHour.text = hour.text + " : 00";
