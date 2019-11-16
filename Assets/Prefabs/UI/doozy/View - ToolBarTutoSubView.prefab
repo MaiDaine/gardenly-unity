@@ -94,8 +94,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11
-  m_fontSizeBase: 11
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     spaceCount: 3
     wordCount: 4
     linkCount: 0
-    lineCount: 22
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1196,6 +1196,17 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: SetTutorial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 7526503430138565211}
+              m_ObjectArgumentAssemblyTypeName: TutoObject, Assembly-CSharp
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -2449,11 +2460,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
   views: []
-  instructions: []
-  progressIndex: 0
+  listener: {fileID: 0}
   activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
+  refColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  componentRefColor: []
+  components: []
+  inputField: {fileID: 0}
+  instructions:
+  - "L'heure du logiciel peut-\xEAtre modifier afin d'\xE9tudier l'\xE9volution de
+    l'ombrage au fil du temps."
+  - "Le bouton plus permet d'incr\xE9menter l'heure."
+  - Le bouton moins de la diminier.
+  progressIndex: 0
+  componentIndex: 0
+  waitForBuild: 0
 --- !u!1 &5834065579871575703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,8 +2574,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11
-  m_fontSizeBase: 11
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2565,7 +2591,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2594,7 +2620,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 12
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -3650,6 +3676,17 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: SetTutorial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 4444890013772175132}
+              m_ObjectArgumentAssemblyTypeName: TutoObject, Assembly-CSharp
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -4903,11 +4940,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 0}
   views: []
-  instructions: []
-  progressIndex: 0
+  listener: {fileID: 0}
   activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
+  refColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  componentRefColor: []
+  components: []
+  inputField: {fileID: 0}
+  instructions:
+  - "La fonction de sauvegarde permet d'enregister l'\xE9tat actuel du jardin. Un
+    message vient confirmer son \xE9tat, il dispara\xEEt avec le temps."
+  progressIndex: 0
+  componentIndex: 0
+  waitForBuild: 0
 --- !u!1 &5834065580388071265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5926,6 +5974,17 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: SetTutorial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 8731661525860117329}
+              m_ObjectArgumentAssemblyTypeName: TutoObject, Assembly-CSharp
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -7179,11 +7238,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
   views: []
-  instructions: []
-  progressIndex: 0
+  listener: {fileID: 0}
   activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
+  refColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  componentRefColor: []
+  components: []
+  inputField: {fileID: 0}
+  instructions:
+  - "Il est possible de cacher la barre de construction pour plus de visibilit\xE9."
+  - "Un simple click permet de la faire r\xE9appara\xEEtre"
+  progressIndex: 0
+  componentIndex: 0
+  waitForBuild: 0
 --- !u!1 &5834065580536349983
 GameObject:
   m_ObjectHideFlags: 0
@@ -7278,8 +7349,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11
-  m_fontSizeBase: 11
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7295,7 +7366,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -7324,7 +7395,7 @@ MonoBehaviour:
     spaceCount: 4
     wordCount: 5
     linkCount: 0
-    lineCount: 18
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -8380,6 +8451,17 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: SetTutorial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 656214921523826910}
+              m_ObjectArgumentAssemblyTypeName: TutoObject, Assembly-CSharp
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -9633,11 +9715,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
   views: []
-  instructions: []
-  progressIndex: 0
+  listener: {fileID: 0}
   activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
+  refColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  componentRefColor: []
+  components: []
+  inputField: {fileID: 0}
+  instructions:
+  - "Il est possible de changer le mode de la cam\xE9ra. Par d\xE9faut le mode 3D
+    est activ\xE9."
+  - "Par d\xE9faut le mode 3D est activ\xE9."
+  - Un simple click permet de changer de mode, le mode 2D permet de voir le jardin
+    du dessus.
+  progressIndex: 0
+  componentIndex: 0
+  waitForBuild: 0
 --- !u!1 &5834065580951940734
 GameObject:
   m_ObjectHideFlags: 0
@@ -10656,6 +10754,17 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_MethodName: SetTutorial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 5605799583335927031}
+              m_ObjectArgumentAssemblyTypeName: TutoObject, Assembly-CSharp
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -11909,11 +12018,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f3d8142e1a5a499c2547677e5fdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons: []
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
   views: []
-  instructions: []
-  progressIndex: 0
+  listener: {fileID: 0}
   activeColor: {r: 0.25490198, g: 0.62352943, b: 0.23137255, a: 1}
+  refColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  componentRefColor:
+  - {r: 0, g: 0, b: 0, a: 0}
+  components:
+  - {fileID: 0}
+  inputField: {fileID: 0}
+  instructions:
+  - "Lors de la construction d'un objet, une grille de construction appara\xEEt par
+    d\xE9fault."
+  - "Il est possible de l'activer manuellement \xE0 l'aide du bouton d'activation."
+  - "Il est possible de modifier l'apparition par d\xE9faut de cette grille \xE0 l'aide
+    du param\xE8tre ad\xE9quate."
+  progressIndex: 0
+  componentIndex: 0
+  waitForBuild: 0
 --- !u!1 &5834065580958767486
 GameObject:
   m_ObjectHideFlags: 0
@@ -12008,8 +12135,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11
-  m_fontSizeBase: 11
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -12025,7 +12152,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -12054,7 +12181,7 @@ MonoBehaviour:
     spaceCount: 4
     wordCount: 5
     linkCount: 0
-    lineCount: 31
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -12186,8 +12313,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11
-  m_fontSizeBase: 11
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -12203,7 +12330,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -12232,7 +12359,7 @@ MonoBehaviour:
     spaceCount: 2
     wordCount: 3
     linkCount: 0
-    lineCount: 19
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -13145,7 +13272,7 @@ MonoBehaviour:
   UpdateShowProgressorOnHide: 0
   UseCustomStartAnchoredPosition: 1
   ViewCategory: Gardenly
-  ViewName: TutorialSubView
+  ViewName: BackGround
 --- !u!222 &5834065581217084535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13325,15 +13452,35 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7084313650271714254, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
         type: 3}
-      propertyPath: m_firstOverflowCharacterIndex
-      value: 0
+      propertyPath: refColor.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+        type: 3}
+      propertyPath: activeColor.r
+      value: 0.25490198
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+        type: 3}
+      propertyPath: activeColor.g
+      value: 0.62352943
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084313651281449006, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+        type: 3}
+      propertyPath: activeColor.b
+      value: 0.23137255
       objectReference: {fileID: 0}
     - target: {fileID: 7084313650271714254, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
         type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 19
+      propertyPath: m_fontSize
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084313650271714254, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f40b0fe0ae4ca43bf5b1e9bb94cd94, type: 3}

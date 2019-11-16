@@ -5,7 +5,7 @@
       "no_cancel": "Pas d'action à annuler",
       "no_revert": "Pas d'action à refaire"
     },
-    "failed_save":  "Echec de la sauvegarde",
+    "failed_save": "Echec de la sauvegarde",
     "flower_bed": {
       "invalid_pos": "Cet élément doit être placé dans un parterre",
       "no_flowerbed": "Vous devez d'abord placer un parterre"
@@ -16,6 +16,7 @@
       "lessthan_3points": "Placez au moins 3 points",
       "line_cross": "Vous ne pouvez pas croiser les lignes"
     },
+    "hour_format": "Le format de l'heure n'est pas correct",
     "waiting_for_save": "En attente de réponse du serveur",
     "tutorial_error": "Vous devez finir la pose pour continuer"
   },
