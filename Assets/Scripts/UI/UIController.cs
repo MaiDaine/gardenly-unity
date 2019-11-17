@@ -24,11 +24,12 @@ public class UIController : MonoBehaviour
     public PlantPanelScript dataPanel;
     public UIInteractions uIInteractions = null;
     public TutorialController tutorialController;
+    public IEnumerator imageCoroutine = null;
+    public GameEvent tutoBlock;
+    public CompassScript compass;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
-    public IEnumerator imageCoroutine = null;
-    public GameEvent tutoBlock;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
@@ -40,7 +41,7 @@ public class UIController : MonoBehaviour
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
     private float sizeView = 183.48f;
-
+    private bool compassToggle = false;
 
     private void Awake()
     {
@@ -127,6 +128,16 @@ public class UIController : MonoBehaviour
         flowerBedMenuOpen = false;
         if (ShadowMap.instance.startShadowCalc == 1)
             ShadowMap.instance.startShadowCalc = 0;
+        compass.ClearInterface();
+        compassToggle = false;
+        compass.gameObject.SetActive(false);
+    }
+
+    public void ToggleCompassInterface()
+    {
+        compassToggle = !compassToggle;
+        compass.gameObject.SetActive(compassToggle);
+        compass.ToggleInterface();
     }
 
     //TODO UI

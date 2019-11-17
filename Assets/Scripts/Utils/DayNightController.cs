@@ -10,9 +10,6 @@ public class DayNightController : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Light sun;
-    [SerializeField] private Transform LightOrientation;
-    [SerializeField] private GameObject VisualOrientation;
-    [SerializeField] private GameObject Compass;
 #pragma warning restore 0649
 
     private int timeAnimation;
@@ -26,34 +23,6 @@ public class DayNightController : MonoBehaviour
     {
         sunInitialIntensity = sun.intensity;
         currentTimeOfDay = targetTime;
-    }
-
-    private void LateUpdate()
-    {
-        //TODO UI
-        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
-        {
-            orientationEditionActive = !orientationEditionActive;
-            VisualOrientation.SetActive(orientationEditionActive);
-            Compass.SetActive(orientationEditionActive);
-        }
-        if (orientationEditionActive)
-        {
-            float rotx = Input.GetAxis("Mouse X") * 100f * Mathf.Deg2Rad;
-            Compass.transform.Rotate(Vector3.forward, -rotx);
-            LightOrientation.Rotate(new Vector3(0f, rotx, 0f));
-
-            if (Input.GetKey(KeyCode.KeypadPlus))
-            {
-                LightOrientation.Rotate(new Vector3(0f, 1f, 0f));
-                Compass.transform.Rotate(new Vector3(0f, 0f, -1f));
-            }
-            else if (Input.GetKey(KeyCode.KeypadMinus))
-            {
-                LightOrientation.Rotate(new Vector3(0f, -1f, 0f));
-                Compass.transform.Rotate(new Vector3(0f, 0f, 1f));
-            }
-        }
     }
 
     public void SetTimeOfDay(float time)
