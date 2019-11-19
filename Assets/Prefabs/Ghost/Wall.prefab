@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1706434982577576496}
   - component: {fileID: 1706434982577576399}
   - component: {fileID: 1445059942037418693}
+  - component: {fileID: 516990792675062235}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -106,3 +107,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needFlowerBed: 0
   textRef: {fileID: 7051908953812569222, guid: 5526e780127008f4196e018d21e29b66, type: 3}
+--- !u!114 &516990792675062235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706434982577576398}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883116beac1871d4b97014655be935a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

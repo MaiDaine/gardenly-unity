@@ -28,6 +28,7 @@ public class PlantElement : GhostHandler
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
+        base.Select(state);
         if (Camera.main != null)
         {
             UpdateSunExposure();
@@ -40,6 +41,7 @@ public class PlantElement : GhostHandler
 
     public override void DeSelect()
     {
+        base.DeSelect();
         if (Camera.main != null)
             Camera.main.GetComponent<UIController>().uIInteractions.OnDeSelectPlantElement();
     }

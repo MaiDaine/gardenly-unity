@@ -37,12 +37,14 @@ public class DefaultStaticElement : GhostHandler
     //ISelectable
     public override void Select(ConstructionController.ConstructionState state)
     {
+        base.Select(state);
         if (Camera.main != null)
             Camera.main.GetComponent<UIController>().uIInteractions.OnSelectDefaultStaticElement("", "", this);//TODO UI
     }
 
     public override void DeSelect()
     {
+        base.DeSelect();
         if (Camera.main != null)
             Camera.main.GetComponent<UIController>().uIInteractions.OnDeselectDefaultStaticElement();
     }

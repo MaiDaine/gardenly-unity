@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5848085319270114232}
   - component: {fileID: 7597030928426193009}
   - component: {fileID: 5116172969074364356}
+  - component: {fileID: 7812493802074813116}
   m_Layer: 10
   m_Name: DefaultPlant
   m_TagString: Untagged
@@ -106,3 +107,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needFlowerBed: 1
+--- !u!114 &7812493802074813116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344667881147691538}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883116beac1871d4b97014655be935a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
