@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ShadowMap : MonoBehaviour
 {
     public static ShadowMap instance = null;
-
+    public Color color;
     public DayNightController dayNightController;
     public GradientScript gradientScript;
     public LoadingShadowScript loadingBar;
@@ -184,10 +184,9 @@ public class ShadowMap : MonoBehaviour
                     float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
 
                     //pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
-                    pixelArray.SetPixel(x, y, gradientScript.GetColor(GetSunExposure(x, y)));                    
+                    pixelArray.SetPixel(x, y, color);                    
                 }
-                else
-                    pixelArray.SetPixel(x, y, gradientScript.gradient.Evaluate(0));
+                
             }
         }
     }

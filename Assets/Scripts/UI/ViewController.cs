@@ -45,13 +45,9 @@ public class ViewController : MonoBehaviour
             float yRef = 0;
             float xRef = -controller.extendMenu.RectTransform.sizeDelta.x + 0.4f;
             if (viewRef.RectTransform.rotation.z == 0)
-            {
-                Debug.Log("first");
                 yRef = -55f;
-            }
             else
             {
-                Debug.Log("second");
                 yRef = -358.5f;
                 xRef -= viewRef.RectTransform.sizeDelta.x;
             }

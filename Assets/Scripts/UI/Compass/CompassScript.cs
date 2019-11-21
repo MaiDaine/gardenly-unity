@@ -9,7 +9,6 @@ public class CompassScript : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Transform LightOrientation;
-    [SerializeField] private GameObject VisualOrientation;
     [SerializeField] private GameObject Compass;
 #pragma warning restore 0649
 
@@ -26,7 +25,6 @@ public class CompassScript : MonoBehaviour
     public void ToggleInterface()
     {
         orientationEditionActive = !orientationEditionActive;
-        VisualOrientation.SetActive(orientationEditionActive);
         Compass.SetActive(orientationEditionActive);
         westButton.SetActive(orientationEditionActive);
         eastButton.SetActive(orientationEditionActive);
@@ -36,7 +34,6 @@ public class CompassScript : MonoBehaviour
     {
         orientationEditionActive = false;
         startRotate = false;
-        VisualOrientation.SetActive(orientationEditionActive);
         Compass.SetActive(orientationEditionActive);
         westButton.SetActive(orientationEditionActive);
         eastButton.SetActive(orientationEditionActive);
