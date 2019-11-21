@@ -66,6 +66,7 @@ public class WallHandler : GhostHandler, ISerializable
             Vector3 tmp = (start + end) / 2f;
             float lenght = (start - end).magnitude;
 
+            tmp.y += 1f;
             transform.position = tmp;
             transform.rotation = (Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0, 90, 0));
             transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
