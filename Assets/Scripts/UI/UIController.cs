@@ -128,9 +128,12 @@ public class UIController : MonoBehaviour
         flowerBedMenuOpen = false;
         if (ShadowMap.instance.startShadowCalc == 1)
             ShadowMap.instance.startShadowCalc = 0;
-        compass.ClearInterface();
-        compassToggle = false;
-        compass.gameObject.SetActive(false);
+        if (compass != null && compass.gameObject.activeSelf)
+        {
+            compass.ClearInterface();
+            compassToggle = false;
+            compass.gameObject.SetActive(false);
+        }
     }
 
     public void ToggleCompassInterface()
