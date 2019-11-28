@@ -106,7 +106,6 @@ public class ConstructionController : MonoBehaviour
 
     public void SetGhost(GhostHandler ghost)
     {
-        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         if (ghost != null && ghost.needFlowerBed && flowerBeds.Count < 1)
         {
             MessageHandler.instance.ErrorMessage("flower_bed", "no_flowerbed");
