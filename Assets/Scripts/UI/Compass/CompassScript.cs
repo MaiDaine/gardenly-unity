@@ -9,7 +9,9 @@ public class CompassScript : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Transform LightOrientation;
+    [SerializeField] private Transform Garden;
     [SerializeField] private GameObject Compass;
+    [SerializeField] private Transform House;
 #pragma warning restore 0649
 
     private bool orientationEditionActive = false;
@@ -53,5 +55,7 @@ public class CompassScript : MonoBehaviour
     {
         LightOrientation.Rotate(new Vector3(0f, compassOrientation, 0f));
         Compass.transform.Rotate(new Vector3(0f, 0f, -compassOrientation));
+       // Garden.Rotate(new Vector3(0f, compassOrientation, 0f));
+        //House.Rotate(new Vector3(0f, compassOrientation / 2, 0f));
     }
 }

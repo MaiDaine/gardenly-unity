@@ -10,6 +10,7 @@ public class DayNightController : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Light sun;
+    [SerializeField] private Transform sun2;
 #pragma warning restore 0649
 
     private int timeAnimation;
@@ -61,9 +62,14 @@ public class DayNightController : MonoBehaviour
 
     void UpdateSun()
     {
-        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
-
         float intensityMultiplier = 1;
+
+        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
+        if (currentTimeOfDay < 0.5f)
+            sun2.transform.localRotation = Quaternion.Euler(0.0122f, -(currentTimeOfDay * 360f), -0.171f);
+        else
+            sun2.transform.localRotation = Quaternion.Euler(0.0122f, (currentTimeOfDay * 360f), -0.171f);
+
         if (currentTimeOfDay < 0.25f || currentTimeOfDay > 0.75f)
             intensityMultiplier = 0;
         else
