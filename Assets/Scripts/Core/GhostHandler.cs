@@ -100,7 +100,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
     public GameObject GetGameObject() { return (this.gameObject); }
 
     //ISelectable
-    public virtual void Select(ConstructionController.ConstructionState state) { }
+    public virtual void Select(ConstructionController.ConstructionState state)
+    {
+        Gardenly.Outline tmp = GetComponent<Gardenly.Outline>();
+        if (tmp != null)
+            tmp.enabled = true;
+    }
 
     public virtual List<ISelectable> SelectWithNeighbor()
     {
@@ -111,7 +116,12 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
         return tmp;
     }
 
-    public virtual void DeSelect() { }
+    public virtual void DeSelect()
+    {
+        Gardenly.Outline tmp = GetComponent<Gardenly.Outline>();
+        if (tmp != null)
+            tmp.enabled = false;
+    }
 
     public void AddNeighbor(ISelectable item)
     {

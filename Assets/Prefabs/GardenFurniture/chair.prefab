@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8974919763504556810}
   - component: {fileID: 6934096047445395356}
   - component: {fileID: 2064298405484624061}
+  - component: {fileID: 3086067960646698103}
   m_Layer: 9
   m_Name: chair
   m_TagString: Untagged
@@ -92,7 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needFlowerBed: 0
-  serializationState: 0
   correctedRotation: {x: -90, y: 0, z: 0}
   type: 1
   subType: 2
@@ -110,3 +110,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -1238218227891777710, guid: a224cea50a9bb32458669010a1136e5b, type: 3}
+--- !u!114 &3086067960646698103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974919763506558408}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883116beac1871d4b97014655be935a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
