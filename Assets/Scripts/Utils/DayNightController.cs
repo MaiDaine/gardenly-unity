@@ -26,7 +26,7 @@ public class DayNightController : MonoBehaviour
     {
         sunInitialIntensity = sun.intensity;
         currentTimeOfDay = targetTime;
-        //sunLocation.transform.localRotation = Quaternion.Euler(0, initialSunLocation, 0);
+        sunLocation.transform.localRotation = Quaternion.Euler(0, initialSunLocation, 0);
     }
 
     public void SetTimeOfDay(float time)

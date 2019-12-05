@@ -33,7 +33,7 @@ public class HourScript : MonoBehaviour
             else
                 txt.SetText("0{0} : 00", hour);
             dayNightController.SetTimeOfDay(hour);
-           // dayNightController.RotateSun(add);
+            dayNightController.RotateSun(add);
         }
     }
 }
