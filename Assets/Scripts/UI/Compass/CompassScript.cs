@@ -55,7 +55,5 @@ public class CompassScript : MonoBehaviour
     {
         LightOrientation.Rotate(new Vector3(0f, compassOrientation, 0f));
         Compass.transform.Rotate(new Vector3(0f, 0f, -compassOrientation));
-       // Garden.Rotate(new Vector3(0f, compassOrientation, 0f));
-        //House.Rotate(new Vector3(0f, compassOrientation / 2, 0f));
     }
 }

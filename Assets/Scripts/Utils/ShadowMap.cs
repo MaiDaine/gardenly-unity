@@ -161,21 +161,11 @@ public class ShadowMap : MonoBehaviour
     private void ConvertColors()
     {
         float correction = 1 / max;
-        float average = 0.0f;
         Vector2 borders = new Vector2(pixelArray.width - startPoint.x, pixelArray.height - startPoint.y);
         for (int y = (int)startPoint.y; y < borders.y; y++)
             for (int x = (int)startPoint.x; x < borders.x - 1; x++)
                 pixelArray.SetPixel(x, y, gradientScript.GetColor(pixelArray.GetPixel(x, y).r * correction));
-        for (int y = (int)startPoint.y; y < borders.y; y++)
-            for (int x = (int)startPoint.x; x < borders.x - 1; x++)
-            {
-                average = 0.0f;
-                if (x > startPoint.x)
-                {
-
-                }
-            }
-                pixelArray.Apply();
+        pixelArray.Apply();
     }
 
     private Texture2D CaptureShadowMap(float hourOffset)

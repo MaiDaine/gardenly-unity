@@ -10,7 +10,7 @@ public class DayNightController : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Light sun;
-    [SerializeField] private Transform sun2;
+    [SerializeField] private Transform sunLocation;
 #pragma warning restore 0649
 
     private int timeAnimation;
@@ -18,12 +18,15 @@ public class DayNightController : MonoBehaviour
     private float sunInitialIntensity;
 
     private const float vHour = 1f / 24f;
+    private const float initialSunLocation = 150f;
+    private const float sunRotateCoef = 15f;
     private bool orientationEditionActive = false;
 
     private void Start()
     {
         sunInitialIntensity = sun.intensity;
         currentTimeOfDay = targetTime;
+        //sunLocation.transform.localRotation = Quaternion.Euler(0, initialSunLocation, 0);
     }
 
     public void SetTimeOfDay(float time)
@@ -64,16 +67,24 @@ public class DayNightController : MonoBehaviour
     {
         float intensityMultiplier = 1;
 
-        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
         if (currentTimeOfDay < 0.5f)
-            sun2.transform.localRotation = Quaternion.Euler(0.0122f, -(currentTimeOfDay * 360f), -0.171f);
+            sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
         else
-            sun2.transform.localRotation = Quaternion.Euler(0.0122f, (currentTimeOfDay * 360f), -0.171f);
+            sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 180, 0);
 
         if (currentTimeOfDay < 0.25f || currentTimeOfDay > 0.75f)
             intensityMultiplier = 0;
         else
             intensityMultiplier = 1f - Mathf.Abs(0.5f - currentTimeOfDay);
         sun.intensity = sunInitialIntensity * intensityMultiplier;
+    }
+
+    public void RotateSun(bool add)
+    {
+        float orientation = 1;
+
+        if (add)
+            orientation = -1;
+        sunLocation.transform.Rotate(new Vector3(0, sunRotateCoef * orientation, 0));
     }
 }
