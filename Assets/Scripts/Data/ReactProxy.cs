@@ -14,6 +14,7 @@ public class ReactProxy : MonoBehaviour
     public Dictionary<string, Action<string>> callbacks = new Dictionary<string, Action<string>>();
     public Dictionary<string, Action<PlantData, GameObject>> plantCallbacks;
     public ModelSO modelList;
+    public GameObject fallbackModel;
 
     [DllImport("__Internal")]
     private static extern void save(string json);
@@ -191,18 +192,18 @@ public class ReactProxy : MonoBehaviour
         else
         {
             PlantData tmp = externalData.plants[plantType][plantName];
-            if (modelList.Models.Count - 1 >= tmp.model)
-                callback.Invoke(tmp, modelList.Models[tmp.model]);
+            if (tmp.model <= modelList.Models.Count)
+                callback.Invoke(tmp, fallbackModel);
             else
-                MessageHandler.instance.ErrorMessage("loading_error");
+                callback.Invoke(tmp, modelList.Models[tmp.model]);
         }
     }
 
     public void LoadPlantDataCallback(PlantData plantData)
     {
-        if (modelList.Models.Count - 1 >= plantData.model)
-            plantCallbacks[plantData.plantID].Invoke(plantData, modelList.Models[plantData.model]);
+        if (plantData.model <= modelList.Models.Count)
+            plantCallbacks[plantData.plantID].Invoke(plantData, fallbackModel);
         else
-            MessageHandler.instance.ErrorMessage("loading_error");
+            plantCallbacks[plantData.plantID].Invoke(plantData, modelList.Models[plantData.model]);
     }
 }

@@ -16,6 +16,7 @@ public class SpawnController : MonoBehaviour
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
     public PlantElement plantElement;
     public ModelSO modelList;
+    public GameObject fallbackModel;
 
     private ShapeCreator shapeCreator;
 
@@ -36,8 +37,10 @@ public class SpawnController : MonoBehaviour
     public GhostHandler GetPlantGhost(string type, PlantData plantData)
     {
         PlantElement ghost = Instantiate(plantElement);
-        GameObject tmp = modelList.Models[plantData.model];
-        ghost.OnPlantDataLoad(plantData, tmp);
+        if (plantData.model <= modelList.Models.Count)
+            ghost.OnPlantDataLoad(plantData, fallbackModel);
+        else
+            ghost.OnPlantDataLoad(plantData, modelList.Models[plantData.model]);
         return ghost;
     }
 
@@ -76,7 +79,7 @@ public class SpawnController : MonoBehaviour
         FlowerBed tmp;
         ConstructionController constructionController = ConstructionController.instance;
 
-        if (constructionController.GetGhost() == shapeCreator 
+        if (constructionController.GetGhost() == shapeCreator
             && constructionController.currentState == ConstructionController.ConstructionState.Positioning)
         {
             constructionController.Cancel();
