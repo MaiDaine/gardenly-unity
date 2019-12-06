@@ -30,6 +30,7 @@ public class MenuScript : MonoBehaviour, IMenu
     {
         LabelScript tmpScript = GetComponentInChildren<LabelScript>();
 
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         tmpScript.ResetColor();
         rotateState = false;
         isMoving = true;
@@ -38,6 +39,7 @@ public class MenuScript : MonoBehaviour, IMenu
 
     public void StartRotate()
     {
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         playerController.actionHandler.NewEditonAction(ConstructionController.EditionType.Rotation, playerController.currentSelection);
         rotateState = !rotateState;
     }

@@ -74,7 +74,6 @@ public class WallHandler : GhostHandler, ISerializable
             text.transform.position = tmp;
             text.SetText(string.Format("{0:F1}m", lenght));
         }
-      //  TutoObject.waitForBuild = true;
         return false;
     }
 
@@ -82,7 +81,7 @@ public class WallHandler : GhostHandler, ISerializable
     {
         base.EndConstruction(position);
         text.gameObject.SetActive(false);
-     //   TutoObject.waitForBuild = false;
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
     }
 
     public override void Move(Vector3 position)

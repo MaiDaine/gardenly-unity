@@ -92,6 +92,7 @@ public class SpawnController : MonoBehaviour
         tmp.Init(shapeCreator);
         constructionController.SetGhost(shapeCreator);
         constructionController.currentState = ConstructionController.ConstructionState.Positioning;
+        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
         return tmp;
     }
 }

@@ -8,6 +8,7 @@ public class ShadowMap : MonoBehaviour
     public static ShadowMap instance = null;
 
     public DayNightController dayNightController;
+    public GradientScript gradientScript;
     public LoadingShadowScript loadingBar;
     public GameObject shadowFilter;
     public RawImage shadowMapTexture;
@@ -22,6 +23,7 @@ public class ShadowMap : MonoBehaviour
     private float toTextureRatio;
     private CommandBuffer cb;
     private float frameUpdatePending = 0;
+    private float max = 0;
 
     private const float planeSize = 100f;
 
@@ -99,7 +101,7 @@ public class ShadowMap : MonoBehaviour
                     goto EndCapture;
                 }
 
-        EndCapture:
+            EndCapture:
         EndCapture(currentTime, currentShadowSetting);
     }
 
@@ -108,6 +110,7 @@ public class ShadowMap : MonoBehaviour
         QualitySettings.shadowDistance = 100f;
         shadowCamera.enabled = true;
         shadowFilter.SetActive(true);
+        max = 0f;
 
         RenderTargetIdentifier shadowmap = BuiltinRenderTextureType.CurrentActive;
         cb.SetShadowSamplingMode(shadowmap, ShadowSamplingMode.RawDepth);
@@ -131,12 +134,12 @@ public class ShadowMap : MonoBehaviour
         pixelArray.Apply();
 
         loadingBar.UpdateLoadingBar((frame * percent) / 100.0f);
-
         if ((frame * percent) > 99.0f)
         {
             startShadowCalc = 2;
             loadingBar.gameObject.SetActive(false);
             MessageHandler.instance.SuccesMessage("shadow_successfull");
+            ConvertColors();
         }
 
         frameUpdatePending -= 0.1f;
@@ -153,6 +156,16 @@ public class ShadowMap : MonoBehaviour
         shadowCamera.enabled = false;
         shadowFilter.SetActive(false);
         dayNightController.InstantSetTimeofDay(currentTime * 24f);
+    }
+
+    private void ConvertColors()
+    {
+        float correction = 1 / max;
+        Vector2 borders = new Vector2(pixelArray.width - startPoint.x, pixelArray.height - startPoint.y);
+        for (int y = (int)startPoint.y; y < borders.y; y++)
+            for (int x = (int)startPoint.x; x < borders.x - 1; x++)
+                pixelArray.SetPixel(x, y, gradientScript.GetColor(pixelArray.GetPixel(x, y).r * correction));
+        pixelArray.Apply();
     }
 
     private Texture2D CaptureShadowMap(float hourOffset)
@@ -181,6 +194,8 @@ public class ShadowMap : MonoBehaviour
                 if (pixelValue != filterValue)
                 {
                     float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
+                    if (updatedValue > max)
+                        max = updatedValue;
                     pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
                 }
             }
