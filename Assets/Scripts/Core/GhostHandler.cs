@@ -60,7 +60,6 @@ public abstract class GhostHandler : MonoBehaviour, ISelectable, ISnapable, ISer
             UIController.afterBuilding = true;
             PlayerController.instance.SelectFromAction(GetComponent<ISelectable>());
         }
-        Camera.main.GetComponent<UIController>().tutoBlock.Raise();
     }
 
     //Actions

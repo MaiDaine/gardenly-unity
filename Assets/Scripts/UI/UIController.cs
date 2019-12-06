@@ -19,14 +19,17 @@ public class UIController : MonoBehaviour
     public ActionRuntimeSet revertActionSet;
     public ActionRuntimeSet redoActionSet;
     public TextMeshProUGUI gardenName;
+    public TMP_InputField hour;
+    public TextMeshProUGUI displayHour;
     public PlantPanelScript dataPanel;
     public UIInteractions uIInteractions = null;
     public TutorialController tutorialController;
+    public IEnumerator imageCoroutine = null;
+    public GameEvent tutoBlock;
+    public CompassScript compass;
     public static bool menuOpen = false;
     public static bool flowerBedMenuOpen = false;
     public static bool afterBuilding = false;
-    public IEnumerator imageCoroutine = null;
-    public GameEvent tutoBlock;
 
     protected MenuScript menu = null;
     protected MenuFlowerBedScript flowerBedMenuScript = null;
@@ -38,7 +41,7 @@ public class UIController : MonoBehaviour
     private Vector3 anchorOpenView = new Vector3();
     private Vector3 anchorCloseView = new Vector3();
     private float sizeView = 183.48f;
-
+    private bool compassToggle = false;
 
     private void Awake()
     {
@@ -96,13 +99,16 @@ public class UIController : MonoBehaviour
 
     public void HideViews()
     {
-        foreach (UIView view in plantsViews)
+        if (plantsViews != null)
         {
-            if (view.gameObject != null && view.IsVisible)
-                view.Hide();
+            foreach (UIView view in plantsViews)
+            {
+                if (view != null && view.gameObject != null && view.IsVisible)
+                    view.Hide();
+            }
+            if (shadowMap.IsVisible)
+                shadowMap.Hide();
         }
-        if (shadowMap.IsVisible)
-            shadowMap.Hide();
     }
 
     public void DestroyMenu()
@@ -122,6 +128,19 @@ public class UIController : MonoBehaviour
         flowerBedMenuOpen = false;
         if (ShadowMap.instance.startShadowCalc == 1)
             ShadowMap.instance.startShadowCalc = 0;
+        if (compass != null && compass.gameObject.activeSelf)
+        {
+            compass.ClearInterface();
+            compassToggle = false;
+            compass.gameObject.SetActive(false);
+        }
+    }
+
+    public void ToggleCompassInterface()
+    {
+        compassToggle = !compassToggle;
+        compass.gameObject.SetActive(compassToggle);
+        compass.ToggleInterface();
     }
 
     //TODO UI
@@ -163,8 +182,8 @@ public class UIController : MonoBehaviour
     // Plant data panel management
     public void SetDataPanel(string plantName, string plantType, bool onSelect = false)
     {
-        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -33.46f, 0);
-        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -33.46f, 0);
+        anchorOpenView = new Vector3(-extendMenu.RectTransform.sizeDelta.x - sizeView + 0.3f, -55f, 0);
+        anchorCloseView = new Vector3(-extendMenu.RectTransform.sizeDelta.x + 0.3f, -55f, 0);
         if (PlantsViewsDisplay() || afterBuilding)
         {
             dataPanel.GetView().CustomStartAnchoredPosition = anchorOpenView;
@@ -237,6 +256,24 @@ public class UIController : MonoBehaviour
         ShadowMap.instance.startShadowCalc = 0;
         uIInteractions.StartNewFB();
     }
+
+    public void SendHours(DayNightController controller)
+    {
+        float hourVal = 0;
+        if (float.TryParse(hour.text, out hourVal) && (hour.text.Length == 1 || hour.text.Length == 2)  && hourVal >= 0 && hourVal < 24)
+        {
+            controller.InstantSetTimeofDay(hourVal);
+            displayHour.text = hour.text + " : 00";
+            hour.text = "00";
+        }
+        else
+            MessageHandler.instance.ErrorMessage("hour_format");
+    }
+
+    /*public void SendMinutes(DayNightController controller)
+    {
+        controller.InstantSetTimeofDay(minutes.text);
+    }*/
 
     public MenuScript GetMenuScript() { return menu; }
 
