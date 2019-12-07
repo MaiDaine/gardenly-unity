@@ -31,6 +31,7 @@ public class ShapeCreator : GhostHandler
         lineInfoText = Instantiate<LineTextHandler>(SpawnController.instance.lineTextRef);
         lineInfoText.gameObject.SetActive(false);
         raycaster = Camera.main.GetComponent<Raycaster>();
+        PlayerController.instance.FbCreation = true;
     }
 
     public void SelfClear()
@@ -42,6 +43,7 @@ public class ShapeCreator : GhostHandler
         points.Clear();
         lineInfoText.gameObject.SetActive(false);
         displayAngle = false;
+        PlayerController.instance.FbCreation = false;
     }
 
     //GhostHandler overrides
@@ -119,6 +121,7 @@ public class ShapeCreator : GhostHandler
         lineInfoText.gameObject.SetActive(false);
         Destroy(currentPoint);
         eventShapeConstructionFinished.Invoke();
+        PlayerController.instance.FbCreation = false;
     }
 
     public override bool OnCancel()
@@ -132,6 +135,7 @@ public class ShapeCreator : GhostHandler
         Destroy(flowerBed.gameObject);
         lineInfoText.gameObject.SetActive(false);
         displayAngle = false;
+        PlayerController.instance.FbCreation = false;
         return false;
     }
 
