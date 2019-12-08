@@ -15,7 +15,8 @@ public class SpawnController : MonoBehaviour
     //Models
     public DefaultStaticElement[] DSElements = new DefaultStaticElement[2];
     public PlantElement plantElement;
-    public ModelList plantModels;
+    public ModelSO modelList;
+    public GameObject fallbackModel;
 
     private ShapeCreator shapeCreator;
 
@@ -33,15 +34,13 @@ public class SpawnController : MonoBehaviour
         shapeCreator.gameObject.SetActive(false);
     }
 
-    public GhostHandler GetPlantGhost(string type, string name)
+    public GhostHandler GetPlantGhost(string type, PlantData plantData)
     {
-        //TODO #74
-        PlantData tmp = ReactProxy.instance.GetPlantsData(type, name);
-        if (tmp == null)
-            return null;
-
         PlantElement ghost = Instantiate(plantElement);
-        ghost.OnPlantDataLoad(tmp);
+        if (plantData.model <= modelList.Models.Count)
+            ghost.OnPlantDataLoad(plantData, fallbackModel);
+        else
+            ghost.OnPlantDataLoad(plantData, modelList.Models[plantData.model]);
         return ghost;
     }
 
@@ -80,7 +79,7 @@ public class SpawnController : MonoBehaviour
         FlowerBed tmp;
         ConstructionController constructionController = ConstructionController.instance;
 
-        if (constructionController.GetGhost() == shapeCreator 
+        if (constructionController.GetGhost() == shapeCreator
             && constructionController.currentState == ConstructionController.ConstructionState.Positioning)
         {
             constructionController.Cancel();

@@ -193,6 +193,8 @@ public class ConstructionController : MonoBehaviour
                 grid.activ = false;
             if (uiController.GetMenuScript() != null)
                 uiController.GetMenuScript().isMoving = false;
+            if (Input.GetKey(KeyCode.LeftShift))
+                SpawnGhost(ghost);
         }
     }
 

@@ -1,6 +1,5 @@
 ﻿using SimpleJSON;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,6 +12,9 @@ public class ReactProxy : MonoBehaviour
     public GraphQL graphQL;
     public ExternalData externalData;
     public Dictionary<string, Action<string>> callbacks = new Dictionary<string, Action<string>>();
+    public Dictionary<string, Action<PlantData, GameObject>> plantCallbacks;
+    public ModelSO modelList;
+    public GameObject fallbackModel;
 
     [DllImport("__Internal")]
     private static extern void save(string json);
@@ -51,14 +53,6 @@ public class ReactProxy : MonoBehaviour
             SerializationController.instance.GetComponent<GardenData>().SetGardenName("Offline Garden");
             LocalisationController.instance.Init("FR");//TODO USERPREF
         }
-    }
-
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    InitScene("{\"id\":\"f5af5fee-92df-4868-8b7a-766a82702987\",\"name\":\"Paris 2\",\"country\":null,\"slug\":\"paris-2\",\"tiles\":[{\"id\":\"72ff9455-d0e3-410e-897a-983d2a38b063\",\"key\":1569574400,\"name\":\"Parterre 1\",\"data\":\"{\\\"points\\\":[{\\\"x\\\":41.0,\\\"y\\\":-61.0},{\\\"x\\\":46.0,\\\"y\\\":-61.0},{\\\"x\\\":46.0,\\\"y\\\":-55.0},{\\\"x\\\":41.0,\\\"y\\\":-55.0}]}\",\"groundType\":{\"id\":\"0162a5af-0a36-4deb-8365-059e1d70b200\",\"name\":\"Calcaire\",\"__typename\":\"GroundType\"},\"__typename\":\"Tile\"},{\"id\":\"cd82d698-af6c-4c16-8dbe-b4ae31c34253\",\"key\":1569574400,\"name\":\"Parterre 2\",\"data\":\"{\\\"points\\\":[{\\\"x\\\":54.0,\\\"y\\\":-61.0},{\\\"x\\\":59.0,\\\"y\\\":-61.0},{\\\"x\\\":59.0,\\\"y\\\":-55.0},{\\\"x\\\":54.0,\\\"y\\\":-55.0}]}\",\"groundType\":{\"id\":\"0162a5af-0a36-4deb-8365-059e1d70b200\",\"name\":\"Calcaire\",\"__typename\":\"GroundType\"},\"__typename\":\"Tile\"}],\"staticElements\":[{\"id\":\"73f33a98-ac4d-4304-be32-78b325126806\",\"key\":1569574312,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":47.0,\\\"y\\\":0.0,\\\"z\\\":-47.0},\\\"end\\\":{\\\"x\\\":40.0,\\\"y\\\":0.0,\\\"z\\\":-47.0},\\\"rotation\\\":{\\\"x\\\":0.0,\\\"y\\\":0.0,\\\"z\\\":0.0,\\\"w\\\":1.0}}\",\"__typename\":\"StaticElement\"},{\"id\":\"5b65a8e1-55ab-4cc4-b24b-bfbc6bb4b06a\",\"key\":1569574322,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":40.0,\\\"y\\\":0.0,\\\"z\\\":-47.0},\\\"end\\\":{\\\"x\\\":40.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"rotation\\\":{\\\"x\\\":0.0,\\\"y\\\":0.7071068286895752,\\\"z\\\":0.0,\\\"w\\\":-0.7071068286895752}}\",\"__typename\":\"StaticElement\"},{\"id\":\"4bf1fd77-74a2-4c70-90a4-753dadbd1e1e\",\"key\":1569574328,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":40.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"end\\\":{\\\"x\\\":48.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"rotation\\\":{\\\"x\\\":0.0,\\\"y\\\":1.0,\\\"z\\\":0.0,\\\"w\\\":0.0}}\",\"__typename\":\"StaticElement\"},{\"id\":\"6e9b833a-d5a1-40d8-ad42-faa7c07a9e3f\",\"key\":1569574357,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":52.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"end\\\":{\\\"x\\\":60.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"rotation\\\":{\\\"x\\\":0.0,\\\"y\\\":1.0,\\\"z\\\":0.0,\\\"w\\\":0.0}}\",\"__typename\":\"StaticElement\"},{\"id\":\"cf319f94-ff06-43bb-b143-a0428b5e07cd\",\"key\":1569574368,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":60.0,\\\"y\\\":0.0,\\\"z\\\":-62.0},\\\"end\\\":{\\\"x\\\":60.0,\\\"y\\\":0.0,\\\"z\\\":-47.0},\\\"rotation\\\":{\\\"x\\\":0.0,\\\"y\\\":0.7071068286895752,\\\"z\\\":0.0,\\\"w\\\":0.7071068286895752}}\",\"__typename\":\"StaticElement\"},{\"id\":\"bb7e6767-bf4f-4037-a67c-451c1af2b057\",\"key\":1569574373,\"data\":\"{\\\"type\\\":\\\"Wall\\\",\\\"start\\\":{\\\"x\\\":60.0,\\\"y\\\":0.0,\\\"z\\\":-47.0},\\\"end\\\":{\\\"x\\\":52.811214447021487,\\\"y\\\":-9.5367431640625e-7,\\\"z\\\":-47.02238845825195},\\\"rotation\\\":{\\\"x\\\":-1.0328804478376696e-10,\\\"y\\\":-0.0015571415424346924,\\\"z\\\":6.633030125158257e-8,\\\"w\\\":0.9999988079071045}}\",\"__typename\":\"StaticElement\"}],\"plants\":[{\"id\":\"5e204e93-c62c-458f-87eb-db85b8f9459f\",\"data\":\"{\\\"position\\\":{\\\"x\\\":56.424747467041019,\\\"y\\\":0.0,\\\"z\\\":-55.953712463378909}}\",\"key\":1569574545,\"age\":null,\"plant\":{\"id\":\"b5b84d24-7c13-466e-8b8d-61ba6bd2c364\",\"name\":\"Bougainvillier\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"},{\"id\":\"2516e25f-f34d-45ce-9beb-5b468c970d71\",\"data\":\"{\\\"position\\\":{\\\"x\\\":56.35068130493164,\\\"y\\\":0.0,\\\"z\\\":-59.84307098388672}}\",\"key\":1569574554,\"age\":null,\"plant\":{\"id\":\"fb59f818-8a68-4a6b-9cac-19c0be259c65\",\"name\":\"Lys\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"},{\"id\":\"dbfc115e-26a9-4918-b8b6-783d383f0898\",\"data\":\"{\\\"position\\\":{\\\"x\\\":56.3575325012207,\\\"y\\\":0.0,\\\"z\\\":-58.44941711425781}}\",\"key\":1569574564,\"age\":null,\"plant\":{\"id\":\"1bd6ab04-5f34-4e2f-a330-513a3721187d\",\"name\":\"Coquelicot\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"},{\"id\":\"b19dc2f4-1ac5-45e4-988b-f96aa4ee5274\",\"data\":\"{\\\"position\\\":{\\\"x\\\":43.49794387817383,\\\"y\\\":0.0,\\\"z\\\":-55.73651123046875}}\",\"key\":1569574571,\"age\":null,\"plant\":{\"id\":\"f9d7aa36-48b3-4b9c-b225-8030c441273b\",\"name\":\"Anémone\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"},{\"id\":\"c5ebeb42-748b-4384-9bf6-ab1eb4cdcef4\",\"data\":\"{\\\"position\\\":{\\\"x\\\":43.52072525024414,\\\"y\\\":0.0,\\\"z\\\":-59.97710418701172}}\",\"key\":1569574586,\"age\":null,\"plant\":{\"id\":\"e2af9d94-beb0-4a59-b8f9-f1113f49cf16\",\"name\":\"Carotte\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"},{\"id\":\"ed85ba46-abb2-4c69-b163-5aa3f43e1f52\",\"data\":\"{\\\"position\\\":{\\\"x\\\":43.245025634765628,\\\"y\\\":0.0,\\\"z\\\":-58.084354400634769}}\",\"key\":1569574589,\"age\":null,\"plant\":{\"id\":\"e66c677a-724a-4788-88b4-46b0178754db\",\"name\":\"Pomme de terre\",\"__typename\":\"Plant\"},\"sunExposition\":0,\"__typename\":\"PlantTile\"}],\"data\":\"\\\"{}\\\"\",\"__typename\":\"Garden\"}");
-        //}
     }
 
     //Link To REACT
@@ -176,7 +170,7 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\"}}}");
+                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\",\"model\":\"0\"}}}");
             else
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
@@ -185,8 +179,31 @@ public class ReactProxy : MonoBehaviour
         return externalData.plants[plantType][plantName];
     }
 
-    public void LoadPlantDataFromId(string plantID, Action<PlantData> callback)
+    public void LoadPlantDataFromSave(Action<PlantData, GameObject> callback, string plantID, string plantName, string plantType)
     {
-        SendQuery(graphQL.GetPlantData(plantID));
+        if (!externalData.plants.ContainsKey(plantType)
+            || !externalData.plants[plantType].ContainsKey(plantName)
+            || externalData.plants[plantType][plantName].status == PlantData.DataStatus.Requested)
+        {
+            SendQuery(graphQL.GetPlantData(plantID));
+            plantCallbacks.Add(plantID, callback);
+            externalData.callbackLoadData.Add(plantID, LoadPlantDataCallback);
+        }
+        else
+        {
+            PlantData tmp = externalData.plants[plantType][plantName];
+            if (tmp.model <= modelList.Models.Count)
+                callback.Invoke(tmp, fallbackModel);
+            else
+                callback.Invoke(tmp, modelList.Models[tmp.model]);
+        }
+    }
+
+    public void LoadPlantDataCallback(PlantData plantData)
+    {
+        if (plantData.model <= modelList.Models.Count)
+            plantCallbacks[plantData.plantID].Invoke(plantData, fallbackModel);
+        else
+            plantCallbacks[plantData.plantID].Invoke(plantData, modelList.Models[plantData.model]);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlantElement : GhostHandler
 {
     private SerializedElement serializedElement;
+    private SerializableItemData serializableItemData;
 
     public void SetTileKey(uint key) { serializedElement.tile_key = key; }
 
@@ -47,7 +48,6 @@ public class PlantElement : GhostHandler
     }
 
     //Serialization
-
     [Serializable]
     public struct SerializedElement
     {
@@ -64,15 +64,14 @@ public class PlantElement : GhostHandler
     public struct SerializableItemData
     {
         public Vector3 position;
+        public string plantType;
+        public string plantName;
     }
 
     public override string Serialize()
     {
-        SerializableItemData serializableItemData;
-
-        serializableItemData.position = transform.position;
-
         serializedElement.type = SerializationController.ItemType.Plant;
+        serializableItemData.position = transform.position;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
 
         SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
@@ -91,7 +90,7 @@ public class PlantElement : GhostHandler
     public override void DeSerialize(string json)
     {
         SerializedElement serializedElement = JsonUtility.FromJson<SerializedElement>(json);
-        SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
+        serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
 
         var tmp = JSON.Parse(json);
         data = new PlantData(tmp["plant"]["name"]);
@@ -101,12 +100,16 @@ public class PlantElement : GhostHandler
         //age
         //sun
         if (!Application.isEditor)
-            ReactProxy.instance.LoadPlantDataFromId(data.plantID, OnPlantDataLoad);
+            ReactProxy.instance.LoadPlantDataFromSave(OnPlantDataLoad, data.plantID, serializableItemData.plantName, serializableItemData.plantType);
     }
 
-    public void OnPlantDataLoad(PlantData plantData)
+    public void OnPlantDataLoad(PlantData plantData, GameObject model)
     {
         data = plantData;
         serializedElement.plant_id = plantData.plantID;
+        serializableItemData.plantType = plantData.typeName;
+        serializableItemData.plantName = plantData.name;
+        GetComponent<MeshFilter>().mesh = model.GetComponent<MeshFilter>().sharedMesh;
+        GetComponent<MeshRenderer>().materials = model.GetComponent<MeshRenderer>().sharedMaterials;
     }
 }

@@ -95,10 +95,10 @@ public class CameraController : MonoBehaviour
         if (!inputEnabled)
             return;
 
-        if (Input.GetAxis("Vertical") != 0f)
+        if (!Input.GetKey(KeyCode.LeftControl) && Input.GetAxis("Vertical") != 0f)
             currentPos = MoveForward(currentPos, Input.GetAxis("Vertical"));
 
-        if (Input.GetAxis("Horizontal") != 0f)
+        if (!Input.GetKey(KeyCode.LeftControl) && Input.GetAxis("Horizontal") != 0f)
             currentPos = MoveRight(currentPos, Input.GetAxis("Horizontal"));
 
         if (!currentCamera.orthographic)

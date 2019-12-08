@@ -22,7 +22,7 @@ public class ButtonScript : MonoBehaviour
         if (tmp == null)
             return;
         ConstructionController.instance.SetGhost(null);
-        ConstructionController.instance.LoadPlantGhost(SpawnController.instance.GetPlantGhost(ghostType, tmp.name));
+        ConstructionController.instance.LoadPlantGhost(SpawnController.instance.GetPlantGhost(ghostType, tmp));
     }
 
     public void SetPanelFunction()

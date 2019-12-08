@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private ConstructionController constructionController;
     private CameraController cameraController;
     private Raycaster raycaster;
+    public bool FbCreation = false;
 
     private void Awake()
     {
@@ -45,6 +46,22 @@ public class PlayerController : MonoBehaviour
             Camera.main.GetComponentInChildren<UIController>().Cancel();
             Camera.main.GetComponentInChildren<UIController>().ResetButton(true);
         }
+        else if (!FbCreation)
+        {
+            //Redo - Revert
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+            {
+                GhostAction currentAction = actionHandler.RedoAction();
+                if (currentAction != null)
+                    UpdateSelectionAfterAction(currentAction);
+            }
+            else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
+            {
+                GhostAction currentAction = actionHandler.RevertAction();
+                if (currentAction != null)
+                    UpdateSelectionAfterAction(currentAction);
+            }
+        }
 
         //Selection
         if (constructionController.currentState == ConstructionController.ConstructionState.Off)
@@ -62,31 +79,31 @@ public class PlayerController : MonoBehaviour
             switch (constructionController.editionState)
             {
                 case ConstructionController.EditionType.Off:
-                {
-                    if (PlaneClick())
-                        SelectBuilding();
-                    else if (Input.GetMouseButton(0) && interactible != null)
-                        constructionController.UpdateGhostEditing(interactible);
-                    if (interactible != null && Input.GetMouseButtonUp(0))
                     {
-                        interactible.EndDrag();
-                        interactible = null;
+                        if (PlaneClick())
+                            SelectBuilding();
+                        else if (Input.GetMouseButton(0) && interactible != null)
+                            constructionController.UpdateGhostEditing(interactible);
+                        if (interactible != null && Input.GetMouseButtonUp(0))
+                        {
+                            interactible.EndDrag();
+                            interactible = null;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case ConstructionController.EditionType.Position:
-                 {
-                     Vector3 pos;
-                     RaycastHit hit;
-                     if (raycaster.MouseRayCast(out pos, out hit))
-                         constructionController.EditPosition(pos);
-                     break;
-                 }
+                    {
+                        Vector3 pos;
+                        RaycastHit hit;
+                        if (raycaster.MouseRayCast(out pos, out hit))
+                            constructionController.EditPosition(pos);
+                        break;
+                    }
                 case ConstructionController.EditionType.Rotation:
-                 {
-                     constructionController.EditRotation(Input.GetAxis("Mouse X"));
-                     break;
-                 }
+                    {
+                        constructionController.EditRotation(Input.GetAxis("Mouse X"));
+                        break;
+                    }
             }
             if (PlaneClick() && constructionController.editionState != ConstructionController.EditionType.Off)
             {
@@ -98,27 +115,10 @@ public class PlayerController : MonoBehaviour
                         return;
                 }
                 actionHandler.ActionComplete(true);
-            } 
+            }
         }
         else
             constructionController.UpdateGhost();
-
-        if (!cameraController.inputEnabled)
-            return;
-
-        //Redo - Revert
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-        {
-            GhostAction currentAction = actionHandler.RedoAction();
-            if (currentAction != null)
-                UpdateSelectionAfterAction(currentAction);
-        }
-        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
-        {
-            GhostAction currentAction = actionHandler.RevertAction();
-            if (currentAction != null)
-                UpdateSelectionAfterAction(currentAction);
-        }
     }
 
     //Selection Handle
