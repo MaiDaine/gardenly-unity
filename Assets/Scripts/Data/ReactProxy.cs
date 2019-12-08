@@ -13,7 +13,7 @@ public class ReactProxy : MonoBehaviour
     public GraphQL graphQL;
     public ExternalData externalData;
     public Dictionary<string, Action<string>> callbacks = new Dictionary<string, Action<string>>();
-    public Dictionary<string, Action<PlantData, GameObject>> plantCallbacks;
+    public Dictionary<string, Action<PlantData, GameObject>> plantCallbacks = new Dictionary<string, Action<PlantData, GameObject>>();
     public ModelSO modelList;
     public GameObject fallbackModel;
     public bool ready = false;
@@ -86,7 +86,6 @@ public class ReactProxy : MonoBehaviour
 
     public void SendQuery(string payload)
     {
-        Debug.Log("SEND<" + payload + ">");
         query(payload);
     }
 
@@ -111,7 +110,6 @@ public class ReactProxy : MonoBehaviour
 
     public void DispatchQueryResult(string json)
     {
-        Debug.Log("RECEIVE<" + json + ">");
         var jsonObject = JSONObject.Parse(json);
         if (jsonObject["errors"] != null)
         {
@@ -169,10 +167,12 @@ public class ReactProxy : MonoBehaviour
     public PlantData GetPlantsData(string plantType, string plantName)
     {
         if (!externalData.plants.ContainsKey(plantType)
-            || !externalData.plants[plantType].ContainsKey(plantName)
             || externalData.plants[plantType][plantName].status == PlantData.DataStatus.Requested)
+        {
             return null;
-        if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
+        }
+        else if (!externalData.plants[plantType].ContainsKey(plantName)
+            || externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
                 DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\"}}}");
@@ -186,21 +186,18 @@ public class ReactProxy : MonoBehaviour
 
     public void LoadPlantDataFromSave(Action<PlantData, GameObject> callback, string plantID, string plantName, string plantType)
     {
-        Debug.Log("LOAD");
         if (!ready
             || !externalData.plants.ContainsKey(plantType)
             || !externalData.plants[plantType].ContainsKey(plantName)
             || !(externalData.plants[plantType][plantName].status == PlantData.DataStatus.Received))
         {
-            Debug.Log("NOPE");
-            SendQuery(graphQL.GetPlantData(plantID));
             plantCallbacks.Add(plantID, callback);
             externalData.callbackLoadData.Add(plantID, LoadPlantDataCallback);
+            SendQuery(graphQL.GetPlantData(plantID));
         }
         else
         {
             PlantData tmp = externalData.plants[plantType][plantName];
-            Debug.Log("OK" + tmp.name + " | " + tmp.model);
             if (tmp.model < modelList.Models.Count)
                 callback.Invoke(tmp, modelList.Models[tmp.model]);
             else

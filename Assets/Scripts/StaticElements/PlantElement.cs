@@ -109,7 +109,13 @@ public class PlantElement : GhostHandler
         serializedElement.plant_id = plantData.plantID;
         serializableItemData.plantType = plantData.typeName;
         serializableItemData.plantName = plantData.name;
-        GetComponent<MeshFilter>().mesh = model.GetComponent<MeshFilter>().sharedMesh;
-        GetComponent<MeshRenderer>().materials = model.GetComponent<MeshRenderer>().sharedMaterials;
+        if (model.GetComponent<MeshFilter>() == null)
+            GetComponent<MeshFilter>().mesh = model.GetComponentInChildren<MeshFilter>().sharedMesh;
+        else
+            GetComponent<MeshFilter>().mesh = model.GetComponent<MeshFilter>().sharedMesh;
+        if (model.GetComponent<MeshRenderer>() == null)
+            GetComponent<MeshRenderer>().materials = model.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+        else
+            GetComponent<MeshRenderer>().materials = model.GetComponent<MeshRenderer>().sharedMaterials;
     }
 }

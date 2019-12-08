@@ -34,7 +34,7 @@ public class SpawnController : MonoBehaviour
         shapeCreator.gameObject.SetActive(false);
     }
 
-    public GhostHandler GetPlantGhost(string type, PlantData plantData)
+    public GhostHandler GetPlantGhost(PlantData plantData)
     {
         PlantElement ghost = Instantiate(plantElement);
         if (plantData.model < modelList.Models.Count)
