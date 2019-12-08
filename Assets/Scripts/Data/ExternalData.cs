@@ -92,7 +92,6 @@ public class ExternalData
         plantData.description = tmp["description"];
         plantData.model = tmp["model"];
         plantData.imgUrl = tmp["thumbnail"];
-
         plantData.status = PlantData.DataStatus.Received;
         if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.name))
         {
