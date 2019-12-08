@@ -37,10 +37,10 @@ public class SpawnController : MonoBehaviour
     public GhostHandler GetPlantGhost(string type, PlantData plantData)
     {
         PlantElement ghost = Instantiate(plantElement);
-        if (plantData.model <= modelList.Models.Count)
-            ghost.OnPlantDataLoad(plantData, fallbackModel);
-        else
+        if (plantData.model < modelList.Models.Count)
             ghost.OnPlantDataLoad(plantData, modelList.Models[plantData.model]);
+        else
+            ghost.OnPlantDataLoad(plantData, fallbackModel);
         return ghost;
     }
 

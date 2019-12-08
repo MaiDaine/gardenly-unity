@@ -170,7 +170,7 @@ public class ReactProxy : MonoBehaviour
         if (externalData.plants[plantType][plantName].status == PlantData.DataStatus.None)
         {
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\",\"model\":\"0\"}}}");
+                DispatchQueryResult("{\"data\":{\"getPlant\":{\"name\":\"Pétunia\",\"type\":{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},\"id\":\"3df07e68-1af1-40ef-bf17-4b412e80574b\",\"colors\":[{\"name\":\"Rose\"},{\"name\":\"Blanche\"},{\"name\":\"Orange\"},{\"name\":\"Rouge\"},{\"name\":\"Jaune\"},{\"name\":\"Violet\"},{\"name\":\"Bleu\"}],\"phRangeLow\":0,\"phRangeHigh\":7,\"rusticity\":5,\"sunNeed\":7,\"waterNeed\":9,\"description\":\"Le pétunia est une fleur facile d’entretien. Sa floraison longue et abondante, aux couleurs variées et éclatantes, s'épanouit du printemps jusqu’aux premières gelées. En jardinière ou en suspension, il est la star des balcons et rebords de fenêtre.\",\"model\":2,\"thumbnail\":\"https://s3.gardenly.app/dev/6ea11cc99fe9a6f7c5a7cdeebf80d5393da23853/thumbnail_f98e393a-8f09-4cd4-9b93-9da72873ccf6.jpg\"}}}");
             else
                 SendQuery(graphQL.GetPlantData(externalData.plants[plantType][plantName].plantID));
             externalData.plants[plantType][plantName].status = PlantData.DataStatus.Requested;
@@ -192,18 +192,18 @@ public class ReactProxy : MonoBehaviour
         else
         {
             PlantData tmp = externalData.plants[plantType][plantName];
-            if (tmp.model <= modelList.Models.Count)
-                callback.Invoke(tmp, fallbackModel);
-            else
+            if (tmp.model < modelList.Models.Count)
                 callback.Invoke(tmp, modelList.Models[tmp.model]);
+            else
+                callback.Invoke(tmp, fallbackModel);
         }
     }
 
     public void LoadPlantDataCallback(PlantData plantData)
     {
-        if (plantData.model <= modelList.Models.Count)
-            plantCallbacks[plantData.plantID].Invoke(plantData, fallbackModel);
-        else
+        if (plantData.model < modelList.Models.Count)
             plantCallbacks[plantData.plantID].Invoke(plantData, modelList.Models[plantData.model]);
+        else
+            plantCallbacks[plantData.plantID].Invoke(plantData, fallbackModel);
     }
 }
