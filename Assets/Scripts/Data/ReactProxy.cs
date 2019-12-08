@@ -113,17 +113,11 @@ public class ReactProxy : MonoBehaviour
 
     public void OnSaveResult(string json)
     {
-        Debug.Log("OnSaveResult: ");
-        Debug.Log(json);
-
         if (json != null && json != "")
         {
             var jsonObject = JSONObject.Parse(json);
             if (jsonObject != null && jsonObject["success"] != null && jsonObject["success"].AsBool)
-            {
                 saveLock = false;
-                Debug.Log("UNLOCK");
-            }
         }
         if (!saveLock)
         {
@@ -136,7 +130,6 @@ public class ReactProxy : MonoBehaviour
 
         if (saveLock)
         {
-            Debug.Log("FAILED");
             saveLock = false;
             PlayerController.instance.actionHandler.OnSaveSucessfull();
             SerializationController.instance.OnSaveSucessfull();

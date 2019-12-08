@@ -47,7 +47,6 @@ public class SerializationController : MonoBehaviour
     public void OnSaveSucessfull()
     {
         items.Clear();
-        Debug.Log("SAVE CLEARED");
     }
 
     public bool CanSave() { return items.Count != 0; }

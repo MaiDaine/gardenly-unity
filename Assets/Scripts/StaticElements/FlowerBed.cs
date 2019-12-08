@@ -137,7 +137,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
             if (vertices[i].y > maxY)
                 maxY = vertices[i].y;
         }
-        GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(maxX - minX, maxY - minY);  
+        GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(maxX - minX, maxY - minY);
     }
 
     private void Setup()
@@ -207,11 +207,9 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public void AddToSerializationNewElements()
     {
         if (!initFromSerialization)
-        {
-            serializedElement.key = SerializationController.GetElementKey();
             serializationState = SerializationController.SerializationState.Add;
-        }
     }
+
     public void AddToSerializationModifyElements()
     {
         if (initFromSerialization)
@@ -251,11 +249,10 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
         serializedElement.type = SerializationController.ItemType.FlowerBed;
         serializedElement.data = JsonUtility.ToJson(serializableItemData);
-
         SimpleJSON.JSONObject json = new SimpleJSON.JSONObject();
-
+        string key = serializedElement.key.ToString();
         json["type"] = serializedElement.type.ToString();
-        json["key"] = serializedElement.key;
+        json["key"] = key;
         json["name"] = flowerBedName;
         json["ground_type_id"] = GetGroundTypeFromName(groundType);
         json["data"] = serializedElement.data;
