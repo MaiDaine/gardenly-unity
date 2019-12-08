@@ -243,6 +243,11 @@ public class ConstructionController : MonoBehaviour
         return true;
     }
 
+    public void ToggleGridState()
+    {
+        gridState = !gridState;
+    }
+
     //ISelectable Helper
     private void AddNeighbor(ISelectable neighbor)
     {
