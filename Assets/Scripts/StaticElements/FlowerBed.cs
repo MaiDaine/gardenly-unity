@@ -37,6 +37,8 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
 
     public uint GetKey() { return serializedElement.key; }
 
+    public List<PlantElement> GetPlantElements() { return flowerBedElements; }
+
     public void UpdatePlantSunExposure()
     {
         foreach (PlantElement elem in flowerBedElements)

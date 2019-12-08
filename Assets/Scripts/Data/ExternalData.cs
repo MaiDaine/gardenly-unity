@@ -72,10 +72,12 @@ public class ExternalData
             plants[plantType][name].typeName = plantType;
             plants[plantType][name].plantID = tmpPlant["id"];
         }
+        ReactProxy.instance.ready = true;
     }
 
     private void SetPlantData(string json)
     {
+        Debug.Log("SET PLANT DATA" + json);
         var jsonObject = JSONObject.Parse(json);
         var tmp = jsonObject["data"]["getPlant"];
         PlantData plantData = plants[tmp["type"]["name"]][tmp["name"]];
@@ -94,9 +96,7 @@ public class ExternalData
         plantData.imgUrl = tmp["thumbnail"];
         plantData.status = PlantData.DataStatus.Received;
         if (plantData.plantID != null && callbackLoadData.ContainsKey(plantData.name))
-        {
             callbackLoadData[plantData.name].Invoke(plantData);
-        }
     }
 
     public IEnumerator GetTexture(PlantData plantData, string imageUrl)

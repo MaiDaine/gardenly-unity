@@ -1,5 +1,6 @@
 ﻿using SimpleJSON;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,6 +16,7 @@ public class ReactProxy : MonoBehaviour
     public Dictionary<string, Action<PlantData, GameObject>> plantCallbacks;
     public ModelSO modelList;
     public GameObject fallbackModel;
+    public bool ready = false;
 
     [DllImport("__Internal")]
     private static extern void save(string json);
@@ -33,7 +35,7 @@ public class ReactProxy : MonoBehaviour
             graphQL = new GraphQL();
             externalData = new ExternalData(callbacks);
             if (Application.isEditor)
-                DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"40219c47-0e6a-494f-82b5-a67fc984af23\"},{\"name\":\"Arbuste\",\"id\":\"b2486c82-9452-4407-8a6b-fea79e94f9f5\"},{\"name\":\"Fleur\",\"id\":\"8bae24ec-6ac6-4059-9a0e-0cdcb2602a7a\"},{\"name\":\"Legume\",\"id\":\"98267617-3720-46f3-9c6f-8970061ad7e8\"}]}}");
+                DispatchQueryResult("{\"data\":{\"getTypes\":[{\"name\":\"Arbre\",\"id\":\"ae68c6e8-9d0c-4fdc-9e72-8e1896e3dfa8\",\"__typename\":\"Type\"},{\"name\":\"Fleur\",\"id\":\"76f0f28d-42da-45ad-91db-e227b12fb71e\",\"__typename\":\"Type\"},{\"name\":\"Arbuste\",\"id\":\"763b5496-02a3-4cdb-9241-9f043a2d4db5\",\"__typename\":\"Type\"},{\"name\":\"Legume\",\"id\":\"47c12932-69ef-4925-9fd3-b263fc47d69a\",\"__typename\":\"Type\"},{\"name\":\"typeKEYVAL3\",\"id\":\"264ac357-5d66-4d3e-90aa-1c89a9f78b1e\",\"__typename\":\"Type\"}]}}");
             else
                 SendQuery(graphQL.GetPlantsTypes());
             if (Application.isEditor)
@@ -84,6 +86,7 @@ public class ReactProxy : MonoBehaviour
 
     public void SendQuery(string payload)
     {
+        Debug.Log("SEND<" + payload + ">");
         query(payload);
     }
 
@@ -94,12 +97,21 @@ public class ReactProxy : MonoBehaviour
         {
             //SerializationController.instance.GetComponent<GardenData>().SetGardenName(JSONObject.Parse(json)["name"]);
             LocalisationController.instance.Init("FR");//TODO USERPREF
-            SerializationController.instance.DeSerialize(json);
+            StartCoroutine(LoadScene(json));
         }
+    }
+
+    public IEnumerator LoadScene(string json)
+    {
+        while (!ready)
+            yield return new WaitForSeconds(.1f);
+        SerializationController.instance.DeSerialize(json);
+        yield return null;
     }
 
     public void DispatchQueryResult(string json)
     {
+        Debug.Log("RECEIVE<" + json + ">");
         var jsonObject = JSONObject.Parse(json);
         if (jsonObject["errors"] != null)
         {
@@ -174,10 +186,13 @@ public class ReactProxy : MonoBehaviour
 
     public void LoadPlantDataFromSave(Action<PlantData, GameObject> callback, string plantID, string plantName, string plantType)
     {
-        if (!externalData.plants.ContainsKey(plantType)
+        Debug.Log("LOAD");
+        if (!ready
+            || !externalData.plants.ContainsKey(plantType)
             || !externalData.plants[plantType].ContainsKey(plantName)
-            || externalData.plants[plantType][plantName].status == PlantData.DataStatus.Requested)
+            || !(externalData.plants[plantType][plantName].status == PlantData.DataStatus.Received))
         {
+            Debug.Log("NOPE");
             SendQuery(graphQL.GetPlantData(plantID));
             plantCallbacks.Add(plantID, callback);
             externalData.callbackLoadData.Add(plantID, LoadPlantDataCallback);
@@ -185,6 +200,7 @@ public class ReactProxy : MonoBehaviour
         else
         {
             PlantData tmp = externalData.plants[plantType][plantName];
+            Debug.Log("OK" + tmp.name + " | " + tmp.model);
             if (tmp.model < modelList.Models.Count)
                 callback.Invoke(tmp, modelList.Models[tmp.model]);
             else

@@ -145,8 +145,15 @@ public class PlayerController : MonoBehaviour
     {
         if (selectionList != null)
         {
+            FlowerBed fb;
             for (int i = 0; i < selectionList.Count; i++)
+            {
+                fb = selectionList[i].GetGameObject().GetComponent<FlowerBed>();
+                if (fb != null)
+                    foreach (PlantElement e in fb.GetPlantElements())
+                        actionHandler.NewStateAction("Destroy", e.GetGameObject());
                 actionHandler.NewStateAction("Destroy", selectionList[i].GetGameObject());
+            }
             selectionList.Clear();
             Camera.main.GetComponent<UIController>().Cancel();
         }

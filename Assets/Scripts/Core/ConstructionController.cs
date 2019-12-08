@@ -169,6 +169,8 @@ public class ConstructionController : MonoBehaviour
                         grid.activ = false;
                     ghost.EndConstruction(pos);
                     PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
+                    if (Input.GetKey(KeyCode.LeftShift))
+                        SpawnGhost(ghost);
                 }
                 return;
             }
@@ -188,13 +190,15 @@ public class ConstructionController : MonoBehaviour
             if (ghost.GetComponent<ShapeCreator>() != null)
                 PlayerController.instance.OnFlowerBedSpawn();
             else
+            {
                 PlayerController.instance.actionHandler.NewStateAction("Create", ghost.gameObject);
+                if (Input.GetKey(KeyCode.LeftShift))
+                    SpawnGhost(ghost);
+            }
             if (gridState && !uiController.GridButtonIsTrigger())//TODO #73
                 grid.activ = false;
             if (uiController.GetMenuScript() != null)
                 uiController.GetMenuScript().isMoving = false;
-            if (Input.GetKey(KeyCode.LeftShift))
-                SpawnGhost(ghost);
         }
     }
 
