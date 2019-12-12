@@ -1,0 +1,141 @@
+fileFormatVersion: 2
+guid: eca94d2e3f8d5c643ac1de787e07c06d
+labels:
+- FencePackageHDTextures
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Canopy
+    100002: Canopy_1
+    100004: Castle
+    100006: Castle_1
+    100008: Castle_2
+    100010: Fence
+    100012: Gate
+    100014: Pillar
+    100016: //RootNode
+    400000: Canopy
+    400002: Canopy_1
+    400004: Castle
+    400006: Castle_1
+    400008: Castle_2
+    400010: Fence
+    400012: Gate
+    400014: Pillar
+    400016: //RootNode
+    2100000: 01 - Default
+    2300000: Canopy
+    2300002: Canopy_1
+    2300004: Castle
+    2300006: Castle_1
+    2300008: Castle_2
+    2300010: Fence
+    2300012: Gate
+    2300014: Pillar
+    3300000: Canopy
+    3300002: Canopy_1
+    3300004: Castle
+    3300006: Castle_1
+    3300008: Castle_2
+    3300010: Fence
+    3300012: Gate
+    3300014: Pillar
+    4300000: Pillar
+    4300002: Castle_1
+    4300004: Fence
+    4300006: Canopy
+    4300008: Gate
+    4300010: Castle_2
+    4300012: Castle
+    4300014: Canopy_1
+    6400000: Canopy
+    6400002: Canopy_1
+    6400004: Castle
+    6400006: Castle_1
+    6400008: Castle_2
+    6400010: Fence
+    6400012: Gate
+    6400014: Pillar
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

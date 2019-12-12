@@ -66,6 +66,7 @@ public class PlantElement : GhostHandler
         public Vector3 position;
         public string plantType;
         public string plantName;
+        public int model;
     }
 
     public override string Serialize()
@@ -96,19 +97,39 @@ public class PlantElement : GhostHandler
         data = new PlantData(tmp["plant"]["name"]);
         data.plantID = tmp["plant"]["id"];
 
+        string fbID = tmp["tile"]["id"];
+        foreach (FlowerBed fb in ConstructionController.instance.flowerBeds)
+            if (fb.dbID == fbID)
+            {
+                serializedElement.tile_key = fb.GetKey();
+                fb.AddElement(this);
+            }
+
         transform.position = serializableItemData.position;
+        if (serializableItemData.model > 0 && serializableItemData.model < ReactProxy.instance.modelList.Models.Count)
+            SetModel(ReactProxy.instance.modelList.Models[serializableItemData.model]);
         //age
         //sun
         if (!Application.isEditor)
             ReactProxy.instance.LoadPlantDataFromSave(OnPlantDataLoad, data.plantID, serializableItemData.plantName, serializableItemData.plantType);
+        if (serializableItemData.model > 0 && serializableItemData.model < SpawnController.instance.modelList.Models.Count)
+            SetModel(SpawnController.instance.modelList.Models[serializableItemData.model]);
     }
 
-    public void OnPlantDataLoad(PlantData plantData, GameObject model)
+    public void SetModel(int model) { serializableItemData.model = model; }
+
+    public void OnPlantDataLoad(PlantData plantData, GameObject model = null)
     {
         data = plantData;
         serializedElement.plant_id = plantData.plantID;
         serializableItemData.plantType = plantData.typeName;
         serializableItemData.plantName = plantData.name;
+        if (model != null)
+            SetModel(model);
+    }
+
+    private void SetModel(GameObject model)
+    {
         if (model.GetComponent<MeshFilter>() == null)
             GetComponent<MeshFilter>().mesh = model.GetComponentInChildren<MeshFilter>().sharedMesh;
         else
@@ -117,5 +138,7 @@ public class PlantElement : GhostHandler
             GetComponent<MeshRenderer>().materials = model.GetComponentInChildren<MeshRenderer>().sharedMaterials;
         else
             GetComponent<MeshRenderer>().materials = model.GetComponent<MeshRenderer>().sharedMaterials;
+        DestroyImmediate(GetComponent<MeshCollider>());
+        gameObject.AddComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().sharedMesh;
     }
 }

@@ -1,0 +1,189 @@
+fileFormatVersion: 2
+guid: f0266a10a9b281348ad028bead2221ab
+labels:
+- FencePackageHDTextures
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Canopy
+    100002: Canopy2
+    100004: Canopy3
+    100006: Canopy4
+    100008: Canopy5
+    100010: Canopy6
+    100012: Column
+    100014: Column2
+    100016: //RootNode
+    100018: Gate
+    100020: Gate_L
+    100022: Gate_r
+    100024: Handle
+    100026: Handle2
+    100028: Handle3
+    100030: Column2_Brick
+    100032: Column_Brick
+    400000: Canopy
+    400002: Canopy2
+    400004: Canopy3
+    400006: Canopy4
+    400008: Canopy5
+    400010: Canopy6
+    400012: Column
+    400014: Column2
+    400016: //RootNode
+    400018: Gate
+    400020: Gate_L
+    400022: Gate_r
+    400024: Handle
+    400026: Handle2
+    400028: Handle3
+    400030: Column2_Brick
+    400032: Column_Brick
+    2100000: No Name
+    2300000: Canopy
+    2300002: Canopy2
+    2300004: Canopy3
+    2300006: Canopy4
+    2300008: Canopy5
+    2300010: Canopy6
+    2300012: Column
+    2300014: Column2
+    2300016: Gate
+    2300018: Gate_L
+    2300020: Gate_r
+    2300022: Handle
+    2300024: Handle2
+    2300026: Handle3
+    2300028: Column2_Brick
+    2300030: Column_Brick
+    3300000: Canopy
+    3300002: Canopy2
+    3300004: Canopy3
+    3300006: Canopy4
+    3300008: Canopy5
+    3300010: Canopy6
+    3300012: Column
+    3300014: Column2
+    3300016: Gate
+    3300018: Gate_L
+    3300020: Gate_r
+    3300022: Handle
+    3300024: Handle2
+    3300026: Handle3
+    3300028: Column2_Brick
+    3300030: Column_Brick
+    4300000: Column
+    4300002: Canopy4
+    4300004: Canopy2
+    4300006: Column2
+    4300008: Canopy6
+    4300010: Gate
+    4300012: Handle
+    4300014: Canopy
+    4300016: Gate_r
+    4300018: Canopy3
+    4300020: Handle2
+    4300022: Gate_L
+    4300024: Canopy5
+    4300026: Handle3
+    4300028: Column_Brick
+    4300030: Column2_Brick
+    6400000: Canopy
+    6400002: Canopy2
+    6400004: Canopy3
+    6400006: Canopy4
+    6400008: Canopy5
+    6400010: Canopy6
+    6400012: Column
+    6400014: Column2
+    6400016: Gate
+    6400018: Gate_L
+    6400020: Gate_r
+    6400022: Handle
+    6400024: Handle2
+    6400026: Handle3
+    6400028: Column2_Brick
+    6400030: Column_Brick
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

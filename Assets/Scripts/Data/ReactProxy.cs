@@ -72,7 +72,7 @@ public class ReactProxy : MonoBehaviour
             if (tmp != null)
             {
                 save(tmp);
-
+                Debug.Log(tmp);
             }
         }
     }
@@ -188,26 +188,24 @@ public class ReactProxy : MonoBehaviour
     {
         if (!ready
             || !externalData.plants.ContainsKey(plantType)
-            || !externalData.plants[plantType].ContainsKey(plantName)
-            || !(externalData.plants[plantType][plantName].status == PlantData.DataStatus.Received))
+            || !externalData.plants[plantType].ContainsKey(plantName))
         {
             plantCallbacks.Add(plantID, callback);
             externalData.callbackLoadData.Add(plantID, LoadPlantDataCallback);
-            SendQuery(graphQL.GetPlantData(plantID));
+            if (!externalData.plants.ContainsKey(plantType)
+                || !externalData.plants[plantType].ContainsKey(plantName))
+                SendQuery(graphQL.GetPlantData(plantID));
         }
         else
         {
             PlantData tmp = externalData.plants[plantType][plantName];
-            if (tmp.model < modelList.Models.Count)
-                callback.Invoke(tmp, modelList.Models[tmp.model]);
-            else
-                callback.Invoke(tmp, fallbackModel);
+            callback.Invoke(tmp, null);
         }
     }
 
     public void LoadPlantDataCallback(PlantData plantData)
     {
-        if (plantData.model < modelList.Models.Count)
+        if (plantData.model >= 0 && plantData.model < modelList.Models.Count)
             plantCallbacks[plantData.plantID].Invoke(plantData, modelList.Models[plantData.model]);
         else
             plantCallbacks[plantData.plantID].Invoke(plantData, fallbackModel);

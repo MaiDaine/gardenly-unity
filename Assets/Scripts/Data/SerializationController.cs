@@ -79,14 +79,10 @@ public class SerializationController : MonoBehaviour
                     break;
             }
 
-        if (itemCount == 0)
-            json = "{}";
-        else
-        {
-            json = "{\"name\":\"" + gardenData.name + "\",";
-            json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
-            json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
-        }
+
+        json = "{\"name\":\"" + gardenData.name + "\",";
+        json += "\"boundaries\":[" + JsonUtility.ToJson(gardenData.boundaries[0]);
+        json += ", " + JsonUtility.ToJson(gardenData.boundaries[1]) + "], ";
 
         for (int i = 0; i < 3; i++)
         {

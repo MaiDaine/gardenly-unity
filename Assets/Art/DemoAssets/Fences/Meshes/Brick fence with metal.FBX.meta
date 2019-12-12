@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: b43c7dc8ac88af14a8b85ba24bde89e0
+labels:
+- FencePackageHDTextures
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Canopy
+    100004: Canopy_2
+    100006: Castle
+    100008: Fence_1
+    100010: Fence_2
+    100012: Gate
+    100014: Handle
+    100016: Pillar_brick
+    100018: Pillar_metal
+    100020: Canopy_1
+    100022: Pillar
+    100024: Pillar_1
+    100026: Pillar_2
+    100028: Canopy_1_1
+    100030: Canopy_2_1
+    400000: //RootNode
+    400002: Canopy
+    400004: Canopy_2
+    400006: Castle
+    400008: Fence_1
+    400010: Fence_2
+    400012: Gate
+    400014: Handle
+    400016: Pillar_brick
+    400018: Pillar_metal
+    400020: Canopy_1
+    400022: Pillar
+    400024: Pillar_1
+    400026: Pillar_2
+    400028: Canopy_1_1
+    400030: Canopy_2_1
+    2100000: 01 - Default
+    2300000: Canopy
+    2300002: Canopy_2
+    2300004: Castle
+    2300006: Fence_1
+    2300008: Fence_2
+    2300010: Gate
+    2300012: Handle
+    2300014: Pillar_brick
+    2300016: Pillar_metal
+    2300018: Canopy_1
+    2300020: Pillar
+    2300022: Pillar_1
+    2300024: Pillar_2
+    2300026: Canopy_1_1
+    2300028: Canopy_2_1
+    3300000: Canopy
+    3300002: Canopy_2
+    3300004: Castle
+    3300006: Fence_1
+    3300008: Fence_2
+    3300010: Gate
+    3300012: Handle
+    3300014: Pillar_brick
+    3300016: Pillar_metal
+    3300018: Canopy_1
+    3300020: Pillar
+    3300022: Pillar_1
+    3300024: Pillar_2
+    3300026: Canopy_1_1
+    3300028: Canopy_2_1
+    4300000: Pillar_brick
+    4300002: Pillar_metal
+    4300004: Fence_1
+    4300006: Fence_2
+    4300008: Gate
+    4300010: Canopy
+    4300012: Castle
+    4300014: Handle
+    4300016: Canopy_2
+    4300018: Pillar
+    4300020: Pillar_2
+    4300022: Pillar_1
+    4300024: Canopy_1
+    4300026: Canopy_2_1
+    4300028: Canopy_1_1
+    6400000: Canopy
+    6400002: Canopy_2
+    6400004: Castle
+    6400006: Fence_1
+    6400008: Fence_2
+    6400010: Gate
+    6400012: Handle
+    6400014: Pillar_brick
+    6400016: Pillar_metal
+    6400018: Canopy_1
+    6400020: Pillar
+    6400022: Pillar_1
+    6400024: Pillar_2
+    6400026: Canopy_1_1
+    6400028: Canopy_2_1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
