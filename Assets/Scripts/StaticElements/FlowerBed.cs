@@ -13,6 +13,7 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
     public string groundType;//TODO FBDATA(waiting db schema update)
     public Vector2[] vertices;
     public SerializationController.SerializationState serializationState = SerializationController.SerializationState.None;
+    public string dbID = "";
 
     private ShapeCreator shapeCreator;
     private List<PlantElement> flowerBedElements = new List<PlantElement>();
@@ -268,8 +269,11 @@ public class FlowerBed : MonoBehaviour, ISelectable, ISerializable
         serializedElement = JsonUtility.FromJson<SerializedElement>(json);
         SerializableItemData serializableItemData = JsonUtility.FromJson<SerializableItemData>(serializedElement.data);
 
+        var tmp = JSON.Parse(json);
+
         flowerBedName = serializedElement.name;
-        groundType = JSON.Parse(json)["groundType"]["name"];
+        groundType = tmp["groundType"]["name"];
+        dbID = tmp["id"];
         //groundType = GetGroundNameFromType(serializedElement.ground_type_id);
         //if (groundType == null)
         //    ReactProxy.instance.externalData.callbackGround.Add(UpdateGroundTypeName);

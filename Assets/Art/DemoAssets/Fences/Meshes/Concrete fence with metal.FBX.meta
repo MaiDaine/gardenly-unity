@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 8f754b3ca81f08f4d865804053dc4432
+labels:
+- FencePackageHDTextures
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Concrete post
+    100004: Concrete pp
+    100006: Door metal
+    100008: Handle
+    100010: Loop_1_1
+    100012: Loop_1_2
+    100014: Loop_2_1
+    100016: Loop_2_2
+    100018: Metal
+    100020: Metal grill
+    100022: Plastic glass
+    100024: Wedge
+    400000: //RootNode
+    400002: Concrete post
+    400004: Concrete pp
+    400006: Door metal
+    400008: Handle
+    400010: Loop_1_1
+    400012: Loop_1_2
+    400014: Loop_2_1
+    400016: Loop_2_2
+    400018: Metal
+    400020: Metal grill
+    400022: Plastic glass
+    400024: Wedge
+    2100000: 01 - Default
+    2300000: Concrete post
+    2300002: Concrete pp
+    2300004: Door metal
+    2300006: Handle
+    2300008: Loop_1_1
+    2300010: Loop_1_2
+    2300012: Loop_2_1
+    2300014: Loop_2_2
+    2300016: Metal
+    2300018: Metal grill
+    2300020: Plastic glass
+    2300022: Wedge
+    3300000: Concrete post
+    3300002: Concrete pp
+    3300004: Door metal
+    3300006: Handle
+    3300008: Loop_1_1
+    3300010: Loop_1_2
+    3300012: Loop_2_1
+    3300014: Loop_2_2
+    3300016: Metal
+    3300018: Metal grill
+    3300020: Plastic glass
+    3300022: Wedge
+    4300000: Concrete post
+    4300002: Concrete pp
+    4300004: Metal grill
+    4300006: Metal
+    4300008: Loop_2_2
+    4300010: Loop_2_1
+    4300012: Door metal
+    4300014: Handle
+    4300016: Loop_1_1
+    4300018: Loop_1_2
+    4300020: Wedge
+    4300022: Plastic glass
+    6400000: Concrete post
+    6400002: Concrete pp
+    6400004: Door metal
+    6400006: Handle
+    6400008: Loop_1_1
+    6400010: Loop_1_2
+    6400012: Loop_2_1
+    6400014: Loop_2_2
+    6400016: Metal
+    6400018: Metal grill
+    6400020: Plastic glass
+    6400022: Wedge
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
