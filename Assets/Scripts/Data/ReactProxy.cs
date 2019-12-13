@@ -70,10 +70,7 @@ public class ReactProxy : MonoBehaviour
             string tmp = SerializationController.instance.Serialize();
 
             if (tmp != null)
-            {
                 save(tmp);
-                Debug.Log(tmp);
-            }
         }
     }
 

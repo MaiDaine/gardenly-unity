@@ -20,6 +20,7 @@ public class ShadowMap : MonoBehaviour
     private RenderTexture shadowmapCopy;
     private Texture2D pixelArray = null;
     private Vector2 startPoint;
+    private Vector2 endPoint;
     private float toTextureRatio;
     private CommandBuffer cb;
     private float frameUpdatePending = 0;
@@ -82,34 +83,35 @@ public class ShadowMap : MonoBehaviour
         float currentTime = dayNightController.targetTime;
         float currentShadowSetting = QualitySettings.shadowDistance;
 
-        StartCapture();
-        shadowFilter.SetActive(false);
-
-        Texture2D tmp = CaptureShadowMap(4);//capture at (8 + 4) 12H00 to minimize shadows
-
+        StartCapture(false);
+        Texture2D tmp = CaptureShadowMap(6);//capture at (6 + 4) 12H00 to minimize shadows
         int offset = tmp.width / 2;
-        for (int y = 0; y < tmp.height; y++)
-            for (int x = 0; x < offset; x++)
-                if (tmp.GetPixel(x + offset, y).r != 0)
-                {
-                    startPoint.x = x;
-                    startPoint.y = y;
-                    while (x < tmp.width && tmp.GetPixel(x + offset, y).r != 0)
-                        x++;
+        startPoint.x = offset + offset / 2;
+        startPoint.y = 0;
 
-                    toTextureRatio = (x - startPoint.x) / planeSize;
-                    goto EndCapture;
-                }
+        while (startPoint.y < tmp.height && tmp.GetPixel((int)startPoint.x, (int)startPoint.y).r == 0f)
+            startPoint.y++;
+        startPoint.x = offset;
+        while (startPoint.x < tmp.width && tmp.GetPixel((int)startPoint.x, (int)startPoint.y).r == 0f)
+            startPoint.x++;
 
-            EndCapture:
+        endPoint.x = startPoint.x;
+        endPoint.y = startPoint.y;
+
+        while (tmp.GetPixel((int)endPoint.x, (int)endPoint.y).r != 0f)
+            endPoint.x++;
+        while (tmp.GetPixel((int)startPoint.x, (int)endPoint.y).r != 0f)
+            endPoint.y++;
+
+        toTextureRatio = (endPoint.x - startPoint.x) / planeSize;
         EndCapture(currentTime, currentShadowSetting);
     }
 
-    private void StartCapture()
+    private void StartCapture(bool setActive = true)
     {
         QualitySettings.shadowDistance = 100f;
         shadowCamera.enabled = true;
-        shadowFilter.SetActive(true);
+        shadowFilter.SetActive(setActive);
         max = 0f;
 
         RenderTargetIdentifier shadowmap = BuiltinRenderTextureType.CurrentActive;
@@ -139,7 +141,7 @@ public class ShadowMap : MonoBehaviour
             startShadowCalc = 2;
             loadingBar.gameObject.SetActive(false);
             MessageHandler.instance.SuccesMessage("shadow_successfull");
-            ConvertColors();
+            //ConvertColors();
         }
 
         frameUpdatePending -= 0.1f;
@@ -160,11 +162,16 @@ public class ShadowMap : MonoBehaviour
 
     private void ConvertColors()
     {
-        float correction = 1 / max;
-        Vector2 borders = new Vector2(pixelArray.width - startPoint.x, pixelArray.height - startPoint.y);
-        for (int y = (int)startPoint.y; y < borders.y; y++)
-            for (int x = (int)startPoint.x; x < borders.x - 1; x++)
-                pixelArray.SetPixel(x, y, gradientScript.GetColor(pixelArray.GetPixel(x, y).r * correction));
+        int offset = pixelArray.width;
+        float correction = 1 ;
+        float value;
+        for (int y = 0; y < pixelArray.height; y++)
+            for (int x = 0; x < pixelArray.width; x++)
+            {
+                value = pixelArray.GetPixel(x, y).r;
+                if (value != 0f)
+                    pixelArray.SetPixel(x, y, gradientScript.GetColor(value * correction));
+            }
         pixelArray.Apply();
     }
 
@@ -183,20 +190,20 @@ public class ShadowMap : MonoBehaviour
     {
         float pixelValue;
         float filterValue;
-        Vector2 borders = new Vector2(pixelArray.width - startPoint.x, tmp.height - startPoint.y);
+        int offset = tmp.width / 2;
 
-        for (int y = (int)startPoint.y; y < borders.y; y++)
+        for (int y = (int)startPoint.y; y < endPoint.y; y++)
         {
-            filterValue = tmp.GetPixel(tmp.width - 1, tmp.height - 1 - y).r;
-            for (int x = (int)startPoint.x; x < borders.x; x++)
+            filterValue = tmp.GetPixel(tmp.width - 1, y).r;
+            for (int x = (int)startPoint.x; x < endPoint.x; x++)
             {
-                pixelValue = tmp.GetPixel(tmp.width - 1 - x, tmp.height - 1 - y).r;
+                pixelValue = tmp.GetPixel(x, y).r;
                 if (pixelValue != filterValue)
                 {
-                    float updatedValue = pixelArray.GetPixel(x, y).r - (pixelValue / stepsNumber);
+                    float updatedValue = pixelArray.GetPixel(x - offset, y).r - (pixelValue / stepsNumber);
                     if (updatedValue > max)
                         max = updatedValue;
-                    pixelArray.SetPixel(x, y, new Color(updatedValue, updatedValue, updatedValue, 1));
+                    pixelArray.SetPixel(x - offset, y, new Color(updatedValue, updatedValue, updatedValue, 1));
                 }
             }
         }
@@ -208,7 +215,7 @@ public class ShadowMap : MonoBehaviour
         pixelArray = new Texture2D(shadowmapCopy.width / 2, shadowmapCopy.height);
         for (int y = (int)startPoint.y; y < pixelArray.height - (int)startPoint.y; y++)
             for (int x = (int)startPoint.x; x < pixelArray.width - (int)startPoint.x; x++)
-                pixelArray.SetPixel(x, y, new Color(1, 1, 1, 1));
+                pixelArray.SetPixel(x, y, new Color(0, 0, 0, 0));
     }
 
     public void SetShadowCalc()

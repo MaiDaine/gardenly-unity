@@ -87,10 +87,10 @@ public class WallHandler : GhostHandler, ISerializable
     public override void Move(Vector3 position)
     {
         float y = transform.position.y;
+        position.y = y;
         start += (position - transform.position);
         end += (position - transform.position);
         base.Move(position);
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
         text.transform.position = position;
     }
 

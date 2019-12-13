@@ -13,6 +13,7 @@ public class SerializationController : MonoBehaviour
     private GardenData.SerializedGardenData gardenData;
     private List<ISerializable> items;
     private string json = "";
+    private static uint lastKey = 0;
 
     private void Awake()
     {
@@ -27,7 +28,11 @@ public class SerializationController : MonoBehaviour
 
     public static uint GetElementKey()
     {
-        return ((uint)(System.DateTime.UtcNow - epochStart).TotalSeconds);
+        uint tmp = (uint)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+        if (tmp <= lastKey)
+            tmp = lastKey + 1;
+        lastKey = tmp;
+        return (tmp);
     }
 
     public void SetGardenData(GardenData.SerializedGardenData gardenData) { this.gardenData = gardenData; }

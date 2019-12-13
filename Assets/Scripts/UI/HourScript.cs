@@ -18,7 +18,7 @@ public class HourScript : MonoBehaviour
         {
             TextMeshProUGUI txt = btn.TextMeshProLabel;
             int hour = (int)(dayNightController.targetTime * 24f);
-            
+
             if (add)
                 hour = (hour + 1) % 24;
             else
@@ -33,7 +33,6 @@ public class HourScript : MonoBehaviour
             else
                 txt.SetText("0{0} : 00", hour);
             dayNightController.SetTimeOfDay(hour);
-            dayNightController.RotateSun(add);
         }
     }
 }

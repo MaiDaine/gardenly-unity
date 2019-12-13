@@ -10,7 +10,8 @@ public class DayNightController : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] private Light sun;
-    [SerializeField] private Transform sunLocation;
+    [SerializeField] private Transform LightOrientation;
+    [SerializeField] private GameObject VisualOrientation;
 #pragma warning restore 0649
 
     private int timeAnimation;
@@ -18,15 +19,29 @@ public class DayNightController : MonoBehaviour
     private float sunInitialIntensity;
 
     private const float vHour = 1f / 24f;
-    private const float initialSunLocation = 150f;
-    private const float sunRotateCoef = 15f;
     private bool orientationEditionActive = false;
 
     private void Start()
     {
         sunInitialIntensity = sun.intensity;
         currentTimeOfDay = targetTime;
-        sunLocation.transform.localRotation = Quaternion.Euler(0, initialSunLocation, 0);
+    }
+
+    private void LateUpdate()
+    {
+        //TODO UI
+        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+        {
+            orientationEditionActive = !orientationEditionActive;
+            VisualOrientation.SetActive(orientationEditionActive);
+        }
+        if (orientationEditionActive)
+        {
+            if (Input.GetKey(KeyCode.KeypadPlus))
+                LightOrientation.Rotate(new Vector3(0f, 1f, 0f));
+            else if (Input.GetKey(KeyCode.KeypadMinus))
+                LightOrientation.Rotate(new Vector3(0f, -1f, 0f));
+        }
     }
 
     public void SetTimeOfDay(float time)
@@ -65,26 +80,13 @@ public class DayNightController : MonoBehaviour
 
     void UpdateSun()
     {
+        sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
+
         float intensityMultiplier = 1;
-
-        if (currentTimeOfDay < 0.5f)
-            sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 0, 0);
-        else
-            sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 180f), 180, 0);
-
         if (currentTimeOfDay < 0.25f || currentTimeOfDay > 0.75f)
             intensityMultiplier = 0;
         else
             intensityMultiplier = 1f - Mathf.Abs(0.5f - currentTimeOfDay);
         sun.intensity = sunInitialIntensity * intensityMultiplier;
-    }
-
-    public void RotateSun(bool add)
-    {
-        float orientation = 1;
-
-        if (add)
-            orientation = -1;
-        sunLocation.transform.Rotate(new Vector3(0, sunRotateCoef * orientation, 0));
     }
 }
