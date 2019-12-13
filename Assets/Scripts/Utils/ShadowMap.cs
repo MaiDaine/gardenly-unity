@@ -52,7 +52,8 @@ public class ShadowMap : MonoBehaviour
         shadowCamera = GetComponent<Camera>();
         shadowmapCopy = new RenderTexture(2048, 1024, 0);
         cb = new CommandBuffer();
-        Calibrate();
+        startPoint = new Vector2(1207, 182);
+        endPoint = new Vector2(1866, 841);
     }
 
     public float GetSunExposure(float xPos, float yPos)
@@ -98,9 +99,9 @@ public class ShadowMap : MonoBehaviour
         endPoint.x = startPoint.x;
         endPoint.y = startPoint.y;
 
-        while (tmp.GetPixel((int)endPoint.x, (int)endPoint.y).r != 0f)
+        while (endPoint.x < tmp.width && tmp.GetPixel((int)endPoint.x, (int)endPoint.y).r != 0f)
             endPoint.x++;
-        while (tmp.GetPixel((int)startPoint.x, (int)endPoint.y).r != 0f)
+        while (endPoint.y < tmp.height && tmp.GetPixel((int)startPoint.x, (int)endPoint.y).r != 0f)
             endPoint.y++;
 
         toTextureRatio = (endPoint.x - startPoint.x) / planeSize;
